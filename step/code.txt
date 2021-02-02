@@ -1,0 +1,4 @@
+Login and logout
+1. composer require laravel/jetstream
+2. php artisan jetstream:install livewire
+----------------------------------------------------

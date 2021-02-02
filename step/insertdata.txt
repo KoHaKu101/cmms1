@@ -1,0 +1,28 @@
+สามารถใช้ได้ทั้งสองแบบ คือ {!! FORM::ACTION !! }หรือ <form action>
+ ซึ่งเราจะใช้เป็น <form action>
+โดยเราจะเปิดหัวฟอร์มก่อน <form action="{{ route('store.me')}}" method="POST">
+และตามด้วย @csrf *****หากไม่มีตัวนี้ก็ไม่สามารถ insert data ลงใน database ได้
+จากนั้นให้สร้างฟอร์มด้วยการ เปิด 
+<div class="form-group">
+เพื่อเปิดฟอร์มเป็นกลุ่ม
+จากนั้นสร้างหัวข้อโดย
+<lebel for=".....">......</lable>
+จะได้ชื่อหัวข้อก่อนใส่ช่องกรอก ต่อไปคือการสร้างช่องที่ไว้กรอกข้อมูล
+<input type="text" class="form-control" id="....." name="....." >
+id และ name
+ ต้องมีชื่อที่ตรงกับ database เพื่อที่จะสามารถส่งข้อมูลได้
+จากนั้นเป็นการสร้างปุ่มเพื่อกดยืนยันการส่งข้อมูลลงไป
+<button type="submit" class="btn btn-success">..........</button>
+type ต้องเป็น submit เท่านั้นเพื่อที่จะสามารถกดยืนยันได้
+และปิดคำสั่งด้วย </form> เพื่อปิดคำสั่ง
+ตัวอย่าง
+<div class="card-body">
+  <form action="{{ route('store.menu') }}" method="POST">
+       @csrf
+        <div class="form-group">
+        <label for="MENU_NAME">MenuName</label>
+        <input type="text"  class="form-control" id="MENU_NAME" name="MENU_NAME" placeholder="Enter Email">
+         </div>
+	<button tpye="submit" class="btn btn-success">Submit</button>
+   </form>
+----------------------------------------------------------------------------------

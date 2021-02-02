@@ -1,0 +1,25 @@
+1. install xampp
+2. install node js
+3. install composer
+	open cmd and insert code here
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+4. install laravel by composer
+	composer create-project --prefer-dist laravel/laravel .........
+----------------------------------------------------------------------------------
+how to make vshost
+1. go to xmapp >apache >conf >extra >vhosts.conf
+2. insert	<VirtualHost *:80>
+    			ServerAdmin webmaster@dummy-host2.example.com
+    			DocumentRoot "C:\xampp\htdocs\project\public" เปลี่ยนที่อยู่ของโปรเจ็ค
+    			ServerName www.pqm.com 	ชื่อเว็บของเรา
+    			##ErrorLog "logs/dummy-host2.example.com-error.log"
+    			##CustomLog "logs/dummy-host2.example.com-access.log" common
+		</VirtualHost>
+3. go to window >system32 >driver >etc >host
+4. insert server in host
+	127.0.0.1		...............
+---------------------------------------------------------------------------------------
+ 
