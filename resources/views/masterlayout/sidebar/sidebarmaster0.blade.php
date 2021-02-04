@@ -29,8 +29,8 @@
       </div>
       @php
 
-        use App\Models\Mainmenu;
-        use App\Models\Menusubitem;
+        use App\Models\SettingMenu\Mainmenu;
+        use App\Models\SettingMenu\Menusubitem;
 
 
         $Mainmenu=Mainmenu::all();

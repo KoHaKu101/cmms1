@@ -33,7 +33,7 @@
         								<div class="card-header"> Edit </div>
                         <div class="card-body">
 
-                          <form action="{{ url('menu/update/'.$data->UNID) }}" method="POST">
+                          <form action="{{ url('setting/menu/update/'.$data->UNID) }}" method="POST">
                             @csrf
                             <div class="form-group">
                           		<label for="MENU_NAME">Menu Thai</label>

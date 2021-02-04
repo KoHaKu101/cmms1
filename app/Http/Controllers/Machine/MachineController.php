@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Machine;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machnie;
+use App\Models\Machine\Machnie;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
@@ -29,17 +30,18 @@ class MachineController extends Controller
   }
 
   public function Create(){
-    return View('assets.formassete.formfacilities');
+    return View('machine/assets/form');
   }
 
   public function Index(){
 
-    $factory_all = Machnie::all();
+    $data_set = Machnie::all();
     // dd($machine_all);
-    return View('/assets/Facilities',compact(['factory_all']));
+    return View('machine/assets/machinelist',compact(['data_set']));
   }
 
   public function Store(Request $request){
+
 
     $validated = $request->validate([
       'MACHINE_CODE'           => 'required|max:255',
@@ -47,6 +49,7 @@ class MachineController extends Controller
       [
       'MACHINE_CODE.required'  => 'กรุณราใส่รหัสเครื่องจักร',
       ]);
+
       $MACHINE_ICON = $request->file('MACHINE_ICON');
 
       $name_gen = hexdec(uniqid());
@@ -115,18 +118,18 @@ class MachineController extends Controller
           'SHIFT_TYPE'           => $request->SHIFT_TYPE,
           'ESP_MAC'              => $request->ESP_MAC,
       ]);
-      $factory_all = Machnie::paginate(12);
+      $data_set = Machnie::paginate(12);
       // dd($machine_all);
-      return View('/assets/Facilities',compact(['factory_all']));
 
+      return Redirect()->route('machine.list',compact(['data_set']))->with('success','Update Success');
   }
 
-  public function Edit($UNID){
-
-    $factory_form = Machnie::where('UNID',$UNID)->first();
+  public function Edit($UNID) {
+    
+    $data_set = Machnie::where('UNID',$UNID)->first();
     // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
-    return view('assets.edit.edit',compact('factory_form'));
+    return view('machine/assets/edit',compact('data_set'));
 
   }
 
@@ -134,7 +137,7 @@ class MachineController extends Controller
 
   public function Update(Request $request,$UNID){
 
-    $dataunid = Machnie::where('UNID',$UNID)->update([
+    $data_set = Machnie::where('UNID',$UNID)->update([
       'MACHINE_CODE'         => $request->MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,
       'MACHINE_CHECK'        => $request->MACHINE_CHECK,
@@ -190,11 +193,11 @@ class MachineController extends Controller
       'SHIFT_TYPE'           => $request->SHIFT_TYPE,
       'ESP_MAC'              => $request->ESP_MAC,
     ]);
-    return Redirect()->route('factoryhome')->with('success','Update Success');
+    return Redirect()->route('machine.list')->with('success','Update Success');
   }
 
   public function Delete($UNID){
-      $data_delete = Machnie::where('UNID','=',$UNID)->delete();
+      $data_set = Machnie::where('UNID','=',$UNID)->delete();
 
       return Redirect()->back()-> with('success','Confirm Delete Success');
 

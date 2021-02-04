@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SettingMenu;
 
-use Illuminate\Http\Request;
-use Auth;
-use App\Models\Menusubitem;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Models\SettingMenu\Menusubitem;
 use Carbon\Carbon;
+use Auth;
 
 class MenuSubController extends Controller
 {
@@ -18,9 +19,6 @@ class MenuSubController extends Controller
    public function __construct(){
      $this->middleware('auth');
    }
-
-
-
    public function randUNID($table){
      $number = date("ymdhis", time());
      $length=7;
@@ -41,10 +39,7 @@ class MenuSubController extends Controller
       'SUBMENU_NAME' => 'required|max:255'],[
       'SUBMENU_NAME.required' => 'กรุณราใส่ชื่อ menu',
       'SUBMENU_NAME.max' => 'ใส่ได้ไม่เกิน 255'
-
-
       ]);
-
       Menusubitem::insert([
           'SUBMENU_NAME'=> $request->SUBMENU_NAME,
           'SUBMENU_EN'=> $request->SUBMENU_EN,
@@ -57,33 +52,29 @@ class MenuSubController extends Controller
           'UNID'=>$this->randUNID('PMCS_CMMS_MENUSUBITEM'),
           'CREATE_BY'=>Auth::user()->name,
           'CREATE_TIME'=> Carbon::now(),
-
-
-
       ]);
-
-
     return Redirect()->back()->with('success','insert success');
 
 
   }
 
-  public function AllMenu()
-  {
-    $datasub = Menusubitem::latest()->paginate(5);
-    $trashsub = Menusubitem::onlyTrashed()->latest()->paginate(3);
-    // $PMCS_CMMS_MENU = DB::table('PMCS_CMMS_MENU')->latest()->get();
-    return View('submenu.indexsubmenu',compact('datasub','trashsub'));
 
-  }
+  public function Subhome($UNID){
+      // $data = Menusubitem::where('UNID','=',$UNID)->first();
+      $mainmenu=array();
+      $mainmenu["UNID"]=$UNID;
+    $datasubmenu = Menusubitem::where('SUBUNID_REF','=',$UNID)->get();
+      // $datasubmenu = Menusubitem::where();
+  return View('setting.submenu.home',compact('datasubmenu','mainmenu'));
 
+}
 
   public function Edit($UNID){
 
-    $datasub = Menusubitem::find($UNID);
+    $data_set = Menusubitem::find($UNID);
     // $data = Menusubitem::where('UNID','=',$UNID)->first();
 
-    return view('submenu/editsubmenu',compact('datasub'));
+    return view('setting.submenu.edit',compact('data_set'));
 
   }
 
@@ -100,48 +91,21 @@ class MenuSubController extends Controller
       'SUBMENU_ICON' => $request->SUBMENU_ICON,
       'SUBMENU_CLASS' => $request->SUBMENU_CLASS,
       'SUBMENU_LINK' => $request->SUBMENU_LINK,
-
       'MODIFY_BY' =>Auth::user()->name,
       'MODIFY_TIME' => Carbon::now(),
-
     ]);
     $SUBUNID_REF=$request->SUBUNID_REF;
-
     $datasubmenu = Menusubitem::where('SUBUNID_REF','=',$SUBUNID_REF)->get();
-
-    return Redirect()->route('all.submenu',[$SUBUNID_REF]);
+    return Redirect()->route('submenu.home',[$SUBUNID_REF]);
 
   }
-
-
-
   // ส่วนลบ
-  public function SoftDeletes($UNID){
-    $delete = Menusubitem::find($UNID)->delete();
-    return Redirect()->back()-> with('success','delete Success');
-  }
-    public function Restore($UNID){
-        $delete = Menusubitem::withTrashed()->find($UNID)->Restore();
-        return Redirect()->back()-> with('success','Restore Success');
-
-    }
     public function Delete($UNID){
-        $delete = Menusubitem::onlyTrashed()->find($UNID)->forceDelete();
-        return Redirect()->back()-> with('success','Confirm Delete Success');
+      $delete = Menusubitem::where('UNID','=',$UNID)->delete();
+      return Redirect()->back()-> with('success','Confirm Delete Success');
+
 
     }
     // ส่วนลบ
 
-
-
-    public function Viewsubmenu($UNID){
-        // $data = Menusubitem::where('UNID','=',$UNID)->first();
-
-        $mainmenu=array();
-        $mainmenu["UNID"]=$UNID;
-
-      $datasubmenu = Menusubitem::where('SUBUNID_REF','=',$UNID)->get();
-        // $datasubmenu = Menusubitem::where();
-    return View('submenu.indexsubmenu',compact('datasubmenu','mainmenu'));
-    }
 }

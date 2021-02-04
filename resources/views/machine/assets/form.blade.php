@@ -32,14 +32,14 @@
 					<div class="row">
 						<div class="col-md-1 mt-2">
 
-							<a href="{{ route('factoryhome') }}">
+							<a href="{{ route('machine.list') }}">
 								<button class="btn btn-primary  btn-sm ">
 									<span class="fas fa-arrow-left ">Back </span>
 								</button>
 							</a>
 						</div>
 							<div class="col-md-11 mt-2 ">
-								<form action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
 								@csrf
 									<button class="btn btn-primary btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>

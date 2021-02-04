@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SettingMenu;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Mainmenu;
+use App\Models\SettingMenu\Mainmenu;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -20,9 +21,6 @@ class MenuController extends Controller
      public function __construct(){
        $this->middleware('auth');
      }
-
-
-
      public function randUNID($table){
        $number = date("ymdhis", time());
        $length=7;
@@ -36,17 +34,13 @@ class MenuController extends Controller
        ->first(['UNID'])) );
        return $number;
      }
-
-    public function AddMenu(Request $request)
-    {
+     public function AddMenu(Request $request)
+      {
       $validated = $request->validate([
         'MENU_NAME'           => 'required|max:255'],[
         'MENU_NAME.required'  => 'กรุณราใส่ชื่อ menu',
         'MENU_NAME.max'       => 'ใส่ได้ไม่เกิน 255'
-
-
         ]);
-
         Mainmenu::insert([
             'MENU_NAME'   => $request->MENU_NAME,
             'MENU_EN'     => $request->MENU_EN,
@@ -65,34 +59,19 @@ class MenuController extends Controller
 
 
     }
-
-    public function AllMenu()
+    public function Home()
     {
       $data = Mainmenu::paginate(6);
       // $data = DB::table('PMCS_CMMS_MENU')->latest()->paginate(3);
-      $trashdata = Mainmenu::onlyTrashed()->latest()->paginate(3);
-
-      return View('menu.index',compact('data','trashdata'));
-
+      return View('setting.menu.home',compact('data'));
     }
-
-
-
-
     public function Edit($UNID){
-
-      $data = Mainmenu::find($UNID);
+      $data = Mainmenu::where("UNID",$UNID)->first();
       // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
-      return view('menu/edit',compact('data'));
-
+      return view('setting/menu/edit',compact('data'));
     }
-
-
-
     public function Update(Request $request,$UNID){
-
-
       $dataunid = Mainmenu::find($UNID)->update([
         'MENU_NAME'   => $request->MENU_NAME,
         'MENU_EN'     => $request->MENU_EN,
@@ -107,28 +86,20 @@ class MenuController extends Controller
 
       ]);
 
-      return Redirect()->route('all.menu')->with('success','Update Success');
+      return Redirect()->route('menu.home')->with('success','Update Success');
 
     }
 
 
-
-    // ส่วนลบ
-    public function SoftDeletes($UNID){
-          $delete = Mainmenu::find($UNID)->delete();
-          return Redirect()->back()-> with('success','delete Success');
-    }
-      public function Restore($UNID){
-          $delete = Mainmenu::withTrashed()->find($UNID)->Restore();
-          return Redirect()->back()-> with('success','Restore Success');
-
-      }
       public function Delete($UNID){
-          $delete = Mainmenu::onlyTrashed()->find($UNID)->forceDelete();
+          $delete = Mainmenu::where('UNID','=',$UNID)->delete();
           return Redirect()->back()-> with('success','Confirm Delete Success');
 
+
+
+
       }
-      // ส่วนลบ
+
 
       public function Logout(){
           Auth::logout();

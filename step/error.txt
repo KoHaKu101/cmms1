@@ -6,4 +6,11 @@ $data = Mainmenu::where('UNID','=',$UNID)->first();
 url = [../asdas/asdasd/asd/asd/]
 ให้ทำการลบ .. ออก
 ---------------------------------------------------------------------------
+include(C:\xampp\htdocs\cmms\vendor\composer/../../app/Http/Controllers/MenuController.php)
+: Failed to open stream: No such file or directory
+ ถ้าหากเกิด error แบบนี้ ให้ลองแก้ด้วย คำสั่ง
+composer dump-autoload
+
+--------------------------------------------------------------------------------
+
 

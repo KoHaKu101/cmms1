@@ -30,7 +30,7 @@
 				<div class="row">
 					<div class="col-md-1 mt-2">
 
-						<a href="{{ route('factoryhome') }}">
+						<a href="{{ route('machine.list') }}">
 							<button class="btn btn-light btn-border btn-sm ">
 								<span class="fas fa-arrow-left ">Back </span>
 							</button>
@@ -39,7 +39,7 @@
 
 						<div class="col-md-11 mt-2 ">
 
-							<form action="{{ url('factory/update/'.$factory_form->UNID) }}" method="POST">
+							<form action="{{ url('machine/assets/update/'.$data_set->UNID) }}" method="POST">
 								@csrf
 							<button class="btn btn-light btn-border btn-sm" type="submit">
 								<span class="fas fa-file-medical ">	save	</span>
@@ -67,22 +67,22 @@
 								<div class="col-md-6 col-lg-4">
 									<div class="form-group">
 										<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
-											<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $factory_form->MACHINE_CODE }}">
-											<input type="hidden" id="UNID" name="UNID" value="{{ $factory_form->UNID }}">
+											<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $data_set->MACHINE_CODE }}">
+											<input type="hidden" id="UNID" name="UNID" value="{{ $data_set->UNID }}">
 									</div>
 									<div class="form-group">
 										<label for="MACHINE_MANU">การผลิต	</label>
-										<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" value="{{ $factory_form->MACHINE_MANU }}">
+										<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" value="{{ $data_set->MACHINE_MANU }}">
 									</div>
 									<div class="form-group">
 										<label for="MACHINE_RVE_DATE">วันที่เริ่มใช้งาน	</label>
-										<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE" value="{{ $factory_form->MACHINE_RVE_DATE }}">
+										<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE" value="{{ $data_set->MACHINE_RVE_DATE }}">
 									</div>
 										<!-- ส่วนของสถานะ และตำแหน่ง-->
 									<div class="row ml-1">
 										<div class="form-group col-md-6 col-lg-6">
 											<lebel>สถานะการใช้งาน</lebel>
-											<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" value="{{ $factory_form->MACHINE_CHECK }}">
+											<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" value="{{ $data_set->MACHINE_CHECK }}">
 												<option>ทำงาน</option>
 												<option>รอผลิต</option>
 												<option>หยุด/เสีย</option>
@@ -91,7 +91,7 @@
 										</div>
 										<div class="form-group col-6">
 											<lebel>ตำแหน่งเครื่อง</lebel>
-											<select class="form-control form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION" value="{{ $factory_form->MACHINE_LOCATION }}">
+											<select class="form-control form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION" value="{{ $data_set->MACHINE_LOCATION }}">
 												<option>Line 1</option>
 												<option>Line 2</option>
 												<option>Line 3</option>
@@ -109,19 +109,19 @@
 								<div class="col-md-6 col-lg-4">
 									<div class="form-group">
 										<label for="MACHINE_NAME">ชื่อเครื่องจักร</label>
-										<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME"  value="{{ $factory_form->MACHINE_NAME }}">
+										<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME"  value="{{ $data_set->MACHINE_NAME }}">
 									</div>
 									<div class="form-group">
 										<label for="MACHINE_RVE_DATE">วันที่แก้ไขปรับปรุง	</label>
-										<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE"  value="{{ $factory_form->MACHINE_RVE_DATE }}">
+										<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE"  value="{{ $data_set->MACHINE_RVE_DATE }}">
 									</div>
 									<div class="form-group">
 										<label for="PURCHASE_FORM">ซื้อจากบริษัท	</label>
-										<input type="text" class="form-control" id="PURCHASE_FORM" name="PURCHASE_FORM"  value="{{ $factory_form->PURCHASE_FORM }}">
+										<input type="text" class="form-control" id="PURCHASE_FORM" name="PURCHASE_FORM"  value="{{ $data_set->PURCHASE_FORM }}">
 									</div>
 									<div class="form-group">
 										<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
-										<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE"  value="{{ $factory_form->MACHINE_TYPE }}">
+										<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE"  value="{{ $data_set->MACHINE_TYPE }}">
 									</div>
 								</div>
 								<!-- ช่อง3-->
@@ -177,57 +177,57 @@
 															<div class="col-md-8 col-lg-3">
 																<div class="form-group">
 																	<label for="MACHINE_PARTNO">PartNo</label>
-																	<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" value="{{ $factory_form->MACHINE_PARTNO }}">
+																	<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" value="{{ $data_set->MACHINE_PARTNO }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_PRICE">ราคา	</label>
-																	<input type="text" class="form-control" id="MACHINE_PRICE" name="MACHINE_PRICE" value="{{ $factory_form->MACHINE_PRICE }}">
+																	<input type="text" class="form-control" id="MACHINE_PRICE" name="MACHINE_PRICE" value="{{ $data_set->MACHINE_PRICE }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_POWER">Power</label>
-																	<input type="text" class="form-control" id="MACHINE_POWER" name="MACHINE_POWER" value="{{ $factory_form->MACHINE_POWER }}">
+																	<input type="text" class="form-control" id="MACHINE_POWER" name="MACHINE_POWER" value="{{ $data_set->MACHINE_POWER }}">
 																</div>
 															</div>
 															<div class="col-md-8 col-lg-3">
 																<div class="form-group">
 																	<label for="MACHINE_MODEL">Model</label>
-																	<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" value="{{ $factory_form->MACHINE_MODEL }}">
+																	<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" value="{{ $data_set->MACHINE_MODEL }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_MA_COST">ค่าใช้จ่ายซ่อมบำรุง	</label>
-																	<input type="text" class="form-control" id="MACHINE_MA_COST" name="MACHINE_MA_COST" value="{{ $factory_form->MACHINE_MA_COST }}">
+																	<input type="text" class="form-control" id="MACHINE_MA_COST" name="MACHINE_MA_COST" value="{{ $data_set->MACHINE_MA_COST }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_WEIGHT">Weight	</label>
-																	<input type="text" class="form-control" id="MACHINE_WEIGHT" name="MACHINE_WEIGHT" value="{{ $factory_form->MACHINE_WEIGHT }}">
+																	<input type="text" class="form-control" id="MACHINE_WEIGHT" name="MACHINE_WEIGHT" value="{{ $data_set->MACHINE_WEIGHT }}">
 																</div>
 															</div>
 															<div class="col-md-8 col-lg-3">
 																<div class="form-group">
 																	<label for="MACHINE_SERIAL">Serial</label>
-																	<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" value="{{ $factory_form->MACHINE_SERIAL }}">
+																	<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" value="{{ $data_set->MACHINE_SERIAL }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_SPEED_UNIT">ความเร็ว</label>
-																	<input type="text" class="form-control" id="MACHINE_SPEED_UNIT" name="MACHINE_SPEED_UNIT" value="{{ $factory_form->MACHINE_SPEED_UNIT }}">
+																	<input type="text" class="form-control" id="MACHINE_SPEED_UNIT" name="MACHINE_SPEED_UNIT" value="{{ $data_set->MACHINE_SPEED_UNIT }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_TARGET">Target</label>
-																	<input type="text" class="form-control" id="MACHINE_TARGET" name="MACHINE_TARGET" value="{{ $factory_form->MACHINE_TARGET }}">
+																	<input type="text" class="form-control" id="MACHINE_TARGET" name="MACHINE_TARGET" value="{{ $data_set->MACHINE_TARGET }}">
 																</div>
 															</div>
 															<div class="col-md-8 col-lg-3">
 																<div class="form-group">
 																	<label for="MACHINE_FACTORY">โรงงานผลิต</label>
-																	<input type="text" class="form-control" id="MACHINE_FACTORY" name="MACHINE_FACTORY" value="{{ $factory_form->MACHINE_FACTORY }}">
+																	<input type="text" class="form-control" id="MACHINE_FACTORY" name="MACHINE_FACTORY" value="{{ $data_set->MACHINE_FACTORY }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_SPEED">ความเร็ว</label>
-																	<input type="text" class="form-control" id="MACHINE_SPEED" name="MACHINE_SPEED" value="{{ $factory_form->MACHINE_SPEED }}">
+																	<input type="text" class="form-control" id="MACHINE_SPEED" name="MACHINE_SPEED" value="{{ $data_set->MACHINE_SPEED }}">
 																</div>
 																<div class="form-group">
 																	<label for="MACHINE_MTBF">Priority</label>
-																	<input type="text" class="form-control" id="MACHINE_MTBF" name="MACHINE_MTBF" value="{{ $factory_form->MACHINE_MTBF }}">
+																	<input type="text" class="form-control" id="MACHINE_MTBF" name="MACHINE_MTBF" value="{{ $data_set->MACHINE_MTBF }}">
 																</div>
 															</div>
 														</div>

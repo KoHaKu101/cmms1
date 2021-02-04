@@ -79,8 +79,8 @@
 															<td>  						{{ $row->SUBMENU_ICON }} </td>
 
 															<td>
-																<a href="{{ url('submenu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
-																<a href="{{ url('SoftDeletes/submenu/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a></a>
+																<a href="{{ url('setting/submenu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
+																<a href="{{ url('setting/submenu/delete/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a></a>
 															</td>
 
                         			</tr>
@@ -102,7 +102,7 @@
         							<div class="card">
         								<div class="card-header"> FormSubmenu </div>
                         <div class="card-body">
-                          <form action="{{ route('store.submenu') }}" method="POST">
+                          <form action="{{ route('submenu.store') }}" method="POST">
                             @csrf
                         		<div class="form-group">
                           		<label for="SUBMENU_NAME">Submenu Thai</label>

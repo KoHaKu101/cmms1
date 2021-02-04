@@ -32,7 +32,7 @@
 								<button class="btn btn-primary  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
-								<a href="{{ route('Formfactory') }}"><button class="btn btn-primary  btn-xs">
+								<a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-medical fa-lg">	New	</span>
 								</button></a>
 								<button class="btn btn-primary  btn-xs">
@@ -103,15 +103,15 @@
 
                       	<tbody>
                           {{-- @php($i = 1) --}}
-													@foreach ($factory_all as $row)
+													@foreach ($data_set as $key => $row)
 
                         		<tr>
 
 															<td>
-																<a href="{{ url('assets/edit/edit/'.$row->UNID) }}">
+																<a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
 																	<i class="fas fa-edit fa-lg"></i>
 																</a>
-																<a href="{{ url('factory/delete/'.$row->UNID) }}">
+																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}">
 
 																	<span class="fas fa-trash fa-lg ml-2">	</span>
 
@@ -125,7 +125,7 @@
                         			</tr>
                         	@endforeach
 
-													@
+
 
                       	</tbody>
                     </table>
