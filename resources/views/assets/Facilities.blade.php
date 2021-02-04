@@ -29,27 +29,26 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
-								<button class="btn btn-light btn-border btn-xs ">
+								<button class="btn btn-primary  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
-								<a href="{{ route('Formfactory') }}"><button class="btn btn-light btn-border btn-xs">
+								<a href="{{ route('Formfactory') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-medical fa-lg">	New	</span>
 								</button></a>
-								<button class="btn btn-light btn-border btn-xs">
+								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-import fa-lg">	Import	</span>
 								</button>
-								<button class="btn btn-light btn-border btn-xs">
+								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
 								</button>
-								<button class="btn btn-light btn-border btn-xs">
+								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
-								<button class="btn btn-light btn-border btn-xs">
+								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-qrcode fa-lg">	Print Asset Tags	</span>
 								</button>
-								<button class="btn btn-light btn-border btn-xs">
-									<span class="fas fa-trash fa-lg">	Delete</span>
-								</button>
+
+
 							</div>
 						</div>
           </div>
@@ -92,7 +91,7 @@
   										data-url="json/data1.json" class=" display table table-striped table-hover" >
                       	<thead>
                         	<tr>
-														<th data-checkbox="true"></th>
+														<th scope="col">แก้ไข</th>
                             <th scope="col">location</th>
                           	<th scope="col">name</th>
                           	<th scope="col">Code</th>
@@ -104,18 +103,29 @@
 
                       	<tbody>
                           {{-- @php($i = 1) --}}
-                          @foreach ($machine_all as $row)
+													@foreach ($factory_all as $row)
 
                         		<tr>
 
-															<td></td>
-															<td scope="row" style="white-space:nowrap">              {{ $row->MACHINE_LOCATION }}  </td>
+															<td>
+																<a href="{{ url('assets/edit/edit/'.$row->UNID) }}">
+																	<i class="fas fa-edit fa-lg"></i>
+																</a>
+																<a href="{{ url('factory/delete/'.$row->UNID) }}">
+
+																	<span class="fas fa-trash fa-lg ml-2">	</span>
+
+																</a>
+															</td>
+															<td scope="row" style="white-space:nowrap">  {{ $row->MACHINE_LOCATION }}  </td>
 															<td style="white-space:nowrap">              {{ $row->MACHINE_NAME }}  </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CODE }}   </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_STATUS }}   </td>
+															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CHECK }}   </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
                         			</tr>
                         	@endforeach
+
+													@
 
                       	</tbody>
                     </table>
@@ -129,7 +139,7 @@
   			</div>
 			</div>
 		</div>
-		
+
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}
 

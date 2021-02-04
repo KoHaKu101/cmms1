@@ -42,7 +42,7 @@ Route::get('/assets/Facilities',[MachineController::class,'Index'])->name('facto
 Route::post('/store/form',[MachineController::class,'Store'])->name('form.store');
 Route::get('/assets/edit/edit/{UNID}',[MachineController::class,'Edit'])->name('factory.edit');
 Route::post('/factory/update/{UNID}',[MachineController::class,'Update']);
-Route::post('/factory/delete/',[MachineController::class,'Delete'])->name('factory.delete');
+Route::get('/factory/delete/{UNID}',[MachineController::class,'Delete'])->name('factory.delete');
 
 
 

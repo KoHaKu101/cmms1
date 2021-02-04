@@ -38,7 +38,7 @@
                             <div class="form-group">
                           		<label for="MENU_NAME">Menu Thai</label>
                           		<input type="text"  class="form-control" id="MENU_NAME" name="MENU_NAME" placeholder="Menu Thai" value="{{ $data->MENU_NAME }}">
-                              <input type="hidden" id="UNIDE" name="UNID"  value="{{ $data->UNID }}">
+                              <input type="hidden" id="UNID" name="UNID"  value="{{ $data->UNID }}">
                         		</div>
 														<div class="form-group">
 															<label for="MENU_EN">Menu English</label>

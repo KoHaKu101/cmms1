@@ -34,18 +34,32 @@ class MachineController extends Controller
 
   public function Index(){
 
-    $machine_all = Machnie::paginate(12);
+    $factory_all = Machnie::all();
     // dd($machine_all);
-    return View('/assets/Facilities',compact(['machine_all']));
+    return View('/assets/Facilities',compact(['factory_all']));
   }
 
   public function Store(Request $request){
+
     $validated = $request->validate([
-      'MENU_NAME'           => 'required|max:255'],[
-      'MENU_NAME.required'  => 'กรุณราใส่ชื่อ menu',
-      'MENU_NAME.max'       => 'ใส่ได้ไม่เกิน 255'
+      'MACHINE_CODE'           => 'required|max:255',
+      ],
+      [
+      'MACHINE_CODE.required'  => 'กรุณราใส่รหัสเครื่องจักร',
       ]);
-      Mainmenu::insert([
+      $MACHINE_ICON = $request->file('MACHINE_ICON');
+
+      $name_gen = hexdec(uniqid());
+
+      $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
+      $img_name = $name_gen.'.'.$img_ext;
+      $up_location = 'image/machnie/';
+      $last_img = $up_location.$img_name;
+
+      $MACHINE_ICON->move($up_location,$img_name);
+
+
+      Machnie::insert([
           'MACHINE_CODE'         => $request->MACHINE_CODE,
           'MACHINE_NAME'         => $request->MACHINE_NAME,
           'MACHINE_CHECK'        => $request->MACHINE_CHECK,
@@ -54,7 +68,7 @@ class MachineController extends Controller
           'MACHINE_TYPE_STATUS'  => $request->MACHINE_TYPE_STATUS,
           'MACHINE_STARTDATE'    => $request->MACHINE_STARTDATE,
           'MACHINE_RVE_DATE'     => $request->MACHINE_RVE_DATE,
-          'MACHINE_ICON'         => $request->MACHINE_ICON,
+          'MACHINE_ICON'         => $last_img,
           'MACHINE_PRICE'        => $request->MACHINE_PRICE,
           'MACHINE_LINE'         => $request->MACHINE_LINE,
           'GROUP_NAME'           => $request->GROUP_NAME,
@@ -93,10 +107,6 @@ class MachineController extends Controller
           'EMP_CODE'             => $request->EMP_CODE,
           'EMP_NAME'             => $request->EMP_NAME,
           'POS_REF_UNID'         => $request->POS_REF_UNID,
-          'POS_X'                => $request->POS_X,
-          'POS_Y'                => $request->POS_Y,
-          'POS_W'                => $request->POS_W,
-          'POS_H'                => $request->POS_H,
           'CREATE_BY'            => Auth::user()->name,
           'CREATE_TIME'          => Carbon::now(),
           // 'MODIFY_BY'            => Auth::user()->name,
@@ -105,15 +115,18 @@ class MachineController extends Controller
           'SHIFT_TYPE'           => $request->SHIFT_TYPE,
           'ESP_MAC'              => $request->ESP_MAC,
       ]);
-        return Redirect()->back()->with('success','insert success');
+      $factory_all = Machnie::paginate(12);
+      // dd($machine_all);
+      return View('/assets/Facilities',compact(['factory_all']));
+
   }
 
   public function Edit($UNID){
 
-    $data_Form = Machnie::find($UNID);
+    $factory_form = Machnie::where('UNID',$UNID)->first();
     // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
-    return view('assets.edit.edit',compact('data_Form'));
+    return view('assets.edit.edit',compact('factory_form'));
 
   }
 
@@ -121,7 +134,7 @@ class MachineController extends Controller
 
   public function Update(Request $request,$UNID){
 
-    $dataunid = Machnie::find($UNID)->update([
+    $dataunid = Machnie::where('UNID',$UNID)->update([
       'MACHINE_CODE'         => $request->MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,
       'MACHINE_CHECK'        => $request->MACHINE_CHECK,
@@ -169,15 +182,11 @@ class MachineController extends Controller
       'EMP_CODE'             => $request->EMP_CODE,
       'EMP_NAME'             => $request->EMP_NAME,
       'POS_REF_UNID'         => $request->POS_REF_UNID,
-      'POS_X'                => $request->POS_X,
-      'POS_Y'                => $request->POS_Y,
-      'POS_W'                => $request->POS_W,
-      'POS_H'                => $request->POS_H,
-      // 'CREATE_BY'            => Auth::user()->name,
-      // 'CREATE_TIME'          => Carbon::now(),
-      'MODIFY_BY'            => Auth::user()->name,
-      'MODIFY_TIME'          => Carbon::now(),
-      'UNID'                 => $this->randUNID('Machnies'),
+      'CREATE_BY'            => Auth::user()->name,
+      'CREATE_TIME'          => Carbon::now(),
+      // 'MODIFY_BY'            => Auth::user()->name,
+      // 'MODIFY_TIME'          => Carbon::now(),
+
       'SHIFT_TYPE'           => $request->SHIFT_TYPE,
       'ESP_MAC'              => $request->ESP_MAC,
     ]);
@@ -185,7 +194,8 @@ class MachineController extends Controller
   }
 
   public function Delete($UNID){
-      $delete = Machnie::onlyTrashed()->find($UNID)->forceDelete();
+      $data_delete = Machnie::where('UNID','=',$UNID)->delete();
+
       return Redirect()->back()-> with('success','Confirm Delete Success');
 
   }
