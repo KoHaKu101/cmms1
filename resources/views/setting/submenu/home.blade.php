@@ -54,11 +54,6 @@
 														<th scope="col">Link</th>
 														<th scope="col">Icon</th>
 														<th scope="col">Action</th>
-
-
-
-
-
                         	</tr>
                       	</thead>
 
@@ -66,26 +61,19 @@
                           {{-- @php($i = 1) --}}
 													@foreach ($datasubmenu as $row)
                           {{-- @foreach ($datasubmenu -> key as $row) --}}
-
-
                         		<tr>
-
                           		<td scope="row">  {{ $row->SUBMENU_NAME }} </td>
-
 															<td>  						{{ $row->SUBMENU_INDEX }} </td>
 															<td>  						{{ $row->SUBMENU_STATUS }} </td>
 															<td>  						{{ $row->SUBMENU_CLASS }} </td>
 															<td>  						{{ $row->SUBMENU_LINK }} </td>
 															<td>  						{{ $row->SUBMENU_ICON }} </td>
-
 															<td>
 																<a href="{{ url('setting/submenu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
 																<a href="{{ url('setting/submenu/delete/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a></a>
 															</td>
-
                         			</tr>
-                        	@endforeach
-
+                        	@endforeach	
                       	</tbody>
                     </table>
 									</div>
@@ -94,7 +82,7 @@
 								</div>
 
 								<div class=" mt-4">
-									<a href="/menu/all" class="btn btn-success">กลับ</a>
+									<a href="{{ url('setting/menu/home') }}" class="btn btn-success">กลับ</a>
 								</div>
 
               </div>

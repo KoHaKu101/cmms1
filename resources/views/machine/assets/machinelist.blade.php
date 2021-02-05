@@ -41,9 +41,11 @@
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
 								</button>
+								<a href="{{ url('users/export/') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
+							</a>
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-qrcode fa-lg">	Print Asset Tags	</span>
 								</button>
@@ -57,7 +59,7 @@
 	        <div class="container mt-2">
 						<div class="row">
 							<div class="col-md-12">
-								<div class="card">
+								<div class="card ">
                 	@if(session('success'))
                   	<div class="alert alert-warning alert-dismissible fade show" role="alert">
   											<strong>{{ session('success') }}</strong>
@@ -66,32 +68,32 @@
   											</button>
 										</div>
 									@endif
-
-										<div class="card-header form-inline "><h4> Assets </h4>
+									<div class="card-header">
+										<div class="form-inline bg-primary"><h4 class="ml-4"> Assets </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-  											<button type="button" class="btn btn-secondary btn-sm"><i class="fas fa-sitemap"></i></button>
-  											<button type="button" class="btn btn-secondary btn-sm"><i class="fas fa-list"></i></button>
-
+  											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
+  											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
 											</div>
-											<div class="form-group form-inline ">
-											<label for="inlineinput" class="col-md-3 col-form-label ">ค้นหา</label>
-											<div class="col-md-9 p-0 row justify-content-end">
-												<input type="text" class="form-control input-full" id="inlineinput" placeholder="ค้นหา">
-											</div>
-										</div>
-										</div>
 
-											<div class="card-body table-responsive">
-                      <table id="table"
-  														data-toggle="table"
-  													data-height="460"
-  												data-checkbox-header="false"
-  											data-click-to-select="true"
-  										data-url="json/data1.json" class=" display table table-striped table-hover" >
-                      	<thead>
+											<form action="{{ url('/search')}} " method="get">
+
+												<div class="input-group">
+	  											<input type="search" name="search" class="form-control" >
+													<span class="input-group-perpend">
+														<button type="submit" class="btn btn-primary">search</button>
+													</span>
+												</div>
+
+											</form>
+										</div>
+									</div>
+									<div class="card-body">
+										<div class="table-responsive">
+                      <table id="basic-datatables" class="display table table-striped table-hover">
+                      	<thead class="thead-light">
                         	<tr>
-														<th scope="col">แก้ไข</th>
+														<th scope="col ">แก้ไข</th>
                             <th scope="col">location</th>
                           	<th scope="col">name</th>
                           	<th scope="col">Code</th>
@@ -117,8 +119,8 @@
 
 																</a>
 															</td>
-															<td scope="row" style="white-space:nowrap">  {{ $row->MACHINE_LOCATION }}  </td>
-															<td style="white-space:nowrap">              {{ $row->MACHINE_NAME }}  </td>
+															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_LOCATION }}  </td>
+															<td style="white-space:nowrap" class="born">              {{ $row->MACHINE_NAME }}  </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CODE }}   </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CHECK }}   </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
@@ -130,6 +132,8 @@
                       	</tbody>
                     </table>
 									</div>
+										</div>
+								</div>
 
 								</div>
               </div>
@@ -145,6 +149,8 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-{{-- <script src="{{ asset('asset/bootstrap-table.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('asset/js/scripts.min.js') }}"></script> --}}
+
+
 @stop
 {{-- ปิดส่วนjava --}}

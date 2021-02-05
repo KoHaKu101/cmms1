@@ -27,3 +27,5 @@ if (mix.inProduction()) {
 
    mix.js('node_modules/bootstrap4-toggle/js/bootstrap4-toggle.min.js','public/assets/js')
       .css('node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css','public/assets/css');
+
+  

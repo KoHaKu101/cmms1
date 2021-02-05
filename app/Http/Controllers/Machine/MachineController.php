@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machnie;
 use Illuminate\Support\Facades\DB;
+use App\Exports\MachineExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Auth;
 
@@ -33,10 +35,12 @@ class MachineController extends Controller
     return View('machine/assets/form');
   }
 
+
+
   public function Index(){
 
     $data_set = Machnie::all();
-    // dd($machine_all);
+    //dd($data_set);
     return View('machine/assets/machinelist',compact(['data_set']));
   }
 
@@ -120,12 +124,11 @@ class MachineController extends Controller
       ]);
       $data_set = Machnie::paginate(12);
       // dd($machine_all);
-
       return Redirect()->route('machine.list',compact(['data_set']))->with('success','Update Success');
   }
 
   public function Edit($UNID) {
-    
+
     $data_set = Machnie::where('UNID',$UNID)->first();
     // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
@@ -185,10 +188,10 @@ class MachineController extends Controller
       'EMP_CODE'             => $request->EMP_CODE,
       'EMP_NAME'             => $request->EMP_NAME,
       'POS_REF_UNID'         => $request->POS_REF_UNID,
-      'CREATE_BY'            => Auth::user()->name,
-      'CREATE_TIME'          => Carbon::now(),
-      // 'MODIFY_BY'            => Auth::user()->name,
-      // 'MODIFY_TIME'          => Carbon::now(),
+      // 'CREATE_BY'            => Auth::user()->name,
+      // 'CREATE_TIME'          => Carbon::now(),
+      'MODIFY_BY'            => Auth::user()->name,
+      'MODIFY_TIME'          => Carbon::now(),
 
       'SHIFT_TYPE'           => $request->SHIFT_TYPE,
       'ESP_MAC'              => $request->ESP_MAC,
@@ -208,4 +211,16 @@ class MachineController extends Controller
       Auth::logout();
       return Redirect()->route('login')->with('success','User Logout');
   }
+
+  public function export()
+    {
+        return Excel::download(new MachineExport, 'Machinelist.xlsx');
+    }
+  public function search(Request $request){
+    $search = $request->get('search');
+    $data_set = Machnie::where('MACHINE_CODE','MACHINE_NAME','%'.$search.'%')->paginate(12);
+
+    return Redirect()->route('machine.list',['data_set'=> $data_set]);
+  }
+
 }
