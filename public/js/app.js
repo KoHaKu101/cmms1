@@ -21018,6 +21018,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/bulma/css/bulma.min.css":
+/*!**********************************************!*\
+  !*** ./node_modules/bulma/css/bulma.min.css ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -21298,7 +21311,8 @@ process.umask = function() { return 0; };
 /******/ 		var deferredModules = [
 /******/ 			["./resources/js/app.js"],
 /******/ 			["./resources/css/app.css"],
-/******/ 			["./node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css"]
+/******/ 			["./node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css"],
+/******/ 			["./node_modules/bulma/css/bulma.min.css"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
 /******/ 		

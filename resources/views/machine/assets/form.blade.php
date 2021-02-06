@@ -41,7 +41,7 @@
 							<div class="col-md-11 mt-2 ">
 								<form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
 								@csrf
-									<button class="btn btn-primary btn-sm" type="submit">
+									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
 									</button>
 								</div>
@@ -372,7 +372,7 @@
 																	<table class="table table-sm"  >
 																		<thead>
 																			<tr>
-																				<th class="bg-primary" height="10"colspan="7" >
+																				<th class="bg-primary" height="10"colspan="8" >
 																					<h5 align="center">พนักนักงานประจำเครื่อง</h5>
 																				</th>
 																			</tr>

@@ -32,16 +32,16 @@
 					<div class="row">
 						<div class="col-md-1 mt-2">
 
-							<a href="{{ route('machine.list') }}">
+							<a href="{{ route('personal.list') }}">
 								<button class="btn btn-primary  btn-sm ">
 									<span class="fas fa-arrow-left ">Back </span>
 								</button>
 							</a>
 						</div>
 							<div class="col-md-11 mt-2 ">
-								<form action="{{ url('machine/assets/update/'.$data_set->UNID) }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ url('machine/personal/update/'.$data_set->UNID) }}" method="POST" enctype="multipart/form-data">
 								@csrf
-									<button class="btn btn-success btn-sm" type="submit">
+									<button class="btn btn-primary btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
 									</button>
 								</div>

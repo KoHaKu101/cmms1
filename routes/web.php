@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 //exprotcontroller
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\Export\MachineExportController;
+//ImprotController
+use App\Http\Controllers\Import\MachineImportController;
 //Controller
 use App\Http\Controllers\SettingMenu\MenuController;
 use App\Http\Controllers\SettingMenu\MenuSubController;
@@ -30,6 +32,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/', function () {
+  $result = QueryBuilder::for(User::class)
+    ->allowedFilters(['MACHINE_CODE', 'MACHINE_LOCATION'])
+    ->get();
+    return $result;
+    return view('machine/assets/machinelist');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -38,8 +48,11 @@ Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout'
 //serach
 Route::get('/search', [MachineController::class,'search']);
 
-//Export
-Route::get('users/export', [MachineController::class,'export']);
+//Exportandimport
+Route::get('users/export', [MachineExportController::class,'export']);
+Route::get('users/import/show', [MachineImportController::class,'show']);
+Route::post('users/import', [MachineImportController::class,'store']);
+
 
 //assets
 Route::get('machine/assets/machinelist'     ,[MachineController::class,'Index'])  ->name('machine.list');
@@ -49,8 +62,13 @@ Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit']) 
 Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
 Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
 
-
-
+//assets
+Route::get('machine/personal/personallist'     ,[MachineController::class,'Index'])  ->name('personal.list');
+Route::get('machine/personal/form'            ,[MachineController::class,'Create']) ->name('personal.form');
+Route::post('machine/personal/store'          ,[MachineController::class,'Store'])  ->name('personal.store');
+Route::get('machine/personal/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('personal.edit');
+Route::post('machine/personal/update/{UNID}'  ,[MachineController::class,'Update']);
+Route::get('machine/personal/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('personal.delete');
 
 
 

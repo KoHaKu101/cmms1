@@ -6,23 +6,20 @@ use App\Models\Machine\Machnie;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\Exportable;
 
-// class MachineExport implements FromCollection
-// {
-//     /**
-//     * @return \Illuminate\Support\Collection
-//     */
-//     public function collection()
-//     {
-//         return Machnie::all();
-//     }
-// }
-class MachineExport implements FromCollection
+
+
+class MachineExport implements FromView
 {
+  use Exportable;
+  /**
+    *@return \Illuminate\Support\Collection
+    */
+
   public function view(): View
   {
-    return view(View 'machine-excel',[
-      'posts' => Post::all()
-    ]);
+      $data_set = Machnie::all();
+      return view('export.machine',compact(['data_set']));
   }
 }

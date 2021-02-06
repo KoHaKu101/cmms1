@@ -5,20 +5,18 @@ namespace App\Http\Controllers\Machine;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machnie;
-
 use Illuminate\Support\Facades\DB;
-
-use App\Exports\MachineExport;
+use App\Exports\personalExport;
 use Maatwebsite\Excel\Facades\Excel;
-
 use Carbon\Carbon;
 use Auth;
 
-class MachineController extends Controller
+class PersonalController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
   }
+
   public function randUNID($table){
     $number = date("ymdhis", time());
     $length=7;
@@ -33,15 +31,17 @@ class MachineController extends Controller
     return $number;
   }
 
-  public function Index(){
-
-    $data_set = Machnie::paginate(10);
-    //dd($data_set);
-    return View('machine/assets/machinelist',compact(['data_set']),['data_set' => $data_set]);
+  public function Create(){
+    return View('machine/personal/form');
   }
 
-  public function Create(){
-    return View('machine/assets/form');
+
+
+  public function Index(){
+
+    $data_set = Machnie::all();
+    //dd($data_set);
+    return View('machine/personal/personallist',compact(['data_set']));
   }
 
   public function Store(Request $request){
@@ -67,50 +67,7 @@ class MachineController extends Controller
 
 
       Machnie::insert([
-          'MACHINE_CODE'         => $request->MACHINE_CODE,
-          'MACHINE_NAME'         => $request->MACHINE_NAME,
-          'MACHINE_CHECK'        => $request->MACHINE_CHECK,
-          'MACHINE_MANU'         => $request->MACHINE_MANU,
-          'MACHINE_TYPE'         => $request->MACHINE_TYPE,
-          'MACHINE_TYPE_STATUS'  => $request->MACHINE_TYPE_STATUS,
-          'MACHINE_STARTDATE'    => $request->MACHINE_STARTDATE,
-          'MACHINE_RVE_DATE'     => $request->MACHINE_RVE_DATE,
-          'MACHINE_ICON'         => $last_img,
-          'MACHINE_PRICE'        => $request->MACHINE_PRICE,
-          'MACHINE_LINE'         => $request->MACHINE_LINE,
-          'GROUP_NAME'           => $request->GROUP_NAME,
-          'MACHINE_MA_COST'      => $request->MACHINE_MA_COST,
-          'MACHINE_TOTAL_FEED'   => $request->MACHINE_TOTAL_FEED,
-          'MACHINE_TOTAL_STOP'   => $request->MACHINE_TOTAL_STOP,
-          'MACHINE_SPEED_UNIT'   => $request->MACHINE_SPEED_UNIT,
-          'MACHINE_LOCATION'     => $request->MACHINE_LOCATION,
-          'MACHINE_GROUP'        => $request->MACHINE_GROUP,
-          'MACHINE_PARTNO'       => $request->MACHINE_PARTNO,
-          'MACHINE_MODEL'        => $request->MACHINE_MODEL,
-          'MACHINE_SERIAL'       => $request->MACHINE_SERIAL,
-          'MACHINE_FACTORY'      => $request->MACHINE_FACTORY,
-          'COMPANY_PAY'          => $request->COMPANY_PAY,
-          'COMPANY_SETUP'        => $request->COMPANY_SETUP,
-          'MACHINE_CAPACITY'     => $request->MACHINE_CAPACITY,
-          'MACHINE_SPEED'        => $request->MACHINE_SPEED,
-          'MACHINE_MTBF'         => $request->MACHINE_MTBF,
-          'MACHINE_MTTF'         => $request->MACHINE_MTTF,
-          'MACHINE_MTTR'         => $request->MACHINE_MTTR,
-          'MACHINE_EFFICIENCY'   => $request->MACHINE_EFFICIENCY,
-          'MACHINE_POWER'        => $request->MACHINE_POWER,
-          'MACHINE_WEIGHT'       => $request->MACHINE_WEIGHT,
-          'MACHINE_TARGET'       => $request->MACHINE_TARGET,
-          'MACHINE_NOTE'         => $request->MACHINE_NOTE,
-          'MACHINE_STATUS'       => $request->MACHINE_STATUS,
-          'MACHINE_POSTED'       => $request->MACHINE_POSTED,
-          'PCDS_MACHINE_CODE'    => $request->PCDS_MACHINE_CODE,
-          'WAREHOUSE_CODE'       => $request->WAREHOUSE_CODE,
-          'GROUP_CODE'           => $request->GROUP_CODE,
-          'LOCATION_CODE'        => $request->LOCATION_CODE,
-          'SECTION_CODE'         => $request->SECTION_CODE,
-          'SUPPLIER_CODE'        => $request->SUPPLIER_CODE,
-          'SUPPLIER_NAME'        => $request->SUPPLIER_NAME,
-          'PURCHASE_FORM'        => $request->PURCHASE_FORM,
+          
           'EMP_CODE'             => $request->EMP_CODE,
           'EMP_NAME'             => $request->EMP_NAME,
           'POS_REF_UNID'         => $request->POS_REF_UNID,
@@ -124,7 +81,7 @@ class MachineController extends Controller
       ]);
       $data_set = Machnie::paginate(12);
       // dd($machine_all);
-      return Redirect()->route('machine.list',compact(['data_set']))->with('success','Update Success');
+      return Redirect()->route('personal.list',compact(['data_set']))->with('success','Update Success');
   }
 
   public function Edit($UNID) {
@@ -132,9 +89,11 @@ class MachineController extends Controller
     $data_set = Machnie::where('UNID',$UNID)->first();
     // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
-    return view('machine/assets/edit',compact('data_set'));
+    return view('machine/personal/edit',compact('data_set'));
 
   }
+
+
 
   public function Update(Request $request,$UNID){
 
@@ -194,7 +153,7 @@ class MachineController extends Controller
       'SHIFT_TYPE'           => $request->SHIFT_TYPE,
       'ESP_MAC'              => $request->ESP_MAC,
     ]);
-    return Redirect()->route('machine.list')->with('success','Update Success');
+    return Redirect()->route('personal.list')->with('success','Update Success');
   }
 
   public function Delete($UNID){
@@ -203,15 +162,19 @@ class MachineController extends Controller
       return Redirect()->back()-> with('success','Confirm Delete Success');
 
   }
-
-
-
-
-
+  // ส่วนลบ
 
   public function Logout(){
       Auth::logout();
       return Redirect()->route('login')->with('success','User Logout');
+  }
+
+  public function export()
+    {
+        return Excel::download(new personalExport, 'personallist.xlsx');
+    }
+  public function search(Request $request){
+
   }
 
 }
