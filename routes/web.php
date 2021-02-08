@@ -6,6 +6,7 @@ use App\Http\Controllers\Export\MachineExportController;
 //ImprotController
 use App\Http\Controllers\Import\MachineImportController;
 //Controller
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\SettingMenu\MenuController;
 use App\Http\Controllers\SettingMenu\MenuSubController;
 use App\Http\Controllers\Machine\MachineController;
@@ -40,9 +41,11 @@ Route::get('/', function () {
     return view('machine/assets/machinelist');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard/dashboard', function () {
+    return view('dashboard/dashboard');
 })->name('dashboard');
+
+Route::get('/machine/dashboard/sumaryline',[DashboardController::class,'Sumaryline'])->name('dashboard.sumaryline');
 
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
 //serach
@@ -73,16 +76,16 @@ Route::get('machine/personal/delete/{UNID}'   ,[MachineController::class,'Delete
 
 
 //MenuController
-Route::get('setting/menu/home'              ,[MenuController::class,'Home'])   ->name('menu.home');
-Route::post('setting/menu/add'              ,[MenuController::class,'AddMenu'])->name('menu.store');
-Route::get('setting/menu/edit/{UNID}'       ,[MenuController::class,'Edit']);
-Route::post('setting/menu/update/{UNID}'    ,[MenuController::class,'Update']);
-Route::get('setting/menu/delete/{UNID}'     ,[MenuController::class,'Delete']);
+Route::get('machine/setting/menu/home'              ,[MenuController::class,'Home'])   ->name('menu.home');
+Route::post('machine/setting/menu/add'              ,[MenuController::class,'AddMenu'])->name('menu.store');
+Route::get('machine/setting/menu/edit/{UNID}'       ,[MenuController::class,'Edit']);
+Route::post('machine/setting/menu/update/{UNID}'    ,[MenuController::class,'Update']);
+Route::get('machine/setting/menu/delete/{UNID}'     ,[MenuController::class,'Delete']);
 
 
 //submenucontroller
-Route::get('setting/submenu/home/{UNID}'    ,[MenuSubController::class,'subhome'])->name('submenu.home');
-Route::post('setting/submenu/add'           ,[MenuSubController::class,'AddMenu'])->name('submenu.store');
-Route::get('setting/submenu/edit/{UNID}'    ,[MenuSubController::class,'Edit']);
-Route::post('setting/submenu/update/{UNID}' ,[MenuSubController::class,'Update']);
-Route::get('setting/submenu/delete{UNID}'   ,[MenuSubController::class,'Delete']);
+Route::get('machine/setting/submenu/home/{UNID}'    ,[MenuSubController::class,'subhome'])->name('submenu.home');
+Route::post('machine/setting/submenu/add'           ,[MenuSubController::class,'AddMenu'])->name('submenu.store');
+Route::get('machine/setting/submenu/edit/{UNID}'    ,[MenuSubController::class,'Edit']);
+Route::post('machine/setting/submenu/update/{UNID}' ,[MenuSubController::class,'Update']);
+Route::get('machine/setting/submenu/delete{UNID}'   ,[MenuSubController::class,'Delete']);

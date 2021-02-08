@@ -42,7 +42,7 @@
 								<form action="{{ url('machine/assets/update/'.$data_set->UNID) }}" method="POST" enctype="multipart/form-data">
 								@csrf
 									<button class="btn btn-success btn-sm" type="submit">
-										<span class="fas fa-file-medical ">	Save	</span>
+										<span class="fas fa-file-medical ">	Update	</span>
 									</button>
 								</div>
 							</div>
@@ -52,8 +52,8 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 							<div class="card">
-								<div class="card-header">
-									<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">ลงทะเบียน.</p>
+								<div class="">
+									<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">รายละเอียดเครื่องจักร</p>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
 											</div>
@@ -102,7 +102,7 @@
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
-													<select class="form-control form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION" value="{{$data_set->MACHINE_LOCATION}}">
+													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" value="{{$data_set->MACHINE_LINE}}">
 													<option>Line 1</option>
 													<option>Line 2</option>
 													<option>Line 3</option>

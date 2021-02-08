@@ -65,7 +65,7 @@ class MenuSubController extends Controller
       $mainmenu["UNID"]=$UNID;
     $datasubmenu = Menusubitem::where('SUBUNID_REF','=',$UNID)->get();
       // $datasubmenu = Menusubitem::where();
-  return View('setting.submenu.home',compact('datasubmenu','mainmenu'));
+  return View('machine.setting.submenu.home',compact('datasubmenu','mainmenu'));
 
 }
 
@@ -74,7 +74,7 @@ class MenuSubController extends Controller
     $data_set = Menusubitem::find($UNID);
     // $data = Menusubitem::where('UNID','=',$UNID)->first();
 
-    return view('setting.submenu.edit',compact('data_set'));
+    return view('machine.setting.submenu.edit',compact('data_set'));
 
   }
 

@@ -27,43 +27,40 @@
 			<div class="page-inner">
 				<!--ส่วนปุ่มด้านบน-->
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-				<div class="container">
-
-					<div class="row">
-						<div class="col-md-1 mt-2">
-
-							<a href="{{ route('machine.list') }}">
-								<button class="btn btn-primary  btn-sm ">
-									<span class="fas fa-arrow-left ">Back </span>
-								</button>
-							</a>
-						</div>
+					<div class="container">
+						<div class="row">
+							<div class="col-md-1 mt-2">
+								<a href="{{ route('machine.list') }}">
+									<button class="btn btn-primary  btn-sm ">
+										<span class="fas fa-arrow-left ">Back </span>
+									</button>
+								</a>
+							</div>
 							<div class="col-md-11 mt-2 ">
 								<form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
-								@csrf
+									@csrf
 									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
 									</button>
-								</div>
 							</div>
 						</div>
 					</div>
-									<!--ส่วนปุ่มด้านบน-->
+				</div>
+				<!--ส่วนกรอกข้อมูล-->
 				<div class="py-12">
 	        <div class="container mt-2">
-							<div class="card">
-								<div class="card-header">
-									<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">ลงทะเบียน.</p>
-
-											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-											</div>
-											<div class="form-group form-inline ">
-											</div>
-										</div>
+						<div class="card">
+							<div class="">
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">ลงทะเบียน</p>
+									<div class="btn-group ml-3" role="group" aria-label="Basic example">
+									</div>
+									<div class="form-group form-inline ">
+									</div>
 								</div>
-								<div class="card-body">
-									<div class="row">
-										<!-- ช่อง1-->
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
 												<img src="/assets/img/jm_denis.jpg" width="200" height="200px" class="mt-4">
@@ -102,7 +99,7 @@
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
-													<select class="form-control form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION">
+													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE">
 													<option>Line 1</option>
 													<option>Line 2</option>
 													<option>Line 3</option>
@@ -174,12 +171,32 @@
 							  				<li>
     											<a id="settings-tab" data-toggle="tab" href="#personal">พนักงานประจำเครื่อง</a>
   											</li>
+												<li>
+    											<a id="settings-tab" data-toggle="tab" href="#systemcheck">ระบบที่ต้องเช็ค</a>
+  											</li>
+												<li>
+    											<a id="settings-tab" data-toggle="tab" href="#partchange">อะไหล่ที่ต้องเปลี่ยน</a>
+  											</li>
   										</ul>
   										<div class="tab-content clearfix">
+												<!-- ข้อมูลทั่วไป -->
   											<div class="tab-pane active" id="home">
     											<div class="row">
       											<div class="col-sm-12">
         											<div class="jumbotron">
+																<div class="col-md-8 col-lg-12">
+																	<div class="table">
+																	<table class="table table-sm"  >
+																		<thead>
+																			<tr>
+																				<th class="bg-primary" colspan="6" >
+																					<h3 align="center" style="color:white;" class="mt-2">ข้อมูลทั่วไป</h3>
+																				</th>
+																			</tr>
+																		</thead>
+																	</table>
+																</div>
+															</div>
 																<div class="row">
 																	<div class="col-md-8 col-lg-3">
 																		<div class="form-group">
@@ -242,6 +259,7 @@
       											</div>
     											</div>
   											</div>
+												<!-- ประวัติการแจ้งซ่อม -->
   											<div class="tab-pane" id="history">
     											<div class="row">
       											<div class="col-sm-12">
@@ -251,8 +269,8 @@
 																	<table class="table table-sm"  >
 																		<thead>
 																			<tr>
-																				<th class="bg-primary" height="10"colspan="6" >
-																					<h5 align="center">ประวัติการแจ้งซ่อม</h5>
+																				<th class="bg-primary" colspan="6" >
+																					<h3 align="center" style="color:white;" class="mt-2">ประวัติการแจ้งซ่อม</h3>
 																				</th>
 																			</tr>
 																			<tr>
@@ -300,6 +318,7 @@
       											</div>
     											</div>
   											</div>
+												<!-- แผนการปฎิบัติการ -->
   											<div class="tab-pane" id="plan" >
 	    										<div class="row">
       											<div class="col-sm-12">
@@ -309,8 +328,8 @@
 																		<table class="table table-sm"  >
 																			<thead>
 																				<tr>
-																					<th class="bg-primary" height="10"colspan="7" >
-																						<h5 align="center">แผนการปฎิบัติการ</h5>
+																					<th class="bg-primary" colspan="7" >
+																					<h3 align="center" style="color:white;" class="mt-2">แผนการปฎิบัติการ</h3>
 																					</th>
 																				</tr>
 																				<tr>
@@ -362,49 +381,49 @@
         											</div>
       											</div>
     											</div>
-  										</div>
-											<div class="tab-pane" id="personal" >
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="jumbotron">
-															<div class="col-md-8 col-lg-12">
-																<div class="table">
-																	<table class="table table-sm"  >
-																		<thead>
-																			<tr>
-																				<th class="bg-primary" height="10"colspan="8" >
-																					<h5 align="center">พนักนักงานประจำเครื่อง</h5>
-																				</th>
-																			</tr>
-																			<tr>
-																				<th scope="col">
-																					ลำดับ
-																				</th>
-																				<th scope="col">
-																					รหัสพนักงาน
-																				</th>
-																				<th scope="col">
+  											</div>
+												<!-- พนักงานประจำเครื่อง -->
+												<div class="tab-pane" id="personal" >
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="jumbotron">
+																<div class="col-md-8 col-lg-12">
+																	<div class="table">
+																		<table class="table table-sm"  >
+																			<thead>
+																				<tr>
+																					<th class="bg-primary" colspan="8" >
+																						<h3 align="center" style="color:white;" class="mt-2">พนักนักงานประจำเครื่อง</h3>
+																					</th>
+																				</tr>
+																				<tr>
+																					<th scope="col">
+																						ลำดับ
+																					</th>
+																					<th scope="col">
+																						รหัสพนักงาน
+																					</th>
+																					<th scope="col">
 																					Product Code
-																				</th>
-																				<th scope="col">
-																					ชื่อพนักงาน
-																				</th>
-																				<th scope="col">
-																					นามสกุล
-																				</th>
-																				<th scope="col">
-																					ประเทศ
-																				</th>
-																				<th scope="col">
-																					กะพนักงาน
-																				</th>
-																				<th scope="col">
-																					ประเภทพนักงาน
-																				</th>
-																			</tr>
-
-																		</thead>
-																		<tbody>
+																					</th>
+																					<th scope="col">
+																						ชื่อพนักงาน
+																					</th>
+																					<th scope="col">
+																						นามสกุล
+																					</th>
+																					<th scope="col">
+																						ประเทศ
+																						</th>
+																						<th scope="col">
+																							กะพนักงาน
+																						</th>
+																						<th scope="col">
+																							ประเภทพนักงาน
+																						</th>
+																					</tr>
+																				</thead>
+																				<tbody>
 																			<tr>
 																				<td>
 																				</td>
@@ -421,15 +440,182 @@
 																				<td>
 																				</td>
 																			</tr>
-																		</tbody>
-																	</table>
+																			</tbody>
+																		</table>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-  									</div>
+  											</div>
+												<!-- ระบบที่ต้องเช็ค -->
+												<div class="tab-pane" id="systemcheck" >
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="jumbotron">
+																<div class="col-md-8 col-lg-12">
+																	<div class="table">
+																		<table class="table table-sm"  >
+																			<thead>
+																				<tr>
+																					<th class="bg-primary" colspan="5" >
+																						<h3 align="center" style="color:white;" class="mt-2">ระบบที่ต้องเช็ค</h3>
 
+																					</th>
+																					<th class="bg-primary" >
+																						<button  id="popup" type="button" class="btn btn-info float-right"
+																						data-toggle="modal" data-target="#exampleModal" onclick="productview(this.)">เพิ่มระบบ</button>
+																					</th>
+																				</tr>
+																				<tr>
+																					<th scope="col">
+																					</th>
+																					<th scope="col" colspan="2">
+																						รายการตรวจเช็ค
+																					</th>
+																					<th scope="col">
+																						สถานนะเช็ค
+																					</th>
+																					<th scope="col">
+																						สถานะแปลกปลอม
+																					</th>
+																					<th scope="col">
+																						Action
+																					</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																			<tr>
+																				<td>
+																					1
+																				</td>
+
+																				<td colspan="2">
+																					ระบบไฟฟ้า
+																				</td>
+																				<td>
+																					<button type="button" class="btn btn-icon btn-round btn-success btn-sm">
+																								<i class="fa fa-check"></i>
+																							</button>
+																				</td>
+
+																				<td>
+																				</td>
+
+																				<td>
+																					<button type="button" class="btn btn-primary">กรอกข้อมูล</button>
+																				</td>
+
+																			</tr>
+																			<tr>
+																				<td>
+																					1
+																				</td>
+
+																				<td colspan="2">
+																					ระบบไฟฟ้า
+																				</td>
+																				<td >
+																					<button type="button" class="btn btn-icon btn-round btn-warning btn-sm">
+																						<i class="fa fa-exclamation-circle"></i>
+																					</button>
+																				</td>
+
+																				<td>
+																					2 warning
+																				</td>
+
+																				<td>
+																					<button type="button" class="btn btn-primary" data-toggle="modal"
+																					data-target="#myModal">กรอกข้อมูล</button>
+
+																				</td>
+
+																			</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+  											</div>
+												<!-- อะไหล่ที่ต้องเปลี่ยน -->
+												<div class="tab-pane" id="partchange" >
+													<div class="row " >
+														<div class="col-sm-12 ">
+															<div class="jumbotron">
+																<div class="col-md-8 col-lg-12">
+																	<div class="table">
+																		<table class="table table-sm"  >
+																			<thead>
+																				<tr>
+																					<th class="bg-primary" colspan="9" >
+																						<h3 align="center" style="color:white;" class="mt-2">อะไหล่ที่ต้องเปลี่ยน</h3>
+																					</th>
+																					<th class="bg-primary" >
+																						<button type="button" class="btn btn-info float-right">เพิ่มระบบ</button>
+																					</th>
+																				</tr>
+																				<tr>
+																					<th scope="col">
+
+																					</th>
+																					<th scope="col">
+																						รายการ
+																					</th>
+																					<th scope="col" colspan="2">
+																						เปลี่ยนประจำ เดือน/ปี
+																					</th>
+																					<th scope="col" colspan="2">
+																						ชื่อพนักงานที่ทำการเปลี่ยน
+																					</th>
+																					<th scope="col" colspan="2">
+																						เวลา วัน เดือน ปี ที่เปลี่ยน
+																					</th>
+																					<th scope="col" colspan="2">
+																						เวลา วัน เดือน ปี ที่เปลี่ยน ล่าสุด
+																					</th>
+
+																					</tr>
+																				</thead>
+																				<tbody>
+																			<tr>
+																				<td>
+																					1
+																				</td>
+																				<td>
+																					มอเตอร์
+																				</td>
+
+																				<td colspan="2">
+																					08/02/2021
+																				</td>
+
+																				<td colspan="2">
+																					<select class="form-control form-control">
+																					<option>นาย ก</option>
+																					<option>นาย ข</option>
+																					<option>นาย ค</option>
+
+																				</select>
+																				</td>
+																				<td colspan="2">
+																					08/02/2021 10:20
+																				</td>
+																				<td>
+																					08/02/2020 10:20
+																				</td>
+
+																			</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+  											</div>
 									</div>
 								</div>
 							</div>
@@ -439,6 +625,109 @@
 			</div>
 		</form>
 	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+				<div class="row">
+					<div class="col-mb-6 col-lg-6">
+						<select class="form-control form-control">
+							<option>ระบบไฟฟ้า</option>
+							<option>มอเตอร์</option>
+						</select>
+					</div>
+					<div class="col-mb-6 col-lg-6">
+						<select class="form-control form-control">
+							<option>สายไฟหลัก</option>
+							<option>ไฟ alarm</option>
+							<option>แรงดันไฟ</option>
+						</select>
+					</div>
+      	</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+				<div class="table">
+					<table class="table table-sm"  >
+						<thead>
+
+							<tr>
+								<th scope="col">
+
+								</th>
+								<th scope="col">
+									รายการ
+								</th>
+								<th scope="col" colspan="2">
+									STD
+								</th>
+								<th scope="col" colspan="2">
+									กรอกข้อมูล
+								</th>
+
+
+								</tr>
+							</thead>
+							<tbody>
+						<tr>
+							<td>
+								1
+							</td>
+							<td>
+								แรงดันไฟ
+							</td>
+
+							<td >
+								40V
+							</td>
+
+							<td colspan="2">
+								<div class="form-group has-error has-feedback">
+
+												<input type="text" id="errorInput" placeholder="กรอกข้อมูล" class="form-control">
+											</div>
+							</td>
+
+
+						</tr>
+						</tbody>
+					</table>
+				</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 </div>
 
 

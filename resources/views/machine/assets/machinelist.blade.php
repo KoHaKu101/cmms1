@@ -1,7 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-<link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -49,8 +49,6 @@
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
 
-
-
 							</div>
 						</div>
           </div>
@@ -68,11 +66,11 @@
   											</button>
 										</div>
 									@endif
-									<div class="card-header">
+									<div class="">
 
-										<div class="form-inline bg-primary">
+										<div class="form-inline bg-primary ">
 
-											<h4 class="ml-4 "><i class="fas fa-wrench fa-lg mr-2"></i> Assets </h4>
+											<h4 class="ml-3 mt-2"><i class="fas fa-wrench fa-lg mr-1"></i> Assets </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
   											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
@@ -124,7 +122,7 @@
 																	</span>
 																</a>
 															</td>
-															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_LOCATION }}  </td>
+															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_LINE }}  </td>
 															<td style="white-space:nowrap" class="born">              {{ $row->MACHINE_NAME }}  </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CODE }}   </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CHECK }}   </td>

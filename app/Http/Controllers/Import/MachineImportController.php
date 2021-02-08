@@ -11,8 +11,11 @@ use App\Imports\MachineImport;
 
 class MachineImportController extends Controller
 {
+  public function __construct(){
+    $this->middleware('auth');
+  }
     public function show(){
-      return view('import.machine');
+      return view('machine.import.machine');
     }
     public function store(Request $request){
       $file = $request->file('file');

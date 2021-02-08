@@ -63,13 +63,13 @@ class MenuController extends Controller
     {
       $data = Mainmenu::paginate(6);
       // $data = DB::table('PMCS_CMMS_MENU')->latest()->paginate(3);
-      return View('setting.menu.home',compact('data'));
+      return View('machine.setting.menu.home',compact('data'));
     }
     public function Edit($UNID){
       $data = Mainmenu::where("UNID",$UNID)->first();
       // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
-      return view('setting/menu/edit',compact('data'));
+      return view('machine/setting/menu/edit',compact('data'));
     }
     public function Update(Request $request,$UNID){
       $dataunid = Mainmenu::find($UNID)->update([

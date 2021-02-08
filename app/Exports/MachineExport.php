@@ -20,6 +20,6 @@ class MachineExport implements FromView
   public function view(): View
   {
       $data_set = Machnie::all();
-      return view('export.machine',compact(['data_set']));
+      return view('machine.export.machine',compact(['data_set']));
   }
 }

@@ -59,7 +59,7 @@
 
               echo '
               <li>
-                <a href="'.$_SUBLINK.'">
+                <a href="url('.$_SUBLINK.')">
                   <span class="sub-item">'.$_SUBNAME.'</span>
                 </a>
               </li>';

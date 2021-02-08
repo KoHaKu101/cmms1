@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Auth;
 
+
 class MachineController extends Controller
 {
   public function __construct(){

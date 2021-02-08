@@ -13,7 +13,7 @@
 
     @foreach ($data_set as $row)
       <tr>
-        <td >  {{ $row->MACHINE_LOCATION }}  </td>
+        <td >  {{ $row->MACHINE_LINE }}  </td>
         <td >  {{ $row->MACHINE_NAME }}  </td>
         <td >  {{ $row->MACHINE_CODE }}   </td>
         <td >  {{ $row->MACHINE_CHECK }}   </td>

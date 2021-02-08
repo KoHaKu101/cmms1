@@ -69,11 +69,11 @@
 															<td>  						{{ $row->SUBMENU_LINK }} </td>
 															<td>  						{{ $row->SUBMENU_ICON }} </td>
 															<td>
-																<a href="{{ url('setting/submenu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
-																<a href="{{ url('setting/submenu/delete/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a></a>
+																<a href="{{ url('machine/setting/submenu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
+																<a href="{{ url('machine/setting/submenu/delete/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a></a>
 															</td>
                         			</tr>
-                        	@endforeach	
+                        	@endforeach
                       	</tbody>
                     </table>
 									</div>
@@ -82,7 +82,7 @@
 								</div>
 
 								<div class=" mt-4">
-									<a href="{{ url('setting/menu/home') }}" class="btn btn-success">กลับ</a>
+									<a href="{{ url('machine/setting/menu/home') }}" class="btn btn-success">กลับ</a>
 								</div>
 
               </div>

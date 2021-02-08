@@ -33,38 +33,37 @@
         								<div class="card-header"> Edit </div>
                         <div class="card-body">
 
-                          <form action="{{ url('setting/submenu/update/'.$data_set->UNID) }}" method="POST">
+                          <form action="{{ url('machine/setting/menu/update/'.$data->UNID) }}" method="POST">
                             @csrf
                             <div class="form-group">
-                          		<label for="SUBMENU_NAME">SUBMENU Thai</label>
-                          		<input type="text"  class="form-control" id="SUBMENU_NAME" name="SUBMENU_NAME" placeholder="SUBMENU Thai" value="{{ $data_set->SUBMENU_NAME }}">
-                              <input type="hidden" id="UNIDE" name="UNID"  value="{{ $data_set->UNID }}">
-															<input type="hidden" id="SUBUNID_REF" name="SUBUNID_REF"  value="{{ $data_set->SUBUNID_REF}}">
+                          		<label for="MENU_NAME">Menu Thai</label>
+                          		<input type="text"  class="form-control" id="MENU_NAME" name="MENU_NAME" placeholder="Menu Thai" value="{{ $data->MENU_NAME }}">
+                              <input type="hidden" id="UNID" name="UNID"  value="{{ $data->UNID }}">
                         		</div>
 														<div class="form-group">
-															<label for="SUBMENU_EN">SUBMENU English</label>
-															<input type="text"  class="form-control" id="SUBMENU_EN" name="SUBMENU_EN" placeholder="SUBMENU English" value="{{ $data_set->SUBMENU_EN }}">
+															<label for="MENU_EN">Menu English</label>
+															<input type="text"  class="form-control" id="MENU_EN" name="MENU_EN" placeholder="Menu English" value="{{ $data->MENU_EN }}">
 														</div>
 														<div class="form-group">
-															<label for="SUBMENU_INDEX">SUBMENU Index</label>
-															<input type="number" min="1" class="form-control" id="SUBMENU_INDEX" name="SUBMENU_INDEX" placeholder="SUBMENU Index" value="{{ $data_set->SUBMENU_INDEX }}">
+															<label for="MENU_INDEX">MENU Index</label>
+															<input type="number" min="1"  class="form-control" id="MENU_INDEX" name="MENU_INDEX" placeholder="MENU Index" value="{{ $data->MENU_INDEX }}">
 														</div>
 														<div class="form-group">
-															<label for="SUBMENU_STATUS">SUBMENU Status</label>
-															<input type="text"  class="form-control" id="SUBMENU_STATUS" name="SUBMENU_STATUS" placeholder="SUBMENU Status" value="{{ $data_set->SUBMENU_STATUS }}">
+															<label for="MENU_STATUS">MENU Status</label>
+															<input type="text"  class="form-control" id="MENU_STATUS" name="MENU_STATUS" placeholder="MENU Status" value="{{ $data->MENU_STATUS }}">
 														</div>
 														<div class="form-group">
-															<label for="SUBMENU_CLASS">SUBMENU Class</label>
-															<input type="text"  class="form-control" id="SUBMENU_CLASS" name="SUBMENU_CLASS" placeholder="SUBMENU Class" value="{{ $data_set->SUBMENU_CLASS }}">
+															<label for="MENU_CLASS">MENU Class</label>
+															<input type="text"  class="form-control" id="MENU_CLASS" name="MENU_CLASS" placeholder="MENU Class" value="{{ $data->MENU_CLASS }}">
 														</div>
 														<div class="form-group">
-															<label for="SUBMENU_LINK">SUBMENU Link</label>
-															<input type="text"  class="form-control" id="SUBMENU_LINK" name="SUBMENU_LINK" placeholder="SUBMENU Link" value="{{ $data_set->SUBMENU_LINK }}">
+															<label for="MENU_LINK">MENU Link</label>
+															<input type="text"  class="form-control" id="MENU_LINK" name="MENU_LINK" placeholder="MENU Link" value="{{ $data->MENU_LINK }}">
 														</div>
                       			<div class="form-group">
-															<label for="SUBMENU_ICON">SUBMENU Icon</label>
-															<input type="text" class="form-control" id="SUBMENU_ICON" name="SUBMENU_ICON"  placeholder="SUBMENU Icon" value="{{ $data_set->SUBMENU_ICON }}">
-                        				@error ('SUBMENU_NAME')
+															<label for="MENU_ICON">MENU Icon</label>
+															<input type="text" class="form-control" id="MENU_ICON" name="MENU_ICON"  placeholder="MENU Icon" value="{{ $data->MENU_ICON }}">
+                        				@error ('MENU_NAME')
                             			<span class="text-danger"> {{ $message }}</span>
                         				@enderror
 														</div>
