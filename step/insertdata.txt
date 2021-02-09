@@ -1,4 +1,5 @@
 สามารถใช้ได้ทั้งสองแบบ คือ {!! FORM::ACTION !! }หรือ <form action>
+
  ซึ่งเราจะใช้เป็น <form action>
 โดยเราจะเปิดหัวฟอร์มก่อน <form action="{{ route('store.me')}}" method="POST">
 และตามด้วย @csrf *****หากไม่มีตัวนี้ก็ไม่สามารถ insert data ลงใน database ได้

@@ -1,0 +1,4 @@
+ใช้คำสั่ง <a href="/contact/create" class="btn btn-primary">.......</a>
+	<a hreft></a> คือการลิงค์
+	"/contact/create" คือตำแหน่งที่จะไป ****ต้องใส่ / ทุกครั้งไม่งั้นจะเป็นการไปต่อไม่ย้อนกลับ ****
+	class="btn btn-primary" คือชนิดของปุ่ม

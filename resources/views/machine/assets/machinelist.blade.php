@@ -59,7 +59,7 @@
 							<div class="col-md-12">
 								<div class="card ">
                 	@if(session('success'))
-                  	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
   											<strong>{{ session('success') }}</strong>
   											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
     										<span aria-hidden="true">&times;</span>
@@ -70,7 +70,7 @@
 
 										<div class="form-inline bg-primary ">
 
-											<h4 class="ml-3 mt-2"><i class="fas fa-wrench fa-lg mr-1"></i> Assets </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> Assets </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
   											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
@@ -94,9 +94,9 @@
                       	<thead class="thead-light">
                         	<tr>
 
-														<th scope="col" style="">แก้ไข</th>
-                            <th scope="col">location</th>
-                          	<th scope="col">name</th>
+														<th scope="col" style=""></th>
+                            <th scope="col">Location</th>
+                          	<th scope="col">Name</th>
                           	<th scope="col">Code</th>
                           	<th scope="col">Asset Status</th>
 														<th scope="col">Last Price Currency</th>

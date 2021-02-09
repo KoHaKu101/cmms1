@@ -56,10 +56,11 @@
 
               $_SUBNAME = $subvalue['SUBMENU_NAME'];
               $_SUBLINK = $subvalue['SUBMENU_LINK'];
+              $url = url($subvalue['SUBMENU_LINK']);
 
               echo '
               <li>
-                <a href="url('.$_SUBLINK.')">
+                <a href='.$url.'>
                   <span class="sub-item">'.$_SUBNAME.'</span>
                 </a>
               </li>';

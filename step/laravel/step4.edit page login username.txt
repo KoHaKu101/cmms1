@@ -1,0 +1,56 @@
+1.สร้างไฟล์ใน database migrations
+	php artisan make:migration add_column_username
+2.เข้า vscode และเปิดโฟลเดอร์โปรเจ็ค เพื่อตรวจสอบว่าไฟล์ได้ถูกสร้างจริงมั้ย
+	database > migrations > add_column_username
+3ใส้่ข้อมูล ลงไปใน public functino up()
+	    Schema::table('users', function (Blueprint $table) {
+            $table->string('username')->after('name');
+       	 });
+	และ
+	ใส่ข้อมูลลงใน public function down()
+	Schema::dropIfExists('users');
+4.ใช้คำสั่งเพื่อนำข้อมูล username ใส่ลงใน phpmyadmin
+	php artisan migrate
+5.ทำการเพิ่ม username ลงใน register 
+	ไปที่ resources > viwe > auth > register.blade.php
+	ใส่                        <div class="form-group row">
+                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('username') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
+
+                                @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+6.ทำการเพิ่ม username ลงใน login
+	ไปที่ resources > viwe > auth > login.blade.php
+	ใส่                        <div class="form-group row">
+                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('username') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
+
+                                @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>	
+7.เพิ่มตำสั่งเพื่อให้สามารถใส่ข้อมูลเพิ่มในฐานข้อมูลได้
+	app > http > controllers > auth > register
+		return Validator::make($data, 
+		'username' => ['required', 'string', 'max:255'],
+
+		return User::create([
+		'username' => $data['username'],
+	app > models >user.php 
+protected $fillable = [
+'username',	
+
+
+

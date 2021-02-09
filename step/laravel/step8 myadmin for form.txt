@@ -1,0 +1,7 @@
+1. php artisan make:migration add_column_email
+	database > migrations > add_column_email
+	Schema::table('contacts', function (Blueprint $table){
+		$table->string('email')-after('name');
+	});
+-----------------------------------------
+   php artisan migrate

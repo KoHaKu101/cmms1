@@ -1,0 +1,32 @@
+1.install sweetalert
+	composer require realrashid/sweet-alert
+---------------------------------------------------
+go to config/app.php
+	in line porviders
+			Package service
+	insert  RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+and go in line aliases
+	insert  'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+--------------------------------------------------------------
+2.configuration 
+	go to app.blade.php
+		place @include('sweetalert::alert') in endline in body
+	run comman
+		php artisan sweetaler:publish
+-------------------------------------------------------------------
+3.use
+	go to contactcontroller
+	after use App\Models\Contact;
+	      use RealRashid\SweetAlert\Facades\Alert;
+
+	on line use 
+	exp
+
+        Alert::success('Success Title', 'Success Message');
+        
+        if($delete){
+
+            Contact::find($id)->delete();
+
+        }
+	

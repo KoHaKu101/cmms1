@@ -1,0 +1,20 @@
+1.ทำเหมือน edit ในขั้นตอนการเพิ่มปุ่ม แต่เปลี่ยนวิธีเพิ่มปุ่มให้ใช้คำสั่ง
+	<form action="{{route('contact.destroy',$row->id)}}" method="POST">
+	@csrf @method('DELETE')
+	<input type="submit" value='ลบ' class="btn btn-danger">
+2.ถ้าหากต้องการให้มีการยืนยันด้วยให้เพิ่มคำสั่งลงในinput
+	danger" onclick="return confirm('คุณต้องการลบ {{$row->name}} ?')">
+3.ไปที่ app > http > contactcontroller.php
+	ไปที่ public function destroy($id)
+	เพิ่ม contact::find($id)->delete();
+	return redirect('/contact');
+
+------------------------------------------------------------
+อีกวิธีคือการใช้ icon
+ทุกอย่างเหมือนกัน เปลี่ยนเพียง ขั้นตอนที่1 โดยเปลี่ยน code จากเดิมเป็น
+<a href="{{route('tableall.destroy',$row->id)}}" method="POST" class="fas fa-trash-alt fa-lg mx-2">@csrf @method('DELETE')</a>
+a href คือการลิงค์
+class สำหรับบรรทัดนี้ คือเป็น icon แต่เราสามารถกำหนดให้เป็นอย่างอื่นได้แล้วแต่ความต้องการ
+fa-lg คือขนาด มีตั้งแต่ xs sm lg 2x 3x 5x 7x 10x
+mx คือการขยับตำแหน่งแนวนอน สามารถเริมได้จาก 1-4
+mt คือการขยับตำแหน่งแนวตั้ง สามารถเริ้่มได่จาก1-4เช่นกัน

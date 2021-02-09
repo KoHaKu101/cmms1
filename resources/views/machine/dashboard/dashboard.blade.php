@@ -217,7 +217,12 @@
 					<div class="col-md-5">
 						<div class="card">
 							<div class="card-header">
-								<div class="card-title">ค่าซ่อมประจำเดือน</div>
+
+									<div class="card-title">ค่าซ่อมประจำเดือน
+										<a href="{{url('machine/dashboard/sumaryline')}}" class="btn btn-info float-right" >ค่าซ่อมแต่ล่ะ Line</a>
+									</div>
+
+
 							</div>
 							<div class="card-body">
 								<div class="chart-container">
@@ -227,20 +232,7 @@
 						</div>
 					</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">ค่าซ่อมประจำเดือน</div>
-						</div>
-						<div class="card-body">
-							<div class="chart-container">
-								<canvas id="multipleLine"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-		</div>
+
 		</div>
 		<footer class="footer">
 			<div class="container-fluid">
@@ -278,7 +270,7 @@
 <script src="{{asset('/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
 <script>
 	var multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
-			multipleLine = document.getElementById('multipleLine').getContext('2d'),
+
 	 		barChart = document.getElementById('barChart').getContext('2d');
 
 	var myBarChart = new Chart(barChart, {
@@ -305,48 +297,6 @@
 		}
 	});
 	var myMultipleBarChart = new Chart(multipleBarChart, {
-		type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
-
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าใช้จ่ายในแต่ล่ะเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
-	var myMultipleLine = new Chart(multipleLine, {
 		type: 'bar',
 		data: {
 			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],

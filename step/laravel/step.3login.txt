@@ -1,0 +1,46 @@
+1.ติดตั้ง composer  และ laravel (composer global require laravel/installer )
+2. ติดตั้งโปรเจค ใช้คำสั่ง laravel new ชื่อ โปรเจ็ค
+3.ลองรันตัว project
+4.ติดตั้ง หน้า login
+	-composer require laravel/ui
+	-php artisan ui vue --auth
+	-npm install
+		npm audit fix เมื่อมีการอัพเดท
+		npm audit fix --force บังคับ
+	-npm run dev
+	-npm run dev อีกครั้ง
+	-php artisan migrate
+5ติดตั้ง adminlt 
+	-composer require jeroennoten/laravel-adminlte
+	-composer require laravel/ui
+	-php artisan ui vue --auth	
+	-php artisan adminlte:install 
+	-เช็คสถานะ	php artisan adminlte:status
+	-* อัพเดทadminlte 		php artisan adminlte:update
+	-*ติดตั้ง plugin 		php artisan adminlte:plugin install 
+6.ทำหน้าเพจ adminlte 
+	ไปที่ไฟล์ resources>view>home.blade.php
+	ลบทั้งหมดและใส่
+	@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Dashboard</h1>
+@stop
+
+@section('content')
+    <p>Welcome to this beautiful admin panel.</p>
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop
+
+
+(6.แก้สร้าง page ใหม่)
+	-php artisan optimize

@@ -1,0 +1,35 @@
+1.เข้า create.blade.php
+	ใส่คำสั่ง	 @extends('layouts\add'or 'layouts.add')
+		@section('content')
+    			<div class="container"//ตู้คอนเทลเนอ>
+			{!! Form::open(['action' => 'ContractController@store','method'=>'post']) !!}****V7 //คือการเชื่อมโยงไฟล์หรือเว็บเมื่อทำการกดปุ่มตกลง
+			{!! Form::open(['action' => 'App\Http\Controllers\ContractController@store','method'=>'post']) !!}****V8 //สำหรับเวอร์นี้ ทำการเจาะจง
+ 						
+			{!! Form::open(['url' => 'foo/bar']) !!}
+        			<div class="col-md-6">
+					//การแบ่งหน้าจอจาก12เหลือครึ่ง
+                			<div class="form-group">
+					//การทำให้form เป็นกลุ่ม
+					{!! Form::label('NAME') !!}
+    					{!! Form::text('name'//ชื่อหัวข้อ,null//ค่าที่ใช้งานเป็นช่องว่าง,["class"=>"form-control"])!!}
+               			 	</div>
+       				 </div>
+                		<input type="submit"//คือประเภทของ... value="good"//ชื่อปุ่ม class="btn btn-primary"//ประเภทปุ่ม โดยต้องมี bootstrap>
+			{!! Form::close() !!}
+			</div>
+		@endsection
+2.เข้าไปที่ ContractController.php
+	ในช่อง store
+	dd($request); or
+	$request->validate([
+	'name' => 'required',
+	'email' => 'required|email',
+	'phone' => 'required',
+	]);
+	Contract::create($request->all());
+	return redurect()->back();
+3.เชื่อมต่อกับฐานข้อมูล
+	ไปที่ contract.php
+	เพิ่มข้อมูล protect $fillable = [
+		'name','email','phone'
+	];

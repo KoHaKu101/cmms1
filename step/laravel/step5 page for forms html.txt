@@ -1,0 +1,31 @@
+
+1.ติดตั้ง html
+	composer require laravelcollective/html
+2.ติดตั้ง ไฟล์ ใน model
+	php artisan make:model Contrat -m
+3.เช็คว่ามีไฟล์มั้ย 
+	app > model >contrat
+	database > migrations > create_contrat
+4.เข้าไปแก้ไขในไฟล์ create_contrat
+	 $table->string('name');
+         $table->string('phone'); 
+	ลงในSchema::create('contrats', function (Blueprint $table) {
+5.เพิ่มข้อมูลลงใน database myadmin
+	php artisan migrate
+6.สร้างไฟล์ controller
+	php artisan make:model controller -m
+	php artisan migrate
+	php artisan make:controller contactcontroller --resource
+	click ขวาใน views แล้ว new folder ชื่อ contact
+	click ขวาใน floder แล้ว mew flie ชื่อ create.blade.php
+	พิมอะไรก็ได้
+7.สร้างหน้า page controller
+	public function index()
+    {
+        return view('contact.create');
+    }
+	next---------------------
+	route > web.php	
+	input route::resource('contact','ContactController')******laravel v.7
+	input route::resource('contact','App\Http\Controllers\ContactController')******laravel V.8
+	

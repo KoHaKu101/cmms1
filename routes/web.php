@@ -41,11 +41,13 @@ Route::get('/', function () {
     return view('machine/assets/machinelist');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard/dashboard', function () {
-    return view('dashboard/dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/machine/dashboard/dashboard', function () {
+    return view('/machine/dashboard/dashboard');
+})->name('/machine/dashboard/dashboard');
 
 Route::get('/machine/dashboard/sumaryline',[DashboardController::class,'Sumaryline'])->name('dashboard.sumaryline');
+
+
 
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
 //serach

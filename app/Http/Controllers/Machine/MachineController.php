@@ -60,6 +60,7 @@ class MachineController extends Controller
       $name_gen = hexdec(uniqid());
 
       $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
+// dd($name_gen);
       $img_name = $name_gen.'.'.$img_ext;
       $up_location = 'image/machnie/';
       $last_img = $up_location.$img_name;
@@ -125,7 +126,7 @@ class MachineController extends Controller
       ]);
       $data_set = Machnie::paginate(12);
       // dd($machine_all);
-      return Redirect()->route('machine.list',compact(['data_set']))->with('success','Update Success');
+      return Redirect()->route('machine.list',compact(['data_set']))->with('success','ลงทะเบียน สำเร็จ');
   }
 
   public function Edit($UNID) {

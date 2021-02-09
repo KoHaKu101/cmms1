@@ -1,0 +1,22 @@
+1.เช็ค route
+	php artisan route:list
+	แล้วหา contact.edit
+2.เข้า index.blade.php และสร้างปุ่มกดเพื่อลิคงไปยัง edit
+	<a href="{{route('contact.edit',$row->id)}}" class="btn btn-succes"> แก้ไข</a>
+	{{route}} คือเลาท์ที่มีในเว็บทั้งหมด
+	('contact.edit') คือที่เจาะจงเลาท์ว่าจะเข้าเลาท์ไหน
+3.ไปที่ app > http > controllers > contactcontroller.php
+   ไปที่ public function edit($id)
+  และเพิ่ม $data=contact::find($id);
+	return view("contact.edit",compact(['data']));
+	return คือการกลับไปเมื่อทำงานเสร็จ และเราได้เจาะจงที่กลับไปด้วย contact.edit
+4.เพิ่มไฟล์ลงใน views> contact 
+	เพิ่มไฟล์edit.blade.php
+	ก็อบข้อมูลจาก create.balde.php มา
+	และแก้ไขปุ่ม login เป็นแก้ไข
+	และเปลี่ยนที่อยุ่จาก store เป็น @update และเพิ่ม ,$data->id และเปยี่น method post เป็น method put
+5.ไปที่ app > http > controllers > contactcontroller.php
+	ไปที่ publice function update(Request $request, $id)
+	ก็อบข้อมูลมาจาก store	
+	และแก้ไข้ contact ให้เป็น contact::find()$id->update($request->all());
+	returen redirect('contact')

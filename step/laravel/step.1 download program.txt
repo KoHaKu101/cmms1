@@ -1,0 +1,8 @@
+1. download composer 
+2. เช็คเวอร์ชั่น composer 
+	composer -v
+3.install laravel
+	composer global require laravel/installer
+4.create porject
+	laravel new projectname
+------------------------------------Finish--------------------------------------------------------

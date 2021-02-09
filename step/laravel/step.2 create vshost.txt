@@ -1,0 +1,9 @@
+1.go to apache in xampp 
+2.go to conf
+3.extra
+4.vhosts
+	add servername and documet root
+	exp.DocumetRoot "C:\xampp\htdocs\nunu\public
+	    ServerName www.nunu.com
+5. go to  window-> system32 -> driver -> ext -> host 
+6. add www.----.com

@@ -1,0 +1,7 @@
+1.สร้างหน้าให้ทำเหมือนกับ creat.balde.php
+	@extends('layouts.app')
+	@section('content')
+	<div class="container">
+align คือตำแหน่ง center คือตรงกลาง   <h2 align='center'>......</h2>
+	<table class> ก็อปจากbootstrap
+	</div>
