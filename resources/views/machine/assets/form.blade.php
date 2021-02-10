@@ -63,7 +63,7 @@
 									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="/assets/img/jm_denis.jpg" width="200" height="200px" class="mt-4">
+												<img src="/assets/img/nobody.jpg" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
 													@error ('MACHINE_ICON')
 														<span class="text-danger"> {{ $message }}</span>

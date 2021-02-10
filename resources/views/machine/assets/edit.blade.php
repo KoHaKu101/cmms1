@@ -25,6 +25,14 @@
 
 		<div class="content">
 			<div class="page-inner">
+				@if(session('success'))
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+							<strong>{{ session('success') }}</strong>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+				@endif
 				<!--ส่วนปุ่มด้านบน-->
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 				<div class="container">
@@ -66,7 +74,7 @@
 										<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="/assets/img/jm_denis.jpg" width="200" height="200px" class="mt-4">
+												<img src="/assets/img/nobody.jpg" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON">
 													@error ('MACHINE_ICON')
 														<span class="text-danger"> {{ $message }}</span>
@@ -100,21 +108,7 @@
 														<option value="4">แผนผลิต</option>
 													</select>
 												</div>
-												<?php
-												$options= array('Line 1','Line 2','Line 3','Line 4','Line 5','Line 6')
 
-												<div class="form-group col-6 has-error">
-													<lebel>ตำแหน่งเครื่อง</lebel>
-													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" >
-													<option value="L1">Line 1</option>
-													<option value="L2">Line 2</option>
-													<option value="L3">Line 3</option>
-													<option value="L4">Line 4</option>
-													<option value="L5">Line 5</option>
-													<option value="L6">Line 6</option>
-												</select>
-						  				</div>
-											?>
 											</div>
 										</div>
 										<!-- ช่อง3-->

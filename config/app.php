@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+         Elibyy\TCPDF\ServiceProvider::class,
          Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
@@ -229,7 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class
     ],
 
 ];

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "elibyy/tcpdf-laravel": "^8.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -20,7 +21,8 @@
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.44",
         "phpoffice/phpspreadsheet": "^1.16",
-        "spatie/laravel-query-builder": "^3.3"
+        "spatie/laravel-query-builder": "^3.3",
+        "tecnickcom/tc-lib-pdf": "^8.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
