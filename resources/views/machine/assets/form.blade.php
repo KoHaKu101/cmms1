@@ -79,36 +79,44 @@
 														<span class="text-danger"> {{ $message }}</span>
 													@enderror
 											</div>
+
 											<div class="form-group">
-												<label for="MACHINE_MANU">การผลิต	</label>
-												<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" placeholder="การผลิต" required autofocus>
-											</div>
-											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">วันที่เริ่มใช้งาน	</label>
-												<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE" placeholder="วันที่เริ่มใช้งาน" required autofocus>
+												<label for="MACHINE_STARTDATE">วันที่เริ่มใช้งาน	</label>
+												<input type="date" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="วันที่เริ่มใช้งาน">
 											</div>
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-6 col-lg-6 has-error">
-													<lebel>สถานะการใช้งาน</lebel>
-													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" >
-														<option value="1">หยุด/เสีย</option>
+													<lebel>สถานะ</lebel>
+													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" required autofocus>
+														<option value>-แสดงทั้งหมด-</option>
+														<option value="1">ทำงานปกติ</option>
 														<option value="2">ทำงาน</option>
 														<option value="3">รอผลิต</option>
-
 														<option value="4">แผนผลิต</option>
 													</select>
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
-													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE">
-													<option>L1</option>
-													<option>L2</option>
-													<option>L3</option>
-													<option>L4</option>
-													<option>L5</option>
-													<option>L6</option>
+													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" required autofocus>
+													<option value>--แสดงทั้งหมด--</option>
+													<option value="L1">Line 1</option>
+													<option value="L2">Line 2</option>
+													<option value="L3">Line 3</option>
+													<option value="L4">Line 4</option>
+													<option value="L5">Line 5</option>
+													<option value="L6">Line 6</option>
 												</select>
 						  				</div>
+											</div>
+											<div class="form-group has-error">
+												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
+												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" required autofocus>
+													<option value>--แสดงทั้งหมด--</option>
+													<?php
+													for($i = 1; $i <(5); $i++)
+														echo'<option value="'.$i.' "> '.$i.' </option>';
+														?>
+												</select>
 											</div>
 										</div>
 										<!-- ช่อง3-->
@@ -117,18 +125,15 @@
 												<label for="MACHINE_NAME">ชื่อเครื่องจักร</label>
 												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME" placeholder="ชื่อเครื่องจักร" required autofocus>
 											</div>
-											<div class="form-group">
-												<label for="MACHINE_RVE_DATE">วันที่แก้ไขปรับปรุง	</label>
-												<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE" placeholder="วันที่เริ่มใช้งาน" required autofocus>
+											<div class="form-group has-error">
+												<label for="MACHINE_RVE_DATE">วันที่ Maintenance 	</label>
+												<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE" placeholder="วันที่ Maintenance" required autofocus>
 											</div>
-											<div class="form-group">
+											<div class="form-group has-error">
 												<label for="PURCHASE_FORM">ซื้อจากบริษัท	</label>
 												<input type="text" class="form-control" id="PURCHASE_FORM" name="PURCHASE_FORM" placeholder="ซื้อจากบริษัท" required autofocus>
 											</div>
-											<div class="form-group has-error">
-												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
-												<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" placeholder="ชนิดเครื่องจักร" required autofocus>
-											</div>
+
 										</div>
 									</div>
 								</div>
@@ -173,10 +178,10 @@
     											<a id="settings-tab" data-toggle="tab" href="#personal">พนักงานประจำเครื่อง</a>
   											</li>
 												<li>
-    											<a id="settings-tab" data-toggle="tab" href="#systemcheck">ระบบที่ต้องเช็ค</a>
+    											<a id="settings-tab" data-toggle="tab" href="#systemcheck">ตรวจสอบระบบ</a>
   											</li>
 												<li>
-    											<a id="settings-tab" data-toggle="tab" href="#partchange">อะไหล่ที่ต้องเปลี่ยน</a>
+    											<a id="settings-tab" data-toggle="tab" href="#partchange">เปลี่ยนอะไหล่</a>
   											</li>
   										</ul>
   										<div class="tab-content clearfix">
@@ -243,8 +248,8 @@
 																	</div>
 																	<div class="col-md-8 col-lg-3">
 																		<div class="form-group">
-																			<label for="MACHINE_FACTORY">โรงงานผลิต</label>
-																			<input type="text" class="form-control" id="MACHINE_FACTORY" name="MACHINE_FACTORY" placeholder="โรงงานผลิต">
+																			<label for="MACHINE_MANU">บริษัทที่ผลิต	</label>
+																			<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" placeholder="บริษัทที่ผลิต" >
 																		</div>
 																		<div class="form-group">
 																			<label for="MACHINE_SPEED">ความเร็ว</label>
@@ -449,7 +454,7 @@
 														</div>
 													</div>
   											</div>
-												<!-- ระบบที่ต้องเช็ค -->
+												<!-- ตรวจสอบระบบ -->
 												<div class="tab-pane" id="systemcheck" >
 													<div class="row">
 														<div class="col-sm-12">
@@ -459,8 +464,8 @@
 																		<table class="table table-sm"  >
 																			<thead>
 																				<tr>
-																					<th class="bg-primary" colspan="5" >
-																						<h3 align="center" style="color:white;" class="mt-2">ระบบที่ต้องเช็ค</h3>
+																					<th class="bg-primary" colspan="6" >
+																						<h3 align="center" style="color:white;" class="mt-2">ตรวจสอบระบบ</h3>
 
 																					</th>
 																					<th class="bg-primary" >
@@ -472,13 +477,17 @@
 																					<th scope="col" colspan="2">
 																					</th>
 																					<th scope="col" colspan="2">
-																						ระบบที่ต้องเช็ค
+																						ตรวจสอบระบบ
 																					</th>
 																					<th scope="col" colspan="1">
 																						รายการที่ต้องตรวจเช็ค
 																					</th>
+																					<th>
+																						<h5>ตรวจสอบประจำ เดือน/ปี</h5>
+																					</th>
 																					<th scope="col" colspan="1">
 																					</th>
+
 																					</tr>
 																				</thead>
 																				<tbody>
@@ -493,9 +502,13 @@
 																				<td>
 																					3 รายการ
 																				</td>
+																				<td>
+																					3 เดือน
+																				</td>
+
 																				<td >
 																					<button  id="popup" type="button" class="btn btn-primary float-right"
-																					data-toggle="modal" data-target="#exampleModal1" >รายละเอียดที่ต้องตรวจเช็ค</button>
+																					data-toggle="modal" data-target="#exampleModal1" >รายการตรวจสอบ	</button>
 																				</td>
 
 																			</tr>
@@ -518,12 +531,12 @@
 																		<table class="table table-sm"  >
 																			<thead>
 																				<tr>
-																					<th class="bg-primary" colspan="6" >
+																					<th class="bg-primary" colspan="7" >
 																						<h3 align="center" style="color:white;" class="mt-2">อะไหล่ที่ต้องเปลี่ยน</h3>
 																					</th>
 																					<th class="bg-primary" >
 																						<button  id="popup" type="button" class="btn btn-info float-right"
-																						data-toggle="modal" data-target="#exampleModal2" >เพิ่มอะไหล่ที่ต้องเปลี่ยน</button>
+																						data-toggle="modal" data-target="#exampleModal2" >เพิ่มรายการอะไหล่</button>
 																					</th>
 																				</tr>
 																				<tr>
@@ -537,7 +550,10 @@
 																						รายการอะไหล่
 																					</th>
 																					<th  colspan="2">
-																						เวลา วัน เดือน ปี ที่เปลี่ยน ล่าสุด
+																						ครบกำหนดเปลี่ยน
+																					</th>
+																					<th  >
+																						รอบเปลี่ยน
 																					</th>
 																					<th >
 
@@ -558,11 +574,14 @@
 																					 3 รายการ
 																				</td>
 																				<td colspan="2">
-																				10:20	 08/02/2020
+																				8/10/2020
+																				</td>
+																				<td >
+																				3เดือน
 																				</td>
 																				<td>
 																					<button  id="popup" type="button" class="btn btn-primary float-right"
-																					data-toggle="modal" data-target="#exampleModal3" >รายละเอียดอะไหล่ที่ต้องเปลี่ยน</button>
+																					data-toggle="modal" data-target="#exampleModal3" >รายการอะไหล่</button>
 																				</td>
 
 																			</tr>
@@ -614,12 +633,11 @@
   </div>
 </div>
 </div>
-<!-- Modalรายละเอียดที่ต้องตรวจเช็ค -->
+<!-- Modalรายการที่ต้องตรวจเช็ค -->
 <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -633,48 +651,37 @@
 
 								</th>
 								<th>
-									<h4>รายการที่ต้องตรวจเช็ค</h4>
+									<h5>รายการที่ต้องตรวจเช็ค</h5>
 								</th>
 								<th>
-									<h4>ค่า STD </h4>
+									<h5>ค่า STD </h5>
 								</th>
 								<th>
-									<h4>ค่า ตรวจเช็คปัจจุบัน</h4>
+									<h5>ตรวจสอบประจำ เดือน/ปี</h5>
 								</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<tr>
-								<td>
+								<td width="1%">
 									<input class="form-check-input float-right" type="checkbox" value="" id="flexCheckDefault">
 								</td>
-								<td>
+								<td width="10%">
 									<h4>สายไฟฟ้า</h4>
 								</td>
 
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
+								<td width="15%">
+										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault" ></small>
 								</td>
 
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-							</td>
-							</tr>
-
-							<tr>
-								<td>
-									<input class="form-check-input float-right" type="checkbox" value="" id="flexCheckDefault">
-								</td>
-								<td>
-									<h4>แรงดันไฟ</h4>
-								</td>
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-								</td>
-
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
+								<td width="20%">
+										<select class="form-control">
+											<option>1เดือน</option>
+											<option>3เดือน</option>
+											<option>6เดือน</option>
+											<option>1เดือน</option>
+										</select>
 							</td>
 							</tr>
 						</tbody>
@@ -720,7 +727,8 @@
 </div>
 
 
-<!-- Modal รายละเอียดอะไหล่ที่ต้องเปลี่ยน -->
+
+<!-- Modal รายการอะไหล่ที่ต้องเปลี่ยน -->
 <style>
 .modal-sm {
     max-width: 80% !important;
@@ -731,7 +739,7 @@
   <div class="modal-dialog modal-sm">
     <div class="modal-content ">
       <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดอะไหล่ที่ต้องเปลี่ยน</h5>
+        <h4 class="modal-title" id="exampleModalLabel">รายการอะไหล่ที่ต้องเปลี่ยน</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -747,17 +755,15 @@
 								<th>
 									<h5>รายการอะไหล่ที่ต้องเปลี่ยน</h5>
 								</th>
+
 								<th>
-									<h5>พนักงานที่ทำการเปลี่ยน </h5>
+									<h5>รอบเปลี่ยน(เดือน/ปี)</h5>
 								</th>
 								<th>
-									<h5>เปลี่ยนทุกกี่เดือน/ปี</h5>
+									<h5>เปลี่ยนอะไหล่ครั้งแรก</h5>
 								</th>
 								<th>
-									<h5>เปลี่ยนวัน/เดือน/ปี</h5>
-								</th>
-								<th>
-									<h5>เปลี่ยนวัน/เดือน/ปี ล่าสุด</h5>
+									<h5>เปลี่ยนอะไหล่ล่าสุด</h5>
 								</th>
 							</tr>
 						</thead>
@@ -770,13 +776,13 @@
 								<td>
 									<h5>มอเตอร์สว่าน</h4>
 								</td>
-
 								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-								</td>
-
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
+									<select class="form-control">
+										<option>1เดือน</option>
+										<option>3เดือน</option>
+										<option>6เดือน</option>
+										<option>1เดือน</option>
+									</select>
 							</td>
 							<td>
 									<small><input class="form-control float-right" type="date" value="" id="flexCheckDefault"></small>

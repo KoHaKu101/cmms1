@@ -45,10 +45,11 @@
 									<span class="fas fa-file-export fa-lg">	Export	</span>
 								</button>
 								</a>
+								<a href="{{url('machine/pdf/machinepdf')}}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
-
+								</a>
 							</div>
 						</div>
           </div>

@@ -1,36 +1,39 @@
-<style type='text/css'>
+<html>
+<header>
+<title>pdf</title>
+<meta http-equiv="Content-Language" content="th" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body {
+font-family: 'sarabun_new', sans-serif;
+}
+table, td, th {
+  border: 1px solid black;
+}
 table {
-  width: 95%;
-  margin-top: 15px;
-  margin-bottom: 25px;
+  border-collapse: collapse;
 }
-td {
-  padding: 5px;
-}
-th {
-  font-family: "Trebuchet MS", Arial, Verdana;
-  font-size: 14px;
-  padding: 5px;
-}
- .header_br th{
-   font-family: arial;
-   display: block;
-   color:white;
-   text-align: center;
-   padding: 14px 16px;
-   text-decoration: none;
+h4  {
+font-size: 20px;
+margin-top: 100px;
+margin-bottom: 100px;
+margin-right: 150px;
+margin-left: 80px;
 }
 </style>
-<table cellspacing="0" cellpadding="5" border="1">
+</header>
+<body>
+<table>
 
   <thead>
     <tr>
-      <th width="90px" height="70px">ใส่ตราโรงงาน</th>
-      <th class="header_br" width="505px" height="70px">ใบแจ้งซ่อมเครื่องจักร / อุปกรณ์</th>
-
-      <th width="190px" height="70px">เลขที่:ss01321553</th>
+      <th width="150px" height="100px">ใส่ตราโรงงาน</th>
+      <th width="500px" height="70px"><p style="font-size:25px; text-align:center">ใบแจ้งซ่อมเครื่องจักร / อุปกรณ์</p></th>
+      <td width="190px" height="70px"><h4 >เลขที่:</h4></th>
 
     </tr>
   </thead>
 
 </table>
+</body>
+</html>

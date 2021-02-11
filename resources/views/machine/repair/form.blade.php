@@ -64,23 +64,31 @@
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">เลขที่เอกสาร</label>
-													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" placeholder="เลขที่เอกสาร" required autofocus>
+												<?php
+												$number = date("ymdhis");
+
+												echo'<input type="text" class="form-control" id="" name="" placeholder="เลขที่เอกสาร"  value='.$number.' disabled> ';
+
+													?>
 											</div>
 
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">รหัสพนักงาน	</label>
-												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="รหัสพนักงาน" required autofocus>
+												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="รหัสพนักงาน">
 											</div>
 										</div>
 										<!-- ช่อง3-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group">
 												<label for="MACHINE_MANU">วันที่เอกสาร	</label>
-												<input type="date" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" placeholder="วันที่เอกสาร" required autofocus>
+
+												<input type="date" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" placeholder="วันที่เอกสาร"
+												<?php echo'value="'.date("yyyy-mm-dd").'"';?>>
+
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
-												<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" placeholder="ชื่อพนักงาน" required autofocus>
+												<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" placeholder="ชื่อพนักงาน" >
 											</div>
 										</div>
 

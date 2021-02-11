@@ -57,16 +57,19 @@ class MachineController extends Controller
 
       $MACHINE_ICON = $request->file('MACHINE_ICON');
 
-      $name_gen = hexdec(uniqid());
+      if ($request->file('MACHINE_ICON')) {
+        $name_gen = hexdec(uniqid());
 
-      $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
-// dd($name_gen);
-      $img_name = $name_gen.'.'.$img_ext;
-      $up_location = 'image/machnie/';
-      $last_img = $up_location.$img_name;
+        $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
+  // dd($name_gen);
+        $img_name = $name_gen.'.'.$img_ext;
+        $up_location = 'image/machnie/';
+        $last_img = $up_location.$img_name;
 
-      $MACHINE_ICON->move($up_location,$img_name);
-
+        $MACHINE_ICON->move($up_location,$img_name);
+      } else {
+        $MACHINE_ICON = '';
+      }
 
       Machnie::insert([
           'MACHINE_CODE'         => $request->MACHINE_CODE,
@@ -77,7 +80,7 @@ class MachineController extends Controller
           'MACHINE_TYPE_STATUS'  => $request->MACHINE_TYPE_STATUS,
           'MACHINE_STARTDATE'    => $request->MACHINE_STARTDATE,
           'MACHINE_RVE_DATE'     => $request->MACHINE_RVE_DATE,
-          'MACHINE_ICON'         => $last_img,
+          'MACHINE_ICON'         => $request->MACHINE_ICON,
           'MACHINE_PRICE'        => $request->MACHINE_PRICE,
           'MACHINE_LINE'         => $request->MACHINE_LINE,
           'GROUP_NAME'           => $request->GROUP_NAME,

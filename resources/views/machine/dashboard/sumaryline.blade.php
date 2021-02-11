@@ -36,7 +36,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<div class="card">
 						<div class="card-header">
 							<div class="card-title">ค่าซ่อมประจำเดือน Line 1</div>
@@ -48,23 +48,21 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-md-6">
+	        <div class="card">
+	          <div class="card-header">
+	            <div class="card-title">ค่าซ่อมประจำเดือน Line 2</div>
+	          </div>
+	          <div class="card-body">
+	            <div class="chart-container">
+	              <canvas id="multipleLine2"></canvas>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
 		</div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">ค่าซ่อมประจำเดือน Line 2</div>
-          </div>
-          <div class="card-body">
-            <div class="chart-container">
-              <canvas id="multipleLine2"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-header">
           <div class="card-title">ค่าซ่อมประจำเดือน Line 3</div>
@@ -76,23 +74,21 @@
         </div>
       </div>
     </div>
+		<div class="col-md-6">
+	    <div class="card">
+	      <div class="card-header">
+	        <div class="card-title">ค่าซ่อมประจำเดือน Line 4</div>
+	      </div>
+	      <div class="card-body">
+	        <div class="chart-container">
+	          <canvas id="multipleLine4"></canvas>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">ค่าซ่อมประจำเดือน Line 4</div>
-      </div>
-      <div class="card-body">
-        <div class="chart-container">
-          <canvas id="multipleLine4"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <div class="card">
       <div class="card-header">
         <div class="card-title">ค่าซ่อมประจำเดือน Line 5</div>
@@ -104,9 +100,8 @@
       </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
+
+  <div class="col-md-6">
     <div class="card">
       <div class="card-header">
         <div class="card-title">ค่าซ่อมประจำเดือน Line 6</div>

@@ -56,7 +56,7 @@
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-3">
-						<div class="card card-stats card-primary card-round">
+						<div class="card card-stats card-success card-round">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-5">
@@ -75,7 +75,7 @@
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-3">
-						<div class="card card-stats card-primary card-round">
+						<div class="card card-stats card-warning card-round">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-5">
@@ -94,7 +94,7 @@
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-3">
-						<div class="card card-stats card-primary card-round">
+						<div class="card card-stats card-danger card-round">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-5">
@@ -154,55 +154,42 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<div class="card">
-							<div class="card-header">
-								<div class="card-title ml-2">แจ้งซ่อมล่าสุด</div>
-							</div>
-							<div class="card-body pb-0">
-								<div class="d-flex">
-									<div class="avatar">
-										<img src="/assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
-									</div>
-									<div class="flex-1 pt-1 ml-2">
-										<h6 class="fw-bold mt-2">เครื่องเปิดไม่ติด</h6>
-										<div class="row">
-											<p class="text-muted dropdown-item">08/02/2021 10:00</p>
+					<div class="col-md-6">
+							<div class="card full-height">
+								<div class="card-header">
+									<div class="card-head-row">
+										<div class="card-title">แจ้งซ่อม</div>
+										<div class="card-tools">
+											<ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+												<li class="nav-item">
+													<a class="nav-link active" id="pills-today" data-toggle="pill" href="#pills-today" role="tab" aria-selected="true">Today</a>
+												</li>
+											</ul>
 										</div>
 									</div>
-									<div class="d-flex ml-auto align-items-center">
-										<h3 class="text-success fw-bold">MC-001</h3>
-									</div>
 								</div>
-								<div class="separator-dashed"></div>
-								<div class="d-flex">
-									<div class="avatar">
-										<img src="/assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
+								<div class="card-body">
+									@for($i = 0; $i < 8 ; $i++)
+									<div class="d-flex">
+										<input type="hidden" value="{{ $i }}">
+										<div class="avatar avatar-online">
+											<span class="avatar-title rounded-circle border border-white bg-info">J</span>
+										</div>
+										<div class="flex-1 ml-3 pt-1">
+											<h4 class="text-uppercase fw-bold mb-1">MC-004 <span class="text-success pl-3">ทำงานปกติ</span></h4>
+
+											<span class="text-muted">มอเตอร์เสีย</span>
+										</div>
+										<div class="float-right pt-1">
+											<h5 class="text-muted">14/02/2021</h5>
+										</div>
 									</div>
-									<div class="flex-1 pt-1 ml-2">
-									<h6 class="fw-bold mt-2">น้ำcoolanรั่ว</h6>
-									</div>
-									<div class="d-flex ml-auto align-items-center">
-										<h3 class="text-warning fw-bold">MC-002</h3>
-									</div>
-								</div>
-								<div class="separator-dashed"></div>
-								<div class="d-flex">
-									<div class="avatar">
-										<img src="/assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
-									</div>
-									<div class="flex-1 pt-1 ml-2">
-										<h6 class="fw-bold mt-2">มอเตอร์ไม่ทำงาน</h6>
-									</div>
-									<div class="d-flex ml-auto align-items-center">
-										<h3 class="text-danger fw-bold">MC-003</h3>
-									</div>
-								</div>
+									<hr>
+								@endfor
 							</div>
 						</div>
-
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-6" >
 						<div class="card">
 							<div class="card-header">
 								<div class="card-title">แจ้งซ่อมแต่ล่ะ LINE</div>
@@ -213,16 +200,11 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-5">
 						<div class="card">
 							<div class="card-header">
-
 									<div class="card-title">ค่าซ่อมประจำเดือน
-										<a href="{{url('machine/dashboard/sumaryline')}}" class="btn btn-info float-right" >ค่าซ่อมแต่ล่ะ Line</a>
+										<a href="{{url('machine/dashboard/sumaryline')}}" class="btn btn-primary float-right" style="color:white">ค่าซ่อมแต่ล่ะ Line</a>
 									</div>
-
-
 							</div>
 							<div class="card-body">
 								<div class="chart-container">
@@ -231,8 +213,8 @@
 							</div>
 						</div>
 					</div>
-			</div>
 
+			</div>
 		</div>
 		<footer class="footer">
 			<div class="container-fluid">
