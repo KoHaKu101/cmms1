@@ -66,7 +66,7 @@
 									</div>
 									<div class="col-7 col-stats">
 										<div class="numbers">
-											<p class="card-category">เครื่องเปิดการใช้งาน</p>
+											<p class="card-category">เครื่องเปิดใช้งาน</p>
 											<h4 class="card-title">1,294</h4>
 										</div>
 									</div>

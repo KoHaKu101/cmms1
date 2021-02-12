@@ -75,10 +75,12 @@
 	<script type="text/javascript" src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
 	<!-- Sweet Alert -->
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+		{{-- <script type="text/javascript" src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script> --}}
+	{{-- <script type="text/javascript" src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script> --}}
 
 	<!-- Atlantis JS -->
 	<script type="text/javascript" src="{{ asset('assets/js/atlantis.min.js') }}"></script>
+		@include('sweetalert::alert')
 
 
 @yield('javascript')

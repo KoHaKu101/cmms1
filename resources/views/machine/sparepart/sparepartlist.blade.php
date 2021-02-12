@@ -29,12 +29,10 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
-								<a href="{{ url('/machine/dashboard/dashboard') }}">
-									<button class="btn btn-primary  btn-xs ">
-										<span class="fas fa-arrow-left fa-lg">Back </span>
-									</button>
-								</a>
-								<a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-xs">
+								<button class="btn btn-primary  btn-xs ">
+									<span class="fas fa-arrow-left fa-lg">Back </span>
+								</button>
+								<a href="{{ route('sparepart.form') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file fa-lg">	New	</span>
 								</button></a>
 								<a href="{{ url('users/import/show') }}">
@@ -47,10 +45,11 @@
 									<span class="fas fa-file-export fa-lg">	Export	</span>
 								</button>
 								</a>
+								<a href="{{url('machine/pdf/machinepdf')}}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
-
+								</a>
 							</div>
 						</div>
           </div>
@@ -72,7 +71,7 @@
 
 										<div class="form-inline bg-primary ">
 
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> Assets </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-fas fa-cogs fa-lg mr-1"></i> SparePart </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
   											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
@@ -96,41 +95,43 @@
                       	<thead class="thead-light">
                         	<tr>
 
-														<th scope="col" style=""></th>
-                            <th scope="col">Location</th>
-                          	<th scope="col">Name</th>
-                          	<th scope="col">Code</th>
-                          	<th scope="col">Asset Status</th>
-														<th scope="col">Last Price Currency</th>
+														<th scope="col" style="" width="10%"></th>
+                            <th scope="col">รหัสอะไหล่</th>
+                          	<th scope="col">ชื่ออะไหล่</th>
+                          	<th scope="col">จำนวน</th>
+                          	<th scope="col">หน่วย</th>
+														<th scope="col">ราคา</th>
+
 
                         	</tr>
                       	</thead>
 
                       	<tbody >
                           {{-- @php($i = 1) --}}
-													@foreach ($data_set as $key => $row)
+													{{-- @foreach ($data_set as $key => $row) --}}
 
                         		<tr>
 
 															<td style="white-space:nowrap">
-																<a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
+																<a href="{{ url('machine/sparepart/edit/') }}">
 																	<span style="color: green;">
 																		<i class="fas fa-edit fa-lg"></i>
 																	</span>
 																</a>
-																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" class="ml-3">
+																<a href="{{ url('machine/sparepart/delete/') }}" class="ml-3">
 																	<span style="color: Tomato;">
 																		<i class="fas fa-trash fa-lg ml-2">	</i>
 																	</span>
 																</a>
 															</td>
-															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_LINE }}  </td>
-															<td style="white-space:nowrap" class="born">              {{ $row->MACHINE_NAME }}  </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CODE }}   </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CHECK }}   </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
+															<td scope="row" style="white-space:nowrap" class="name">  RE6402-0023  </td>
+															<td style="white-space:nowrap" class="born">      สายพาน          </td>
+															<td style="white-space:nowrap">  				10		     </td>
+															<td style="white-space:nowrap">  				สาย		    </td>
+															<td style="white-space:nowrap">  				10,000	    </td>
+
                         			</tr>
-                        	@endforeach
+                        	{{-- @endforeach --}}
 
 
 
@@ -142,7 +143,8 @@
 									</div>
 
 										</div>
-										{{ $data_set->links() }}
+										{{-- {{ $data_set->links('pagination.default',['paginator' => $data_set,
+					 'link_limit' => $data_set->perPage()]) }} --}}
 
 								</div>
 

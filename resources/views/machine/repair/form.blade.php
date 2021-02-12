@@ -36,11 +36,17 @@
 									</button>
 								</a>
 							</div>
-							<div class="col-md-11 mt-2 ">
+							<div class="col-md-1 mt-2 ">
 								<form action="" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
+									</button>
+							</div>
+							<div class="col-md-1 mt-2 ">
+
+									<button class="btn btn-secondary btn-sm" type="submit">
+										<span class="fas fa-qrcode">	Scan QRCode	</span>
 									</button>
 							</div>
 						</div>
@@ -51,7 +57,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แจ้งซ่อม</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แจ้งซ่อมเครื่องจักร</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -60,48 +66,67 @@
 							</div>
 							<div class="card-body">
 								<div class="row">
-										<!-- ช่อง2-->
+										<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">เลขที่เอกสาร</label>
 												<?php
 												$number = date("ymdhis");
 
-												echo'<input type="text" class="form-control" id="" name="" placeholder="เลขที่เอกสาร"  value='.$number.' disabled> ';
+												echo'<input type="text" class="form-control" id="" name="" placeholder="เลขที่เอกสาร"  value=RE-'.$number.' disabled> ';
 
 													?>
 											</div>
-
+											<div class="form-group has-error">
+												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
+												<select class="form-control">
+													<option>พนักงาน</option>
+													<option value="ก">นาย ก</option>
+													<option value="ข">นาย ข</option>
+											</select>
+											</div>
+										</div>
+										<!-- ช่อง2-->
+										<div class="col-md-6 col-lg-4">
+											<div class="form-group">
+												<label for="MACHINE_MANU">วันที่เอกสาร	</label>
+												<input type="date" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU"
+												<?php echo'value="'.date("yyyy-mm-dd").'"';?> >
+											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">รหัสพนักงาน	</label>
-												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="รหัสพนักงาน">
+												<select class="form-control">
+													<option value>รหัสพนักงาน</option>
+													<option >6000</option>
+													<option >5000</option>
+												</select>
 											</div>
 										</div>
 										<!-- ช่อง3-->
 										<div class="col-md-6 col-lg-4">
-											<div class="form-group">
-												<label for="MACHINE_MANU">วันที่เอกสาร	</label>
-
-												<input type="date" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" placeholder="วันที่เอกสาร"
-												<?php echo'value="'.date("yyyy-mm-dd").'"';?>>
-
-											</div>
-											<div class="form-group has-error">
-												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
-												<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" placeholder="ชื่อพนักงาน" >
-											</div>
-										</div>
-
-										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">เวลาแจ้งซ่อม	</label>
-												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="เวลาแจ้งซ่อม" required autofocus>
+												<?php echo '<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value='.date("h:i:s").' disabled>'; ?>
 											</div>
 											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">แผนก	</label>
-												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="แผนก" required autofocus>
+												<label for="MACHINE_PARTNO">รหัสเครื่อง</label>
+													<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" placeholder="รหัสเครื่อง" disabled >
 											</div>
 										</div>
+									</div>
+									<div class="row">
+											<div class="col-md-8 col-lg-4">
+												<div class="form-group has-error">
+													<label for="MACHINE_MODEL">ชื่อเครื่อง</label>
+													<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="ชื่อเครื่อง" disabled>
+												</div>
+											</div>
+											<div class="col-md-8 col-lg-4">
+												<div class="form-group has-error">
+													<label for="MACHINE_SERIAL">Line</label>
+													<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" placeholder="Serial" disabled>
+												</div>
+											</div>
 									</div>
 								</div>
 								<div class="row">
@@ -122,14 +147,9 @@
     											border: none;
     											margin: 30px 2px 0;
 												}
-												ul li a {
-    											text-decoration: none;
-												}
-												.nav-pills li a.active {
-    											background: #3482ca;
-    											border: none;
-    											color: #FFF;
-												}
+
+
+
 											</style>
 											<ul class="nav nav-pills justify-content-left mt--4">
   											<li>
@@ -157,39 +177,36 @@
 																</div>
 															</div>
 																<div class="row">
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_PARTNO">รหัสเครื่อง</label>
-																				<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" placeholder="รหัสเครื่อง">
+
+																		<div class="col-md-8 col-lg-2 ml-2">
+																			<div class="form-check ml-4">
+																				<input class="form-check-input" type="radio" value="มอเตอร์เสีย" id="flexCheckDefault">
+																				<label class="form-check-label ml-2" for="flexCheckDefault">มอเตอร์เสีย</label>
+																			</div>
+																			<div class="form-check ml-4">
+																				<input class="form-check-input" type="radio" value="มอเตอร์เสีย" id="flexCheckDefault1">
+																				<label class="form-check-label ml-2" for="flexCheckDefault1">ท่อรั้ว</label>
+																			</div>
 																		</div>
-																	</div>
-																	<div class="col-md-8 col-lg-4">
-																		<div class="form-group">
-																			<label for="MACHINE_MODEL">ชื่อเครื่อง</label>
-																			<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="ชื่อเครื่อง">
-																		</div>
-																	</div>
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_SERIAL">Line</label>
-																			<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" placeholder="Serial">
+																		<div class="col-md-8 col-lg-3 ml-2">
+																			<div class="form-check ">
+																				<input class="form-check-input" type="radio" value="มอเตอร์เสีย" id="flexCheckDefault2">
+																				<label class="form-check-label ml-2" for="flexCheckDefault2">ตัวจับชิ้นงานเสีย</label>
+																			</div>
+																			<div class="form-check">
+  																			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked>
+  																				<label class="form-check-label" for="defaultCheck1">
+    																				Default checkbox
+  																			</label>
+																			</div>
 																		</div>
 
-																	</div>
-
-																		<div class="col-md-8 col-lg-5 ml-2">
+																		<div class="col-md-8 col-lg-3 ">
 																			<div class="form-group">
-																			<label for="MACHINE_SERIAL">อาการเสีย</label>
-																			<textarea class="form-control" id="comment" rows="5">
-																			</textarea>
-																		</div>
-																		</div>
-
-																		<div class="col-md-8 col-lg-2 ">
-																			<div class="form-group">
-																				<label for="MACHINE_SERIAL">Line</label>
+																				<label for="MACHINE_SERIAL">สถานะ</label>
 
 																				<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" >
+																					<option value>--แสดงทั้งหมด--</option>
 																					<option value="1">หยุดทำงาน</option>
 																					<option value="2">ทำงานปกติ</option>
 
@@ -216,220 +233,6 @@
 	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="row">
-					<div class="col-mb-6 col-lg-6">
-						<select class="form-control form-control">
-							<option>ระบบไฟฟ้า</option>
-						</select>
-					</div>
-					<div class="col-mb-6 col-lg-6">
-						<input type="text" class="form-control">
-					</div>
-      	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<!-- Modalรายละเอียดที่ต้องตรวจเช็ค -->
-<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="table">
-					<table>
-						<thead>
-							<tr>
-								<th>
-
-								</th>
-								<th>
-									<h4>รายการที่ต้องตรวจเช็ค</h4>
-								</th>
-								<th>
-									<h4>ค่า STD </h4>
-								</th>
-								<th>
-									<h4>ค่า ตรวจเช็คปัจจุบัน</h4>
-								</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr>
-								<td>
-									<input class="form-check-input float-right" type="checkbox" value="" id="flexCheckDefault">
-								</td>
-								<td>
-									<h4>สายไฟฟ้า</h4>
-								</td>
-
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-								</td>
-
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-							</td>
-							</tr>
-
-							<tr>
-								<td>
-									<input class="form-check-input float-right" type="checkbox" value="" id="flexCheckDefault">
-								</td>
-								<td>
-									<h4>แรงดันไฟ</h4>
-								</td>
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-								</td>
-
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-							</td>
-							</tr>
-						</tbody>
-					</table>
-      	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- Modal เพิ่มอะไหล่ที่ต้องเปลี่ยน -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">เพิ่มระบบที่ต้องตรวจเช็ค</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="row">
-					<div class="col-mb-6 col-lg-6">
-						<select class="form-control form-control">
-							<option>มอเตอร์</option>
-						</select>
-					</div>
-					<div class="col-mb-6 col-lg-6">
-						<input type="text" class="form-control">
-					</div>
-    		</div>
-      	<div class="modal-footer">
-        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="submit" class="btn btn-primary">Save changes</button>
-      	</div>
-    	</div>
-  	</div>
-	</div>
-</div>
-
-
-<!-- Modal รายละเอียดอะไหล่ที่ต้องเปลี่ยน -->
-<style>
-.modal-sm {
-    max-width: 80% !important;
-}
-</style>
-
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดอะไหล่ที่ต้องเปลี่ยน</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="table">
-					<table>
-						<thead>
-							<tr>
-								<th>
-
-								</th>
-								<th>
-									<h5>รายการอะไหล่ที่ต้องเปลี่ยน</h5>
-								</th>
-								<th>
-									<h5>พนักงานที่ทำการเปลี่ยน </h5>
-								</th>
-								<th>
-									<h5>เปลี่ยนทุกกี่เดือน/ปี</h5>
-								</th>
-								<th>
-									<h5>เปลี่ยนวัน/เดือน/ปี</h5>
-								</th>
-								<th>
-									<h5>เปลี่ยนวัน/เดือน/ปี ล่าสุด</h5>
-								</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr>
-								<td>
-									<input class="form-check-input float-right" type="checkbox" value="" id="flexCheckDefault">
-								</td>
-								<td>
-									<h5>มอเตอร์สว่าน</h4>
-								</td>
-
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-								</td>
-
-								<td>
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault"></small>
-							</td>
-							<td>
-									<small><input class="form-control float-right" type="date" value="" id="flexCheckDefault"></small>
-							</td>
-
-							<td>
-									<small><input class="form-control float-right" type="date" value="" id="flexCheckDefault"></small>
-						</td>
-							</tr>
-
-
-						</tbody>
-					</table>
-      	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 
 
 

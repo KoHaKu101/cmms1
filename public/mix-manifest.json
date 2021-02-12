@@ -1,7 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
     "/assets/js/bootstrap4-toggle.min.js": "/assets/js/bootstrap4-toggle.min.js",
-    "/assets/css/bulma.min.css": "/assets/css/bulma.min.css",
     "/assets/css/bootstrap4-toggle.min.css": "/assets/css/bootstrap4-toggle.min.css",
     "/css/app.css": "/css/app.css"
 }

@@ -30,7 +30,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/personal/personallist') }}">
+								<a href="{{ url('machine/sparepart/sparepartlist') }}">
 									<button class="btn btn-primary  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>
@@ -43,6 +43,10 @@
 										<span class="fas fa-file-medical ">	Save	</span>
 									</button>
 							</div>
+							<div class="col-md-11 mt-2 ">
+
+
+							</div>
 						</div>
 					</div>
 				</div>
@@ -51,7 +55,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">sparepart</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">Stock</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -75,32 +79,19 @@
 											</div>
 										</div>
 										<!-- ช่อง3-->
+
 										<div class="col-md-6 col-lg-2">
 											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">หน่วย	</label>
-												<select class="form-control">
-													<option value>--ทั้งหมด--</option>
-													<option value="1">สาย</option>
-													<option value="2">กล่อง</option>
-												</select>
+												<label for="MACHINE_RVE_DATE">จำนวน	</label>
+												<input type="text" class="form-control" id="" name="" placeholder="จำนวน" >
 											</div>
 
 										</div>
-										<div class="col-md-8 col-lg-3">
-											<div class="form-group has-error">
-												<label for="MACHINE_MODEL">ราคา</label>
-												<div class="input-group">
-												<input type="text" class="form-control" id="" name="" placeholder="ราคา" >
-												<div class="input-group-append">
-														<span class="input-group-text">บาท</span>
-													</div>
-											</div>
-										</div>
-									</div>
+										
 								</div>
 									<div class="row">
 											<div class="col-md-8 col-lg-4">
-												<div class="form-group has-error">
+												<div class="form-group ">
 													<label for="exampleFormControlTextarea1">หมายเหตุ</label>
     											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
 												</div>
@@ -113,13 +104,13 @@
 										<tbody>
 											<tr>
 												<td valign="center"><div class="today-record-audit">สร้างโดย:</div></td>
-												<td valign="center"><div class="today-record-audit">สุบรรณ์</div></td>
+												<td valign="center"><div class="today-record-audit"></div></td>
 												<td valign="center"><div class="today-record-audit">สร้างเวลา:</div></td>
-												<td valign="center"><div class="today-record-audit">2017-08-16 13:54:03</div></td>
+												<td valign="center"><div class="today-record-audit"></div></td>
 												<td valign="center"><div class="today-record-audit">แก้ไขโดย:</div></td>
-												<td valign="center"><div class="today-record-audit">สุบรรณ์</div></td>
+												<td valign="center"><div class="today-record-audit"></div></td>
 												<td valign="center"><div class="today-record-audit">แก้ไขเวลา:</div></td>
-												<td valign="center"><div class="today-record-audit">2021-02-12 09:30:58</div></td>
+												<td valign="center"><div class="today-record-audit"></div></td>
 											</tr>
 										</tbody>
 									</table>

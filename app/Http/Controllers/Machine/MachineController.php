@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Machine;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machnie;
-
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 
 use App\Exports\MachineExport;
@@ -36,12 +36,18 @@ class MachineController extends Controller
 
   public function Index(){
 
+
     $data_set = Machnie::paginate(10);
+
+
+
     //dd($data_set);
     return View('machine/assets/machinelist',compact(['data_set']),['data_set' => $data_set]);
   }
 
   public function Create(){
+
+
     return View('machine/assets/form');
   }
 
@@ -128,7 +134,7 @@ class MachineController extends Controller
           'ESP_MAC'              => $request->ESP_MAC,
       ]);
       $data_set = Machnie::paginate(12);
-      // dd($machine_all);
+      Alert::success('ลงทะเบียนสำเร็จ');
       return Redirect()->route('machine.list',compact(['data_set']))->with('success','ลงทะเบียน สำเร็จ');
   }
 
@@ -199,7 +205,8 @@ class MachineController extends Controller
       'SHIFT_TYPE'           => $request->SHIFT_TYPE,
       'ESP_MAC'              => $request->ESP_MAC,
     ]);
-    return Redirect()->route('machine.list')->with('success','Update Success');
+
+    return Redirect()->route('machine.list')->with('success','อัพเดทรายการสำเร็จ');
   }
 
   public function Delete($UNID){

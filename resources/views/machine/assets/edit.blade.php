@@ -63,7 +63,7 @@
 									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="{{$data_set->MAHCINE_ICON}}" width="200" height="200px" class="mt-4">
+												<img src="{{asset($data_set->MACHINE_ICON	)}}" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
 											</div>
 										</div>
@@ -86,7 +86,7 @@
 												<div class="form-group col-md-6 col-lg-6 has-error">
 													<lebel>สถานะ</lebel>
 													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" value="{{ $data_set->MACHINE_CHECK }}">
-														
+
 														<option value>-แสดงทั้งหมด-</option>
 														<option value="1">ทำงานปกติ</option>
 														<option value="2">ทำงาน</option>

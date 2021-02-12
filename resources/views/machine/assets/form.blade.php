@@ -469,7 +469,7 @@
 
 																					</th>
 																					<th class="bg-primary" >
-																						<button  id="popup" type="button" class="btn btn-info float-right"
+																						<button  id="popup" type="button" class="btn btn-secondary float-right"
 																						data-toggle="modal" data-target="#exampleModal" >เพิ่มระบบที่ต้องตรวจเช็ค</button>
 																					</th>
 																				</tr>
@@ -535,7 +535,7 @@
 																						<h3 align="center" style="color:white;" class="mt-2">อะไหล่ที่ต้องเปลี่ยน</h3>
 																					</th>
 																					<th class="bg-primary" >
-																						<button  id="popup" type="button" class="btn btn-info float-right"
+																						<button  id="popup" type="button" class="btn btn-secondary float-right"
 																						data-toggle="modal" data-target="#exampleModal2" >เพิ่มรายการอะไหล่</button>
 																					</th>
 																				</tr>

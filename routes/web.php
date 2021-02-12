@@ -10,7 +10,10 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\SettingMenu\MenuController;
 use App\Http\Controllers\SettingMenu\MenuSubController;
 use App\Http\Controllers\Machine\MachineController;
+use App\Http\Controllers\Machine\PersonalController;
 use App\Http\Controllers\Machine\RepairController;
+use App\Http\Controllers\Machine\SparePartController;
+use App\Http\Controllers\Machine\StockController;
 use App\Http\Controllers\PDF\TsetController;
 
 //Model
@@ -72,13 +75,13 @@ Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit']) 
 Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
 Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
 
-//pernosal
-Route::get('machine/personal/personallist'     ,[MachineController::class,'Index'])  ->name('personal.list');
-Route::get('machine/personal/form'            ,[MachineController::class,'Create']) ->name('personal.form');
-Route::post('machine/personal/store'          ,[MachineController::class,'Store'])  ->name('personal.store');
-Route::get('machine/personal/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('personal.edit');
-Route::post('machine/personal/update/{UNID}'  ,[MachineController::class,'Update']);
-Route::get('machine/personal/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('personal.delete');
+//personal
+Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'])  ->name('personal.list');
+Route::get('machine/personal/form'            ,[PersonalController::class,'Create']) ->name('personal.form');
+Route::post('machine/personal/store'          ,[PersonalController::class,'Store'])  ->name('personal.store');
+Route::get('machine/personal/edit'            ,[PersonalController::class,'Edit'])   ->name('personal.edit');
+Route::post('machine/personal/update/{UNID}'  ,[PersonalController::class,'Update']);
+Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 
 //repair
 Route::get('machine/repair/repairlist'         ,[RepairController::class,'Index'])  ->name('repair.list');
@@ -88,6 +91,21 @@ Route::get('machine/repair/edit'     ,[RepairController::class,'Edit'])   ->name
 Route::post('machine/repair/update/{UNID}'  ,[RepairController::class,'Update']);
 Route::get('machine/repair/delete/{UNID}'   ,[RepairController::class,'Delete']) ->name('repair.delete');
 
+//sparepart
+Route::get('machine/sparepart/sparepartlist'   ,[SparePartController::class,'Index'])  ->name('sparepart.list');
+Route::get('machine/sparepart/form'            ,[SparePartController::class,'Create']) ->name('sparepart.form');
+Route::post('machine/sparepart/store'          ,[SparePartController::class,'Store'])  ->name('sparepart.store');
+Route::get('machine/sparepart/edit'            ,[SparePartController::class,'Edit'])   ->name('sparepart.edit');
+Route::post('machine/sparepart/update/{UNID}'  ,[SparePartController::class,'Update']);
+Route::get('machine/sparepart/delete/{UNID}'   ,[SparePartController::class,'Delete']) ->name('sparepart.delete');
+
+//stock
+Route::get('machine/sparepart/stock/stocklist'      ,[StockController::class,'Index'])  ->name('stock.list');
+Route::get('machine/sparepart/stock/form'            ,[StockController::class,'Create']) ->name('stock.form');
+Route::post('machine/sparepart/stock/store'          ,[StockController::class,'Store'])  ->name('stock.store');
+Route::get('machine/sparepart/stock/edit'            ,[StockController::class,'Edit'])   ->name('stock.edit');
+Route::post('machine/sparepart/stock/update/{UNID}'  ,[StockController::class,'Update']);
+Route::get('machine/sparepart/stock/delete/{UNID}'   ,[StockController::class,'Delete']) ->name('stock.delete');
 
 
 //MenuController

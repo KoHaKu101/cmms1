@@ -5,7 +5,7 @@ namespace App\Models\Machine;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class System extends Model
+class MachineLine extends Model
 {
     use HasFactory;
     const CREATED_AT = 'CREATE_TIME';
