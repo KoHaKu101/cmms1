@@ -1,0 +1,38 @@
+1.ใช้คำสั่ง composer require elibyy/tcpdf-laravel เพื่อติดตั้งไฟล์
+2.เพื่มคำสั่งลงใน providers service และ aliases
+'providers' => [
+    //...
+    Elibyy\TCPDF\ServiceProvider::class,
+]
+
+//...
+
+'aliases' => [
+    //...
+    'PDF' => Elibyy\TCPDF\Facades\TCPDF::class
+]
+3.สร้าง route::get('/....','..........');
+4.สร้างไฟล์เพื่อทำให้ route ทำงานได้ 
+	php artisan make:controller .......Controller
+
+5.เพิ่มคำสั่งใส่ไฟล์ ที่เราเพิ่งสร้างมา
+
+โดยใส่ลงใน class
+
+	public function index(){
+  PDF::AddPage('A4');
+PDF::SetFont('freeserif', 'B', 20, '', 'false');
+PDF::SetY(10); //ระยะห่างจากด้านบนมาล่าง
+PDF::SetX(0); //ระยะห่างจากซ้ายไปขวา
+PDF::Cell(0, 0, "อีสานเดฟ มหาสารคาม", 0, false, 'C', 0, '', 0, false, 'M', 'M');
+PDF::SetFont('freeserif', 'B', 16, '', 'false');
+PDF::SetY(30); //ระยะห่างจากด้านบนมาล่าง
+PDF::SetX(10); //ระยะห่างจากซ้ายไปขวา
+PDF::Cell(0, 0, "วัน/เดือน/ปี", 1, false, 'C', 0, '', 0, false, 'M', 'M');
+PDF::SetFont('freeserif', 'B', 16, '', 'false');
+PDF::SetY(34); //ระยะห่างจากด้านบนมาล่าง
+PDF::SetX(10); //ระยะห่างจากซ้ายไปขวา
+PDF::MultiCell(40, 5, "เดือน/ปี", 1, 'C',0, 1, '', '', true);
+PDF::Output('PDF-Report.pdf','I');
+
+}

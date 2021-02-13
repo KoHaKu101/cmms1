@@ -1,0 +1,15 @@
+add Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout');
+	in route web
+and use <a herf="{{ url('.logout)}}" in your page
+------------------------------------------------------------
+set login default
+add Route::get('/pqmhome', [App\Http\Controllers\HomeController::class, 'index']);
+	in route web
+add ->middlewar('auth'); in }); exp })->middlewar('auth);
+	and change return view('welcome') to 'pqmhome'
+-----------------------------------------------------------------
+go route serviceprovide.php
+	go to line and change public const Home = '/home'; to public const Home = '/pqmhome';	
+---------------------------------------------------------------------
+go to Home controller
+	go to line return view ('home') change it to /pqmhome

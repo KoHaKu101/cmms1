@@ -1,0 +1,12 @@
+หากมีปัญหา ขั้นแรก คำสั่ง ="" ออกจากคำสั่งพวกนี้ดังต่อไปนี้ ใน file tcpdf_font.php ใน vendor tecnickcom tcpdf include
+
+1998 public static function UTF8StringToArray($str, $isunicode, &$currentfont)
+2024 public static function UTF8ToLatin1($str, $isunicode, &$currentfont)
+2040 public static function UTF8ToUTF16BE($str, $setbom, $isunicode, &$currentfont)
+2060 public static function utf8StrRev($str, $setbom, $forcertl, $isunicode, &$currentfont)
+2077 public static function utf8StrArrRev($arr, $str, $setbom, $forcertl, $isunicode, &$currentfont)
+2093 public static function utf8Bidi($ta, $str, $forcertl, $isunicode, &$currentfont)
+
+และใน tcpdf_static
+1139 public static function fixHTMLCode($html, $default_css, $tagvs, $tidy_options, &$tagvspaces)
+2510 public static function setPageBoxes($page, $type, $llx, $lly, $urx, $ury, $points, $k, $pagedim=array())

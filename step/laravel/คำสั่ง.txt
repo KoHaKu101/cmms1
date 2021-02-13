@@ -1,0 +1,2 @@
+php artisan route:list --name=...... เพื่อหาเล้าที่เราเจาะจง
+

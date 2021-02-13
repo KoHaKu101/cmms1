@@ -1,0 +1,7 @@
+git init เพิ่มไฟล์ git ลงในโฟลเดอร์
+git remote add oringin url เพิ่มurl ที่จะทำการบันทึกลง
+git remote -v  เพื่อเช็คurl
+git status เพื่อเช็คว่ามีไรเปลี่ยนแปลงบ้าง
+git add . เพิ่มไฟล์รอลงออนไลน์ทั้งหมด
+git commit -m " " เพื่อบันทึกลงออนไลน์แต่ยังไม่สำเร็จ รอยืนยัน
+git push origin master คือการยืนยันว่าลงตรงนี้นะในตำแหน่งของ master

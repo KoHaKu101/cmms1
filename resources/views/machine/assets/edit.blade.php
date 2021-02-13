@@ -85,25 +85,25 @@
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-6 col-lg-6 has-error">
 													<lebel>สถานะ</lebel>
-													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" value="{{ $data_set->MACHINE_CHECK }}">
+													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK">
 
 														<option value>-แสดงทั้งหมด-</option>
-														<option value="1">ทำงานปกติ</option>
-														<option value="2">ทำงาน</option>
-														<option value="3">รอผลิต</option>
-														<option value="4">แผนผลิต</option>
+														<option value="1"{{ $data_set->MACHINE_CHECK == "1" ? 'selected' : '' }}>ทำงานปกติ</option>
+														<option value="2"{{ $data_set->MACHINE_CHECK == "2" ? 'selected' : '' }}>ทำงาน</option>
+														<option value="3"{{ $data_set->MACHINE_CHECK == "3" ? 'selected' : '' }}>รอผลิต</option>
+														<option value="4"{{ $data_set->MACHINE_CHECK == "4" ? 'selected' : '' }}>แผนผลิต</option>
 													</select>
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
-													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" value="{{ $data_set->MACHINE_LINE }}">
+													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE">
 													<option value>--แสดงทั้งหมด--</option>
-													<option value="L1">Line 1</option>
-													<option value="L2">Line 2</option>
-													<option value="L3">Line 3</option>
-													<option value="L4">Line 4</option>
-													<option value="L5">Line 5</option>
-													<option value="L6">Line 6</option>
+													<option value="L1"{{ $data_set->MACHINE_LINE == "L1" ? 'selected' : '' }}>Line 1</option>
+													<option value="L2"{{ $data_set->MACHINE_LINE == "L2" ? 'selected' : '' }}>Line 2</option>
+													<option value="L3"{{ $data_set->MACHINE_LINE == "L3" ? 'selected' : '' }}>Line 3</option>
+													<option value="L4"{{ $data_set->MACHINE_LINE == "L4" ? 'selected' : '' }}>Line 4</option>
+													<option value="L5"{{ $data_set->MACHINE_LINE == "L5" ? 'selected' : '' }}>Line 5</option>
+													<option value="L6"{{ $data_set->MACHINE_LINE == "L6" ? 'selected' : '' }}>Line 6</option>
 												</select>
 						  				</div>
 											</div>

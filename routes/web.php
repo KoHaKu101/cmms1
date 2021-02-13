@@ -51,6 +51,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/machine/dashboard/dashboa
 })->name('/machine/dashboard/dashboard');
 
 Route::get('/machine/dashboard/sumaryline',[DashboardController::class,'Sumaryline'])->name('dashboard.sumaryline');
+Route::get('/machine/dashboard/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
 
 
 

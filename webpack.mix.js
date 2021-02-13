@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -27,4 +28,5 @@ if (mix.inProduction()) {
 
    mix.js('node_modules/bootstrap4-toggle/js/bootstrap4-toggle.min.js','public/assets/js')
       .css('node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css','public/assets/css');
-  // mix.js('vendor/realrashid/sweet-alert/resources/js/sweetalert.all.js','public/assets/css');
+  mix.js('node_modules/echarts/dist/echarts.min.js','public/assets/js')
+    .js('node_modules/echarts/dist/echarts.common.min.js','public/assets/js');

@@ -1,0 +1,4 @@
+หาก error app.js:959 [Vue warn]: Cannot find element: #app
+	ให้ใส่ id='app' ลงใน div
+-----------------------------------------------------------
+

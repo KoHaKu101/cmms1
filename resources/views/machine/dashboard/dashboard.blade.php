@@ -1,7 +1,9 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-<link rel="stylesheet" href="{{ asset('assets/icofont/icofont.min.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('assets/icofont/icofont.min.css') }}"> --}}
+<script type="text/javascript" src="{{asset('/assets/js/echarts.min.js')}}"></script>
+
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -48,7 +50,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องจักรทั้งหมด</p>
-											<h4 class="card-title">1,294</h4>
+											<h4 class="card-title">{{$data_setall}}</h4>
 										</div>
 									</div>
 								</div>
@@ -67,7 +69,8 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องเปิดใช้งาน</p>
-											<h4 class="card-title">1,294</h4>
+
+											<h4 class="card-title">{{$data_check}}</h4>
 										</div>
 									</div>
 								</div>
@@ -86,7 +89,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องรอขึ้นงาน</p>
-											<h4 class="card-title">1,294</h4>
+											<h4 class="card-title">{{$data_nocheck}}</h4>
 										</div>
 									</div>
 								</div>
@@ -104,8 +107,8 @@
 									</div>
 									<div class="col-7 col-stats">
 										<div class="numbers">
-											<p class="card-category">เครื่องรอซ่อม</p>
-											<h4 class="card-title">1,294</h4>
+											<p class="card-category">เครื่องแจ้งซ่อม</p>
+											<h4 class="card-title"></h4>
 										</div>
 									</div>
 								</div>
@@ -154,7 +157,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-5">
 							<div class="card full-height">
 								<div class="card-header">
 									<div class="card-head-row">
@@ -169,34 +172,38 @@
 									</div>
 								</div>
 								<div class="card-body">
-									@for($i = 0; $i < 8 ; $i++)
+
+									@foreach($data_set as $data_sett)
+										{{-- @for($i = 1; $i < 9-$data_set ; $i++) --}}
 									<div class="d-flex">
-										<input type="hidden" value="{{ $i }}">
+										<input type="hidden" value="1">
 										<div class="avatar avatar-online">
 											<span class="avatar-title rounded-circle border border-white bg-info">J</span>
 										</div>
 										<div class="flex-1 ml-3 pt-1">
-											<h4 class="text-uppercase fw-bold mb-1">MC-004 <span class="text-success pl-3">ทำงานปกติ</span></h4>
+											<h4 class="text-uppercase fw-bold mb-1">{{$data_sett->MACHINE_CODE}} <span class="text-success pl-3">ทำงานปกติ</span></h4>
 
 											<span class="text-muted">มอเตอร์เสีย</span>
 										</div>
 										<div class="float-right pt-1">
-											<h5 class="text-muted">14/02/2021</h5>
+											<h5 class="text-muted">{{$data_sett->CREATE_TIME}}</h5>
 										</div>
 									</div>
 									<hr>
-								@endfor
+									{{-- @endfor --}}
+								@endforeach
+
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6" >
+					<div class="col-md-7" >
 						<div class="card">
 							<div class="card-header">
 								<div class="card-title">แจ้งซ่อมแต่ล่ะ LINE</div>
 							</div>
 							<div class="card-body">
 								<div class="chart-container">
-									<canvas id="barChart"></canvas>
+									<div id="repair" style="width: 740px;height:350px;"></div>
 								</div>
 							</div>
 						</div>
@@ -208,7 +215,7 @@
 							</div>
 							<div class="card-body">
 								<div class="chart-container">
-									<canvas id="multipleBarChart"></canvas>
+									<div id="price" style="width: 740px;height:350px;"></div>
 								</div>
 							</div>
 						</div>
@@ -248,87 +255,176 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+
+<script type="text/javascript" src="{{asset('/echart/echarts-en.common.min.js')}}"></script>
 <script src="{{asset('/assets/js/plugin/chart.js/chart.min.js')}}"></script>
 <script src="{{asset('/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
+	{{-- แจ้งซ่อมแต่ล่ะLine--}}
+<script type="text/javascript">
+
+	var chartDom = document.getElementById('repair');
+	var myChart = echarts.init(chartDom);
+	var option;
+	option = {
+		legend: {show: true,textStyle: {
+      fontSize: 14
+    }},
+		tooltip: {},
+		dataset: {
+			source: [
+			['product', 'Line1', 'Line2', 'Line3','Line4', 'Line5', 'Line6'],
+			['แจ้งซ่อมในแต่ล่ะ LINE', 43.3, 85.8, 93.7,43.3, 85.8, 93.7],
+		]
+	},
+	xAxis: {type: 'category'},
+	yAxis: {},
+	// Declare several bar series, each will be mapped
+	// to a column of dataset.source by default.
+	series: [
+		{type: 'bar',color: '#14BAFD',
+		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
+		{type: 'bar',color: '#FF944F',
+		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
+		{type: 'bar',color: '#BAFF4F',
+		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
+		{type: 'bar',color: '#FF4F4F',
+		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
+		{type: 'bar',color: '#FF4FCF',
+		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
+		{type: 'bar',color: '#4F62FF',
+		label: {position: "top",show: true,fontSize: 16,color: 'black'},}
+	]
+	};
+	option && myChart.setOption(option);
+
+</script>
+	{{-- ค่าใช้จ่าย--}}
+<script type="text/javascript">
+	var chartDom1 = document.getElementById('price');
+	var myChart1 = echarts.init(chartDom1,);
+	var option;
+	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var yMax = 500;
+	var dataShadow = [];
+	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);
+	}
+	option = {
+		legend: {show: true,textStyle: {
+			fontSize: 14
+		},data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
+		},
+		title: {
+				text: 'ค่าซ่อมประจำเดือน',
+
+		},
+		xAxis: {
+				data: dataAxis,
+				axisLabel: {
+						inside: false,
+						textStyle: {
+								color: 'black'
+						}
+				},
+				axisTick: {
+						show: false
+				},
+				axisLine: {
+						show: false
+				},
+				z: 10
+		},
+		yAxis: {
+				axisLine: {
+						show: false
+				},
+				axisTick: {
+						show: false
+				},
+				axisLabel: {
+						textStyle: {
+								color: 'black'
+						}
+				}
+		},
+
+		series: [
+				{
+						name: 'ค่าอะไหล่',
+						type: 'bar',
+
+						itemStyle: {
+								color: new echarts.graphic.LinearGradient(
+										0, 0, 0, 1,
+										[
+												{offset: 0, color: '#83bff6'},
+												{offset: 0.5, color: '#188df0'},
+												{offset: 1, color: '#188df0'}
+										]
+								)
+						},
+
+						emphasis: {
+								itemStyle: {
+										color: new echarts.graphic.LinearGradient(
+												0, 0, 0, 1,
+												[
+														{offset: 0, color: '#2378f7'},
+														{offset: 0.7, color: '#2378f7'},
+														{offset: 1, color: '#83bff6'}
+												]
+										)
+								}
+						},
+
+						data: data
+
+				},
+				{
+						name: 'ค่าจ้าง SubContaine',
+						type: 'bar',
+
+						itemStyle: {
+								color: new echarts.graphic.LinearGradient(
+										0, 0, 0, 1,
+										[
+												{offset: 0, color: '#FF9595'},
+												{offset: 0.5, color: '#FF5656'},
+												{offset: 1, color: '#FF1616'}
+										]
+								)
+						},
+						 emphasis: {
+								itemStyle: {
+										color: new echarts.graphic.LinearGradient(
+												0, 0, 0, 1,
+												[
+														{offset: 0, color: '#FF1616'},
+														{offset: 0.7, color: '#FF5656'},
+														{offset: 1, color: '#FF9595'}
+												]
+										)
+								}
+						},
+
+						data : data1
+				}
+		],
+
+	};
+	option && myChart1.setOption(option);
+
+</script>
 <script>
-	var multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
-
-	 		barChart = document.getElementById('barChart').getContext('2d');
-
-	var myBarChart = new Chart(barChart, {
-		type: 'bar',
-		data: {
-			labels: ["Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6"],
-			datasets : [{
-				label: "แจ้งซ่อมเครื่องจักรในแต่ล่ะ LINE",
-				backgroundColor: 'rgb(23, 125, 255)',
-				borderColor: 'rgb(23, 125, 255)',
-				data: [3, 2, 9, 5, 4, 6,],
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero:true
-					}
-				}]
-			},
-		}
-	});
-	var myMultipleBarChart = new Chart(multipleBarChart, {
-		type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
-
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าใช้จ่ายในแต่ล่ะเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
-
 	Circles.create({
 		id:'circles-1',
 		radius:45,
-		value:60,
-		maxValue:100,
-		width:7,
-		text: 5,
-		colors:['#f1f1f1', '#FF9E27'],
+		value:{{$data_line1}},
+		maxValue:500,
+		width:10,
+		text: {{$data_line1}},
+		colors:['#585963', '#14BAFD'],
 		duration:400,
 		wrpClass:'circles-wrp',
 		textClass:'circles-text',
@@ -338,11 +434,11 @@
 	Circles.create({
 		id:'circles-2',
 		radius:45,
-		value:70,
-		maxValue:100,
-		width:7,
-		text: 36,
-		colors:['#f1f1f1', '#2BB930'],
+		value:{{$data_line2}},
+		maxValue:500,
+		width:10,
+		text: {{$data_line2}},
+		colors:['#585963', '#FF944F'],
 		duration:400,
 		wrpClass:'circles-wrp',
 		textClass:'circles-text',
@@ -352,11 +448,11 @@
 	Circles.create({
 		id:'circles-3',
 		radius:45,
-		value:40,
-		maxValue:100,
-		width:7,
-		text: 12,
-		colors:['#f1f1f1', '#F25961'],
+		value:{{$data_line3}},
+		maxValue:500,
+		width:10,
+		text: {{$data_line3}},
+		colors:['#585963', '#BAFF4F'],
 		duration:400,
 		wrpClass:'circles-wrp',
 		textClass:'circles-text',
@@ -366,11 +462,11 @@
 	Circles.create({
 		id:'circles-4',
 		radius:45,
-		value:20,
-		maxValue:100,
-		width:7,
-		text: 20,
-		colors:['#f1f1f1', '#5EE91D'],
+		value:{{$data_line4}},
+		maxValue:500,
+		width:10,
+		text: {{$data_line4}},
+		colors:['#585963', '#FF4F4F'],
 		duration:400,
 		wrpClass:'circles-wrp',
 		textClass:'circles-text',
@@ -380,11 +476,11 @@
 	Circles.create({
 		id:'circles-5',
 		radius:45,
-		value:40,
-		maxValue:100,
-		width:7,
-		text: 40,
-		colors:['#f1f1f1', '#F018F7'],
+		value:{{$data_line5}},
+		maxValue:500,
+		width:10,
+		text: {{$data_line5}},
+		colors:['#585963', '#FF4FCF'],
 		duration:400,
 		wrpClass:'circles-wrp',
 		textClass:'circles-text',
@@ -394,11 +490,11 @@
 	Circles.create({
 		id:'circles-6',
 		radius:45,
-		value:60,
-		maxValue:100,
-		width:7,
-		text: 60,
-		colors:['#f1f1f1', '#6C14FD'],
+		value:{{$data_line6}},
+		maxValue:500,
+		width:10,
+		text: {{$data_line6}},
+		colors:['#585963', '#4F62FF'],
 		duration:400,
 		wrpClass:'circles-wrp',
 		textClass:'circles-text',

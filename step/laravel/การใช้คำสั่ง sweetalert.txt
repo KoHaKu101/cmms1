@@ -1,0 +1,20 @@
+$(document).ready(function() {
+    $('.deleteform').click(function(event) {
+        event.preventDefault();
+        Swal({
+            title: "คุณต้องการลบหรือไม่ ?"
+        })
+    })
+});
+
+V.old
+-----------------------------------------------------------------------
+$(function() {
+    $('.deleteform').on('click', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: "คุณต้องการลบหรือไม่ ?"
+        })
+    })
+});
+V.new

@@ -43,7 +43,7 @@
 						</div>
 						<div class="card-body">
 							<div class="chart-container">
-								<canvas id="multipleLine1"></canvas>
+								<div id="price1"style="width: 650px;height:400px;"></div>
 							</div>
 						</div>
 					</div>
@@ -55,7 +55,7 @@
 	          </div>
 	          <div class="card-body">
 	            <div class="chart-container">
-	              <canvas id="multipleLine2"></canvas>
+	              <div id="price2"style="width: 650px;height:400px;"></div>
 	            </div>
 	          </div>
 	        </div>
@@ -69,7 +69,7 @@
         </div>
         <div class="card-body">
           <div class="chart-container">
-            <canvas id="multipleLine3"></canvas>
+            <div id="price3"style="width: 650px;height:400px;"></div>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
 	      </div>
 	      <div class="card-body">
 	        <div class="chart-container">
-	          <canvas id="multipleLine4"></canvas>
+	          <div id="price4"style="width: 650px;height:400px;"></div>
 	        </div>
 	      </div>
 	    </div>
@@ -95,7 +95,7 @@
       </div>
       <div class="card-body">
         <div class="chart-container">
-          <canvas id="multipleLine5"></canvas>
+          <div id="price5"style="width: 650px;height:400px;"></div>
         </div>
       </div>
     </div>
@@ -108,7 +108,7 @@
       </div>
       <div class="card-body">
         <div class="chart-container">
-          <canvas id="multipleLine6"></canvas>
+          <div id="price6"style="width: 650px;height:400px;"></div>
         </div>
       </div>
     </div>
@@ -148,270 +148,366 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-<script src="{{asset('/assets/js/plugin/chart.js/chart.min.js')}}"></script>
-<script src="{{asset('/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
-<script>
-	var multipleLine1 = document.getElementById('multipleLine1').getContext('2d'),
-  multipleLine2 = document.getElementById('multipleLine2').getContext('2d'),
-  multipleLine3 = document.getElementById('multipleLine3').getContext('2d'),
-  multipleLine4 = document.getElementById('multipleLine4').getContext('2d'),
-  multipleLine5 = document.getElementById('multipleLine5').getContext('2d'),
-  multipleLine6 = document.getElementById('multipleLine6').getContext('2d');
+<script type="text/javascript" src="{{asset('/echart/echarts-en.common.min.js')}}"></script>
+<script type="text/javascript">
+	var chartDom1 = document.getElementById('price1');
+	var myChart1 = echarts.init(chartDom1,);
+	var option;
+	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var yMax = 500;
+	var dataShadow = [];
+	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);}
+	option = {
+		legend: {show: true,textStyle: {fontSize: 14 },
+			data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
+						},
+	 	 
+		 xAxis: {
+			data: dataAxis,
+			axisLabel: {inside: false,textStyle:{color: 'black'} },
+	axisTick: {show: false},
+	axisLine: {show: false},z: 10
+						},
+		yAxis: {axisLine: {show: false},axisTick: {show: false},axisLabel: {textStyle: {color: 'black'} } },
+		series: [
+				{	name: 'ค่าอะไหล่',
+				 	type: 'bar',
+					itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#83bff6'},
+												{offset: 0.5, color: '#188df0'},
+												{offset: 1, color: '#188df0'}
+										])
+										},
+				emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#2378f7'},
+														{offset: 0.7, color: '#2378f7'},
+														{offset: 1, color: '#83bff6'}
+															])
+															}
+									},
+						data: data},
+				{name: 'ค่าจ้าง SubContaine',
+						type: 'bar',
+						itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#FF9595'},
+												{offset: 0.5, color: '#FF5656'},
+												{offset: 1, color: '#FF1616'}
+										])
+										},
+					 emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#FF1616'},
+														{offset: 0.7, color: '#FF5656'},
+														{offset: 1, color: '#FF9595'}
+												])
+											}
+										},
+						data : data1}
+					],
 
-	var myMultipleLine1 = new Chart(multipleLine1, {
-		type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
+	};
+	option && myChart1.setOption(option);
+</script>
+<script type="text/javascript">
+	var chartDom2 = document.getElementById('price2');
+	var myChart2 = echarts.init(chartDom2,);
+	var option;
+	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var yMax = 500;
+	var dataShadow = [];
+	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);}
+	option = {
+		legend: {show: true,textStyle: {fontSize: 14 },
+			data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
+						},
 
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าซ่อมประจำเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
-  var myMultipleLine1 = new Chart(multipleLine2, {
-		  type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
+		 xAxis: {
+			data: dataAxis,
+			axisLabel: {inside: false,textStyle:{color: 'black'} },
+	axisTick: {show: false},
+	axisLine: {show: false},z: 10
+						},
+		yAxis: {axisLine: {show: false},axisTick: {show: false},axisLabel: {textStyle: {color: 'black'} } },
+		series: [
+				{	name: 'ค่าอะไหล่',
+				 	type: 'bar',
+					itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#83bff6'},
+												{offset: 0.5, color: '#188df0'},
+												{offset: 1, color: '#188df0'}
+										])
+										},
+				emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#2378f7'},
+														{offset: 0.7, color: '#2378f7'},
+														{offset: 1, color: '#83bff6'}
+															])
+															}
+									},
+						data: data},
+				{name: 'ค่าจ้าง SubContaine',
+						type: 'bar',
+						itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#FF9595'},
+												{offset: 0.5, color: '#FF5656'},
+												{offset: 1, color: '#FF1616'}
+										])
+										},
+					 emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#FF1616'},
+														{offset: 0.7, color: '#FF5656'},
+														{offset: 1, color: '#FF9595'}
+												])
+											}
+										},
+						data : data1}
+					],
 
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าซ่อมประจำเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
-  var myMultipleLine1 = new Chart(multipleLine3, {
-		  type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
+	};
+	option && myChart2.setOption(option);
+</script>
+<script type="text/javascript">
+	var chartDom3 = document.getElementById('price3');
+	var myChart3 = echarts.init(chartDom3,);
+	var option;
+	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var yMax = 500;
+	var dataShadow = [];
+	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);}
+	option = {
+		legend: {show: true,textStyle: {fontSize: 14 },
+			data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
+						},
 
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าซ่อมประจำเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
-  var myMultipleLine1 = new Chart(multipleLine4, {
-		  type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
+		 xAxis: {
+			data: dataAxis,
+			axisLabel: {inside: false,textStyle:{color: 'black'} },
+	axisTick: {show: false},
+	axisLine: {show: false},z: 10
+						},
+		yAxis: {axisLine: {show: false},axisTick: {show: false},axisLabel: {textStyle: {color: 'black'} } },
+		series: [
+				{	name: 'ค่าอะไหล่',
+				 	type: 'bar',
+					itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#83bff6'},
+												{offset: 0.5, color: '#188df0'},
+												{offset: 1, color: '#188df0'}
+										])
+										},
+				emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#2378f7'},
+														{offset: 0.7, color: '#2378f7'},
+														{offset: 1, color: '#83bff6'}
+															])
+															}
+									},
+						data: data},
+				{name: 'ค่าจ้าง SubContaine',
+						type: 'bar',
+						itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#FF9595'},
+												{offset: 0.5, color: '#FF5656'},
+												{offset: 1, color: '#FF1616'}
+										])
+										},
+					 emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#FF1616'},
+														{offset: 0.7, color: '#FF5656'},
+														{offset: 1, color: '#FF9595'}
+												])
+											}
+										},
+						data : data1}
+					],
 
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าซ่อมประจำเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
-  var myMultipleLine1 = new Chart(multipleLine5, {
-		  type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
+	};
+	option && myChart3.setOption(option);
+</script>
+<script type="text/javascript">
+	var chartDom4 = document.getElementById('price4');
+	var myChart4 = echarts.init(chartDom4,);
+	var option;
+	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var yMax = 500;
+	var dataShadow = [];
+	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);}
+	option = {
+		legend: {show: true,textStyle: {fontSize: 14 },
+			data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
+						},
 
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าซ่อมประจำเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
-  var myMultipleLine1 = new Chart(multipleLine6, {
-		  type: 'bar',
-		data: {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			datasets : [{
-				label: "ค่าอะไหล่",
-				backgroundColor: '#59d05d',
-				borderColor: '#59d05d',
-				data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
-			},{
-				label: "ค่าจ้าง Subcontact",
-				backgroundColor: '#fdaf4b',
-				borderColor: '#fdaf4b',
-				data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312,356],
+		 xAxis: {
+			data: dataAxis,
+			axisLabel: {inside: false,textStyle:{color: 'black'} },
+	axisTick: {show: false},
+	axisLine: {show: false},z: 10
+						},
+		yAxis: {axisLine: {show: false},axisTick: {show: false},axisLabel: {textStyle: {color: 'black'} } },
+		series: [
+				{	name: 'ค่าอะไหล่',
+				 	type: 'bar',
+					itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#83bff6'},
+												{offset: 0.5, color: '#188df0'},
+												{offset: 1, color: '#188df0'}
+										])
+										},
+				emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#2378f7'},
+														{offset: 0.7, color: '#2378f7'},
+														{offset: 1, color: '#83bff6'}
+															])
+															}
+									},
+						data: data},
+				{name: 'ค่าจ้าง SubContaine',
+						type: 'bar',
+						itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#FF9595'},
+												{offset: 0.5, color: '#FF5656'},
+												{offset: 1, color: '#FF1616'}
+										])
+										},
+					 emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#FF1616'},
+														{offset: 0.7, color: '#FF5656'},
+														{offset: 1, color: '#FF9595'}
+												])
+											}
+										},
+						data : data1}
+					],
 
-			}],
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			legend: {
-				position : 'bottom'
-			},
-			title: {
-				display: true,
-				text: 'ค่าซ่อมประจำเดือน'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false
-			},
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-	});
+	};
+	option && myChart4.setOption(option);
+</script>
+<script type="text/javascript">
+	var chartDom5 = document.getElementById('price5');
+	var myChart5 = echarts.init(chartDom5,);
+	var option;
+	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var yMax = 500;
+	var dataShadow = [];
+	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);}
+	option = {
+		legend: {show: true,textStyle: {fontSize: 14 },
+			data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
+						},
 
+		 xAxis: {
+			data: dataAxis,
+			axisLabel: {inside: false,textStyle:{color: 'black'} },
+	axisTick: {show: false},
+	axisLine: {show: false},z: 10
+						},
+		yAxis: {axisLine: {show: false},axisTick: {show: false},axisLabel: {textStyle: {color: 'black'} } },
+		series: [
+				{	name: 'ค่าอะไหล่',
+				 	type: 'bar',
+					itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#83bff6'},
+												{offset: 0.5, color: '#188df0'},
+												{offset: 1, color: '#188df0'}
+										])
+										},
+				emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#2378f7'},
+														{offset: 0.7, color: '#2378f7'},
+														{offset: 1, color: '#83bff6'}
+															])
+															}
+									},
+						data: data},
+				{name: 'ค่าจ้าง SubContaine',
+						type: 'bar',
+						itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#FF9595'},
+												{offset: 0.5, color: '#FF5656'},
+												{offset: 1, color: '#FF1616'}
+										])
+										},
+					 emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#FF1616'},
+														{offset: 0.7, color: '#FF5656'},
+														{offset: 1, color: '#FF9595'}
+												])
+											}
+										},
+						data : data1}
+					],
 
+	};
+	option && myChart5.setOption(option);
+</script>
+<script type="text/javascript">
+	var chartDom6= document.getElementById('price6');
+	var myChart6 = echarts.init(chartDom6,);
+	var option;
+	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+	var yMax = 500;
+	var dataShadow = [];
+	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);}
+	option = {
+		legend: {show: true,textStyle: {fontSize: 14 },
+			data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
+						},
+
+		 xAxis: {
+			data: dataAxis,
+			axisLabel: {inside: false,textStyle:{color: 'black'} },
+	axisTick: {show: false},
+	axisLine: {show: false},z: 10
+						},
+		yAxis: {axisLine: {show: false},axisTick: {show: false},axisLabel: {textStyle: {color: 'black'} } },
+		series: [
+				{	name: 'ค่าอะไหล่',
+				 	type: 'bar',
+					itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#83bff6'},
+												{offset: 0.5, color: '#188df0'},
+												{offset: 1, color: '#188df0'}
+										])
+										},
+				emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#2378f7'},
+														{offset: 0.7, color: '#2378f7'},
+														{offset: 1, color: '#83bff6'}
+															])
+															}
+									},
+						data: data},
+				{name: 'ค่าจ้าง SubContaine',
+						type: 'bar',
+						itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+												{offset: 0, color: '#FF9595'},
+												{offset: 0.5, color: '#FF5656'},
+												{offset: 1, color: '#FF1616'}
+										])
+										},
+					 emphasis: {itemStyle: {color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[
+														{offset: 0, color: '#FF1616'},
+														{offset: 0.7, color: '#FF5656'},
+														{offset: 1, color: '#FF9595'}
+												])
+											}
+										},
+						data : data1}
+					],
+
+	};
+	option && myChart6.setOption(option);
 </script>
 @stop
 {{-- ปิดส่วนjava --}}

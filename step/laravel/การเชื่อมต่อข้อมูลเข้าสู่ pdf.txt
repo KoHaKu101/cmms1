@@ -1,0 +1,50 @@
+1ติดตั้ง  composer "elibyy/tcpdf-laravel"    tcpdf
+2.เพิ่มprovieder และ  aliase
+	นำ Elibyy\TCPDF\ServiceProvider::class, ไปใส่ใน config app.php
+	นำ 'PDF' => Elibyy\TCPDF\Facades\TCPDF::class ไปใส่ใน aliases
+	
+3.สร้าง controllers
+	php artisan make:controller ........
+4.สร้าง route เพื่อทำการเชื่อ controller เข้ากับ view
+5.ทำการเพื่มคำสั่งลงใน controllers 
+	นำ use ของ tcpdf มาใช้
+	use PDF;
+	และนำ data ของเรามา ซึ่ง data เราจะอยุ่ใน models
+	นำมาโดยการ use App\Models\........;
+	จากในให้ใส่โค้ดลงไปใน class 
+
+	public function HtmlToPDF(){
+    $data=Formtool::all();
+    $view = view('HtmlToPDF',compact(['data']));
+    $html_content = $view->render();
+
+    PDF::SetTitle('Sample PDF');
+    PDF::Addpage();
+    PDF::writeHTML($html_content,true,false,true,false,'');
+    PDF::Output("PDF-Report.pdf","I");
+
+	******************************
+$data=Formtool::all(); 
+$ตัวแปร 	data คือชื่อตัวแปร	Formtool คือฐานข้อมูลของเราใน model    all()คือทั้งหมด
+$view = view('HtmlToPDF',compact(['data']));
+View คือชื่อตั่วแปร และ  view คือคำสั่งเพื่อนให้แสดงผล HtmlToPDF คือชื่อเว็บหน้าเพจที่จะนำไปแสดง compact คือ ตัวแปรที่นำข้อมูลทั้งมหมดมาใส่ใน data
+
+6.สร้างหน้า pdf โดยสร้างใน view และสร้างเป็น file .blade.php 
+ ใช้คำสั่งพื้นฐานไม่มีไรมาก
+7.ทำการเชื่อต่อหน้ากัลฐานข้อมูลโดย คำสั่ง
+	@foreach ($data as $row)
+
+@ คือลูป	
+foreach
+$data คือตัวแปรที่มาจากหน้า controller 
+as คือลงในสิ่งที่ต้องการ
+$row คือตัวแปรแถว
+
+<td>{{ $row->name}}</td>
+
+$row คือการเรียกตัวแปลจาก row ข้างต้นมาใช้
+
+name คือในฐานข้อมูง mysql
+
+
+	

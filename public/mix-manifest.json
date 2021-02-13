@@ -1,6 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/assets/js/bootstrap4-toggle.min.js": "/assets/js/bootstrap4-toggle.min.js",
+    "/assets/js/echarts.min.js": "/assets/js/echarts.min.js",
+    "/assets/js/echarts.common.min.js": "/assets/js/echarts.common.min.js",
     "/assets/css/bootstrap4-toggle.min.css": "/assets/css/bootstrap4-toggle.min.css",
     "/css/app.css": "/css/app.css"
 }

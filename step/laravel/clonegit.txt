@@ -1,0 +1,8 @@
+1การดาวโหลดไฟล์จากgit 
+	git clone url(ตัวอย่าง git clone https://github.com/KoHaKu101/project.git)
+2.ให้ติดตั้ง compser
+	compser install
+3.ให้รัน npm install และ dev
+	npm install
+	npm run dev
+	php artisan key:generate

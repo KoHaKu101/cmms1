@@ -1,0 +1,9 @@
+dot . เรียก class
+shap # เรียก id
+
+------------------------------------------------
+ใน php 
+? คือ if else ในรูปแบบ oneline หรือ บรรทัดเดียว ซึ่ง ? คือ if  : คือelse เช่น
+{{ $data_set->MACHINE_CHECK == "4" ? 'selected' : '' }}
+
+นำข้อมูลใน data_set มาและเลือกเอา คอลัม machinec_check ที่มีค่า เท่ากับ4 มา ?(if) หากใช่ ให้ selected :(else) หากไม่ ให้ค่าว่าง

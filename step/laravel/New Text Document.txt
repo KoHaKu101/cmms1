@@ -1,0 +1,2 @@
+dot . เรียก class
+shap # เรียก id
