@@ -72,6 +72,7 @@ Route::get('machine/pdf/machinepdf', 'App\Http\Controllers\PDF\TsetController@Ht
 Route::get('machine/assets/machinelist'     ,[MachineController::class,'Index'])  ->name('machine.list');
 Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
 Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
+Route::post('machine/assets/storehelp'      ,[MachineController::class,'StoreUpload'])  ->name('machine.storeupload');
 Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
 Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
 Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');

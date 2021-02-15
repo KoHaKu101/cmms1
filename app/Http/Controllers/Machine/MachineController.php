@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Machine;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machnie;
+use App\Models\Machine\Upload;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 
@@ -61,21 +62,21 @@ class MachineController extends Controller
       'MACHINE_CODE.required'  => 'กรุณราใส่รหัสเครื่องจักร',
       ]);
 
-      $MACHINE_ICON = $request->file('MACHINE_ICON');
+  $MACHINE_ICON = $request->file('MACHINE_ICON');
 
-      if ($request->file('MACHINE_ICON')) {
-        $name_gen = hexdec(uniqid());
+  if(!empty($MACHINE_ICON)) {
+    $name_gen = hexdec(uniqid());
 
-        $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
-  // dd($name_gen);
-        $img_name = $name_gen.'.'.$img_ext;
-        $up_location = 'image/machnie/';
-        $last_img = $up_location.$img_name;
+    $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
+// dd($name_gen);
+    $img_name = $name_gen.'.'.$img_ext;
+    $up_location = 'image/machnie/';
+    $last_img = $up_location.$img_name;
 
-        $MACHINE_ICON->move($up_location,$img_name);
-      } else {
-        $MACHINE_ICON = '';
-      }
+    $MACHINE_ICON->move($up_location,$img_name);
+  } else {
+    $MACHINE_ICON = '';
+  }
 
       Machnie::insert([
           'MACHINE_CODE'         => $request->MACHINE_CODE,
@@ -133,14 +134,82 @@ class MachineController extends Controller
           'SHIFT_TYPE'           => $request->SHIFT_TYPE,
           'ESP_MAC'              => $request->ESP_MAC,
       ]);
+
       $data_set = Machnie::paginate(12);
-      Alert::success('ลงทะเบียนสำเร็จ');
+
       return Redirect()->route('machine.list',compact(['data_set']))->with('success','ลงทะเบียน สำเร็จ');
   }
 
-  public function Edit($UNID) {
+  public function StoreUpload(Request $request){
+    //ตัวแปร ชื่อ
+    $TOPIC_NAME = $request->TOPIC_NAME;
+    $MACHINE_CODE = $request->MACHINE_CODE;
+    //ตัวแปรไฟล์
+    $FILE_UPLOAD = request()->file('FILE_UPLOAD');
+    //ตัวแปร size
+    $FILE_SIZE = 0;
+
+    //ส่วนของไฟล์
+    //ส่วนของชื่อไฟล์
+     $FILE_NAME = basename($request->file('FILE_UPLOAD')->getClientOriginalName(), '.'.$request->file('FILE_UPLOAD')->getClientOriginalExtension());
+    //ส่วนของนามสกุลไฟล์
+     $FILE_EXTENSION = $request->file('FILE_UPLOAD')->getClientOriginalExtension();
+    //ส่วนของ size ไฟล์
+     $FILE_SIZE = $request->file('FILE_UPLOAD')->getSize();
+       //ส่วนของกำหนดการแสดงsizeไฟล์
+     if ($FILE_SIZE >0 ) {
+       $FILE_SIZE = number_format($FILE_SIZE /100000, 2);
+     }
+      //ส่วนของวันที่ไฟล์
+     $FILE_UPLOADDATETIME = Carbon::now()->format('Y-m-d H:i:s');
+
+     //pathfile
+     $filePath = "/uploadfile/" . "manual/"  . $MACHINE_CODE . "/" . $FILE_NAME;
+
+
+     $filenamemaster = uniqid()."_".basename($request->file('FILE_UPLOAD')->getClientOriginalName());
+
+
+     //สิ้นสุดส่วนของไฟล์
+
+     //ชื่อ
+    if(!empty($TOPIC_NAME)) {
+        $TOPIC_NAME = $TOPIC_NAME;
+    } else {
+      $TOPIC_NAME = $FILE_NAME;
+      dd($TOPIC_NAME);
+    }
+    //สิ้นสุดชื่อ
+
+
+    Upload::insert([
+
+      'MACHINE_CODE'         => $MACHINE_CODE,
+      'TOPIC_NAME'         => $TOPIC_NAME,
+      'FILE_UPLOAD'          => $filenamemaster,
+      'FILE_SIZE'          => $FILE_SIZE,
+      'FILE_NAME'          => $FILE_NAME,
+      'FILE_EXTENSION'      => $FILE_EXTENSION,
+      'FILE_UPLOADDATETIME'    => $FILE_UPLOADDATETIME,
+      'CREATE_BY'            => Auth::user()->name,
+      'CREATE_TIME'          => Carbon::now(),
+      // 'MODIFY_BY'            => Auth::user()->name,
+      // 'MODIFY_TIME'          => Carbon::now(),
+      'UNID'                 => $this->randUNID('UPLOAD'),
+    ]);
+
+
+
+
+    return Redirect()->back();
+  }
+
+
+  public function Edit($UNID,Upload $MACHINE_CODE) {
 
     $data_set = Machnie::where('UNID',$UNID)->first();
+    $data_up = Upload::where('MACHINE_CODE',$MACHINE_CODE)->first();
+    dd($data_up);
     // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
     return view('machine/assets/edit',compact('data_set'));

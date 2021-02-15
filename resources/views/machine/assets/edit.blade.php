@@ -51,7 +51,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">ลงทะเบียน</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แก้ไขข้อมูล</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -63,7 +63,7 @@
 									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="{{asset($data_set->MACHINE_ICON	)}}" width="200" height="200px" class="mt-4">
+												<img src="{{asset('/image/machnie')}}/{{$data_set->MACHINE_ICON}}" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
 											</div>
 										</div>
@@ -139,30 +139,9 @@
 								<div class="row">
 									<div class="col-md-12 mt-2">
 										<div class="card-body">
-											<style>
-												.nav-pills {
-    											border-bottom: 0px solid #ddd;
-												}
-												.nav-pills li a {
-    											background: #1f4e79;
-    											color: #fff;
-    											display: block;
-    											line-height: 2em;
-    											padding: 7px 15px;
-    											border-radius: 0;
-    											font-size: 13px;
-    											border: none;
-    											margin: 30px 2px 0;
-												}
-												ul li a {
-    											text-decoration: none;
-												}
-												.nav-pills li a.active {
-    											background: #3482ca;
-    											border: none;
-    											color: #FFF;
-												}
-											</style>
+
+											@include('masterlayout.tab.styletab')
+
 											<ul class="nav nav-pills justify-content-center mt--4">
   											<li>
     											<a id="home-tab" data-toggle="tab" href="#home" class="active" >ข้อมูลทั่วไป</a>
@@ -182,88 +161,13 @@
 												<li>
     											<a id="settings-tab" data-toggle="tab" href="#partchange">เปลี่ยนอะไหล่</a>
   											</li>
+												<li>
+    											<a id="settings-tab" data-toggle="tab" href="#uploadmanue">Upload</a>
+  											</li>
   										</ul>
   										<div class="tab-content clearfix">
 												<!-- ข้อมูลทั่วไป -->
-  											<div class="tab-pane active" id="home">
-    											<div class="row">
-      											<div class="col-sm-12">
-        											<div class="jumbotron">
-																<div class="col-md-8 col-lg-12">
-																	<div class="table">
-																	<table class="table table-sm"  >
-																		<thead>
-																			<tr>
-																				<th class="bg-primary" colspan="6" >
-																					<h3 align="center" style="color:white;" class="mt-2">ข้อมูลทั่วไป</h3>
-																				</th>
-																			</tr>
-																		</thead>
-																	</table>
-																</div>
-															</div>
-																<div class="row">
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_PARTNO">PartNo</label>
-																				<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" value="{{ $data_set->MACHINE_PARTNO }}">
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_PRICE">ราคา	</label>
-																			<input type="text" class="form-control" id="MACHINE_PRICE" name="MACHINE_PRICE" value="{{ $data_set->MACHINE_PRICE }}">
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_POWER">Power</label>
-																			<input type="text" class="form-control" id="MACHINE_POWER" name="MACHINE_POWER" value="{{ $data_set->MACHINE_POWER }}">
-																		</div>
-																	</div>
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_MODEL">Model</label>
-																			<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL"  value="{{ $data_set->MACHINE_MODEL }}">
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_MA_COST">ค่าใช้จ่ายซ่อมบำรุง	</label>
-																			<input type="text" class="form-control" id="MACHINE_MA_COST" name="MACHINE_MA_COST"  value="{{ $data_set->MACHINE_MA_COST }}">
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_WEIGHT">Weight	</label>
-																			<input type="text" class="form-control" id="MACHINE_WEIGHT" name="MACHINE_WEIGHT"  value="{{ $data_set->MACHINE_WEIGHT }}">
-																		</div>
-																	</div>
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_SERIAL">Serial</label>
-																			<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" value="{{ $data_set->MACHINE_SERIAL }}">
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_SPEED_UNIT">ความเร็ว</label>
-																			<input type="text" class="form-control" id="MACHINE_SPEED_UNIT" name="MACHINE_SPEED_UNIT" value="{{ $data_set->MACHINE_SPEED_UNIT }}">
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_TARGET">Target</label>
-																			<input type="text" class="form-control" id="MACHINE_TARGET" name="MACHINE_TARGET" value="{{ $data_set->MACHINE_TARGET }}">
-																		</div>
-																	</div>
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_MANU">บริษัทที่ผลิต	</label>
-																			<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" value="{{ $data_set->MACHINE_MANU }}" >
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_SPEED">ความเร็ว</label>
-																			<input type="text" class="form-control" id="MACHINE_SPEED" name="MACHINE_SPEED" value="{{ $data_set->MACHINE_SPEED }}">
-																		</div>
-																		<div class="form-group">
-																			<label for="MACHINE_MTBF">Priority</label>
-																			<input type="text" class="form-control" id="MACHINE_MTBF" name="MACHINE_MTBF" value="{{ $data_set->MACHINE_MTBF }}">
-																		</div>
-																	</div>
-																</div>
-        											</div>
-      											</div>
-    											</div>
-  											</div>
+  											@include('masterlayout.tab.homeedit')
 												<!-- ประวัติการแจ้งซ่อม -->
   											<div class="tab-pane" id="history">
     											<div class="row">
@@ -454,144 +358,12 @@
 													</div>
   											</div>
 												<!-- ตรวจสอบระบบ -->
-												<div class="tab-pane" id="systemcheck" >
-													<div class="row">
-														<div class="col-sm-12">
-															<div class="jumbotron">
-																<div class="col-md-8 col-lg-12">
-																	<div class="table">
-																		<table class="table table-sm"  >
-																			<thead>
-																				<tr>
-																					<th class="bg-primary" colspan="6" >
-																						<h3 align="center" style="color:white;" class="mt-2">ตรวจสอบระบบ</h3>
-
-																					</th>
-																					<th class="bg-primary" >
-																						<button  id="popup" type="button" class="btn btn-info float-right"
-																						data-toggle="modal" data-target="#exampleModal" >เพิ่มระบบที่ต้องตรวจเช็ค</button>
-																					</th>
-																				</tr>
-																				<tr>
-																					<th scope="col" colspan="2">
-																					</th>
-																					<th scope="col" colspan="2">
-																						ตรวจสอบระบบ
-																					</th>
-																					<th scope="col" colspan="1">
-																						รายการที่ต้องตรวจเช็ค
-																					</th>
-																					<th>
-																						<h5>ตรวจสอบประจำ เดือน/ปี</h5>
-																					</th>
-																					<th scope="col" colspan="1">
-																					</th>
-
-																					</tr>
-																				</thead>
-																				<tbody>
-																			<tr>
-																				<td colspan="2">
-																					1
-																				</td>
-
-																				<td colspan="2">
-																					ระบบไฟฟ้า
-																				</td>
-																				<td>
-																					3 รายการ
-																				</td>
-																				<td>
-																					3 เดือน
-																				</td>
-
-																				<td >
-																					<button  id="popup" type="button" class="btn btn-primary float-right"
-																					data-toggle="modal" data-target="#exampleModal1" >รายการตรวจสอบ	</button>
-																				</td>
-
-																			</tr>
-
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-  											</div>
+												@include('masterlayout.tab.systemcheck')
 												<!-- อะไหล่ที่ต้องเปลี่ยน -->
-												<div class="tab-pane" id="partchange" >
-													<div class="row " >
-														<div class="col-sm-12 ">
-															<div class="jumbotron">
-																<div class="col-md-8 col-lg-12">
-																	<div class="table">
-																		<table class="table table-sm"  >
-																			<thead>
-																				<tr>
-																					<th class="bg-primary" colspan="7" >
-																						<h3 align="center" style="color:white;" class="mt-2">อะไหล่ที่ต้องเปลี่ยน</h3>
-																					</th>
-																					<th class="bg-primary" >
-																						<button  id="popup" type="button" class="btn btn-info float-right"
-																						data-toggle="modal" data-target="#exampleModal2" >เพิ่มรายการอะไหล่</button>
-																					</th>
-																				</tr>
-																				<tr>
-																					<th >
-
-																					</th>
-																					<th >
-																						อะไหล่
-																					</th>
-																					<th  colspan="2">
-																						รายการอะไหล่
-																					</th>
-																					<th  colspan="2">
-																						ครบกำหนดเปลี่ยน
-																					</th>
-																					<th  >
-																						รอบเปลี่ยน
-																					</th>
-																					<th >
-
-																					</th>
-
-																					</tr>
-																				</thead>
-																				<tbody>
-																			<tr>
-																				<td>
-																					1
-																				</td>
-																				<td>
-																					มอเตอร์
-																				</td>
-
-																				<td colspan="2">
-																					 3 รายการ
-																				</td>
-																				<td colspan="2">
-																				8/10/2020
-																				</td>
-																				<td >
-																				3เดือน
-																				</td>
-																				<td>
-																					<button  id="popup" type="button" class="btn btn-primary float-right"
-																					data-toggle="modal" data-target="#exampleModal3" >รายการอะไหล่</button>
-																				</td>
-
-																			</tr>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-  											</div>
+												@include('masterlayout.tab.partchange')
+												<!-- upload -->
+												@include('masterlayout.tab.uploadmanue')
+											
 									</div>
 								</div>
 							</div>
@@ -603,208 +375,11 @@
 	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="row">
-					<div class="col-mb-6 col-lg-6">
-						<select class="form-control form-control">
-							<option>ระบบไฟฟ้า</option>
-						</select>
-					</div>
-					<div class="col-mb-6 col-lg-6">
-						<input type="text" class="form-control">
-					</div>
-      	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<!-- Modalรายการที่ต้องตรวจเช็ค -->
-<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="table">
-					<table>
-						<thead>
-							<tr>
-								<th>
-
-								</th>
-								<th>
-									<h5>รายการที่ต้องตรวจเช็ค</h5>
-								</th>
-								<th>
-									<h5>ค่า STD </h5>
-								</th>
-								<th>
-									<h5>ตรวจสอบประจำ เดือน/ปี</h5>
-								</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr>
-								<td width="1%">
-									<input class="form-check-input float-right" type="checkbox" value="" id="flexCheckDefault">
-								</td>
-								<td width="10%">
-									<h4>สายไฟฟ้า</h4>
-								</td>
-
-								<td width="15%">
-										<small><input class="form-control float-right" type="text" value="" id="flexCheckDefault" ></small>
-								</td>
-
-								<td width="20%">
-										<select class="form-control">
-											<option>1เดือน</option>
-											<option>3เดือน</option>
-											<option>6เดือน</option>
-											<option>1เดือน</option>
-										</select>
-							</td>
-							</tr>
-						</tbody>
-					</table>
-      	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- Modal เพิ่มอะไหล่ที่ต้องเปลี่ยน -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">เพิ่มระบบที่ต้องตรวจเช็ค</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="row">
-					<div class="col-mb-6 col-lg-6">
-						<select class="form-control form-control">
-							<option>มอเตอร์</option>
-						</select>
-					</div>
-					<div class="col-mb-6 col-lg-6">
-						<input type="text" class="form-control">
-					</div>
-    		</div>
-      	<div class="modal-footer">
-        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="submit" class="btn btn-primary">Save changes</button>
-      	</div>
-    	</div>
-  	</div>
-	</div>
-</div>
-
-
-
-<!-- Modal รายการอะไหล่ที่ต้องเปลี่ยน -->
-<style>
-.modal-sm {
-    max-width: 80% !important;
-}
-</style>
-
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">รายการอะไหล่ที่ต้องเปลี่ยน</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-				<div class="table">
-					<table>
-						<thead>
-							<tr>
-								<th>
-
-								</th>
-								<th>
-									<h5>รายการอะไหล่ที่ต้องเปลี่ยน</h5>
-								</th>
-
-								<th>
-									<h5>รอบเปลี่ยน(เดือน/ปี)</h5>
-								</th>
-								<th>
-									<h5>เปลี่ยนอะไหล่ครั้งแรก</h5>
-								</th>
-								<th>
-									<h5>เปลี่ยนอะไหล่ล่าสุด</h5>
-								</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr>
-								<td>
-									<input class="form-check-input float-right" type="checkbox" value="" id="flexCheckDefault">
-								</td>
-								<td>
-									<h5>มอเตอร์สว่าน</h4>
-								</td>
-								<td>
-									<select class="form-control">
-										<option>1เดือน</option>
-										<option>3เดือน</option>
-										<option>6เดือน</option>
-										<option>1เดือน</option>
-									</select>
-							</td>
-							<td>
-									<small><input class="form-control float-right" type="date" value="" id="flexCheckDefault"></small>
-							</td>
-
-							<td>
-									<small><input class="form-control float-right" type="date" value="" id="flexCheckDefault"></small>
-						</td>
-							</tr>
-
-
-						</tbody>
-					</table>
-      	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
+@include('masterlayout.tab.modal.systemcheck.systemcheck')
+@include('masterlayout.tab.modal.systemcheck.systemcheckedit')
+@include('masterlayout.tab.modal.partchange.partchange')
+@include('masterlayout.tab.modal.partchange.partchangeedit')
+@include('masterlayout.tab.modal.uploadmanue')
 
 
 
