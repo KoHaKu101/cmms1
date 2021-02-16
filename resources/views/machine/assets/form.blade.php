@@ -181,7 +181,7 @@
 @include('masterlayout.tab.modal.systemcheck.systemcheckedit')
 @include('masterlayout.tab.modal.partchange.partchange')
 @include('masterlayout.tab.modal.partchange.partchangeedit')
-@include('masterlayout.tab.modal.uploadmanue')
+
 
 
 

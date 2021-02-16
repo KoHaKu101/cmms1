@@ -88,10 +88,10 @@
 										</div>
 										<!-- ช่อง2-->
 										<div class="col-md-6 col-lg-4">
-											<div class="form-group">
+											<div class="form-group has-error">
 												<label for="MACHINE_MANU">วันที่เอกสาร	</label>
-												<input type="date" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU"
-												<?php echo'value="'.date("yyyy-mm-dd").'"';?> >
+												<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU"
+												<?php echo'value="'.date("Y-m-d").'"';?>disabled >
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">รหัสพนักงาน	</label>
@@ -106,7 +106,7 @@
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">เวลาแจ้งซ่อม	</label>
-												<?php echo '<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value='.date("h:i:s").' disabled>'; ?>
+												<?php echo '<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value='.date("H:i:s").' disabled>'; ?>
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_PARTNO">รหัสเครื่อง</label>
@@ -178,28 +178,42 @@
 															</div>
 																<div class="row">
 
-																		<div class="col-md-8 col-lg-2 ml-2">
-																			<div class="form-check ml-4">
-																				<input class="form-check-input" type="radio" value="มอเตอร์เสีย" id="flexCheckDefault">
-																				<label class="form-check-label ml-2" for="flexCheckDefault">มอเตอร์เสีย</label>
-																			</div>
-																			<div class="form-check ml-4">
-																				<input class="form-check-input" type="radio" value="มอเตอร์เสีย" id="flexCheckDefault1">
-																				<label class="form-check-label ml-2" for="flexCheckDefault1">ท่อรั้ว</label>
-																			</div>
-																		</div>
-																		<div class="col-md-8 col-lg-3 ml-2">
-																			<div class="form-check ">
-																				<input class="form-check-input" type="radio" value="มอเตอร์เสีย" id="flexCheckDefault2">
-																				<label class="form-check-label ml-2" for="flexCheckDefault2">ตัวจับชิ้นงานเสีย</label>
-																			</div>
+																	<div class="col-md-8 col-lg-1 ml-2">
+																		@for($i =1; $i < 4 ; $i++)
+																		<div class="form-check">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" value="">
+												<span class="form-check-sign">{{ $i }}</span>
+											</label>
+										</div>
+									@endfor
+																	</div>
+																	<div class="col-md-8 col-lg-1">
+																		@for($i =1; $i < 4 ; $i++)
 																			<div class="form-check">
-  																			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked>
-  																				<label class="form-check-label" for="defaultCheck1">
-    																				Default checkbox
-  																			</label>
+																				<label class="form-check-label">
+																					<input class="form-check-input" type="checkbox" value="">
+																					<span class="form-check-sign">{{ $i }}</span>
+																				</label>
 																			</div>
-																		</div>
+																		@endfor
+																	</div>
+																	<div class="col-md-8 col-lg-1">
+																		@for($i =1; $i < 4 ; $i++)
+																			<div class="form-check">
+																				<label class="form-check-label">
+																					<input class="form-check-input" type="checkbox" value=" {{ $i }}">
+																					<span class="form-check-sign">{{ $i }}</span>
+																				</label>
+																			</div>
+																		@endfor
+																	</div>
+																	<div class="col-md-8 col-lg-3 ml-2">
+																		<div class="form-group">
+    																	<label for="exampleFormControlTextarea1">Example textarea</label>
+    																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+  																	</div>
+																	</div>
 
 																		<div class="col-md-8 col-lg-3 ">
 																			<div class="form-group">

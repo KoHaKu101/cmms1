@@ -14,6 +14,9 @@ use App\Http\Controllers\Machine\PersonalController;
 use App\Http\Controllers\Machine\RepairController;
 use App\Http\Controllers\Machine\SparePartController;
 use App\Http\Controllers\Machine\StockController;
+use App\Http\Controllers\Machine\UploadController;
+use App\Http\Controllers\Machine\ManualController;
+
 use App\Http\Controllers\PDF\TsetController;
 
 //Model
@@ -76,6 +79,19 @@ Route::post('machine/assets/storehelp'      ,[MachineController::class,'StoreUpl
 Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
 Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
 Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
+
+//upload
+Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update']);
+Route::get('machine/upload/delete/{UNID}'   ,[UploadController::class,'Delete']) ->name('upload.delete');
+Route::get('machine/upload/download/{UNID}'  ,[UploadController::class,'Download']) ->name('upload.download');
+Route::get('machine/upload/view/{UNID}'     ,[UploadController::class,'View']) ->name('upload.view');
+//manual
+Route::get('machine/manual/manuallist'      ,[ManualController::class,'Index'])  ->name('manual.list');
+Route::get('machine/manual/edit/{UNID}'     ,[ManualController::class,'Edit'])   ->name('manual.edit');
+Route::post('machine/manual/update/{UNID}'  ,[ManualController::class,'Update']);
+Route::get('machine/manual/delete/{UNID}'   ,[ManualController::class,'Delete']) ->name('manual.delete');
+
+
 
 //personal
 Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'])  ->name('personal.list');

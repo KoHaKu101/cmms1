@@ -35,11 +35,6 @@
 								<a href="{{ route('sparepart.form') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file fa-lg">	New	</span>
 								</button></a>
-								<a href="{{ url('users/import/show') }}">
-								<button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file-import fa-lg">	Import	</span>
-								</button>
-							</a>
 								<a href="{{ url('users/export/') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
@@ -114,8 +109,8 @@
 
 															<td style="white-space:nowrap">
 																<a href="{{ url('machine/sparepart/edit/') }}">
-																	<span style="color: green;">
-																		<i class="fas fa-edit fa-lg"></i>
+																	<span style="color: #1C7BFD;">
+																		<i class="fas fa-eye fa-lg"></i>
 																	</span>
 																</a>
 																<a href="{{ url('machine/sparepart/delete/') }}" class="ml-3">

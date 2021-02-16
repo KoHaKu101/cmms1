@@ -43,35 +43,50 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($data_up as $upload)
+
+                  {{-- @foreach ($data_up as $key => $data_up) --}}
+
+
+                  {{-- @foreach ($data_set as $data_set) --}}
               <tr>
                 <td>
                   1
                 </td>
                 <td colspan="2">
-                  {{$upload->TOPIC_NAME}}
+                  <h5>{{ $data_set->upload->TOPIC_NAME }}</h5>
+                  {{-- <input type="text" value="{{ $data_up->TOPIC_NAME }}"> --}}
+                  {{-- <h4>{{$data_upload->UPLOAD_UNID_REF}}</h4> --}}
+
                 </td>
                 <td>
-                  file.doc
+                  <h5>{{ $data_set->upload->FILE_EXTENSION }}</h5>
                 </td>
 
                 <td style="text-align:center">
                   <button class="btn btn-icon btn-round btn-primary"><i class="fas fa-file-word"></i></button>
                 </td>
                 <td>
-                  15MB
+                  <div class="form-group form-inline">
+                    <h5>{{ $data_set->upload->FILE_SIZE }}</h5>
+                    <h5>MB</h5>
+                  </div>
                 </td>
                 <td>
                   <a href="#"class="btn btn-primary btn-link"><i class="fas fa-eye fa-lg "></i></a>
-                  <a href="#" class="btn btn-success btn-link"><i class="fas fa-download fa-lg"></i>	</a>
-                  <a href="#" class="btn btn-warning btn-link"><i class="fas fa-edit fa-lg "></i>	</a>
-                  <a href="#" class="btn btn-danger btn-link"><i class="fas fa-trash fa-lg "></i>	</a>
+                  <a href="#" download="{{ $data_set->upload->FILE_UPLOAD }}" class="btn btn-success btn-link"><i class="fas fa-download fa-lg"></i>	</a>
+                  <button  id="popup" type="button" class="btn btn-warning btn-link "
+                    data-toggle="modal" data-target="#exampleModal5">
+                    <i class="fas fa-edit fa-lg "></i>
+                  </button>
+
+                  <a href="{{url('machine/upload/delete/'.$data_set->upload->UNID)}}" class="btn btn-danger btn-link"><i class="fas fa-trash fa-lg "></i>	</a>
+
                 </td>
 
                 <td>
-                  15/02/2021
+                  <small>{{ $data_set->upload->FILE_UPLOADDATETIME }}</small>
                 </td>
-                @endforeach
+                {{-- @endforeach --}}
               </tr>
               </tbody>
             </table>

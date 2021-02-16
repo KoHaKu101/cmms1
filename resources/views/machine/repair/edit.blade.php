@@ -36,11 +36,17 @@
 									</button>
 								</a>
 							</div>
-							<div class="col-md-11 mt-2 ">
+							<div class="col-md-1 mt-2 ">
 								<form action="" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
+									</button>
+							</div>
+							<div class="col-md-1 mt-2 ">
+
+									<button class="btn btn-secondary btn-sm" type="submit">
+										<span class="fas fa-qrcode">	Scan QRCode	</span>
 									</button>
 							</div>
 						</div>
@@ -51,7 +57,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แจ้งซ่อม</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แจ้งซ่อมเครื่องจักร</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -60,40 +66,67 @@
 							</div>
 							<div class="card-body">
 								<div class="row">
+										<!-- ช่อง1-->
+										<div class="col-md-6 col-lg-4">
+											<div class="form-group has-error">
+												<label for="MACHINE_CODE">เลขที่เอกสาร</label>
+												<?php
+												$number = date("ymdhis");
+
+												echo'<input type="text" class="form-control" id="" name="" placeholder="เลขที่เอกสาร"  value=RE-'.$number.' disabled> ';
+
+													?>
+											</div>
+											<div class="form-group has-error">
+												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
+												<select class="form-control">
+													<option>พนักงาน</option>
+													<option value="ก">นาย ก</option>
+													<option value="ข">นาย ข</option>
+											</select>
+											</div>
+										</div>
 										<!-- ช่อง2-->
 										<div class="col-md-6 col-lg-4">
-											<div class="form-group has-error disable">
-												<label for="MACHINE_CODE">เลขที่เอกสาร</label>
-													<input type="text" class=" form-control" id="MACHINE_CODE" name="MACHINE_CODE" value="10" disabled>
+											<div class="form-group has-error">
+												<label for="MACHINE_MANU">วันที่เอกสาร	</label>
+												<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU"
+												<?php echo'value="'.date("Y-m-d").'"';?>disabled >
 											</div>
-
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">รหัสพนักงาน	</label>
-												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="รหัสพนักงาน" required autofocus>
+												<select class="form-control">
+													<option value>รหัสพนักงาน</option>
+													<option >6000</option>
+													<option >5000</option>
+												</select>
 											</div>
 										</div>
 										<!-- ช่อง3-->
 										<div class="col-md-6 col-lg-4">
-											<div class="form-group">
-												<label for="MACHINE_MANU">วันที่เอกสาร	</label>
-												<input type="date" class=" form-control" id="MACHINE_MANU" name="MACHINE_MANU" placeholder="วันที่เอกสาร" required autofocus>
-											</div>
-											<div class="form-group has-error">
-												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
-												<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" placeholder="ชื่อพนักงาน" required autofocus>
-											</div>
-										</div>
-
-										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">เวลาแจ้งซ่อม	</label>
-												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="เวลาแจ้งซ่อม" disabled>
+												<?php echo '<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value='.date("H:i:s").' disabled>'; ?>
 											</div>
 											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">แผนก	</label>
-												<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" placeholder="แผนก" required autofocus>
+												<label for="MACHINE_PARTNO">รหัสเครื่อง</label>
+													<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" placeholder="รหัสเครื่อง" disabled >
 											</div>
 										</div>
+									</div>
+									<div class="row">
+											<div class="col-md-8 col-lg-4">
+												<div class="form-group has-error">
+													<label for="MACHINE_MODEL">ชื่อเครื่อง</label>
+													<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="ชื่อเครื่อง" disabled>
+												</div>
+											</div>
+											<div class="col-md-8 col-lg-4">
+												<div class="form-group has-error">
+													<label for="MACHINE_SERIAL">Line</label>
+													<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" placeholder="Serial" disabled>
+												</div>
+											</div>
 									</div>
 								</div>
 								<div class="row">
@@ -114,14 +147,9 @@
     											border: none;
     											margin: 30px 2px 0;
 												}
-												ul li a {
-    											text-decoration: none;
-												}
-												.nav-pills li a.active {
-    											background: #3482ca;
-    											border: none;
-    											color: #FFF;
-												}
+
+
+
 											</style>
 											<ul class="nav nav-pills justify-content-left mt--4">
   											<li>
@@ -149,39 +177,50 @@
 																</div>
 															</div>
 																<div class="row">
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_PARTNO">รหัสเครื่อง</label>
-																				<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" placeholder="รหัสเครื่อง">
-																		</div>
-																	</div>
-																	<div class="col-md-8 col-lg-4">
-																		<div class="form-group">
-																			<label for="MACHINE_MODEL">ชื่อเครื่อง</label>
-																			<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="ชื่อเครื่อง">
-																		</div>
-																	</div>
-																	<div class="col-md-8 col-lg-3">
-																		<div class="form-group">
-																			<label for="MACHINE_SERIAL">Line</label>
-																			<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" placeholder="Serial">
-																		</div>
 
+																	<div class="col-md-8 col-lg-1 ml-2">
+																		@for($i =1; $i < 4 ; $i++)
+																		<div class="form-check">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" value="">
+												<span class="form-check-sign">{{ $i }}</span>
+											</label>
+										</div>
+									@endfor
+																	</div>
+																	<div class="col-md-8 col-lg-1">
+																		@for($i =1; $i < 4 ; $i++)
+																			<div class="form-check">
+																				<label class="form-check-label">
+																					<input class="form-check-input" type="checkbox" value="">
+																					<span class="form-check-sign">{{ $i }}</span>
+																				</label>
+																			</div>
+																		@endfor
+																	</div>
+																	<div class="col-md-8 col-lg-1">
+																		@for($i =1; $i < 4 ; $i++)
+																			<div class="form-check">
+																				<label class="form-check-label">
+																					<input class="form-check-input" type="checkbox" value=" {{ $i }}">
+																					<span class="form-check-sign">{{ $i }}</span>
+																				</label>
+																			</div>
+																		@endfor
+																	</div>
+																	<div class="col-md-8 col-lg-3 ml-2">
+																		<div class="form-group">
+    																	<label for="exampleFormControlTextarea1">Example textarea</label>
+    																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+  																	</div>
 																	</div>
 
-																		<div class="col-md-8 col-lg-5 ml-2">
+																		<div class="col-md-8 col-lg-3 ">
 																			<div class="form-group">
-																			<label for="MACHINE_SERIAL">อาการเสีย</label>
-																			<textarea class="form-control" id="comment" rows="5">
-																			</textarea>
-																		</div>
-																		</div>
-
-																		<div class="col-md-8 col-lg-2 ">
-																			<div class="form-group">
-																				<label for="MACHINE_SERIAL">Line</label>
+																				<label for="MACHINE_SERIAL">สถานะ</label>
 
 																				<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" >
+																					<option value>--แสดงทั้งหมด--</option>
 																					<option value="1">หยุดทำงาน</option>
 																					<option value="2">ทำงานปกติ</option>
 

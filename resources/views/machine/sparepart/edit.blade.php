@@ -64,21 +64,21 @@
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">รหัสอะไหล่</label>
-													<input type="text" class="form-control" id="" name="" placeholder="รหัสอะไหล่">
+													<input type="text" class="form-control" id="" name="" placeholder="รหัสอะไหล่" value="RE6402-0023	" disabled>
 											</div>
 										</div>
 										<!-- ช่อง2-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group has-error">
 												<label for="MACHINE_MANU">ชื่ออะไหล่</label>
-												<input type="text" class="form-control" id="" name=" "placeholder="ชื่ออะไหล่">
+												<input type="text" class="form-control" id="" name=" "placeholder="ชื่ออะไหล่" value="สายพาน" disabled>
 											</div>
 										</div>
 										<!-- ช่อง3-->
 										<div class="col-md-6 col-lg-2">
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">หน่วย	</label>
-												<select class="form-control">
+												<select class="form-control" disabled>
 													<option value>--ทั้งหมด--</option>
 													<option value="1">สาย</option>
 													<option value="2">กล่อง</option>
@@ -90,7 +90,7 @@
 											<div class="form-group has-error">
 												<label for="MACHINE_MODEL">ราคา</label>
 												<div class="input-group">
-												<input type="text" class="form-control" id="" name="" placeholder="ราคา" >
+												<input type="text" class="form-control" id="" name="" placeholder="ราคา" value="10,000" disabled>
 												<div class="input-group-append">
 														<span class="input-group-text">บาท</span>
 													</div>
@@ -102,7 +102,7 @@
 											<div class="col-md-8 col-lg-4">
 												<div class="form-group has-error">
 													<label for="exampleFormControlTextarea1">หมายเหตุ</label>
-    											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+    											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" ></textarea>
 												</div>
 											</div>
 

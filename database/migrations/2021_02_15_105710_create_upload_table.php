@@ -15,6 +15,7 @@ class CreateUploadTable extends Migration
     {
         Schema::create('UPLOAD', function (Blueprint $table) {
           $table->BigInteger('UNID')->primary();
+          $table->BigInteger('UPLOAD_UNID_REF',false,false)->nullable();
           $table->string('MACHINE_CODE',50)->nullable()->index();
           $table->string('TOPIC_NAME',50)->nullable()->index();
           $table->string('FILE_UPLOAD',200)->nullable();

@@ -63,7 +63,7 @@
 									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="{{asset('/image/machnie')}}/{{$data_set->MACHINE_ICON}}" width="200" height="200px" class="mt-4">
+												<img src="{{asset($data_set->MACHINE_ICON)}}" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
 											</div>
 										</div>
@@ -363,7 +363,7 @@
 												@include('masterlayout.tab.partchange')
 												<!-- upload -->
 												@include('masterlayout.tab.uploadmanue')
-											
+
 									</div>
 								</div>
 							</div>
@@ -380,6 +380,7 @@
 @include('masterlayout.tab.modal.partchange.partchange')
 @include('masterlayout.tab.modal.partchange.partchangeedit')
 @include('masterlayout.tab.modal.uploadmanue')
+@include('masterlayout.tab.modal.edit.uploadmanueedit')
 
 
 

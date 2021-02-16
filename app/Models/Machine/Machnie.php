@@ -32,4 +32,8 @@ class Machnie extends Model
        'EMP_CODE', 'EMP_NAME', 'POS_REF_UNID', 'POS_X', 'POS_Y', 'POS_W', 'POS_H', 'CREATE_BY',
        'CREATE_TIME', 'MODIFY_BY', 'MODIFY_TIME', 'UNID', 'SHIFT_TYPE', 'ESP_MAC'
     ];
+
+    public function upload(){
+      return $this->hasOne(upload::class,'UPLOAD_UNID_REF','UNID');
+    }
 }
