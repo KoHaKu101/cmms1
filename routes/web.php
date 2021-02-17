@@ -17,7 +17,10 @@ use App\Http\Controllers\Machine\StockController;
 use App\Http\Controllers\Machine\UploadController;
 use App\Http\Controllers\Machine\ManualController;
 use App\Http\Controllers\Machine\SysCheckController;
+use App\Http\Controllers\Machine\MachineTypeController;
 use App\Http\Controllers\PDF\TsetController;
+
+
 
 //Model
 use App\Models\SettingMenu\Mainmenu;
@@ -108,12 +111,12 @@ Route::post('machine/personal/update/{UNID}'  ,[PersonalController::class,'Updat
 Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 
 //machinetype
-Route::get('machine/machinetype/machinetypelist'   ,[PersonalController::class,'Index'])  ->name('machinetype.list');
-Route::get('machine/machinetype/form'            ,[PersonalController::class,'Create']) ->name('machinetype.form');
-Route::post('machine/machinetype/store'          ,[PersonalController::class,'Store'])  ->name('machinetype.store');
-Route::get('machine/machinetype/edit'            ,[PersonalController::class,'Edit'])   ->name('machinetype.edit');
-Route::post('machine/machinetype/update/{UNID}'  ,[PersonalController::class,'Update']);
-Route::get('machine/machinetype/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('machinetype.delete');
+Route::get('machine/machinetype/machinetypelist'   ,[MachineTypeController::class,'Index'])  ->name('machinetype.list');
+Route::get('machine/machinetype/form'            ,[MachineTypeController::class,'Create']) ->name('machinetype.form');
+Route::post('machine/machinetype/store'          ,[MachineTypeController::class,'Store'])  ->name('machinetype.store');
+Route::get('machine/machinetype/edit'            ,[MachineTypeController::class,'Edit'])   ->name('machinetype.edit');
+Route::post('machine/machinetype/update/{UNID}'  ,[MachineTypeController::class,'Update']);
+Route::get('machine/machinetype/delete/{UNID}'   ,[MachineTypeController::class,'Delete']) ->name('machinetype.delete');
 
 //repair
 Route::get('machine/repair/repairlist'         ,[RepairController::class,'Index'])  ->name('repair.list');
