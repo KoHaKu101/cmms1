@@ -40,7 +40,7 @@
 									@endif
 
 										<div class="card-header"><h3> Submenu </h4></div>
-											<div class="table-responsive">
+											<div class="table-responsive ml-2">
                       <table class="display table table-striped table-hover" >
                       	<thead>
                         	<tr>

@@ -26,7 +26,7 @@
           <h4 class="page-title">MENU</h4>
         </div>
 				<div class="py-12">
-	        <div class="container">
+
 						<div class="row">
 							<div class="col-md-8">
 								<div class="card">
@@ -40,8 +40,31 @@
 									@endif
 
 										<div class="card-header"><h3> Menu </h4></div>
+											{{-- <div class="row ml-2">
+												<div class="col-md-6 col-lg-2">
+													<h4>Menu Thai</h4>
+												</div>
+												<div class="col-md-6 col-lg-2">
+													<h4>Menu English</h4>
+												</div>
+												<div class="col-md-6 col-lg-1">
+													<h5>MenuIndex</h5>
+												</div>
+												<div class="col-md-6 col-lg-1">
+													<h4>MENU Status</h4>
+												</div>
+												<div class="col-md-6 col-lg-2">
+													<h4>MENU Class</h4>
+												</div>
+												<div class="col-md-6 col-lg-2">
+													<h4>MENU Icon</h4>
+												</div>
+												<div class="col-md-6 col-lg-2">
+													<h4>Action</h4>
+												</div>
+											</div> --}}
 											<div class="table-responsive">
-                      <table class="display table table-striped table-hover" >
+                      <table class="display table table-striped table-hover ml-4" >
                       	<thead>
                         	<tr>
 
@@ -71,9 +94,9 @@
 															<td>  						{{ $row->MENU_LINK }} </td>
 															<td>  						{{ $row->MENU_ICON }} </td>
 															<td>
-																<a href="{{ url('machine/setting/menu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
-																<a href="{{ url('machine/setting/menu/delete/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a>
-																<a href="{{ url('machine/setting/submenu/home/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-clipboard-list fa-2x"></i></a>
+																<a href="{{ url('machine/setting/menu/edit/'.$row->UNID) }}" class="btn  btnmenu btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
+																<a href="{{ url('machine/setting/menu/delete/'.$row->UNID) }}" class="btn btnmenu btn-link"><i class="fas fa-trash fa-2x"></i></a>
+																<a href="{{ url('machine/setting/submenu/home/'.$row->UNID) }}" class="btn btnmenu btn-link"><i class="fas fa-clipboard-list fa-2x"></i></a>
 															</td>
 
                         			</tr>
