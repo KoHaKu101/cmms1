@@ -34,14 +34,6 @@
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
-								<a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file fa-lg">	New	</span>
-								</button></a>
-								{{-- <a href="{{ url('users/import/show') }}">
-								<button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file-import fa-lg">	Import	</span>
-								</button>
-							</a> --}}
 								<a href="{{ url('users/export/') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
@@ -50,7 +42,6 @@
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
-
 							</div>
 						</div>
           </div>
@@ -72,7 +63,7 @@
 
 										<div class="form-inline bg-primary ">
 
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> Assets </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> รายการตรวจเช็คเครื่องจักร </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
   											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
@@ -97,11 +88,10 @@
                         	<tr>
 
 														<th scope="col" style=""></th>
-                            <th scope="col">Location</th>
-                          	<th scope="col">Name</th>
-                          	<th scope="col">Code</th>
-                          	<th scope="col">Asset Status</th>
-														<th scope="col">Last Price Currency</th>
+                            <th scope="col">Code</th>
+                          	<th scope="col">ชื่อเครื่อง</th>
+                          	<th scope="col">LINE</th>
+														<th scope="col">รายการตรวจเช็ค</th>
 
                         	</tr>
                       	</thead>
@@ -110,25 +100,19 @@
                           {{-- @php($i = 1) --}}
 													@foreach ($data_set as $key => $row)
 
-                        		<tr class="mt-4">
+                        		<tr>
 
-															<td style="white-space:nowrap">
-																<a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
-																	<span style="color: green;">
-																		<i class="fas fa-edit fa-lg"></i>
-																	</span>
-																</a>
-																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" class="ml-3">
-																	<span style="color: Tomato;">
-																		<i class="fas fa-trash fa-lg ml-2">	</i>
+															<td width="13%">
+																<a href="{{ url('machine/syscheck/edit/'.$row->UNID) }}">
+																	<span style="color: #2C94FC;">
+																		<i class="fas fa-eye fa-lg"></i>
 																	</span>
 																</a>
 															</td>
-															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_LINE }}  </td>
+															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_CODE }}  </td>
 															<td style="white-space:nowrap" class="born">              {{ $row->MACHINE_NAME }}  </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CODE }}   </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CHECK }}   </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
+															<td style="white-space:nowrap">  						 {{ $row->MACHINE_LINE }}     </td>
+															<td style="white-space:nowrap">  						 {{ $row->MACHINE_LINE }}     </td>
                         			</tr>
                         	@endforeach
 

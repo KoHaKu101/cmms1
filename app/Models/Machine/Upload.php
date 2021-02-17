@@ -15,7 +15,7 @@ class Upload extends Model
     public $timestamps = false;
     protected $primaryKey = "UNID";
     protected $keyType = 'string';
-    public $table ='UPLOAD';
+    public $table ='PMCS_MACHINES_UPLOAD';
 
     protected $fillable = [
     'UNID','UPLOAD_UNID_REF' ,'MACHINE_CODE', 'TOPIC_NAME', 'FILE_UPLOAD', 'FILE_SIZE', 'FILE_NAME', 'FILE_EXTENSION', 'FILE_UPLOADDATETIME', 'CREATE_BY', 'CREATE_TIME', 'MODIFY_BY', 'MODIFY_TIME'];

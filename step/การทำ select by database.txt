@@ -1,0 +1,19 @@
+@foreach($datalineselect as $dataline)
+<option value="{{ $dataline->LINE_CODE}}"
+{{ $dataset->MACHINE_LINE == $dataline->LINE_CODE ? 'selected' : ''}} > 
+{{$dataline->LINE_NAME}} </option>
+@endforeach
+
+--------------------อธิบาย--------------------------
+@foreach
+@endforeach 
+คือการสร้างลูปของphp เพื่อทำการวนข้อมูลตามลำดับมาใช้
+
+$datalineselect as $dataline
+$datalineselect คือกำหนดว่านำข้อมูลในcontroller ตัวไหนมาลูป
+$dataline	คือการสร้างตัวแปรของลูปมาใช้เพื่อไม่ให้มีการกระทบกับข้อมูลอื่นที่ไม่ต้องการลูปไปด้วย
+
+$dataset->MACHINE_LINE == $dataline->LINE_CODE ? 'selected' : ''
+$dataset->MACHINE_LINE คือการนำ data จาก controller มาใส่
+== $dataline->LINE_CODE ? 'selected' คือถ้าหากมีค่า ==  $dataline->LINE_CODE ให้ไป เลือก slected
+:'' 	หากไม่ให้เป็นค่าว่าง

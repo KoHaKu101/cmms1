@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machnie;
 use App\Models\Machine\Upload;
+use App\Models\Machine\MachineLine;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 
@@ -48,8 +49,9 @@ class MachineController extends Controller
 
   public function Create(){
 
+    $dataset = MachineLine::all();
 
-    return View('machine/assets/form');
+    return View('machine/assets/form',compact('dataset'));
   }
 
   public function Store(Request $request){
@@ -57,7 +59,6 @@ class MachineController extends Controller
 
     $validated = $request->validate([
       'MACHINE_CODE'           => 'required|max:255',
-      'MACHINE_ICON'           => 'required|mimes:jpg,jpeg,png'
       ],
       [
       'MACHINE_CODE.required'  => 'กรุณราใส่รหัสเครื่องจักร',
@@ -65,8 +66,6 @@ class MachineController extends Controller
 
 
   if ($request->hasFile('MACHINE_ICON')) {
-    //  Let's do everything here
-
     if ($request->file('MACHINE_ICON')->isValid()) {
 
          // $filenamemaster = uniqid()."_".basename($request->file('MACHINE_ICON')->getClientOriginalName());
@@ -76,14 +75,15 @@ class MachineController extends Controller
         $img_name = $name_gen.'.'.$img_ext;
         $up_location = 'image/machnie/';
         $last_img = $up_location.$img_name;
+        $MACHINE_ICON->move($up_location,$img_name);
         // dd($MACHINE_ICON);
         //
         // $extension = $request->MACHINE_ICON->extension();
         // $url = Storage::url($validated['MACHINE_ICON'].".".$extension);
     }
+} else {
+    $last_img = "";
 }
-
-
 //   if(!empty($MACHINE_ICON)) {
 //     $name_gen = hexdec(uniqid());
 //
@@ -97,7 +97,6 @@ class MachineController extends Controller
 //   } else {
 //     $MACHINE_ICON = '';
 //   }
-
       Machnie::insert([
           'MACHINE_CODE'         => $request->MACHINE_CODE,
           'MACHINE_NAME'         => $request->MACHINE_NAME,
@@ -154,13 +153,14 @@ class MachineController extends Controller
           'SHIFT_TYPE'           => $request->SHIFT_TYPE,
           'ESP_MAC'              => $request->ESP_MAC,
       ]);
-          $MACHINE_ICON->move($up_location,$img_name);
+
       $data_set = Machnie::paginate(12);
 
       return Redirect()->route('machine.list',compact(['data_set']))->with('success','ลงทะเบียน สำเร็จ');
   }
 
   public function StoreUpload(Request $request){
+
     //ตัวแปร ชื่อ
     $TOPIC_NAME = $request->TOPIC_NAME;
     $MACHINE_CODE = $request->MACHINE_CODE;
@@ -184,15 +184,17 @@ class MachineController extends Controller
       //ส่วนของวันที่ไฟล์
      $FILE_UPLOADDATETIME = Carbon::now()->format('Y-m-d');
      //pathfile
-      $up_location = 'uploadfile/manual/'.$MACHINE_CODE;
-      $last_upload = $up_location.'/'.$FILE_NAME;
+      $filenamemaster = uniqid()."_".basename($request->file('FILE_UPLOAD')->getClientOriginalName(),'.'.$request->file('FILE_UPLOAD')->getClientOriginalExtension());
+      $up_location = 'uploadfile/manual'.'/'.$MACHINE_CODE;
 
+       $last_upload = $up_location.'/'.$filenamemaster;
       // dd($last_img);
 
      $filePath = "/uploadfile/" . "manual/"  . $MACHINE_CODE . "/" . $FILE_NAME;
 
 
-     $filenamemaster = uniqid()."_".basename($request->file('FILE_UPLOAD')->getClientOriginalName());
+
+
      //สิ้นสุดส่วนของไฟล์
      //ชื่อ
     if(!empty($TOPIC_NAME)) {
@@ -215,36 +217,44 @@ class MachineController extends Controller
       'CREATE_TIME'          => Carbon::now(),
       // 'MODIFY_BY'            => Auth::user()->name,
       // 'MODIFY_TIME'          => Carbon::now(),
-      'UNID'                 => $this->randUNID('UPLOAD'),
+      'UNID'                 => $this->randUNID('PMCS_MACHINES_UPLOAD'),
     ]);
+    $FILE_UPLOAD->move($up_location,$filenamemaster);
 
     return Redirect()->back();
   }
 
   public function Edit($UNID) {
 
+    $dataset = Machnie::where('UNID',$UNID)->first();
+    $dataupload = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $datauploadedit = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
+    $datalineselect = MachineLine::all();
 
-
-    $data_set = Machnie::where('UNID',$UNID)->first();
-    // $data_up  = Upload::where('UPLOAD_UNID_REF','=',$UNID)->first();
-
-
-
-
-    // $data_set = Upload::where('UNID',$UNID)->first();
-    // dd($data_set);
-    // $data_set = DB::table('pmcs_machines')->join('upload','Upload.UNID','=','pmcs_machines.UNID')->first()  ;
-
-
-
-    // $data = Mainmenu::where('UNID','=',$UNID)->first();
-
-    return view('machine/assets/edit',compact('data_set'));
-
+    return view('machine/assets/edit',compact('dataset','dataupload','datalineselect','datauploadedit'));
   }
 
   public function Update(Request $request,$UNID){
 
+    if ($request->hasFile('MACHINE_ICON')) {
+      if ($request->file('MACHINE_ICON')->isValid()) {
+
+           // $filenamemaster = uniqid()."_".basename($request->file('MACHINE_ICON')->getClientOriginalName());
+          $MACHINE_ICON = $request->file('MACHINE_ICON');
+          $name_gen = hexdec(uniqid());
+          $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
+          $img_name = $name_gen.'.'.$img_ext;
+          $up_location = 'image/machnie/';
+          $last_img = $up_location.$img_name;
+          $MACHINE_ICON->move($up_location,$img_name);
+          // dd($MACHINE_ICON);
+          //
+          // $extension = $request->MACHINE_ICON->extension();
+          // $url = Storage::url($validated['MACHINE_ICON'].".".$extension);
+      }
+  } else {
+      $last_img = "";
+  }
     $data_set = Machnie::where('UNID',$UNID)->update([
       'MACHINE_CODE'         => $request->MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,
@@ -254,7 +264,7 @@ class MachineController extends Controller
       'MACHINE_TYPE_STATUS'  => $request->MACHINE_TYPE_STATUS,
       'MACHINE_STARTDATE'    => $request->MACHINE_STARTDATE,
       'MACHINE_RVE_DATE'     => $request->MACHINE_RVE_DATE,
-      'MACHINE_ICON'         => $request->MACHINE_ICON,
+      'MACHINE_ICON'         => $last_img,
       'MACHINE_PRICE'        => $request->MACHINE_PRICE,
       'MACHINE_LINE'         => $request->MACHINE_LINE,
       'GROUP_NAME'           => $request->GROUP_NAME,
@@ -302,7 +312,7 @@ class MachineController extends Controller
       'ESP_MAC'              => $request->ESP_MAC,
     ]);
 
-    return Redirect()->route('machine.list')->with('success','อัพเดทรายการสำเร็จ');
+    return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
   }
 
   public function Delete($UNID){

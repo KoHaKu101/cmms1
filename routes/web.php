@@ -16,7 +16,7 @@ use App\Http\Controllers\Machine\SparePartController;
 use App\Http\Controllers\Machine\StockController;
 use App\Http\Controllers\Machine\UploadController;
 use App\Http\Controllers\Machine\ManualController;
-
+use App\Http\Controllers\Machine\SysCheckController;
 use App\Http\Controllers\PDF\TsetController;
 
 //Model
@@ -38,23 +38,24 @@ use App\Models\SettingMenu\Menusubitem;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
-Route::get('/', function () {
-  $result = QueryBuilder::for(User::class)
-    ->allowedFilters(['MACHINE_CODE', 'MACHINE_LOCATION'])
-    ->get();
-    return $result;
-    return view('machine/assets/machinelist');
-});
+// Route::get('/', function () {
+//   $result = QueryBuilder::for(User::class)
+//     ->allowedFilters(['MACHINE_CODE', 'MACHINE_LOCATION'])
+//     ->get();
+//     return $result;
+//     return view('machine/assets/machinelist');
+// });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/machine/dashboard/dashboard', function () {
-    return view('/machine/dashboard/dashboard');
-})->name('/machine/dashboard/dashboard');
+Route::middleware(['auth:sanctum', 'verified']);
 
 Route::get('/machine/dashboard/sumaryline',[DashboardController::class,'Sumaryline'])->name('dashboard.sumaryline');
-Route::get('/machine/dashboard/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
+Route::get('/machine/dashboard/dashboard',[DashboardController::class,'Dashboard']);
+Route::get('/machine',[DashboardController::class,'Dashboard']);
+Route::get('/machine/dashboard',[DashboardController::class,'Dashboard']);
+Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
 
 
 
@@ -75,7 +76,7 @@ Route::get('machine/pdf/machinepdf', 'App\Http\Controllers\PDF\TsetController@Ht
 Route::get('machine/assets/machinelist'     ,[MachineController::class,'Index'])  ->name('machine.list');
 Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
 Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
-Route::post('machine/assets/storehelp'      ,[MachineController::class,'StoreUpload'])  ->name('machine.storeupload');
+Route::post('machine/assets/storehelp'      ,[MachineController::class,'StoreUpload']) ->name('machine.storeupload');
 Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
 Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
 Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
@@ -85,13 +86,18 @@ Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update'])
 Route::get('machine/upload/delete/{UNID}'   ,[UploadController::class,'Delete']) ->name('upload.delete');
 Route::get('machine/upload/download/{UNID}'  ,[UploadController::class,'Download']) ->name('upload.download');
 Route::get('machine/upload/view/{UNID}'     ,[UploadController::class,'View']) ->name('upload.view');
+
 //manual
 Route::get('machine/manual/manuallist'      ,[ManualController::class,'Index'])  ->name('manual.list');
 Route::get('machine/manual/edit/{UNID}'     ,[ManualController::class,'Edit'])   ->name('manual.edit');
 Route::post('machine/manual/update/{UNID}'  ,[ManualController::class,'Update']);
 Route::get('machine/manual/delete/{UNID}'   ,[ManualController::class,'Delete']) ->name('manual.delete');
 
-
+//syscheck
+Route::get('machine/syscheck/syschecklist'      ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
+Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
+Route::post('machine/syscheck/update/{UNID}'  ,[SysCheckController::class,'Update']);
+Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
 
 //personal
 Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'])  ->name('personal.list');
@@ -100,6 +106,14 @@ Route::post('machine/personal/store'          ,[PersonalController::class,'Store
 Route::get('machine/personal/edit'            ,[PersonalController::class,'Edit'])   ->name('personal.edit');
 Route::post('machine/personal/update/{UNID}'  ,[PersonalController::class,'Update']);
 Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
+
+//machinetype
+Route::get('machine/machinetype/machinetypelist'   ,[PersonalController::class,'Index'])  ->name('machinetype.list');
+Route::get('machine/machinetype/form'            ,[PersonalController::class,'Create']) ->name('machinetype.form');
+Route::post('machine/machinetype/store'          ,[PersonalController::class,'Store'])  ->name('machinetype.store');
+Route::get('machine/machinetype/edit'            ,[PersonalController::class,'Edit'])   ->name('machinetype.edit');
+Route::post('machine/machinetype/update/{UNID}'  ,[PersonalController::class,'Update']);
+Route::get('machine/machinetype/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('machinetype.delete');
 
 //repair
 Route::get('machine/repair/repairlist'         ,[RepairController::class,'Index'])  ->name('repair.list');

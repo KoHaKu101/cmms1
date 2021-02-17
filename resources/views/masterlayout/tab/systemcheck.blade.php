@@ -12,8 +12,8 @@
 
                   </th>
                   <th class="bg-primary" >
-                    <button  id="popup" type="button" class="btn btn-secondary float-right"
-                    data-toggle="modal" data-target="#exampleModal" >เพิ่มระบบที่ต้องตรวจเช็ค</button>
+                    <button  id="popup" type="button" class="btn btn-warning float-right btn-sm"
+                    data-toggle="modal" data-target="#exampleModal"><span style="color:black;font-size:14px">เพิ่มระบบที่ต้องตรวจเช็ค</span></button>
                   </th>
                 </tr>
                 <tr>

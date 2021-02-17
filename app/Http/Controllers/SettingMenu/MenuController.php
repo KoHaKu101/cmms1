@@ -92,6 +92,7 @@ class MenuController extends Controller
 
 
       public function Delete($UNID){
+  
           $delete = Mainmenu::where('UNID','=',$UNID)->delete();
           return Redirect()->back()-> with('success','Confirm Delete Success');
 

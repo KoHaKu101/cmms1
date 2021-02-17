@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUploadTable extends Migration
+class CreateUpload2Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUploadTable extends Migration
      */
     public function up()
     {
-        Schema::create('UPLOAD', function (Blueprint $table) {
+        Schema::create('PMCS_MACHINES_UPLOAD', function (Blueprint $table) {
           $table->BigInteger('UNID')->primary();
           $table->BigInteger('UPLOAD_UNID_REF',false,false)->nullable();
           $table->string('MACHINE_CODE',50)->nullable()->index();
@@ -38,6 +38,6 @@ class CreateUploadTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('UPLOAD');
+        Schema::dropIfExists('PMCS_MACHINES_UPLOAD');
     }
 }

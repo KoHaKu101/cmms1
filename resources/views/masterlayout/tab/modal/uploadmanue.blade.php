@@ -14,11 +14,11 @@
   				<div class="row">
   					<div class="col-md-12 col-lg-12">
   						<div class="form-group">
-  							<label for="TOPIC_NAME">ชื่อคู่มือ</label>
+  							<label for="TOPIC_NAME">ชื่อรายการเอก/คู่มือ</label>
   								<input type="text" class="form-control form-control-sm" id="TOPIC_NAME" name="TOPIC_NAME" placeholder="ชื่อคู่มือ">
-                  <input type="hidden" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $data_set->MACHINE_CODE }}">
-                  <input type="hidden"  id="UPLOAD_UNID_REF"    name="UPLOAD_UNID_REF"  value="{{ $data_set['UNID'] }}">
-                    {{-- <input type="hidden"  id="UPLOAD_UNID_REF" name="UPLOAD_UNID_REF" value="{{ $data_set->UNID }}"> --}}
+                  <input type="hidden" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $dataset->MACHINE_CODE }}">
+                  {{-- <input type="hidden"  id="UPLOAD_UNID_REF"    name="UPLOAD_UNID_REF"  value="{{ $dataset['UNID'] }}"> --}}
+                    {{-- <input type="hidden"  id="UPLOAD_UNID_REF" name="UPLOAD_UNID_REF" value="{{ $dataset->UNID }}"> --}}
   						</div>
   					</div>
   				</div>

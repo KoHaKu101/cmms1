@@ -68,7 +68,7 @@ class UploadController extends Controller
       // dd($TOPIC_NAME);
     }
 
-    $data_up = Upload::where('UNID',$UNID)->update([
+    $dataupload = Upload::where('UNID',$UNID)->update([
 
 
       'UPLOAD_UNID_REF'     => $UPLOAD_UNID_REF,
@@ -100,7 +100,7 @@ class UploadController extends Controller
       $data_set = Upload::find($UNID);
       // $data_set = Upload::where('UNID','=',$UNID)->first();
 
-      return Storage::download($data->FILE_UPLOAD)
+      return Storage::download($data->FILE_UPLOAD);
 
   }
 

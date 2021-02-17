@@ -37,7 +37,7 @@
 								</a>
 							</div>
 							<div class="col-md-11 mt-2 ">
-								<form action="{{ url('machine/assets/update/'.$data_set->UNID) }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ url('machine/assets/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	update	</span>
@@ -51,7 +51,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แก้ไขข้อมูล</p>
+								<div class="form-inline bg-primary"><h3 class="ml-4 mt-2" style="color:white">ลงทะเบียนเครื่องจักร <h2 class=" ml-2 mt-2" style="color:white"><b>{{ $dataset->MACHINE_CODE }} </b></h2> </h3></p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -63,7 +63,7 @@
 									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="{{asset($data_set->MACHINE_ICON)}}" width="200" height="200px" class="mt-4">
+												<img src="{{asset($dataset->MACHINE_ICON)}}" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
 											</div>
 										</div>
@@ -71,8 +71,8 @@
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
-													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $data_set->MACHINE_CODE }}">
-													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $data_set->MACHINE_UNID }}">
+													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $dataset->MACHINE_CODE }}">
+													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $dataset->MACHINE_UNID }}">
 													@error ('MACHINE_CODE')
 														<span class="text-danger"> {{ $message }}</span>
 													@enderror
@@ -80,7 +80,7 @@
 
 											<div class="form-group">
 												<label for="MACHINE_STARTDATE">วันที่เริ่มใช้งาน	</label>
-												<input type="date" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value="{{ $data_set->MACHINE_STARTDATE }}">
+												<input type="date" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value="{{ $dataset->MACHINE_STARTDATE }}">
 											</div>
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-6 col-lg-6 has-error">
@@ -88,28 +88,27 @@
 													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK">
 
 														<option value>-แสดงทั้งหมด-</option>
-														<option value="1"{{ $data_set->MACHINE_CHECK == "1" ? 'selected' : '' }}>ทำงานปกติ</option>
-														<option value="2"{{ $data_set->MACHINE_CHECK == "2" ? 'selected' : '' }}>ทำงาน</option>
-														<option value="3"{{ $data_set->MACHINE_CHECK == "3" ? 'selected' : '' }}>รอผลิต</option>
-														<option value="4"{{ $data_set->MACHINE_CHECK == "4" ? 'selected' : '' }}>แผนผลิต</option>
+														<option value="1"{{ $dataset->MACHINE_CHECK == "1" ? 'selected' : '' }}>ทำงานปกติ</option>
+														<option value="2"{{ $dataset->MACHINE_CHECK == "2" ? 'selected' : '' }}>ทำงาน</option>
+														<option value="3"{{ $dataset->MACHINE_CHECK == "3" ? 'selected' : '' }}>รอผลิต</option>
+														<option value="4"{{ $dataset->MACHINE_CHECK == "4" ? 'selected' : '' }}>แผนผลิต</option>
 													</select>
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
 													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE">
 													<option value>--แสดงทั้งหมด--</option>
-													<option value="L1"{{ $data_set->MACHINE_LINE == "L1" ? 'selected' : '' }}>Line 1</option>
-													<option value="L2"{{ $data_set->MACHINE_LINE == "L2" ? 'selected' : '' }}>Line 2</option>
-													<option value="L3"{{ $data_set->MACHINE_LINE == "L3" ? 'selected' : '' }}>Line 3</option>
-													<option value="L4"{{ $data_set->MACHINE_LINE == "L4" ? 'selected' : '' }}>Line 4</option>
-													<option value="L5"{{ $data_set->MACHINE_LINE == "L5" ? 'selected' : '' }}>Line 5</option>
-													<option value="L6"{{ $data_set->MACHINE_LINE == "L6" ? 'selected' : '' }}>Line 6</option>
+													@foreach($datalineselect as $dataline)
+
+													<option value="{{ $dataline->LINE_CODE}}"
+														{{ $dataset->MACHINE_LINE == $dataline->LINE_CODE ? 'selected' : ''}} > {{$dataline->LINE_NAME}} </option>
+													@endforeach
 												</select>
 						  				</div>
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
-												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" value="{{ $data_set->MACHINE_TYPE }}">
+												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" value="{{ $dataset->MACHINE_TYPE }}">
 													<option value>--แสดงทั้งหมด--</option>
 													<?php
 													for($i = 1; $i <(5); $i++)
@@ -122,15 +121,15 @@
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_NAME">ชื่อเครื่องจักร</label>
-												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME"  value="{{ $data_set->MACHINE_NAME }}">
+												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME"  value="{{ $dataset->MACHINE_NAME }}">
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">วันที่ Maintenance 	</label>
-												<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE"  value="{{ $data_set->MACHINE_RVE_DATE }}">
+												<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE"  value="{{ $dataset->MACHINE_RVE_DATE }}">
 											</div>
 											<div class="form-group has-error">
 												<label for="PURCHASE_FORM">ซื้อจากบริษัท	</label>
-												<input type="text" class="form-control" id="PURCHASE_FORM" name="PURCHASE_FORM"  value="{{ $data_set->PURCHASE_FORM }}">
+												<input type="text" class="form-control" id="PURCHASE_FORM" name="PURCHASE_FORM"  value="{{ $dataset->PURCHASE_FORM }}">
 											</div>
 
 										</div>

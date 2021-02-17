@@ -11,8 +11,8 @@
                     <h3 align="center" style="color:white;" class="mt-2">อะไหล่ที่ต้องเปลี่ยน</h3>
                   </th>
                   <th class="bg-primary" >
-                    <button  id="popup" type="button" class="btn btn-secondary float-right"
-                    data-toggle="modal" data-target="#exampleModal2" >เพิ่มรายการอะไหล่</button>
+                    <button  id="popup" type="button" class="btn btn-warning float-right btn-sm"
+                    data-toggle="modal" data-target="#exampleModal2" ><span style="color:black;font-size:14px">เพิ่มรายการอะไหล่</span></button>
                   </th>
                 </tr>
                 <tr>

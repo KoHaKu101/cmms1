@@ -72,7 +72,7 @@
 															<td>  						{{ $row->MENU_ICON }} </td>
 															<td>
 																<a href="{{ url('machine/setting/menu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
-																<a href="{{ url('machine/setting/menu/delete'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a>
+																<a href="{{ url('machine/setting/menu/delete/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a>
 																<a href="{{ url('machine/setting/submenu/home/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-clipboard-list fa-2x"></i></a>
 															</td>
 
@@ -81,6 +81,7 @@
 
                       	</tbody>
                     </table>
+										{{ $data->links() }}
 									</div>
 
 								</div>

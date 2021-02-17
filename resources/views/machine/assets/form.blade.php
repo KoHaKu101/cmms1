@@ -51,7 +51,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">ลงทะเบียน</p>
+								<div class="form-inline bg-primary"><h3 class="ml-4 mt-2" style="color:white">ลงทะเบียนเครื่องจักร</h3>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -97,14 +97,13 @@
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
+
 													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" required autofocus>
-													<option value>--แสดงทั้งหมด--</option>
-													<option value="L1">Line 1</option>
-													<option value="L2">Line 2</option>
-													<option value="L3">Line 3</option>
-													<option value="L4">Line 4</option>
-													<option value="L5">Line 5</option>
-													<option value="L6">Line 6</option>
+														<option value> -แสดงทั้งหมด- </option>
+														@foreach($dataset as $dataline)
+														<option value="{{ $dataline->LINE_CODE  }}"> {{$dataline->LINE_NAME}} </option>
+														@endforeach
+
 												</select>
 						  				</div>
 											</div>

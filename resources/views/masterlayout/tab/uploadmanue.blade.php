@@ -3,39 +3,36 @@
     <div class="col-sm-12 ">
       <div class="jumbotron">
         <div class="col-md-8 col-lg-12">
-          <div class="table">
+          <div class="table-responsive">
             <table class="table table-sm"  >
               <thead>
                 <tr>
-                  <th class="bg-primary" colspan="7" >
-                    <h3 align="center" style="color:white;" class="mt-2">คู่มือ</h3>
+                  <th class="bg-primary" colspan="8" >
+                    <h3 align="center" style="color:white;" class="mt-2">รายการเอก/คู่มือ</h3>
                   </th>
                   <th class="bg-primary" >
-                    <button  id="popup" type="button" class="btn btn-warning float-right "
+                    <button  id="popup" type="button" class="btn btn-warning float-right btn-sm "
                       data-toggle="modal" data-target="#exampleModal4">
-                      <i class="fas fa-cloud-upload-alt" style="color:black">Upload</i>
+                      <i class="fas fa-cloud-upload-alt" style="color:black;font-size:14px">Upload</i>
                     </button>
                   </th>
                 </tr>
-
-
-
                 <tr>
                   <th>
                   </th>
                   <th colspan="2">
-                    ชื่อรายการคู่มือ
+                    รายการเอก/คู่มือ
                   </th>
                   <th>
                     ชื่อไฟล์
                   </th>
                   <th>
-                    ประเภทไฟล์(Type)
+                    ประเภทไฟล์
                   </th>
                   <th>
                     ขนาดไฟล์
                   </th>
-                  <th>
+                  <th colspan="2">
                   </th>
                   <th>
                     วันที่อัปโหลด
@@ -43,50 +40,48 @@
                   </tr>
                 </thead>
                 <tbody>
-
                   {{-- @foreach ($data_up as $key => $data_up) --}}
-
-
-                  {{-- @foreach ($data_set as $data_set) --}}
+                  @foreach ($dataupload as $uploaditem)
               <tr>
                 <td>
                   1
                 </td>
                 <td colspan="2">
-                  <h5>{{ $data_set->upload->TOPIC_NAME }}</h5>
+                  <h5>{{ $uploaditem->TOPIC_NAME }}</h5>
                   {{-- <input type="text" value="{{ $data_up->TOPIC_NAME }}"> --}}
-                  {{-- <h4>{{$data_upload->UPLOAD_UNID_REF}}</h4> --}}
-
+                  {{-- <h4>{{$data_upload_UNID_REF}}</h4> --}}
                 </td>
                 <td>
-                  <h5>{{ $data_set->upload->FILE_EXTENSION }}</h5>
+                  <h5>{{ $uploaditem->FILE_EXTENSION }}</h5>
                 </td>
 
-                <td style="text-align:center">
-                  <button class="btn btn-icon btn-round btn-primary"><i class="fas fa-file-word"></i></button>
+                <td>
+                  <i class="fas fa-file-word fa-2x"></i>
                 </td>
                 <td>
                   <div class="form-group form-inline">
-                    <h5>{{ $data_set->upload->FILE_SIZE }}</h5>
+                    <h5>{{ $uploaditem->FILE_SIZE }}</h5>
                     <h5>MB</h5>
                   </div>
                 </td>
-                <td>
-                  <a href="#"class="btn btn-primary btn-link"><i class="fas fa-eye fa-lg "></i></a>
-                  <a href="#" download="{{ $data_set->upload->FILE_UPLOAD }}" class="btn btn-success btn-link"><i class="fas fa-download fa-lg"></i>	</a>
+                <td colspan="2">
+                  <button type="button" href="#"class="btn btn-primary btn-link "><i class="fas fa-eye fa-lg "></i></button>
+
+                  <a href="{{ asset($uploaditem->FILE_UPLOAD)  }}" download="{{ $uploaditem->FILE_UPLOAD }}">
+                    <button type="button"class="btn btn-success btn-link"><i class="fas fa-download fa-lg"></i>	</button>
+                  </a>
                   <button  id="popup" type="button" class="btn btn-warning btn-link "
                     data-toggle="modal" data-target="#exampleModal5">
                     <i class="fas fa-edit fa-lg "></i>
                   </button>
-
-                  <a href="{{url('machine/upload/delete/'.$data_set->upload->UNID)}}" class="btn btn-danger btn-link"><i class="fas fa-trash fa-lg "></i>	</a>
+                  <a href="{{url('machine/upload/delete/'.$uploaditem->UNID)}}" class="btn btn-danger btn-link"><i class="fas fa-trash fa-lg "></i>	</a>
 
                 </td>
 
                 <td>
-                  <small>{{ $data_set->upload->FILE_UPLOADDATETIME }}</small>
+                  <small>{{ $uploaditem->FILE_UPLOADDATETIME }}</small>
                 </td>
-                {{-- @endforeach --}}
+                @endforeach
               </tr>
               </tbody>
             </table>
