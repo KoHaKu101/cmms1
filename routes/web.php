@@ -76,6 +76,8 @@ Route::get('machine/pdf/machinepdf', 'App\Http\Controllers\PDF\TsetController@Ht
 
 
 //assets
+Route::get('machine/assets/machinelist0'     ,[MachineController::class,'All'])  ->name('machine.listall');
+Route::get('machine/assets/machineline/{LINE_CODE}'     ,[MachineController::class,'Allline'])  ->name('machine.listallline');
 Route::get('machine/assets/machinelist'     ,[MachineController::class,'Index'])  ->name('machine.list');
 Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
 Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
@@ -106,7 +108,7 @@ Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delet
 Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'])  ->name('personal.list');
 Route::get('machine/personal/form'            ,[PersonalController::class,'Create']) ->name('personal.form');
 Route::post('machine/personal/store'          ,[PersonalController::class,'Store'])  ->name('personal.store');
-Route::get('machine/personal/edit'            ,[PersonalController::class,'Edit'])   ->name('personal.edit');
+Route::get('machine/personal/edit/{UNID}'            ,[PersonalController::class,'Edit'])   ->name('personal.edit');
 Route::post('machine/personal/update/{UNID}'  ,[PersonalController::class,'Update']);
 Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 

@@ -51,21 +51,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="card-body ml-4">
-								<div class="row">
-									<div class="col-md-6 col-lg-1">
+							<div class="card-body ml-2">
+								<div class="row ">
 									{{-- <input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $data_set->UNID }}"> --}}
+									<div class="col-md-6 col-lg-2">
+										ระบบ
 
 									</div>
 									<div class="col-md-6 col-lg-2">
-										รายการตรวจเช็ค
-
-									</div>
-									<div class="col-md-6 col-lg-1">
-										STD
-									</div>
-									<div class="col-md-6 col-lg-1">
-										ค่า
+										รายการระบบ
 									</div>
 									<div class="col-md-6 col-lg-2">
 										เช็คประจำเดือน
@@ -73,66 +67,63 @@
 									<div class="col-md-6 col-lg-2">
 										วันที่เช็คล่าสุด
 									</div>
-									<div class="col-md-6 col-lg-2">
-										วันที่เช็ค
-									</div>
-									<div class="col-md-6 col-lg-1">
 
+									<div class="col-md-6 col-lg-3">
+										รายการครบกำหนดตรวจเช็ค
+									</div>
+									<div class="col-md-6 col-lg-1 ">
 									</div>
 
 								</div>
+
 								<div class="row mt-4">
-									{{-- @foreach ($data_set as $key => $data_set) --}}
 
+									{{-- <input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $data_set->UNID }}"> --}}
+									<div class="col-md-6 col-lg-2 ">
+										ระบบมอเตอร์
 
-									<div class="col-md-6 col-lg-1">
-										1
 									</div>
 									<div class="col-md-6 col-lg-2">
-										สายไฟ
-										{{-- <h5>{{ $data_set->MACHINE_CODE }}</h5> --}}
-
-									</div>
-									<div class="col-md-6 col-lg-1">
-										1
-										{{-- <h5>{{ $data_set->FILE_NAME }}</h5> --}}
-									</div>
-									<div class="col-md-6 col-lg-1">
-										1
-										{{-- <h5>{{ $data_set->FILE_UPLOAD }}</h5> --}}
+										3 รายการ
 									</div>
 									<div class="col-md-6 col-lg-2">
-											<h5>{{ $data_set->CREATE_TIME }}</h5>
+										3 เดือน
 									</div>
 									<div class="col-md-6 col-lg-2">
-
-										<h5>{{ $data_set->CREATE_TIME }}</h5>
+										18/02/2021
 									</div>
 									<div class="col-md-6 col-lg-2">
-										<input type="text" class="form-control" >
+										ครบกำหนด 3 รายการ
+									</div>
 
+
+									<div class="col-md-6 col-lg-2">
+										<div class="form-group form-inline">
+												<button  id="popup" type="button" class="btn btn-link mt--3"
+		                    data-toggle="modal" data-target="#syscheck">
+												<span style="color: #2C94FC;"><i class="fas fa-eye fa-lg"></i>
+												</span></button>
+												<button  id="popup" type="button" class="btn btn-link mt--3"
+												data-toggle="modal" data-target="#syscheckadd">
+												<span style="color: #1CFD48;font-size:18px"><i class="fas fa-plus fa-lg"></i>
+												</span></button>
 									</div>
-									<div class="col-md-6 col-lg-1">
-										<a href="">
-											<span style="color: #2C94FC;">
-												<i class="fas fa-eye fa-lg"></i>
-											</span>
-										</a>
-										<a href="#"class="ml-2" ><span style="color: #2CFC78;"> <i class="fas fa-download fa-lg"></i></span> 	</a>
-									</div>
-									{{-- @endforeach --}}
+
 								</div>
 
+
+								</div>
 
 							</div>
 				</div>
 				</div>
 			</div>
-		</form>
+
 	</div>
 </div>
 
-
+@include('masterlayout\tab\modalsyscheck\syscheck')
+@include('masterlayout\tab\modalsyscheck\syscheckadd')
 
 
 

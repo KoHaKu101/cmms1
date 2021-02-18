@@ -37,7 +37,7 @@
 								</a>
 							</div>
 							<div class="col-md-11 mt-2 ">
-								<form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ route('personal.store') }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
@@ -64,7 +64,7 @@
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
 												<img src="/assets/img/nobody.jpg" width="200" height="200px" class="mt-4">
-													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
+													<input type="file" class="form-control mt-4" id="EMP_ICON" name="EMP_ICON" >
 													@error ('MACHINE_ICON')
 														<span class="text-danger"> {{ $message }}</span>
 													@enderror
@@ -73,8 +73,8 @@
 										<!-- ช่อง2-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="MACHINE_CODE">รหัสพนักงาน</label>
-													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" placeholder="รหัสพนักงาน" required autofocus>
+												<label for="EMP_CODE">รหัสพนักงาน</label>
+													<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" placeholder="รหัสพนักงาน" required autofocus>
 													@error ('MACHINE_CODE')
 														<span class="text-danger"> {{ $message }}</span>
 													@enderror
@@ -85,14 +85,11 @@
 
 												<div class="form-group col-md-12 has-error">
 													<lebel>ประจำ LINE</lebel>
-													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" required autofocus>
+													<select class="form-control form-control" id="EMP_GROUP" name="EMP_GROUP">
 													<option value>--แสดงทั้งหมด--</option>
-													<option value="L1">Line 1</option>
-													<option value="L2">Line 2</option>
-													<option value="L3">Line 3</option>
-													<option value="L4">Line 4</option>
-													<option value="L5">Line 5</option>
-													<option value="L6">Line 6</option>
+													@foreach($datalineselect as $dataline)
+													<option value="{{ $dataline->LINE_NAME}}"> {{$dataline->LINE_NAME}} </option>
+													@endforeach
 												</select>
 						  				</div>
 											</div>
@@ -101,8 +98,17 @@
 										<!-- ช่อง3-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="MACHINE_NAME">ชื่อพนักงาน</label>
-												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME" placeholder="ชื่อพนักงาน" required autofocus>
+												<label for="EMP_NAME">ชื่อพนักงาน</label>
+												<input type="text" class="form-control" id="EMP_NAME" name="EMP_NAME" placeholder="ชื่อพนักงาน" required autofocus>
+											</div>
+											<div class="form-group col-md-12 has-error">
+												<lebel>ตำแหน่งงาน</lebel>
+												<select class="form-control form-control" id="" name="">
+												<option value>--แสดงทั้งหมด--</option>
+												<option value>หัวหน้างาน</option>
+												<option value>พนักงานประจำ</option>
+												<option value>พนักงานรายวัน</option>
+												</select>
 											</div>
 
 

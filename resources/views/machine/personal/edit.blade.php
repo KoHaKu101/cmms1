@@ -37,7 +37,7 @@
 								</a>
 							</div>
 							<div class="col-md-11 mt-2 ">
-								<form action="" method="POST" enctype="multipart/form-data">
+								<form action="{{ url('machine/personal/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
@@ -51,7 +51,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">sparepart</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">ลงทะเบียนพนักงาน</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -60,85 +60,96 @@
 							</div>
 							<div class="card-body">
 								<div class="row">
-										<!-- ช่อง1-->
+									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
-											<div class="form-group has-error">
-												<label for="MACHINE_CODE">รหัสอะไหล่</label>
-													<input type="text" class="form-control" id="" name="" placeholder="รหัสอะไหล่">
+											<div class="form-group mt-4">
+												<img src="{{asset($dataset->EMP_ICON)}}" width="200" height="200px" class="mt-4">
+													<input type="file" class="form-control mt-4" id="EMP_ICON" name="EMP_ICON" >
+													@error ('EMP_ICON')
+														<span class="text-danger"> {{ $message }}</span>
+													@enderror
 											</div>
 										</div>
 										<!-- ช่อง2-->
-										<div class="col-md-6 col-lg-3">
+										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="MACHINE_MANU">ชื่ออะไหล่</label>
-												<input type="text" class="form-control" id="" name=" "placeholder="ชื่ออะไหล่">
+												<label for="EMP_CODE">รหัสพนักงาน</label>
+													<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" value="{{ $dataset->EMP_CODE }}">
+														<input type="hidden" id="UNID" name="UNID" value="{{ $dataset->UNID }}">
+													@error ('EMP_CODE')
+														<span class="text-danger"> {{ $message }}</span>
+													@enderror
+											</div>
+											<div class="row ml-1 mt-2">
+												<div class="form-group col-md-12 has-error">
+													<lebel>ประจำ LINE</lebel>
+													<select class="form-control form-control" id="EMP_GROUP" name="EMP_GROUP">
+													<option value>--แสดงทั้งหมด--</option>
+													@foreach($datalineselect as $dataline)
+
+													<option value="{{ $dataline->LINE_NAME}}"
+														{{ $dataset->EMP_GROUP == $dataline->LINE_NAME ? 'selected' : ''}} > {{$dataline->LINE_NAME}} </option>
+													@endforeach
+												</select>
+						  				</div>
 											</div>
 										</div>
 										<!-- ช่อง3-->
-										<div class="col-md-6 col-lg-2">
+										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">หน่วย	</label>
-												<select class="form-control">
-													<option value>--ทั้งหมด--</option>
-													<option value="1">สาย</option>
-													<option value="2">กล่อง</option>
-												</select>
+												<label for="EMP_NAME">ชื่อพนักงาน</label>
+												<input type="text" class="form-control" id="EMP_NAME" name="EMP_NAME" value="{{ $dataset->EMP_NAME }}">
 											</div>
-
-										</div>
-										<div class="col-md-8 col-lg-3">
-											<div class="form-group has-error">
-												<label for="MACHINE_MODEL">ราคา</label>
-												<div class="input-group">
-												<input type="text" class="form-control" id="" name="" placeholder="ราคา" >
-												<div class="input-group-append">
-														<span class="input-group-text">บาท</span>
-													</div>
+											<div class="form-group col-md-12 has-error">
+												<lebel>ตำแหน่งงาน</lebel>
+												<select class="form-control form-control" id="" name="">
+												<option value>--แสดงทั้งหมด--</option>
+												<option value>หัวหน้างาน</option>
+												<option value>พนักงานประจำ</option>
+												<option value>พนักงานรายวัน</option>
+												</select>
 											</div>
 										</div>
 									</div>
-								</div>
-									<div class="row">
-											<div class="col-md-8 col-lg-4">
-												<div class="form-group has-error">
-													<label for="exampleFormControlTextarea1">หมายเหตุ</label>
-    											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-												</div>
-											</div>
-
-
+								</form>
 								</div>
 								<div class="card-footer">
-									<table cellpadding="5" cellspacing="3" border="0" id="table_log">
-										<tbody>
-											<tr>
-												<td valign="center"><div class="today-record-audit">สร้างโดย:</div></td>
-												<td valign="center"><div class="today-record-audit">สุบรรณ์</div></td>
-												<td valign="center"><div class="today-record-audit">สร้างเวลา:</div></td>
-												<td valign="center"><div class="today-record-audit">2017-08-16 13:54:03</div></td>
-												<td valign="center"><div class="today-record-audit">แก้ไขโดย:</div></td>
-												<td valign="center"><div class="today-record-audit">สุบรรณ์</div></td>
-												<td valign="center"><div class="today-record-audit">แก้ไขเวลา:</div></td>
-												<td valign="center"><div class="today-record-audit">2021-02-12 09:30:58</div></td>
-											</tr>
-										</tbody>
-									</table>
+									<div class="row">
+										<div class="col-md-6 col-lg-1">
+											<small><b>สร้างโดย</b></small>
+										</div>
+										<div class="col-md-6 col-lg-2">
+											<small>{{ $dataset->CREATE_BY }}</small>
+										</div>
+										<div class="col-md-6 col-lg-1">
+											<small><b>วันที่สร้าง</b></small>
+										</div>
+										<div class="col-md-6 col-lg-2">
+											<small>{{ $dataset->CREATE_TIME }}</small>
+										</div>
+										<div class="col-md-6 col-lg-1">
+											<small><b>แก้ไขโดย</b></small>
+										</div>
+										<div class="col-md-6 col-lg-1">
+											<small>{{ $dataset->MODIFY_BY }}</small>
+										</div>
+										<div class="col-md-6 col-lg-1">
+											<small><b>วันที่แก้ไข</b></small>
+										</div>
+										<div class="col-md-6 col-lg-2">
+											<small>{{ $dataset->MODIFY_TIME }}</small>
+										</div>
+									</div>
 								</div>
+
+
+							</div>
+
+
+						</div>
 					</div>
 				</div>
-				</div>
 			</div>
-		</form>
-	</div>
-</div>
-
-
-
-
-
-
-
-
 
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}

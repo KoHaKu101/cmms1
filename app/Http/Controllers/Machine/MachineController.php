@@ -37,14 +37,18 @@ class MachineController extends Controller
   }
 
   public function Index(){
-
-
+    $dataset = MachineLine::all();
+    return View('machine/assets/machinelist',compact(['dataset']),['dataset' => $dataset]);
+  }
+  public function All(){
     $data_set = Machnie::paginate(10);
+    return View('machine/assets/machinelist0',compact(['data_set']),['data_set' => $data_set]);
+  }
+  public function Allline($LINE_CODE) {
 
+    $data_set = Machnie::where('MACHINE_LINE','=',$LINE_CODE)->paginate(10);
 
-
-    //dd($data_set);
-    return View('machine/assets/machinelist',compact(['data_set']),['data_set' => $data_set]);
+    return view('machine/assets/machinelist0',compact(['data_set']),['data_set' => $data_set]);
   }
 
   public function Create(){
@@ -75,28 +79,11 @@ class MachineController extends Controller
         $img_name = $name_gen.'.'.$img_ext;
         $up_location = 'image/machnie/';
         $last_img = $up_location.$img_name;
-        $MACHINE_ICON->move($up_location,$img_name);
-        // dd($MACHINE_ICON);
-        //
-        // $extension = $request->MACHINE_ICON->extension();
-        // $url = Storage::url($validated['MACHINE_ICON'].".".$extension);
+        $MACHINE_ICON->move($up_location,$img_name);;
     }
 } else {
     $last_img = "";
 }
-//   if(!empty($MACHINE_ICON)) {
-//     $name_gen = hexdec(uniqid());
-//
-//     $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
-// // dd($name_gen);
-//     $img_name = $name_gen.'.'.$img_ext;
-//     $up_location = 'image/machnie/';
-//     $last_img = $up_location.$img_name;
-//
-
-//   } else {
-//     $MACHINE_ICON = '';
-//   }
       Machnie::insert([
           'MACHINE_CODE'         => $request->MACHINE_CODE,
           'MACHINE_NAME'         => $request->MACHINE_NAME,
@@ -191,10 +178,6 @@ class MachineController extends Controller
       // dd($last_img);
 
      $filePath = "/uploadfile/" . "manual/"  . $MACHINE_CODE . "/" . $FILE_NAME;
-
-
-
-
      //สิ้นสุดส่วนของไฟล์
      //ชื่อ
     if(!empty($TOPIC_NAME)) {
@@ -247,10 +230,6 @@ class MachineController extends Controller
           $up_location = 'image/machnie/';
           $last_img = $up_location.$img_name;
           $MACHINE_ICON->move($up_location,$img_name);
-          // dd($MACHINE_ICON);
-          //
-          // $extension = $request->MACHINE_ICON->extension();
-          // $url = Storage::url($validated['MACHINE_ICON'].".".$extension);
       }
   } else {
       $last_img = "";

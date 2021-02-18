@@ -30,7 +30,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/assets/machinelist') }}">
+								<a href="{{ url('machine/assets/machinelist0') }}">
 									<button class="btn btn-primary  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>
@@ -134,7 +134,7 @@
 
 										</div>
 									</div>
-								</div>
+
 								<div class="row">
 									<div class="col-md-12 mt-2">
 										<div class="card-body">
@@ -363,6 +363,35 @@
 												<!-- upload -->
 												@include('masterlayout.tab.uploadmanue')
 
+									</div>
+								</div>
+							</div>
+							</div>
+							<div class="card-footer">
+								<div class="row">
+									<div class="col-md-6 col-lg-1">
+										<small><b>สร้างโดย</b></small>
+									</div>
+									<div class="col-md-6 col-lg-1">
+										<small>{{ $dataset->CREATE_BY }}</small>
+									</div>
+									<div class="col-md-6 col-lg-1">
+										<small><b>วันที่สร้าง</b></small>
+									</div>
+									<div class="col-md-6 col-lg-3">
+										<small>{{ $dataset->CREATE_TIME }}</small>
+									</div>
+									<div class="col-md-6 col-lg-1">
+										<small><b>แก้ไขโดย</b></small>
+									</div>
+									<div class="col-md-6 col-lg-1">
+										<small>{{ $dataset->MODIFY_BY }}</small>
+									</div>
+									<div class="col-md-6 col-lg-1">
+										<small><b>วันที่แก้ไข</b></small>
+									</div>
+									<div class="col-md-6 col-lg-3">
+										<small>{{ $dataset->MODIFY_TIME }}</small>
 									</div>
 								</div>
 							</div>

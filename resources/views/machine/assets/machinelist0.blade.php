@@ -29,7 +29,7 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
-								<a href="{{ url('/machine/dashboard/dashboard') }}">
+								<a href="{{ route('machine.list') }}">
 									<button class="btn btn-primary  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
