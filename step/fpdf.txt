@@ -1,0 +1,84 @@
+******install*******
+## fpdf
+composer require codedge/laravel-fpdf
+php artisan vendor:publish --provider="Codedge\Fpdf\FpdfServiceProvider" --tag=config
+##pdf-invoice
+composer require konekt/pdf-invoice
+##laravel-invoices
+composer require laraveldaily/laravel-invoices:^2.0
+
+go to config->app.php-> insert
+--in package service 
+LaravelDaily\Invoices\InvoiceServiceProvider::class,
+--aliases
+	'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class
+
+install php artisan vendor:publish --tag=invoices.views --force
+	php artisan vendor:publish --tag=invoices.translations --force
+	php artisan invoices:install
+	php artisan invoices:update
+--------------------------------------------------------------------
+******font*******
+https://drive.google.com/file/d/0B-mDm6RqTfxgbDBsa2RocWdTQTA/view
+-----------------------------------------------------------------------
+
+******	การทำงานใน	******
+สร้าง route และ controller และ model
+****** Route ******
+Route::get('ชื่อที่จะใช้ในเว็บ เช่น /pdf', 'ตำแหน่ง controller');
+-------------------------------------------------------------------- 
+****** Controller ******
+  protected $pdf;
+
+  public function __construct(\App\Models\PDF\Pdf ){
+	//public function __construct มือเข้ามาที่ controller ตัว function จะทำงานทันที 
+	//\App\Models\PDF\Pdf ลืงค์โมเดล  $pdfกำหนดตัวแปรที่ส่งข้อมูลมา
+
+    $this->middleware('auth');	
+	//$this->middleware('auth'); เมื่อมีการเข้าหน้านี้หากไม่มีการลอกอินจะให้ทำการล็อกอินก่อน  
+	//'auth' คือตัวล็อกอิน
+      $this->fpdf = $pdf; 
+	//ตัวแปร $this->fpdf มีค่า = ตัวแปร $pdf
+
+  public function HtmlToPDF()
+  {
+     // $this->fpdf = new Fpdf('P','mm','A4');
+	// set ฟอน และหน้า pdf
+     $this->fpdf->SetFont('Arial','B',16);
+     $this->fpdf->AddPage();
+     $this->fpdf->Text(10, 10, "Hello FPDF");
+     $this->fpdf->SetFont('Arial','B',10);
+     $this->fpdf->Cell(60,10,'Powered by FPDF.',0,1,'C');
+     $this->fpdf->Output();
+     exit;
+  }
+}	
+--------------------------------------------------------------------------------
+******* Model *******
+class Pdf extends Fpdf
+{
+  function Header()
+{
+    // Logo
+    $this->Image('assets/img/logo.png',10,6,30);
+    // Arial bold 15
+    $this->SetFont('Arial','B',15);
+    // Move to the right
+    $this->Cell(80);
+    // Title
+    $this->Cell(30,10,'Title',1,0,'C');
+    // Line break
+    $this->Ln(20);
+}
+// Page footer
+function Footer()
+  {
+    // Position at 1.5 cm from bottom
+    $this->SetY(-15);
+    // Arial italic 8
+    $this->SetFont('Arial','I',8);
+    // Page number
+    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+  }
+}
+// เป็นส่วนที่ไว้ตั้งค่าส่วนหัวและท้าย หรือ ส่วนที่จะไม่มีการรับข้อมูลมาหรือเกิดการเปลี่ยนแปลง

@@ -29,12 +29,13 @@
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-1 mt-2">
+							<div class="col-md-12 mt-2">
 								<a href="{{ url('machine/syscheck/syschecklist') }}">
 									<button class="btn btn-primary  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>
 								</a>
+
 							</div>
 						</div>
 					</div>
@@ -43,13 +44,20 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">รายการตรวจเช็คเครื่อง</p>
-									<div class="btn-group ml-3" role="group" aria-label="Basic example">
-									</div>
-									<div class="form-group form-inline ">
-									</div>
-								</div>
+							<div class="card-Header bg-primary">
+								{{-- <div class="form-inline  col-md-12"> --}}
+								<h3 class="ml-4 mt-2" style="color:white">ลงทะเบียนเครื่องจักร</h3>
+								<p style="color:white;font-size:17px" class="ml-4 mt-3">
+
+										<a href="{{ url('machine/syscheck/syschecklist') }}">
+											<button class="btn btn-info  btn-sm float-right ">
+												<span class="fas fa-arrow-left ">Back </span>
+											</button>
+										</a>
+
+									</p>
+
+								{{-- </div> --}}
 							</div>
 							<div class="card-body ml-2">
 								<div class="row ">

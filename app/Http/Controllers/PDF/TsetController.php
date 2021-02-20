@@ -4,34 +4,47 @@ namespace App\Http\Controllers\PDF;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Machnie;
+// use App\Models\PDF\Pdf;
+// use Codedge\Fpdf\Fpdf\Fpdf;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Auth;
+
+
 
 class TsetController extends Controller
 {
-  public function HtmlToPDF(){
+  protected $pdf;
 
-    $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-    $fontDirs = $defaultConfig['fontDir'];
-    $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-    $fontData = $defaultFontConfig['fontdata'];
-    $html = view('machine/pdf/machinepdf')->render();
-    $mpdf = new \Mpdf\Mpdf([
-    'mode' => 'utf-8',
-    'format' => 'A4-L',
-    'fontDir' => array_merge($fontDirs, [
-    storage_path('fonts/'),
-    ]),
-    'fontdata' => $fontData + [
-    'sarabun_new' => [
-    'R' => 'THSarabunNew.ttf',
-    'I' => 'THSarabunNew Italic.ttf',
-    'B' => 'THSarabunNew Bold.ttf',
-    ],
-    ],
-    'default_font' => 'sarabun_new',
-    ]);
-    $mpdf->WriteHTML($html);
-    $mpdf->Output();
-    return $mpdf->Output();
-    }
+  public function __construct(\App\Models\PDF\Pdf $pdf){
+
+    $this->middleware('auth');
+
+      $this->fpdf = $pdf;
+
+  }
+  // public function randUNID($table){
+  //   $number = date("ymdhis", time());
+  //   $length=7;
+  //   do {
+  //     for ($i=$length; $i--; $i>0) {
+  //       $number .= mt_rand(0,9);
+  //     }
+  //   }
+  //   while ( !empty(DB::table($table)
+  //   ->where('UNID',$number)
+  //   ->first(['UNID'])) );
+  //   return $number;
+  // }
+
+  public function HtmlToPDF()
+  {
+     // $this->fpdf = new Fpdf('P','mm','A4');
+     $this->fpdf->SetFont('Arial','B',16);
+     $this->fpdf->AddPage();
+     $this->fpdf->SetFont('Arial','B',10);
+     $this->fpdf->Output();
+     exit;
+  }
 }

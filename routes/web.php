@@ -18,6 +18,7 @@ use App\Http\Controllers\Machine\UploadController;
 use App\Http\Controllers\Machine\ManualController;
 use App\Http\Controllers\Machine\SysCheckController;
 use App\Http\Controllers\Machine\MachineTypeController;
+
 use App\Http\Controllers\PDF\TsetController;
 
 
@@ -43,6 +44,8 @@ use App\Models\SettingMenu\Menusubitem;
 Route::get('/', function () {
     return view('auth/login');
 });
+Route::get('/pdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
+
 
 // Route::get('/', function () {
 //   $result = QueryBuilder::for(User::class)
@@ -72,7 +75,7 @@ Route::get('users/import/show', [MachineImportController::class,'show']);
 Route::post('users/import', [MachineImportController::class,'store']);
 
 //PDF
-Route::get('machine/pdf/machinepdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
+// Route::get('machine/pdf/machinepdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
 
 
 //assets
