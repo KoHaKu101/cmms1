@@ -1,3 +1,8 @@
+<style>
+.modal-sm {
+    max-width: 80% !important;
+}
+</style>
 <!-- Modal upload -->
 <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
   <div class="modal-dialog modal-md">

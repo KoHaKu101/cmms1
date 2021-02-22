@@ -5,7 +5,7 @@
 }
 </style> --}}
 <!-- Modal -->
-<div class="modal fade" id="syscheckadd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
+<div class="modal fade" id="syscheckmain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -31,7 +31,7 @@
             </div>
           </div>
 
-          
+
               <div class="row ">
             <div class="col-md-6 col-lg-6">
               ตรวจเช็คประจำเดือน

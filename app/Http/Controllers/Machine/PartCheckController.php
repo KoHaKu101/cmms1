@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Machine;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machnie;
-
+use App\Models\Machine\Upload;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 
 use App\Exports\MachineExport;
@@ -14,7 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Auth;
 
-class RepairController extends Controller
+class PartCheckController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
@@ -35,18 +36,13 @@ class RepairController extends Controller
 
   public function Index(){
 
-    // $data_set = Machnie::paginate(10);
+    $data_set = Machnie::paginate(10);
+    $data_line6 = DB::table('pmcs_machines')->where('MACHINE_LINE','L6')->get()->count();
     //dd($data_set);
-    return View('machine/repair/repairlist');
+    return View('machine/partcheck/partchecklist',compact('data_set','data_line6'));
   }
   public function Create(){
-      // $dataupload = Machnie::where('MACHINE_CODE','=',$MACHINE_CODE)->get();
-    return View('machine/repair/form');
-  }
-  public function Search($MACHINE_CODE){
-    
-      $dataupload = Machnie::where('MACHINE_CODE','=',$MACHINE_CODE)->get();
-    return compact('dataupload');
+    return View('machine/partcheck/form');
   }
 
   public function Store(Request $request){
@@ -60,13 +56,11 @@ class RepairController extends Controller
   //   return view('machine/assets/edit',compact('data_set'));
   //
   // }
-  public function Edit() {
+  public function Edit($UNID) {
 
 
-    // $data = Mainmenu::where('UNID','=',$UNID)->first();
+    $dataset = Machnie::where('UNID','=',$UNID)->first();
 
-    return view('machine/repair/edit');
-
-  }
-
+    return view('machine/partcheck/edit',compact('dataset'));
+}
 }

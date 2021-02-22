@@ -45,15 +45,9 @@
 							</div>
 							<div class="col-md-1 mt-2 ">
 
-									<button id="popup"data-toggle="modal" data-target="#Scan"
-										class="btn btn-secondary btn-sm" type="button">
+								<button id="popup"data-toggle="modal" data-target="#Scan"
+									class="btn btn-secondary btn-sm" type="button">
 										<span class="fas fa-qrcode">	Scan QRCode	</span>
-									</button>
-							</div>
-							<div class="col-md-9 mt-2 ">
-
-									<button class="btn btn-secondary btn-sm float-right" type="button">
-										<span class="fas fa-print">	print	</span>
 									</button>
 							</div>
 						</div>
@@ -125,7 +119,7 @@
 											<div class="col-md-8 col-lg-4">
 												<div class="form-group has-error">
 													<label for="MACHINE_MODEL">ชื่อเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="ชื่อเครื่อง" disabled>
+													<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL"  disabled>
 												</div>
 											</div>
 											<div class="col-md-8 col-lg-4">
@@ -256,8 +250,8 @@
 
 
 
-
 @include('masterlayout\tab\modal\scanqrcode')
+
 
 
 
@@ -267,6 +261,17 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#getRequest').click(function(){
+			$.get('getRequest', function(data){
+				console.log(data);
+			});
+		});
+		$('#search').click(function(){
 
+		});
+	});
+</script>
 @stop
 {{-- ปิดส่วนjava --}}

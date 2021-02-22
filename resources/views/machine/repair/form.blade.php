@@ -1,6 +1,10 @@
 @extends('masterlayout.masterlayout')
+@section('meta')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+@endsection
 @section('tittle','homepage')
 @section('css')
+
 
 @endsection
 {{-- ส่วนหัว --}}
@@ -45,7 +49,8 @@
 							</div>
 							<div class="col-md-1 mt-2 ">
 
-									<button class="btn btn-secondary btn-sm" type="submit">
+								<button id="popup"data-toggle="modal" data-target="#Scan"
+									class="btn btn-secondary btn-sm" type="button">
 										<span class="fas fa-qrcode">	Scan QRCode	</span>
 									</button>
 							</div>
@@ -249,7 +254,7 @@
 
 
 
-
+@include('masterlayout\tab\modal\scanqrcode')
 
 
 
@@ -260,6 +265,27 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+<script type="text/javascript">
+$.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        }
+});
+	$(document).ready(function(){
+		$('#getRequest').click(function(){
+			$.get('getRequest', function(data){
+				console.log(data);
+			});
+		});
+		$('#search').click(function(){
+			var MACHINE_CODE = $('#MACHINE_CODE').val();
+			$.get('search',{MACHINE_CODE:MACHINE_CODE},function(data){
+				console.log(data);
+				// $('#search').html(data);
+			});
 
+		});
+	});
+</script>
 @stop
 {{-- ปิดส่วนjava --}}

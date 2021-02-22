@@ -13,7 +13,7 @@
                   </th>
                   <th class="bg-primary" >
                     <button  id="popup" type="button" class="btn btn-warning float-right btn-sm"
-                    data-toggle="modal" data-target="#exampleModal"><span style="color:black;font-size:14px">เพิ่มระบบที่ต้องตรวจเช็ค</span></button>
+                    data-toggle="modal" data-target="#syscheckmain"><span style="color:black;font-size:14px">เพิ่มระบบที่ต้องตรวจเช็ค</span></button>
                   </th>
                 </tr>
                 <tr>
@@ -50,8 +50,11 @@
                 </td>
 
                 <td >
+                  <button  id="popup" type="button" class="btn btn-success float-right ml-4"
+                  data-toggle="modal" data-target="#syschecksub" >เพิ่มรายการตรวจสอบ	</button>
                   <button  id="popup" type="button" class="btn btn-primary float-right"
-                  data-toggle="modal" data-target="#exampleModal1" >รายการตรวจสอบ	</button>
+                  data-toggle="modal" data-target="#syscheck" >รายการตรวจสอบ	</button>
+
                 </td>
 
               </tr>

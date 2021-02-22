@@ -41,10 +41,10 @@
                 </thead>
                 <tbody>
                   {{-- @foreach ($data_up as $key => $data_up) --}}
-                  @foreach ($dataupload as $uploaditem)
+                  @foreach ($dataupload as $key =>$uploaditem)
               <tr>
                 <td>
-                  1
+                  {{$key=1 , $key++}}
                 </td>
                 <td colspan="2">
                   <h5>{{ $uploaditem->TOPIC_NAME }}</h5>
@@ -65,8 +65,9 @@
                   </div>
                 </td>
                 <td colspan="2">
-                  <button type="button" href="#"class="btn btn-primary btn-link "><i class="fas fa-eye fa-lg "></i></button>
-
+                  <a href="{{ url('machine/assets/uploadpdf/'.$uploaditem->UNID) }}" class="btn btn-primary btn-link">
+                    <i class="fas fa-eye fa-lg "></i>
+                  </a>
                   <a href="{{ asset($uploaditem->FILE_UPLOAD)  }}" download="{{ $uploaditem->FILE_UPLOAD }}">
                     <button type="button"class="btn btn-success btn-link"><i class="fas fa-download fa-lg"></i>	</button>
                   </a>
@@ -74,7 +75,8 @@
                     data-toggle="modal" data-target="#exampleModal5">
                     <i class="fas fa-edit fa-lg "></i>
                   </button>
-                  <a href="{{url('machine/upload/delete/'.$uploaditem->UNID)}}" class="btn btn-danger btn-link"><i class="fas fa-trash fa-lg "></i>	</a>
+                  <a href="{{url('machine/upload/delete/'.$uploaditem->UNID)}}" class="btn btn-danger btn-link">
+                    <i class="fas fa-trash fa-lg "></i>	</a>
 
                 </td>
 

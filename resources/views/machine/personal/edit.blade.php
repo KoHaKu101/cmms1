@@ -51,7 +51,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">ลงทะเบียนพนักงาน</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แก้ไขข้อมูลพนักงาน</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">

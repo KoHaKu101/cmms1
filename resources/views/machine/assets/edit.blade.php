@@ -168,200 +168,17 @@
 												<!-- ข้อมูลทั่วไป -->
   											@include('masterlayout.tab.homeedit')
 												<!-- ประวัติการแจ้งซ่อม -->
-  											<div class="tab-pane" id="history">
-    											<div class="row">
-      											<div class="col-sm-12">
-        											<div class="jumbotron">
-          											<div class="col-md-8 col-lg-12">
-																	<div class="table">
-																	<table class="table table-sm"  >
-																		<thead>
-																			<tr>
-																				<th class="bg-primary" colspan="6" >
-																					<h3 align="center" style="color:white;" class="mt-2">ประวัติการแจ้งซ่อม</h3>
-																				</th>
-																			</tr>
-																			<tr>
-																				<th scope="col">
-																					Line
-																				</th>
-																				<th scope="col">
-																					Docno
-																				</th>
-																				<th scope="col">
-																					Docdate
-																				</th>
-																				<th scope="col">
-																					User Name
-																				</th>
-																				<th scope="col">
-																					Time
-																				</th>
-																				<th scope="col">
-																					Description
-																				</th>
-																			</tr>
+												@include('masterlayout.tab.edit.history')
 
-																		</thead>
-																		<tbody>
-																			<tr>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																			</tr>
-																		</tbody>
-																	</table>
-																</div>
-																</div>
-        											</div>
-      											</div>
-    											</div>
-  											</div>
-												<!-- แผนการปฎิบัติการ -->
-  											<div class="tab-pane" id="plan" >
-	    										<div class="row">
-      											<div class="col-sm-12">
-        											<div class="jumbotron">
-																<div class="col-md-8 col-lg-12">
-																	<div class="table">
-																		<table class="table table-sm"  >
-																			<thead>
-																				<tr>
-																					<th class="bg-primary" colspan="7" >
-																					<h3 align="center" style="color:white;" class="mt-2">แผนการปฎิบัติการ</h3>
-																					</th>
-																				</tr>
-																				<tr>
-																					<th scope="col">
-																						Line
-																					</th>
-																					<th scope="col">
-																						Machine Code
-																					</th>
-																					<th scope="col">
-																						Product Code
-																					</th>
-																					<th scope="col">
-																						Product Name
-																					</th>
-																					<th scope="col">
-																						Part Code
-																					</th>
-																					<th scope="col">
-																						Part Name
-																					</th>
-																					<th scope="col">
-																						Section Name
-																					</th>
-																				</tr>
+												@include('masterlayout.tab.edit.plan')
 
-																			</thead>
-																			<tbody>
-																				<tr>
-																					<td>
-																					</td>
-																					<td>
-																					</td>
-																					<td>
-																					</td>
-																					<td>
-																					</td>
-																					<td>
-																					</td>
-																					<td>
-																					</td>
-																					<td>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-        											</div>
-      											</div>
-    											</div>
-  											</div>
-												<!-- พนักงานประจำเครื่อง -->
-												<div class="tab-pane" id="personal" >
-													<div class="row">
-														<div class="col-sm-12">
-															<div class="jumbotron">
-																<div class="col-md-8 col-lg-12">
-																	<div class="table">
-																		<table class="table table-sm"  >
-																			<thead>
-																				<tr>
-																					<th class="bg-primary" colspan="8" >
-																						<h3 align="center" style="color:white;" class="mt-2">พนักนักงานประจำเครื่อง</h3>
-																					</th>
-																				</tr>
-																				<tr>
-																					<th scope="col">
-																						ลำดับ
-																					</th>
-																					<th scope="col">
-																						รหัสพนักงาน
-																					</th>
-																					<th scope="col">
-																					Product Code
-																					</th>
-																					<th scope="col">
-																						ชื่อพนักงาน
-																					</th>
-																					<th scope="col">
-																						นามสกุล
-																					</th>
-																					<th scope="col">
-																						ประเทศ
-																						</th>
-																						<th scope="col">
-																							กะพนักงาน
-																						</th>
-																						<th scope="col">
-																							ประเภทพนักงาน
-																						</th>
-																					</tr>
-																				</thead>
-																				<tbody>
-																			<tr>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																				<td>
-																				</td>
-																			</tr>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-  											</div>
+												@include('masterlayout.tab.edit.personal')
 												<!-- ตรวจสอบระบบ -->
-												@include('masterlayout.tab.systemcheck')
+												@include('masterlayout.tab.edit.systemcheck')
 												<!-- อะไหล่ที่ต้องเปลี่ยน -->
-												@include('masterlayout.tab.partchange')
+												@include('masterlayout.tab.edit.partchange')
 												<!-- upload -->
-												@include('masterlayout.tab.uploadmanue')
+												@include('masterlayout.tab.edit.uploadmanue')
 
 									</div>
 								</div>
@@ -403,8 +220,10 @@
 	</div>
 </div>
 
-@include('masterlayout.tab.modal.systemcheck.systemcheck')
-@include('masterlayout.tab.modal.systemcheck.systemcheckedit')
+@include('masterlayout.tab.edit.systemcheck.syscheck')
+@include('masterlayout.tab.edit.systemcheck.syschecksub')
+@include('masterlayout.tab.edit.systemcheck.syscheckmain')
+
 @include('masterlayout.tab.modal.partchange.partchange')
 @include('masterlayout.tab.modal.partchange.partchangeedit')
 @include('masterlayout.tab.modal.uploadmanue')

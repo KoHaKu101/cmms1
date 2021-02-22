@@ -17,13 +17,16 @@ use App\Http\Controllers\Machine\StockController;
 use App\Http\Controllers\Machine\UploadController;
 use App\Http\Controllers\Machine\ManualController;
 use App\Http\Controllers\Machine\SysCheckController;
+use App\Http\Controllers\Machine\PartCheckController;
 use App\Http\Controllers\Machine\MachineTypeController;
 
 use App\Http\Controllers\PDF\TsetController;
+use App\Http\Controllers\PDF\UploadPdfController;
 
 
 
 //Model
+use App\Models\Machine\Machnie;
 use App\Models\SettingMenu\Mainmenu;
 use App\Models\SettingMenu\Menusubitem;
 
@@ -47,13 +50,17 @@ Route::get('/', function () {
 Route::get('/pdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
 
 
-// Route::get('/', function () {
-//   $result = QueryBuilder::for(User::class)
-//     ->allowedFilters(['MACHINE_CODE', 'MACHINE_LOCATION'])
-//     ->get();
-//     return $result;
-//     return view('machine/assets/machinelist');
-// });
+
+Route::get('/machine/repair/getRequest', function(){
+  if(Request::ajax()){
+    return 'getRequest has load';
+  }
+});
+Route::get('/machine/repair/search',function(){
+  if(Request::ajax()){
+    return Response::json(Request::all());
+  }});
+
 
 Route::middleware(['auth:sanctum', 'verified']);
 
@@ -74,10 +81,6 @@ Route::get('users/export', [MachineExportController::class,'export']);
 Route::get('users/import/show', [MachineImportController::class,'show']);
 Route::post('users/import', [MachineImportController::class,'store']);
 
-//PDF
-// Route::get('machine/pdf/machinepdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
-
-
 //assets
 Route::get('machine/assets/machinelist0'     ,[MachineController::class,'All'])  ->name('machine.listall');
 Route::get('machine/assets/machineline/{LINE_CODE}'     ,[MachineController::class,'Allline'])  ->name('machine.listallline');
@@ -88,6 +91,7 @@ Route::post('machine/assets/storehelp'      ,[MachineController::class,'StoreUpl
 Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
 Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
 Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
+Route::get('machine/assets/uploadpdf/{UNID}',[UploadPdfController::class,'Uploadpdf']);
 
 //upload
 Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update']);
@@ -102,10 +106,16 @@ Route::post('machine/manual/update/{UNID}'  ,[ManualController::class,'Update'])
 Route::get('machine/manual/delete/{UNID}'   ,[ManualController::class,'Delete']) ->name('manual.delete');
 
 //syscheck
-Route::get('machine/syscheck/syschecklist'      ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
+Route::get('machine/syscheck/syschecklist'    ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
 Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
 Route::post('machine/syscheck/update/{UNID}'  ,[SysCheckController::class,'Update']);
 Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
+
+//partcheck
+Route::get('machine/partcheck/partchecklist'   ,[PartCheckController::class,'Index'])  ->name('partcheck.list');
+Route::get('machine/partcheck/edit/{UNID}'     ,[PartCheckController::class,'Edit'])   ->name('partcheck.edit');
+Route::post('machine/partcheck/update/{UNID}'  ,[PartCheckController::class,'Update']);
+Route::get('machine/partcheck/delete/{UNID}'   ,[PartCheckController::class,'Delete']) ->name('partcheck.delete');
 
 //personal
 Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'])  ->name('personal.list');
@@ -126,6 +136,7 @@ Route::get('machine/machinetype/delete/{UNID}'   ,[MachineTypeController::class,
 //repair
 Route::get('machine/repair/repairlist'         ,[RepairController::class,'Index'])  ->name('repair.list');
 Route::get('machine/repair/form'            ,[RepairController::class,'Create']) ->name('repair.form');
+Route::get('machine/repair/formdata'            ,[RepairController::class,'Create']) ->name('repair.formdata');
 Route::post('machine/repair/store'          ,[RepairController::class,'Store'])  ->name('repair.store');
 Route::get('machine/repair/edit'     ,[RepairController::class,'Edit'])   ->name('repair.edit');
 Route::post('machine/repair/update/{UNID}'  ,[RepairController::class,'Update']);

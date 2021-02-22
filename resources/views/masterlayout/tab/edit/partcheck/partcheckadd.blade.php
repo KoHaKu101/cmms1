@@ -5,7 +5,7 @@
 }
 </style> --}}
 <!-- Modal -->
-<div class="modal fade" id="syscheckadd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
+<div class="modal fade" id="partcheckadd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -19,27 +19,20 @@
 
           <div class="row ">
             <div class="col-md-6 col-lg-6">
-              ระบบ
-            </div>
-            <div class="col-md-6 col-lg-6">
-              <select class="form-control">
-                <option value="">--ทั้งหมด--</option>
-                <option value="1">มอเตอร์</option>
-                <option value="2">ไฟฟ้า</option>
-                <option value="3">ความเย็น</option>
-              </select>
+              รายการอะไหล่
             </div>
           </div>
+          <div class="row ">
+            @for($i =1; $i < 10 ; $i++)
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="">
+                <span class="form-check-sign">{{ $i }}</span>
+              </label>
+            </div>
+          @endfor
+        </div>
 
-          
-              <div class="row ">
-            <div class="col-md-6 col-lg-6">
-              ตรวจเช็คประจำเดือน
-            </div>
-            <div class="col-md-6 col-lg-6">
-              <input type="text" class="form-control" placeholder="ใสจำนวนเดือน">
-            </div>
-          </div>
           </div>
 
         </div>
