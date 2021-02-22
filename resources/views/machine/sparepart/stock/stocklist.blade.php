@@ -29,17 +29,11 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
+								<a href="{{ route('dashboard') }}">
 								<button class="btn btn-primary  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
-								<a href="{{ route('stock.form') }}"><button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file fa-lg">	New	</span>
-								</button></a>
-								<a href="{{ url('users/import/show') }}">
-								<button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file-import fa-lg">	Import	</span>
-								</button>
-							</a>
+								</a>
 								<a href="{{ url('users/export/') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
@@ -113,7 +107,7 @@
                         		<tr>
 
 															<td style="white-space:nowrap">
-																<a href="{{ url('machine/sparepart/edit/') }}">
+																<a href="{{ url('machine/stock/edit/') }}">
 																	<span style="color: green;">
 																		<i class="fas fa-edit fa-lg"></i>
 																	</span>

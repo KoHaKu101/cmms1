@@ -11,15 +11,19 @@ class Pdf extends Fpdf
   function Header()
 {
     // Logo
-    $this->Image('assets/img/logo13.jpg',10,6,20);
+    $this->Image('assets/img/logo13.jpg',15,6,20);
+    $this->AddFont('THSarabunNew','','THSarabunNew.php');
+    $this->AddFont('THSarabunNew','B','THSarabunNew_b.php');
     // Arial bold 15
-    $this->SetFont('Arial','B',15);
+    $this->SetFont('THSarabunNew','b',20);
     // Move to the right
-    $this->Cell(80);
+    $this->Cell(50);
     // Title
-    $this->Cell(30,10,'Title',1,0,'C');
-    // Line break
+    $this->Cell(20, 10, iconv('UTF-8', 'cp874', 'ใบแจ้งซ้อมเครื่องจักร / อุปกรณ์'));
+    // Line break(UTF-8,30,10,'',0,0,'C');
     $this->Ln(20);
+      $this->SetFont('THSarabunNew','',16);
+    $this->Cell(20, 10, iconv('UTF-8', 'cp874', 'วันที่'));
 }
 // Page footer
 function Footer()

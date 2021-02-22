@@ -47,7 +47,7 @@ use App\Models\SettingMenu\Menusubitem;
 Route::get('/', function () {
     return view('auth/login');
 });
-Route::get('/pdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
+Route::get('/machine/repair/pdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
 
 
 
@@ -67,8 +67,8 @@ Route::middleware(['auth:sanctum', 'verified']);
 Route::get('/machine/dashboard/sumaryline',[DashboardController::class,'Sumaryline'])->name('dashboard.sumaryline');
 Route::get('/machine/dashboard/dashboard',[DashboardController::class,'Dashboard']);
 Route::get('/machine',[DashboardController::class,'Dashboard']);
-Route::get('/machine/dashboard',[DashboardController::class,'Dashboard']);
-Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
+Route::get('/machine/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
+Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard');
 
 
 
@@ -151,12 +151,12 @@ Route::post('machine/sparepart/update/{UNID}'  ,[SparePartController::class,'Upd
 Route::get('machine/sparepart/delete/{UNID}'   ,[SparePartController::class,'Delete']) ->name('sparepart.delete');
 
 //stock
-Route::get('machine/sparepart/stock/stocklist'      ,[StockController::class,'Index'])  ->name('stock.list');
-Route::get('machine/sparepart/stock/form'            ,[StockController::class,'Create']) ->name('stock.form');
-Route::post('machine/sparepart/stock/store'          ,[StockController::class,'Store'])  ->name('stock.store');
-Route::get('machine/sparepart/stock/edit'            ,[StockController::class,'Edit'])   ->name('stock.edit');
-Route::post('machine/sparepart/stock/update/{UNID}'  ,[StockController::class,'Update']);
-Route::get('machine/sparepart/stock/delete/{UNID}'   ,[StockController::class,'Delete']) ->name('stock.delete');
+Route::get('machine/stock/stocklist'      ,[StockController::class,'Index'])  ->name('stock.list');
+Route::get('machine/stock/form'            ,[StockController::class,'Create']) ->name('stock.form');
+Route::post('machine/stock/store'          ,[StockController::class,'Store'])  ->name('stock.store');
+Route::get('machine/stock/edit'            ,[StockController::class,'Edit'])   ->name('stock.edit');
+Route::post('machine/stock/update/{UNID}'  ,[StockController::class,'Update']);
+Route::get('machine/stock/delete/{UNID}'   ,[StockController::class,'Delete']) ->name('stock.delete');
 
 
 //MenuController

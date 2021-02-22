@@ -66,7 +66,7 @@
 
 										<div class="form-inline bg-primary ">
 
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-fas fa-cogs fa-lg mr-1"></i> SparePart </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-fas fa-cogs fa-lg mr-1"></i> รายการสังซื้อSparePart</h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
   											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>

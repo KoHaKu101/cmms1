@@ -44,7 +44,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">คู่มือเครื่อง</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">คู่มือเครื่อง {{ $dataset->MACHINE_CODE }}</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -54,7 +54,7 @@
 							<div class="card-body ml-4">
 								<div class="row">
 									<div class="col-md-6 col-lg-1">
-									<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $data_set->UNID }}">
+									{{-- <input type="hidden"  id="UNID" name="UNID"  value="{{ $data_set->UNID }}"> --}}
 
 									</div>
 									<div class="col-md-6 col-lg-2">
@@ -76,24 +76,24 @@
 
 								</div>
 								<div class="row mt-4">
-									{{-- @foreach ($data_set as $key => $data_set) --}}
+									@foreach ($dataupload as $key => $dataitem)
 
 
 									<div class="col-md-6 col-lg-1">
-										1
+										{{ $key=1,$key++ }}
 									</div>
 									<div class="col-md-6 col-lg-2">
-										<h5>{{ $data_set->MACHINE_CODE }}</h5>
+										<h5>{{ $dataitem->MACHINE_CODE }}</h5>
 
 									</div>
 									<div class="col-md-6 col-lg-3">
-										<h5>{{ $data_set->FILE_NAME }}</h5>
+										<h5>{{ $dataitem->FILE_NAME }}</h5>
 									</div>
 									<div class="col-md-6 col-lg-2">
-										<h5>{{ $data_set->FILE_UPLOAD }}</h5>
+										<h5>{{ $dataitem->FILE_UPLOAD }}</h5>
 									</div>
 									<div class="col-md-6 col-lg-2">
-										<h5>{{ $data_set->FILE_UPLOADDATETIME }}</h5>
+										<h5>{{ $dataitem->FILE_UPLOADDATETIME }}</h5>
 									</div>
 									<div class="col-md-6 col-lg-2">
 										<a href="">
@@ -103,7 +103,7 @@
 										</a>
 										<a href="#"class="ml-2" ><span style="color: #2CFC78;"> <i class="fas fa-download fa-lg"></i></span> 	</a>
 									</div>
-									{{-- @endforeach --}}
+									@endforeach
 								</div>
 
 

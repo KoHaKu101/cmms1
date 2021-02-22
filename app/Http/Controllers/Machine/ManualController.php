@@ -91,15 +91,15 @@ class ManualController extends Controller
   }
 
   public function Edit($UNID) {
-
-    $data_set = Upload::where('UPLOAD_UNID_REF','=',$UNID)->first();
+    $dataset = Machnie::where('UNID','=',$UNID)->first();
+    $dataupload = Upload::where('UPLOAD_UNID_REF','=',$UNID)->get();
 
     // $data_set = Upload::where('UNID',$UNID)->first();
     // dd($data_set);
     // $data_set = DB::table('pmcs_machines')->join('upload','Upload.UNID','=','pmcs_machines.UNID')->first()  ;
     // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
-    return view('machine/manual/edit',compact('data_set'));
+    return view('machine/manual/edit',compact('dataset','dataupload'));
 
   }
 

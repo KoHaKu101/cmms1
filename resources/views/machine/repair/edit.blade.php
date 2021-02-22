@@ -51,10 +51,11 @@
 									</button>
 							</div>
 							<div class="col-md-9 mt-2 ">
-
+								<a href="{{ url('machine/repair/pdf') }}"
 									<button class="btn btn-secondary btn-sm float-right" type="button">
 										<span class="fas fa-print">	print	</span>
 									</button>
+								</a>
 							</div>
 						</div>
 					</div>

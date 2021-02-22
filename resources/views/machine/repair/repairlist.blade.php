@@ -29,25 +29,17 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
+								<a href="{{ route('dashboard') }}">
 								<button class="btn btn-primary  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
+								</button></a>
 								<a href="{{ route('repair.form') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file fa-lg">	New	</span>
 								</button></a>
-								<a href="{{ url('users/import/show') }}">
-								<button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file-import fa-lg">	Import	</span>
-								</button>
-							</a>
 								<a href="{{ url('users/export/') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
-								</button>
-								</a>
-								<a href="{{url('machine/pdf/machinepdf')}}">
-								<button class="btn btn-primary  btn-xs">
-									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
 								</a>
 							</div>
