@@ -36,6 +36,9 @@
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
 							</a>
+              <a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-sm">
+                <span class="fas fa-file fa-lg">	New	</span>
+              </button></a>
 						</div>
 					</div>
 
@@ -49,18 +52,20 @@
 					 <div class="portfolio-content portfolio-1">
 							 <!--portfolio Grid-->
 							 <div id="js-grid-juicy-projects" class="cbp">
-                 <div class="cbp-item movie">
+                 <div class="cbp-item movie" style="width:250px">
                      <div class="cbp-item-wrap">
                          <div class="cbp-caption">
                              <div class="cbp-caption-defaultWrap">
-                                 <img src="{{asset('assets/img/1653183730128902_c5_720x720.jpeg')}}" alt="img3"> </div>
+                               <a href="{{url('machine/assets/machinelist')}}">
+                                 <img src="{{asset('assets/img/bg-404.jpeg')}}" alt="img3">
+                               </a> </div>
                              <div class="cbp-caption-activeWrap">
                                  <div class="cbp-l-caption-alignCenter">
                                      <div class="cbp-l-caption-body">
                                          <div class="btn-group">
-                                             <a href="{{url('machine/assets/machinelist0')}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">ทะเบียนเครื่องจักร</a>
+                                             <a href="{{url('machine/assets/machinelist')}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">ทะเบียนเครื่องจักร</a>
 
-                                             <a href="{{url('machine/assets/syschecklist')}}" class=" btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro">กำหนดตรวจสอบ</a>
+                                             <a href="{{url('machine/syscheck/syschecklist')}}" class=" btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro">กำหนดตรวจสอบ</a>
                                          </div>
                                      </div>
                                  </div>
@@ -78,17 +83,17 @@
 											 <div class="cbp-item-wrap">
 													 <div class="cbp-caption">
 															 <div class="cbp-caption-defaultWrap">
-                                 <a href="{{url('machine/assets/machineline/'.$dataitem->LINE_CODE)}}">
-																	 <img src="{{asset('assets/img/1653183730128902_c5_720x720.jpeg')}}" alt="img3">
+                                 <a href="{{url('machine/assets/machinelist/'.$dataitem->LINE_CODE)}}">
+																	 <img src="{{asset('assets/img/bg-404.jpeg')}}" alt="img3">
                                  </a>
                                  </div>
 															 <div class="cbp-caption-activeWrap">
 																	 <div class="cbp-l-caption-alignCenter">
 																			 <div class="cbp-l-caption-body">
 																					 <div class="btn-group">
-																							 <a href="{{url('machine/assets/machineline/'.$dataitem->LINE_CODE)}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">ทะเบียนเครื่องจักร</a>
+																							 <a href="{{url('machine/assets/machinelist/'.$dataitem->LINE_CODE)}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">ทะเบียนเครื่องจักร</a>
                                                <input type="hidden" value="{{ $dataitem->LINE_CODE }}">
-																					     <a href="https://www.youtube.com/watch?v=3wbvpOIIBQA" class="cbp-lightbox btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro">กำหนดตรวจสอบ</a>
+																					     <a href="{{url('syscheck/syschecklist')}}" class="cbp-lightbox btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro">กำหนดตรวจสอบ</a>
 																					 </div>
 																			 </div>
 																	 </div>

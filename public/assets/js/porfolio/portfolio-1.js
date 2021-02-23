@@ -17,19 +17,16 @@
         gapVertical: 0,
         gridAdjustment: 'responsive',
         mediaQueries: [{
-            width: 1600,
-            cols: 5
-        }, {
-            width: 1280,
+            width: 800,
             cols: 4
         }, {
             width: 800,
             cols: 3
         }, {
-            width: 480,
+            width: 800,
             cols: 2
         }, {
-            width: 320,
+            width: 800,
             cols: 1
         }],
         caption: 'overlayBottomReveal',

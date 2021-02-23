@@ -63,4 +63,11 @@ class PartCheckController extends Controller
 
     return view('machine/partcheck/edit',compact('dataset'));
 }
+public function Editmain($UNID) {
+
+
+  $dataset = Machnie::where('UNID','=',$UNID)->first();
+
+  return view('machine/partcheck/editmain',compact('dataset'));
+}
 }

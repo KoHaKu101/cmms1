@@ -29,7 +29,7 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
-								<a href="{{ route('machine.list') }}">
+								<a href="{{ route('machine') }}">
 									<button class="btn btn-primary  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
@@ -72,11 +72,10 @@
 
 										<div class="form-inline bg-primary ">
 
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> Assets </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> เครื่องจักร </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-  											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
-  											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
+
 											</div>
 											<div class="form-group form-inline ">
 												<div class="input-group ml-4">

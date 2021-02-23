@@ -56,7 +56,7 @@
                 </td>
 
                 <td>
-                  <i class="fas fa-file-word fa-2x"></i>
+                    <i class="fas fa-file-word "></i>
                 </td>
                 <td>
                   <div class="form-group form-inline">

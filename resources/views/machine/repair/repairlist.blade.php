@@ -66,8 +66,7 @@
 											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-  											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
-  											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
+  											
 											</div>
 											<div class="form-group form-inline ">
 												<div class="input-group ml-4">

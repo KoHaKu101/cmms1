@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Machine\Machnie;
+
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 
@@ -12,8 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use Carbon\Carbon;
 use Auth;
-
-class MachineTypeController extends Controller
+class TypeMachineController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
@@ -34,22 +35,24 @@ class MachineTypeController extends Controller
 
   public function Index(){
 
-    return View('machine/machinetype/machinetypelist');
+    $data_set = Machnie::paginate(10);
+
+
+    return View('machine/typemachine/typemachinelist',compact('data_set'));
   }
   public function Create(){
-    return View('machine/machinetype/form');
+    return View('machine/typemachine/form');
   }
 
   public function Store(Request $request){
-
+    //code
   }
-
-  public function Edit() {
-
+  public function Edit($UNID) {
 
 
+    $dataset = Machnie::where('UNID','=',$UNID)->first();
 
-    return view('machine/machinetype/edit');
+    return view('machine/typemachine/edit',compact('dataset'));
+}
 
-  }
 }

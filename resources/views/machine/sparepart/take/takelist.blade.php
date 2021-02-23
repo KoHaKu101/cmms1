@@ -29,12 +29,11 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
+								<a href="{{ route('dashboard') }}">
 								<button class="btn btn-primary  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
-								<a href="{{ route('personal.form') }}"><button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file fa-lg">	New	</span>
-								</button></a>
+								</a>
 								<a href="{{ url('users/export/') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
@@ -66,7 +65,7 @@
 
 										<div class="form-inline bg-primary ">
 
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-user-cog fa-lg mr-1"></i> พนักงานซ่อมบำรุง </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-fas fa-cubes fa-lg mr-1"></i> Stock </h4>
 
 											<div class="btn-group ml-3" role="group" aria-label="Basic example">
   											<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
@@ -91,11 +90,11 @@
                         	<tr>
 
 														<th scope="col" style="" width="10%"></th>
-														<th scope="col"></th>
-                            <th scope="col">รหัสพนักงาน</th>
-                          	<th scope="col">ชื่อพนักงาน</th>
-                          	<th scope="col">ประจำ LINE</th>
-
+                            <th scope="col">รหัสอะไหล่</th>
+                          	<th scope="col">ชื่ออะไหล่</th>
+                          	<th scope="col">จำนวน</th>
+                          	<th scope="col">แก้ไขโดย</th>
+														<th scope="col">วันที่แก้ไข</th>
 
 
                         	</tr>
@@ -108,22 +107,22 @@
                         		<tr>
 
 															<td style="white-space:nowrap">
-																<a href="{{ url('machine/personal/edit/') }}">
+																<a href="{{ url('machine/stock/edit/') }}">
 																	<span style="color: green;">
 																		<i class="fas fa-edit fa-lg"></i>
 																	</span>
 																</a>
-																<a href="{{ url('machine/personal/delete/') }}" class="ml-3">
+																<a href="{{ url('machine/sparepart/delete/') }}" class="ml-3">
 																	<span style="color: Tomato;">
 																		<i class="fas fa-trash fa-lg ml-2">	</i>
 																	</span>
 																</a>
 															</td>
-															<td><img src="{{ asset('assets/img/profile.jpg') }}" width="70" height="70px"></td>
-															<td scope="row" style="white-space:nowrap" class="name">  6022041032  </td>
-															<td style="white-space:nowrap" class="born">      นายก          </td>
-															<td style="white-space:nowrap">  				4		     </td>
-
+															<td scope="row" style="white-space:nowrap" class="name">  RE6402-0023  </td>
+															<td style="white-space:nowrap" class="born">      สายพาน          </td>
+															<td style="white-space:nowrap">  				10		     </td>
+															<td style="white-space:nowrap">  				สาย		    </td>
+															<td style="white-space:nowrap">  				10,000	    </td>
 
                         			</tr>
                         	{{-- @endforeach --}}
