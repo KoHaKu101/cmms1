@@ -63,7 +63,7 @@
   											</button>
 										</div>
 									@endif
-									<div class="">
+									<div class="card-header">
 
 										<div class="form-inline bg-primary ">
 
@@ -93,28 +93,35 @@
 														 <div class="portfolio-content portfolio-1">
 																 <!--portfolio Grid-->
 																 <div id="js-grid-juicy-projects" class="cbp">
+																	 @foreach ($dataset as $key => $dataitem)
+
+
 									                 <div class="cbp-item movie">
 									                     <div class="cbp-item-wrap">
 									                         <div class="cbp-caption">
 									                             <div class="cbp-caption-defaultWrap">
-									                               <a href="{{url('machine/assets/machinelist')}}">
+									                               <a href="{{url('machine/typemachine/edit/'.$dataitem->UNID)}}">
 									                                 <img src="{{asset('assets/img/Chevalier-Automatic-Surface-Grider.jpg')}}" alt="img3">
+
 									                               </a> </div>
 									                             <div class="cbp-caption-activeWrap">
 									                                 <div class="cbp-l-caption-alignCenter">
 									                                     <div class="cbp-l-caption-body">
 									                                         <div class="btn-group">
-									                                             <a href="{{url('machine/assets/machinelist')}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">รายระเอียด</a>
-									                                             <a href="{{url('machine/syscheck/syschecklist')}}" class=" btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro">เครื่องจักร</a>
+																														 <a href="{{url('machine/typemachine/edit/'.$dataitem->UNID)}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">รายละเอียด</a>
+									                                             <a href="{{url('machine/assets/machinetype/'.$dataitem->TYPE_CODE)}}" class=" btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro"> เครื่องจักร</a>
+
 									                                         </div>
 									                                     </div>
 									                                 </div>
 									                             </div>
 									                         </div>
-									                         <div class="cbp-l-grid-projects-title uppercase text-center uppercase text-center">ประเภทเครื่อง เจียร</div>
+									                         <div class="cbp-l-grid-projects-title uppercase text-center uppercase text-center">ประเภทเครื่อง {{$dataitem->TYPE_NAME}}</div>
 									                                                   <div class="cbp-l-grid-projects-desc uppercase text-center uppercase text-center"></div>
+																																		 <a href="{{ url('machine/typemachine/delete/'.$dataitem->UNID) }}" class="btn btn-danger"><span class="fas fa-trash ">Delete</span></a>
 									                     </div>
 									                 </div>
+																	 @endforeach
 
 																		 <!--/portfolio 1-->
 
@@ -135,7 +142,7 @@
 												 </div>
 
 										</div>
-										{{ $data_set->links() }}
+										{{ $dataset->links() }}
 
 								</div>
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Machine\Upload;
 // use App\Models\PDF\Pdf;
 // use Codedge\Fpdf\Fpdf\Fpdf;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -26,7 +27,10 @@ class UploadPdfController extends Controller
 
   public function Uploadpdf($UNID)
   {
-    $dataset = Upload::where('UNID',$UNID)->get();
-    $dataupload =  Upload::readfile('FILE_UPLOAD',$dataset->FILE_UPLOAD)->first();
+
+    $dataset = Upload::where('UNID',$UNID)->first();
+    $file = Storage::url($dataset->FILE_UPLOAD);
+    return "<img src='".$file."'/>";
+
   }
 }

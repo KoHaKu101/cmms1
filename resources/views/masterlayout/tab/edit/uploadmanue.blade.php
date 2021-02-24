@@ -68,7 +68,7 @@
                   <a href="{{ url('machine/assets/uploadpdf/'.$uploaditem->UNID) }}" class="btn btn-primary btn-link">
                     <i class="fas fa-eye fa-lg "></i>
                   </a>
-                  <a href="{{ asset($uploaditem->FILE_UPLOAD)  }}" download="{{ $uploaditem->FILE_UPLOAD }}">
+                  <a href="{{ url('machine/upload/download/'.$uploaditem->UNID) }}">
                     <button type="button"class="btn btn-success btn-link"><i class="fas fa-download fa-lg"></i>	</button>
                   </a>
                   <button  id="popup" type="button" class="btn btn-warning btn-link "

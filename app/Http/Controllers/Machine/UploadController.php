@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Machine\Upload;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
-
-use App\Exports\MachineExport;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 use Carbon\Carbon;
 use Auth;
+use Response;
 
 class UploadController extends Controller
 {
@@ -35,31 +34,48 @@ class UploadController extends Controller
 
   public function Update(Request $request,$UNID){
 
+
     //ตัวแปร ชื่อ
     $TOPIC_NAME = $request->TOPIC_NAME;
     $MACHINE_CODE = $request->MACHINE_CODE;
     $UPLOAD_UNID_REF = $request->UPLOAD_UNID_REF;
     //ตัวแปรไฟล์
-    $FILE_UPLOAD = request()->file('FILE_UPLOAD');
-    //ตัวแปร size
-    $FILE_SIZE = 0;
-    //ส่วนของไฟล์
-    //ส่วนของชื่อไฟล์
-     $FILE_NAME = basename($request->file('FILE_UPLOAD')->getClientOriginalName(), '.'.$request->file('FILE_UPLOAD')->getClientOriginalExtension());
-    //ส่วนของนามสกุลไฟล์
-     $FILE_EXTENSION = $request->file('FILE_UPLOAD')->getClientOriginalExtension();
-    //ส่วนของ size ไฟล์
-     $FILE_SIZE = $request->file('FILE_UPLOAD')->getSize();
-       //ส่วนของกำหนดการแสดงsizeไฟล์
-     if ($FILE_SIZE >0 ) {
-       $FILE_SIZE = number_format($FILE_SIZE /100000, 2);
-     }
-      //ส่วนของวันที่ไฟล์
-     $FILE_UPLOADDATETIME = Carbon::now()->format('Y-m-d');
-     //pathfile
-     $filePath = "/uploadfile/" . "manual/"  . $MACHINE_CODE . "/" . $FILE_NAME;
-     $filenamemaster = uniqid()."_".basename($request->file('FILE_UPLOAD')->getClientOriginalName());
-     //สิ้นสุดส่วนของไฟล์
+    $update = $request->FILE_UPDATE;
+      $fileupdate = $request->FILE_SIZE;
+      $nameupdate = $request->FILE_NAME;
+      $extensionupdate = $request->FILE_EXTENSION;
+      $datetimeupdate = $request->FILE_UPLOADDATETIME;
+    // $nameupdate =
+        // $FILE_UPLOAD = request()->file('FILE_UPLOAD');
+    if ($request->hasFile('FILE_UPLOAD')) {
+      if ($request->file('FILE_UPLOAD')->isValid()) {
+        //ตัวแปร size
+        $FILE_SIZE = 0;
+        //ส่วนของไฟล์
+        //ส่วนของชื่อไฟล์
+         $FILE_NAME = basename($request->file('FILE_UPLOAD')->getClientOriginalName(), '.'.$request->file('FILE_UPLOAD')->getClientOriginalExtension());
+        //ส่วนของนามสกุลไฟล์
+         $FILE_EXTENSION = $request->file('FILE_UPLOAD')->getClientOriginalExtension();
+        //ส่วนของ size ไฟล์
+         $FILE_SIZE = $request->file('FILE_UPLOAD')->getSize();
+           //ส่วนของกำหนดการแสดงsizeไฟล์
+         if ($FILE_SIZE >0 ) {
+           $FILE_SIZE = number_format($FILE_SIZE /100000, 2);
+         }
+          //ส่วนของวันที่ไฟล์
+         $FILE_UPLOADDATETIME = Carbon::now()->format('Y-m-d');
+         //pathfile
+          $last_upload = $request->file('FILE_UPLOAD')->storeAs('upload','manual',$filenamemaster,'public');
+         //สิ้นสุดส่วนของไฟล์
+      }
+  } else {
+      $last_upload = $update;
+      $FILE_SIZE = $fileupdate;
+      $FILE_EXTENSION =  $extensionupdate;
+      $FILE_NAME =  $nameupdate;
+      $FILE_UPLOADDATETIME =  $datetimeupdate;
+    }
+
      //ชื่อ
     if(!empty($TOPIC_NAME)) {
         $TOPIC_NAME = $TOPIC_NAME;
@@ -69,12 +85,10 @@ class UploadController extends Controller
     }
 
     $dataupload = Upload::where('UNID',$UNID)->update([
-
-
       'UPLOAD_UNID_REF'     => $UPLOAD_UNID_REF,
       'MACHINE_CODE'         => $MACHINE_CODE,
       'TOPIC_NAME'         => $TOPIC_NAME,
-      'FILE_UPLOAD'          => $filenamemaster,
+      'FILE_UPLOAD'          => $last_upload,
       'FILE_SIZE'          => $FILE_SIZE,
       'FILE_NAME'          => $FILE_NAME,
       'FILE_EXTENSION'      => $FILE_EXTENSION,
@@ -95,12 +109,13 @@ class UploadController extends Controller
       return Redirect()->back()-> with('success','Confirm Delete Success');
 
   }
-  public function Download($UNID){
+  public static function Download($UNID){
     // dd($UNID);
-      $data_set = Upload::find($UNID);
+      $dataset = Upload::find($UNID);
+      $download = $dataset->FILE_UPLOAD;
       // $data_set = Upload::where('UNID','=',$UNID)->first();
-
-      return Storage::download($data->FILE_UPLOAD);
+      // return Response::disk('public')->file($download);
+      return Storage::disk('public')->download($download);
 
   }
 

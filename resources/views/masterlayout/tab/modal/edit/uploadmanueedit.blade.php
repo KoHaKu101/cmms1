@@ -29,6 +29,13 @@
 					<div class="form-group">
 						<label for="FILE_UPLOAD">Upload file</label>
 						<input type="file" class="form-control-file" id="FILE_UPLOAD" name="FILE_UPLOAD" >
+            <input type="hidden" id="FILE_UPDATE" name="FILE_UPDATE" value="{{ $dataset->FILE_UPLOAD }}" >
+            <input type="hidden" id="FILE_SIZE" name="FILE_SIZE" value="{{ $dataset->FILE_SIZE }}" >
+            <input type="hidden" id="FILE_SIZE" name="FILE_SIZE" value="{{ $dataset->FILE_EXTENSION }}" >
+            <input type="hidden" id="FILE_SIZE" name="FILE_SIZE" value="{{ $dataset->FILE_NAME }}" >
+            <input type="hidden" id="FILE_SIZE" name="FILE_SIZE" value="{{ $dataset->FILE_UPLOADDATETIME }}" >
+
+
 
 					</div>
 				</div>

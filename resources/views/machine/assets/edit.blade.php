@@ -64,7 +64,9 @@
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
 												<img src="{{asset($dataset->MACHINE_ICON)}}" width="200" height="200px" class="mt-4">
-													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
+												  <input type="hidden" id="MACHINE_UPDATE" name="MACHINE_UPDATE" value="{{$dataset->MACHINE_ICON}}">
+													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON"  >
+
 											</div>
 										</div>
 										<!-- ช่อง2-->
@@ -108,12 +110,12 @@
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
-												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" value="{{ $dataset->MACHINE_TYPE }}">
+												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE">
 													<option value>--แสดงทั้งหมด--</option>
-													<?php
-													for($i = 1; $i <(5); $i++)
-														echo'<option value="'.$i.' "> '.$i.' </option>';
-														?>
+													@foreach($dataset1 as $datatype)
+														<option value="{{ $datatype->TYPE_CODE}}"
+														{{ $dataset->MACHINE_TYPE == $datatype->TYPE_CODE ? 'selected' : ''}} > {{$datatype->TYPE_CODE}} </option>
+															@endforeach
 												</select>
 											</div>
 										</div>

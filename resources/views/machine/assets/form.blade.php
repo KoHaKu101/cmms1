@@ -65,9 +65,6 @@
 											<div class="form-group mt-4">
 												<img src="/assets/img/nobody.jpg" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON" >
-													@error ('MACHINE_ICON')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
 											</div>
 										</div>
 										<!-- ช่อง2-->
@@ -76,7 +73,7 @@
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
 													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" placeholder="รหัสเครื่องจักร" required autofocus>
 													@error ('MACHINE_CODE')
-														<span class="text-danger"> {{ $message }}</span>
+														<h3 class="text-danger"> !!!! {{ $message }}</h3>
 													@enderror
 											</div>
 
@@ -111,10 +108,9 @@
 												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
 												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" required autofocus>
 													<option value>--แสดงทั้งหมด--</option>
-													<?php
-													for($i = 1; $i <(5); $i++)
-														echo'<option value="'.$i.' "> '.$i.' </option>';
-														?>
+													@foreach($dataset1 as $datatype)
+													<option value="{{ $datatype->TYPE_CODE  }}"> {{$datatype->TYPE_NAME}} </option>
+													@endforeach
 												</select>
 											</div>
 										</div>

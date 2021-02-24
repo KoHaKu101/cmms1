@@ -30,14 +30,14 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/personal/personallist') }}">
+								<a href="{{ url('machine/typemachine/typemachinelist') }}">
 									<button class="btn btn-primary  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>
 								</a>
 							</div>
 							<div class="col-md-11 mt-2 ">
-								<form action="{{ route('personal.store') }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ route('typemachine.store') }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-success btn-sm" type="submit">
 										<span class="fas fa-file-medical ">	Save	</span>
@@ -64,20 +64,24 @@
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
 												<img src="/assets/img/nobody.jpg" width="200" height="200px" class="mt-4">
-													<input type="file" class="form-control mt-4" id="EMP_ICON" name="EMP_ICON" >
-													@error ('MACHINE_ICON')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+													<input type="file" class="form-control mt-4" id="TYPE_ICON" name="TYPE_ICON" >
 											</div>
 										</div>
 										<!-- ช่อง2-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="EMP_CODE">ชื่อประเภทเครื่องจักร</label>
-													<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" placeholder="รหัสพนักงาน" required autofocus>
+													<input type="text" class="form-control" id="TYPE_CODE" name="TYPE_CODE" placeholder="ชื่อประเภทเครื่องจักร" required autofocus>
 													@error ('MACHINE_CODE')
 														<span class="text-danger"> {{ $message }}</span>
 													@enderror
+											</div>
+											<div class="col-md-6 col-lg-12">
+												<div class="form-group ">
+													<label for="EMP_NAME">อธิบายเพิ่มเติม</label>
+													<textarea class="form-control" id="TYPE_NOTE" name="TYPE_NOTE" rows="6"></textarea>
+												</div>
+
 											</div>
 
 
@@ -85,13 +89,12 @@
 										<!-- ช่อง3-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="EMP_NAME">รหัสประเภท</label>
-												<input type="text" class="form-control" id="EMP_NAME" name="EMP_NAME" placeholder="ชื่อพนักงาน" required autofocus>
+												<label for="EMP_NAME">รหัสประเภทเครื่องจักร</label>
+												<input type="text" class="form-control" id="TYPE_NAME" name="TYPE_NAME" placeholder="รหัสประเภทเครื่องจักร" required autofocus>
 											</div>
-											
-
 
 										</div>
+
 									</div>
 								</div>
 

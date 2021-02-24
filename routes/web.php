@@ -84,6 +84,7 @@ Route::post('users/import', [MachineImportController::class,'store']);
 //assets
 Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  ->name('machine.list');
   Route::get('machine/assets/machinelist/{LINE_CODE}'     ,[MachineController::class,'Allline'])  ->name('machine.listline');
+  Route::get('machine/assets/machinetype/{TYPE_CODE}'     ,[MachineController::class,'Alltype'])  ->name('machine.listtype');
   Route::get('machine/assets/machine'     ,[MachineController::class,'Index'])  ->name('machine');
   Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
@@ -91,10 +92,11 @@ Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  
   Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
   Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
   Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
-  Route::get('machine/assets/uploadpdf/{UNID}',[UploadPdfController::class,'Uploadpdf']);
+
 
 //upload
 Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update']);
+  Route::get('machine/assets/uploadpdf/{UNID}',[UploadPdfController::class,'Uploadpdf']);
   Route::get('machine/upload/delete/{UNID}'   ,[UploadController::class,'Delete']) ->name('upload.delete');
   Route::get('machine/upload/download/{UNID}'  ,[UploadController::class,'Download']) ->name('upload.download');
   Route::get('machine/upload/view/{UNID}'     ,[UploadController::class,'View']) ->name('upload.view');
@@ -104,8 +106,9 @@ Route::get('machine/manual/manuallist'      ,[ManualController::class,'Index']) 
   Route::get('machine/manual/edit/{UNID}'     ,[ManualController::class,'Edit'])   ->name('manual.edit');
   Route::post('machine/manual/update/{UNID}'  ,[ManualController::class,'Update']);
   Route::get('machine/manual/delete/{UNID}'   ,[ManualController::class,'Delete']) ->name('manual.delete');
-//manual
+//typemachine
 Route::get('machine/typemachine/typemachinelist'      ,[TypeMachineController::class,'Index'])  ->name('typemachine.list');
+  Route::post('machine/typemachine/store'            ,[TypeMachineController::class,'Store']) ->name('typemachine.store');
   Route::get('machine/typemachine/form'            ,[TypeMachineController::class,'Create']) ->name('typemachine.form');
   Route::get('machine/typemachine/edit/{UNID}'     ,[TypeMachineController::class,'Edit'])   ->name('typemachine.edit');
   Route::post('machine/typemachine/update/{UNID}'  ,[TypeMachineController::class,'Update']);

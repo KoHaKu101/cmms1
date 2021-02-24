@@ -1,42 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'charset="utf-8" />
+	<title>tittle</title>
+</head>
 
-@extends('masterlayout.masterlayout')
-@section('tittle','homepage')
-@section('css')
-
-@endsection
-{{-- ส่วนหัว --}}
-@section('Logoandnavbar')
-
-	@include('masterlayout.logomaster')
-	@include('masterlayout.navbar.navbarmaster')
-
-@stop
-{{-- ปิดท้ายส่วนหัว --}}
-
-{{-- ส่วนเมนู --}}
-@section('sidebar')
-
-	@include('masterlayout.sidebar.sidebarmaster0')
-
-@stop
-{{-- ปิดส่วนเมนู --}}
-
-	{{-- ส่วนเนื้อหาและส่วนท้า --}}
-@section('contentandfooter')
-
-		<div class="content">
-			<div class="page-inner">
-				<iframe src="{{ asset($dataset->FILE_UPLOAD) }}">
-      </div>
-    </div>
-
-
-
-@stop
-{{-- ปิดส่วนเนื้อหาและส่วนท้า --}}
-
-{{-- ส่วนjava --}}
-@section('javascript')
-
-@stop
-{{-- ปิดส่วนjava --}}
+<body >
+	<?php
+			$file = $dataset->FILE_UPLOAD;
+			$filename = $dataset->FILE_NAME;
+			header('Content-type: application/pdf');
+			header('Content-Disposition:inline:filname="'.$filename.'"');
+			// header('Content-Transfer-Endcoding : binary');
+			header('Accept-Ranges: bytes');
+			readfile($file);
+	 ?>
+</body>
+</head>

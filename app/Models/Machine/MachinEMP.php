@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MachinEMP extends Model
 {
     use HasFactory;
-    use HasFactory;
+
     const CREATED_AT = 'CREATE_TIME';
     const UPDATED_AT = 'MODIFY_TIME';
 
