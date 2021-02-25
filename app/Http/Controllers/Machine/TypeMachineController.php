@@ -90,24 +90,19 @@ class TypeMachineController extends Controller
     $dataset = MachineType::where('UNID','=',$UNID)->first();
     return view('machine/typemachine/edit',compact('dataset'));
 }
-public function Upadte(Request $request,$UNID) {
-  $imgupdate = $request->TYPE_ICON;
+public function Update(Request $request,$UNID) {
+  $imgupdate = $request->imgupdate;
   if ($request->hasFile('TYPE_ICON')) {
     if ($request->file('TYPE_ICON')->isValid()) {
-
-
         $TYPE_ICON = $request->file('TYPE_ICON');
         $img_name = uniqid()."_".strtolower($TYPE_ICON->getClientOriginalName());
-        // $name_gen = uniqid().basename($TYPE_ICON->getClientOriginalName());
-        // $img_ext = strtolower($TYPE_ICON->getClientOriginalExtension());
-        // $img_name = $name_gen.'.'.$img_ext;
         $last_img = $request->file('TYPE_ICON')->storeAs('img/typemachine',$img_name,'public');
 
     }
 } else {
     $last_img = $imgupdate;
 }
-  $data_set = Machnie::where('UNID',$UNID)->update([
+  $data_set = MachineType::where('UNID',$UNID)->update([
     'TYPE_CODE'         => $request->TYPE_CODE,
     'TYPE_NAME'         => $request->TYPE_NAME,
     'TYPE_NOTE'         => $request->TYPE_NOTE,
@@ -117,6 +112,7 @@ public function Upadte(Request $request,$UNID) {
     'MODIFY_TIME'       => Carbon::now(),
 
   ]);
+
   return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
 
 }  public function Delete($UNID) {

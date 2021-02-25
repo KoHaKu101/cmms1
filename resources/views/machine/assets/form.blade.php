@@ -86,10 +86,10 @@
 													<lebel>สถานะ</lebel>
 													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" required autofocus>
 														<option value>-แสดงทั้งหมด-</option>
-														<option value="1">ทำงานปกติ</option>
-														<option value="2">ทำงาน</option>
-														<option value="3">รอผลิต</option>
-														<option value="4">แผนผลิต</option>
+														<option value="ทำงานปกติ">ทำงานปกติ</option>
+														<option value="กำลังทำงาน">กำลังทำงาน</option>
+														<option value="รอผลิต">รอผลิต</option>
+														<option value="แผนผลิต">แผนผลิต</option>
 													</select>
 												</div>
 												<div class="form-group col-6 has-error">

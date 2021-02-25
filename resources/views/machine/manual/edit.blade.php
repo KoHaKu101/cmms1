@@ -30,11 +30,18 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/manual/manuallist') }}">
+								<a href="{{ url('machine/assets/edit/'.$dataset->UPLOAD_UNID_REF) }}">
 									<button class="btn btn-primary  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>
 								</a>
+							</div>
+								<div class="col-md-4 mt-2">
+								<form action="{{ url('machine/upload/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
+									@csrf
+									<button class="btn btn-success btn-sm" type="submit">
+										<span class="fas fa-file-medical ">	Save	</span>
+									</button>
 							</div>
 						</div>
 					</div>
@@ -44,7 +51,7 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">คู่มือเครื่อง {{ $dataset->MACHINE_CODE }}</p>
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แก้ไขคู่มือเครื่อง</p>
 									<div class="btn-group ml-3" role="group" aria-label="Basic example">
 									</div>
 									<div class="form-group form-inline ">
@@ -53,62 +60,41 @@
 							</div>
 							<div class="card-body ml-4">
 								<div class="row">
-									<div class="col-md-6 col-lg-1">
-									{{-- <input type="hidden"  id="UNID" name="UNID"  value="{{ $data_set->UNID }}"> --}}
+									<div class="col-md-6 col-lg-4">
+										ชื่อ รายการเอก/คู่มือ
+										<div class="col-md-6 col-lg-12 mt-4 ml--4">
+											<input type="text" class="form-control"id="TOPIC_NAME" name="TOPIC_NAME" value="{{ $dataset->TOPIC_NAME }}">
+											<input type="hidden" class="form-control"id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}">
+											<input type="hidden" class="form-control"id="UNID" name="UNID" value="{{ $dataset->UNID }}">
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-4">
+										ชื่อไฟล์
+										<div class="col-md-6 col-lg-12 mt-4 ml--4">
+											<label>{{ $dataset->FILE_NAME }}<label>
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-4">
 
-									</div>
-									<div class="col-md-6 col-lg-2">
-										รหัสเครื่อง
-
-									</div>
-									<div class="col-md-6 col-lg-3">
-										ชื่อคู่มือ
-									</div>
-									<div class="col-md-6 col-lg-2">
-										ชื่อไฟล์คู่มือ
-									</div>
-									<div class="col-md-6 col-lg-2">
-										วันที่อัปโหลด
-									</div>
-									<div class="col-md-6 col-lg-2">
-										Action
+										<div class="col-md-6 col-lg-12 mt-4 ml--4">
+											<input type="file" class="form-control" id="FILE_UPLOAD" name="FILE_UPLOAD">
+											<input type="hidden" id="FILE_UPDATE" name="FILE_UPDATE" value="{{ $dataset->FILE_UPLOAD }}">
+											<input type="hidden" id="FILE_SIZE" name="FILE_SIZE" value="{{ $dataset->FILE_SIZE }}">
+											<input type="hidden" id="FILE_NAME" name="FILE_NAME" value="{{ $dataset->FILE_NAME }}">
+											<input type="hidden" id="FILE_EXTENSION" name="FILE_EXTENSION" value="{{ $dataset->FILE_EXTENSION }}">
+											<input type="hidden" id="FILE_UPLOADDATETIME" name="FILE_UPLOADDATETIME" value="{{ $dataset->FILE_UPLOADDATETIME }}">
+										</div>
 									</div>
 
 								</div>
-								<div class="row mt-4">
-									@foreach ($dataupload as $key => $dataitem)
 
-
-									<div class="col-md-6 col-lg-1">
-										{{ $key=1,$key++ }}
-									</div>
-									<div class="col-md-6 col-lg-2">
-										<h5>{{ $dataitem->MACHINE_CODE }}</h5>
-
-									</div>
-									<div class="col-md-6 col-lg-3">
-										<h5>{{ $dataitem->FILE_NAME }}</h5>
-									</div>
-									<div class="col-md-6 col-lg-2">
-										<h5>{{ $dataitem->FILE_UPLOAD }}</h5>
-									</div>
-									<div class="col-md-6 col-lg-2">
-										<h5>{{ $dataitem->FILE_UPLOADDATETIME }}</h5>
-									</div>
-									<div class="col-md-6 col-lg-2">
-										<a href="">
-											<span style="color: #2C94FC;">
-												<i class="fas fa-eye fa-lg"></i>
-											</span>
-										</a>
-										<a href="#"class="ml-2" ><span style="color: #2CFC78;"> <i class="fas fa-download fa-lg"></i></span> 	</a>
-									</div>
-									@endforeach
+								</div>
 								</div>
 
 
 							</div>
 				</div>
+			</form>
 				</div>
 			</div>
 		</form>

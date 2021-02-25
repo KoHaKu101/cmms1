@@ -18,7 +18,7 @@ class Machnie extends Model
     protected $primaryKey = "MACHINE_CODE";
     protected $keyType = 'string';
     public $table ='PMCS_MACHINES';
-    
+
 
     protected $fillable = [
       'MACHINE_CODE', 'MACHINE_NAME', 'MACHINE_CHECK', 'MACHINE_MANU', 'MACHINE_TYPE',

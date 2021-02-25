@@ -71,10 +71,11 @@
                   <a href="{{ url('machine/upload/download/'.$uploaditem->UNID) }}">
                     <button type="button"class="btn btn-success btn-link"><i class="fas fa-download fa-lg"></i>	</button>
                   </a>
-                  <button  id="popup" type="button" class="btn btn-warning btn-link "
-                    data-toggle="modal" data-target="#exampleModal5">
-                    <i class="fas fa-edit fa-lg "></i>
-                  </button>
+                  <a href="{{ url('machine/upload/edit/'.$uploaditem->UNID) }}">
+                    <button type="button" class="btn btn-warning btn-link ">
+                      <i class="fas fa-edit fa-lg "></i>
+                    </button>
+                  </a>
                   <a href="{{url('machine/upload/delete/'.$uploaditem->UNID)}}" class="btn btn-danger btn-link">
                     <i class="fas fa-trash fa-lg "></i>	</a>
 

@@ -57,7 +57,7 @@ class MachineController extends Controller
   }
   public function Alltype($TYPE_CODE) {
     $dataset = Machnie::where('MACHINE_TYPE','=',$TYPE_CODE)->paginate(10);
-    
+
     return view('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
   }
 
@@ -193,7 +193,7 @@ class MachineController extends Controller
     }
     //สิ้นสุดชื่อ
     Upload::insert([
-      'UPLOAD_UNID_REF'     => $UPLOAD_UNID_REF,
+      'UPLOAD_UNID_REF'     => $request->UPLOAD_UNID_REF,
       'MACHINE_CODE'         => $MACHINE_CODE,
       'TOPIC_NAME'         => $TOPIC_NAME,
       'FILE_UPLOAD'          => $last_upload,
@@ -216,12 +216,25 @@ class MachineController extends Controller
 
     $dataset = Machnie::where('UNID',$UNID)->first();
     $dataupload = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $dataupload1 = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $datauploadedit = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
     $dataset1 = MachineType::all();
     $datalineselect = MachineLine::all();
 
-    return view('machine/assets/edit',compact('dataset','dataset1','dataupload','datalineselect','datauploadedit'));
+    return view('machine/assets/edit',compact('dataset','dataset1','dataupload','datalineselect','datauploadedit','dataupload1'));
   }
+  public function Editback($UPLOAD_UNID_REF) {
+
+    $dataset = Machnie::where('UNID','=',$UPLOAD_UNID_REF)->first();
+    $dataupload = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $dataupload1 = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $datauploadedit = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
+    $dataset1 = MachineType::all();
+    $datalineselect = MachineLine::all();
+
+    return view('machine/assets/edit',compact('dataset','dataset1','dataupload','datalineselect','datauploadedit','dataupload1'));
+  }
+
 
   public function Update(Request $request,$UNID){
     $update = $request->MACHINE_UPDATE;

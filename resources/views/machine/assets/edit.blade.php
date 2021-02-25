@@ -90,10 +90,12 @@
 													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK">
 
 														<option value>-แสดงทั้งหมด-</option>
-														<option value="1"{{ $dataset->MACHINE_CHECK == "1" ? 'selected' : '' }}>ทำงานปกติ</option>
-														<option value="2"{{ $dataset->MACHINE_CHECK == "2" ? 'selected' : '' }}>ทำงาน</option>
-														<option value="3"{{ $dataset->MACHINE_CHECK == "3" ? 'selected' : '' }}>รอผลิต</option>
-														<option value="4"{{ $dataset->MACHINE_CHECK == "4" ? 'selected' : '' }}>แผนผลิต</option>
+
+														<option value="ทำงานปกติ"{{ $dataset->MACHINE_CHECK == "ทำงานปกติ" ? 'selected' : '' }}>ทำงานปกติ</option>
+														<option value="กำลังทำงาน"{{ $dataset->MACHINE_CHECK == "กำลังทำงาน" ? 'selected' : '' }}>กำลังทำงาน</option>
+														<option value="รอผลิต"{{ $dataset->MACHINE_CHECK == "รอผลิต" ? 'selected' : '' }}>รอผลิต</option>
+														<option value="แผนผลิต"{{ $dataset->MACHINE_CHECK == "แผนผลิต" ? 'selected' : '' }}>แผนผลิต</option>
+
 													</select>
 												</div>
 												<div class="form-group col-6 has-error">

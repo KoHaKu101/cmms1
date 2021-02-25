@@ -94,14 +94,14 @@
                       <table class="display table table-striped table-hover">
                       	<thead class="thead-light">
                         	<tr>
-
-														<th scope="col" style=""></th>
-                            <th scope="col">Location</th>
+														<th ></th>
+														<th ></th>
+                            <th scope="col">LINE</th>
                           	<th scope="col">Name</th>
                           	<th scope="col">Code</th>
                           	<th scope="col">Asset Status</th>
-														<th scope="col">Last Price Currency</th>
-
+														<th scope="col">วันที่เริ่มใช้งาน</th>
+														<th></th>
                         	</tr>
                       	</thead>
 
@@ -109,18 +109,16 @@
                           {{-- @php($i = 1) --}}
 													@foreach ($dataset as $key => $row)
 
-                        		<tr class="mt-4">
 
-															<td style="white-space:nowrap">
+                        		<tr class="mt-4">
+															<td style="width:24px">
+																<h5 class="ml-4">{{ $key+1 }}</h5>
+															</td>
+																<td style="width:120px;">
 																<a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
-																	<span style="color: green;">
-																		<i class="fas fa-edit fa-lg"></i>
-																	</span>
-																</a>
-																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" class="ml-3">
-																	<span style="color: Tomato;">
-																		<i class="fas fa-trash fa-lg ml-2">	</i>
-																	</span>
+																	<button type="button" class="btn btn-secondary" style="width:100px">
+																		<i class="fas fa-edit fa-lg float-left" ></i>
+																	</button>
 																</a>
 															</td>
 															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_LINE }}  </td>
@@ -128,16 +126,16 @@
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CODE }}   </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CHECK }}   </td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
+															<td style="width:100px;">
+																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" >
+																	<button type="button" class="ml-4 btn btn-danger" style="width:65px">
+																		<i class="fas fa-trash  fa-lg float-left ">	</i>
+																	</button>
+																</a></td>
                         			</tr>
                         	@endforeach
-
-
-
                       	</tbody>
                     </table>
-
-
-
 									</div>
 
 										</div>

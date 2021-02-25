@@ -40,29 +40,6 @@
 									@endif
 
 										<div class="card-header"><h3> Menu </h4></div>
-											{{-- <div class="row ml-2">
-												<div class="col-md-6 col-lg-2">
-													<h4>Menu Thai</h4>
-												</div>
-												<div class="col-md-6 col-lg-2">
-													<h4>Menu English</h4>
-												</div>
-												<div class="col-md-6 col-lg-1">
-													<h5>MenuIndex</h5>
-												</div>
-												<div class="col-md-6 col-lg-1">
-													<h4>MENU Status</h4>
-												</div>
-												<div class="col-md-6 col-lg-2">
-													<h4>MENU Class</h4>
-												</div>
-												<div class="col-md-6 col-lg-2">
-													<h4>MENU Icon</h4>
-												</div>
-												<div class="col-md-6 col-lg-2">
-													<h4>Action</h4>
-												</div>
-											</div> --}}
 											<div class="table-responsive">
                       <table class="display table table-striped table-hover ml-4" >
                       	<thead>

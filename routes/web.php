@@ -90,20 +90,23 @@ Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
   Route::post('machine/assets/storehelp'      ,[MachineController::class,'StoreUpload']) ->name('machine.storeupload');
   Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
+  Route::get('machine/assets/edit:/{UPLOAD_UNID_REF}'     ,[MachineController::class,'Editback'])   ->name('machine.edit:');
   Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
   Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
 
 
 //upload
-Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update']);
+Route::get('machine/upload/edit/{UNID}'     ,[UploadController::class,'Edit'])   ->name('manual.edit');
+  Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update']);
   Route::get('machine/assets/uploadpdf/{UNID}',[UploadPdfController::class,'Uploadpdf']);
   Route::get('machine/upload/delete/{UNID}'   ,[UploadController::class,'Delete']) ->name('upload.delete');
   Route::get('machine/upload/download/{UNID}'  ,[UploadController::class,'Download']) ->name('upload.download');
   Route::get('machine/upload/view/{UNID}'     ,[UploadController::class,'View']) ->name('upload.view');
 
+
 //manual
 Route::get('machine/manual/manuallist'      ,[ManualController::class,'Index'])  ->name('manual.list');
-  Route::get('machine/manual/edit/{UNID}'     ,[ManualController::class,'Edit'])   ->name('manual.edit');
+  Route::get('machine/manual/show/{UNID}'     ,[ManualController::class,'Show'])   ->name('manual.Show');
   Route::post('machine/manual/update/{UNID}'  ,[ManualController::class,'Update']);
   Route::get('machine/manual/delete/{UNID}'   ,[ManualController::class,'Delete']) ->name('manual.delete');
 //typemachine

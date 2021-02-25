@@ -103,7 +103,7 @@
                         		<tr>
 
 															<td width="13%">
-																<a href="{{ url('machine/manual/edit/'.$row->UNID) }}">
+																<a href="{{ url('machine/manual/show/'.$row->UNID) }}">
 																	<span style="color: #2C94FC;">
 																		<i class="fas fa-eye fa-lg"></i>
 																	</span>

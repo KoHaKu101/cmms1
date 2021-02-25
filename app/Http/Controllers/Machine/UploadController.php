@@ -32,19 +32,25 @@ class UploadController extends Controller
     return $number;
   }
 
+
+  public function Edit($UNID){
+    $dataset = Upload::where('UNID',$UNID)->first();
+    return view('machine/manual/edit',compact('dataset'));
+
+  }
   public function Update(Request $request,$UNID){
 
 
     //ตัวแปร ชื่อ
-    $TOPIC_NAME = $request->TOPIC_NAME;
+      $TOPIC_NAME = $request->TOPIC_NAME;
     $MACHINE_CODE = $request->MACHINE_CODE;
-    $UPLOAD_UNID_REF = $request->UPLOAD_UNID_REF;
     //ตัวแปรไฟล์
-    $update = $request->FILE_UPDATE;
+      $update = $request->FILE_UPDATE;
       $fileupdate = $request->FILE_SIZE;
       $nameupdate = $request->FILE_NAME;
       $extensionupdate = $request->FILE_EXTENSION;
       $datetimeupdate = $request->FILE_UPLOADDATETIME;
+
     // $nameupdate =
         // $FILE_UPLOAD = request()->file('FILE_UPLOAD');
     if ($request->hasFile('FILE_UPLOAD')) {
@@ -63,29 +69,29 @@ class UploadController extends Controller
            $FILE_SIZE = number_format($FILE_SIZE /100000, 2);
          }
           //ส่วนของวันที่ไฟล์
+         $filenamemaster = uniqid().basename($request->file('FILE_UPLOAD')->getClientOriginalName());
          $FILE_UPLOADDATETIME = Carbon::now()->format('Y-m-d');
          //pathfile
-          $last_upload = $request->file('FILE_UPLOAD')->storeAs('upload','manual',$filenamemaster,'public');
+          $last_upload = $request->file('FILE_UPLOAD')->storeAs('upload/manual',$filenamemaster,'public');
          //สิ้นสุดส่วนของไฟล์
-      }
-  } else {
-      $last_upload = $update;
-      $FILE_SIZE = $fileupdate;
-      $FILE_EXTENSION =  $extensionupdate;
-      $FILE_NAME =  $nameupdate;
-      $FILE_UPLOADDATETIME =  $datetimeupdate;
-    }
+         // dd($filenamemaster);
 
-     //ชื่อ
-    if(!empty($TOPIC_NAME)) {
-        $TOPIC_NAME = $TOPIC_NAME;
-    } else {
-      $TOPIC_NAME = $FILE_NAME;
-      // dd($TOPIC_NAME);
-    }
+      }
+  }  else {
+        $last_upload = $update;
+        $FILE_SIZE = $fileupdate;
+        $FILE_EXTENSION =  $extensionupdate;
+        $FILE_NAME =  $nameupdate;
+        $FILE_UPLOADDATETIME =  $datetimeupdate;
+      }
+
+  // if ($request->TOPIC_NAME) {
+
+
+
 
     $dataupload = Upload::where('UNID',$UNID)->update([
-      'UPLOAD_UNID_REF'     => $UPLOAD_UNID_REF,
+
       'MACHINE_CODE'         => $MACHINE_CODE,
       'TOPIC_NAME'         => $TOPIC_NAME,
       'FILE_UPLOAD'          => $last_upload,
@@ -93,14 +99,13 @@ class UploadController extends Controller
       'FILE_NAME'          => $FILE_NAME,
       'FILE_EXTENSION'      => $FILE_EXTENSION,
       'FILE_UPLOADDATETIME'    => $FILE_UPLOADDATETIME,
-      // 'CREATE_BY'            => Auth::user()->name,
-      // 'CREATE_TIME'          => Carbon::now(),
       'MODIFY_BY'            => Auth::user()->name,
       'MODIFY_TIME'          => Carbon::now(),
-      // 'UNID'                 => $this->randUNID('UPLOAD'),
+
     ]);
 
     return Redirect()->back();
+
   }
   public function Delete($UNID){
     // dd($UNID);

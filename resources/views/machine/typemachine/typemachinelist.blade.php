@@ -101,7 +101,7 @@
 									                         <div class="cbp-caption">
 									                             <div class="cbp-caption-defaultWrap">
 									                               <a href="{{url('machine/typemachine/edit/'.$dataitem->UNID)}}">
-									                                 <img src="{{asset('assets/img/Chevalier-Automatic-Surface-Grider.jpg')}}" alt="img3">
+									                                 <img src="{{asset('storage/'.$dataitem->TYPE_ICON)}}" alt="img3">
 
 									                               </a> </div>
 									                             <div class="cbp-caption-activeWrap">
@@ -117,9 +117,10 @@
 									                             </div>
 									                         </div>
 									                         <div class="cbp-l-grid-projects-title uppercase text-center uppercase text-center">ประเภทเครื่อง {{$dataitem->TYPE_NAME}}</div>
-									                                                   <div class="cbp-l-grid-projects-desc uppercase text-center uppercase text-center"></div>
-																																		 <a href="{{ url('machine/typemachine/delete/'.$dataitem->UNID) }}" class="btn btn-danger"><span class="fas fa-trash ">Delete</span></a>
-									                     </div>
+									                         <div class="cbp-l-grid-projects-desc uppercase text-center uppercase text-center bg-danger">
+																					 <a href="{{ url('machine/typemachine/delete/'.$dataitem->UNID) }}" class="btn btn-danger btn-lg"><span class="fas fa-trash ">Delete</span></a>
+																					 </div>
+																			 </div>
 									                 </div>
 																	 @endforeach
 
