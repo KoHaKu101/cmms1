@@ -98,7 +98,7 @@
 
                       	<tbody >
                           {{-- @php($i = 1) --}}
-													@foreach ($data_set as $key => $row)
+													@foreach ($dataset as $key => $row)
 
                         		<tr>
 
@@ -127,7 +127,7 @@
 									</div>
 
 										</div>
-										{{ $data_set->links() }}
+										{{ $dataset->links() }}
 
 								</div>
 

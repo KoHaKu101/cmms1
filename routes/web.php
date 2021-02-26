@@ -5,10 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Export\MachineExportController;
 //ImprotController
 use App\Http\Controllers\Import\MachineImportController;
-//Controller
-use App\Http\Controllers\Dashboard\DashboardController;
+
+//************************* Menu *************************************
 use App\Http\Controllers\SettingMenu\MenuController;
 use App\Http\Controllers\SettingMenu\MenuSubController;
+//************************* Controller *******************************
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Machine\MachineController;
 use App\Http\Controllers\Machine\PersonalController;
 use App\Http\Controllers\Machine\RepairController;
@@ -18,13 +20,14 @@ use App\Http\Controllers\Machine\UploadController;
 use App\Http\Controllers\Machine\ManualController;
 use App\Http\Controllers\Machine\SysCheckController;
 use App\Http\Controllers\Machine\PartCheckController;
-use App\Http\Controllers\Machine\TypeMachineController;
-
+use App\Http\Controllers\Machine\PaySpareController;
+//************************* add tabel *********************************
+use App\Http\Controllers\MachineaddTable\TypeMachineController;
+use App\Http\Controllers\MachineaddTable\TableRepairController;
+use App\Http\Controllers\MachineaddTable\SpareTabelController;
+//****************************** PDF **********************************
 use App\Http\Controllers\PDF\TsetController;
 use App\Http\Controllers\PDF\UploadPdfController;
-
-
-
 //Model
 use App\Models\Machine\Machnie;
 use App\Models\SettingMenu\Mainmenu;
@@ -88,36 +91,30 @@ Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  
   Route::get('machine/assets/machine'     ,[MachineController::class,'Index'])  ->name('machine');
   Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
-  Route::post('machine/assets/storehelp'      ,[MachineController::class,'StoreUpload']) ->name('machine.storeupload');
+
   Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
   Route::get('machine/assets/edit:/{UPLOAD_UNID_REF}'     ,[MachineController::class,'Editback'])   ->name('machine.edit:');
   Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
   Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
 
-
 //upload
-Route::get('machine/upload/edit/{UNID}'     ,[UploadController::class,'Edit'])   ->name('manual.edit');
+Route::post('machine/assets/storeupload'      ,[UploadController::class,'StoreUpload']) ->name('machine.storeupload');
+  Route::get('machine/upload/edit/{UNID}'     ,[UploadController::class,'Edit'])   ->name('manual.edit');
   Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update']);
   Route::get('machine/assets/uploadpdf/{UNID}',[UploadPdfController::class,'Uploadpdf']);
   Route::get('machine/upload/delete/{UNID}'   ,[UploadController::class,'Delete']) ->name('upload.delete');
   Route::get('machine/upload/download/{UNID}'  ,[UploadController::class,'Download']) ->name('upload.download');
   Route::get('machine/upload/view/{UNID}'     ,[UploadController::class,'View']) ->name('upload.view');
 
-
 //manual
 Route::get('machine/manual/manuallist'      ,[ManualController::class,'Index'])  ->name('manual.list');
   Route::get('machine/manual/show/{UNID}'     ,[ManualController::class,'Show'])   ->name('manual.Show');
   Route::post('machine/manual/update/{UNID}'  ,[ManualController::class,'Update']);
   Route::get('machine/manual/delete/{UNID}'   ,[ManualController::class,'Delete']) ->name('manual.delete');
-//typemachine
-Route::get('machine/typemachine/typemachinelist'      ,[TypeMachineController::class,'Index'])  ->name('typemachine.list');
-  Route::post('machine/typemachine/store'            ,[TypeMachineController::class,'Store']) ->name('typemachine.store');
-  Route::get('machine/typemachine/form'            ,[TypeMachineController::class,'Create']) ->name('typemachine.form');
-  Route::get('machine/typemachine/edit/{UNID}'     ,[TypeMachineController::class,'Edit'])   ->name('typemachine.edit');
-  Route::post('machine/typemachine/update/{UNID}'  ,[TypeMachineController::class,'Update']);
-  Route::get('machine/typemachine/delete/{UNID}'   ,[TypeMachineController::class,'Delete']) ->name('typemachine.delete');
+
 //syscheck
 Route::get('machine/syscheck/syschecklist'    ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
+Route::get('machine/syscheck/syschecklist:/{LINE_CODE}'    ,[SysCheckController::class,'Indexline'])  ->name('syscheck.listline');
   Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
   Route::post('machine/syscheck/update/{UNID}'  ,[SysCheckController::class,'Update']);
   Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
@@ -134,7 +131,6 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
   Route::get('machine/personal/edit/{UNID}'            ,[PersonalController::class,'Edit'])   ->name('personal.edit');
   Route::post('machine/personal/update/{UNID}'  ,[PersonalController::class,'Update']);
   Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
-
 //repair
 Route::get('machine/repair/repairlist'         ,[RepairController::class,'Index'])  ->name('repair.list');
   Route::get('machine/repair/form'            ,[RepairController::class,'Create']) ->name('repair.form');
@@ -157,6 +153,35 @@ Route::get('machine/stock/stocklist'      ,[StockController::class,'Index'])  ->
   Route::get('machine/stock/edit'            ,[StockController::class,'Edit'])   ->name('stock.edit');
   Route::post('machine/stock/update/{UNID}'  ,[StockController::class,'Update']);
   Route::get('machine/stock/delete/{UNID}'   ,[StockController::class,'Delete']) ->name('stock.delete');
+//pay
+Route::get('machine/pay/paylist'      ,[PaySpareController::class,'Index'])  ->name('pay.list');
+  Route::get('machine/pay/form'            ,[PaySpareController::class,'Create']) ->name('pay.form');
+  Route::post('machine/pay/store'          ,[PaySpareController::class,'Store'])  ->name('pay.store');
+  Route::get('machine/pay/edit'            ,[PaySpareController::class,'Edit'])   ->name('pay.edit');
+  Route::post('machine/pay/update/{UNID}'  ,[PaySpareController::class,'Update']);
+  Route::get('machine/pay/delete/{UNID}'   ,[PaySpareController::class,'Delete']) ->name('pay.delete');
+
+  //***************************** tabledata ****************************************
+  //typemachine
+  Route::get('machine/typemachine/typemachinelist'      ,[TypeMachineController::class,'Index'])  ->name('typemachine.list');
+    Route::post('machine/typemachine/store'            ,[TypeMachineController::class,'Store']) ->name('typemachine.store');
+    Route::get('machine/typemachine/form'            ,[TypeMachineController::class,'Create']) ->name('typemachine.form');
+    Route::get('machine/typemachine/edit/{UNID}'     ,[TypeMachineController::class,'Edit'])   ->name('typemachine.edit');
+    Route::post('machine/typemachine/update/{UNID}'  ,[TypeMachineController::class,'Update']);
+    Route::get('machine/typemachine/delete/{UNID}'   ,[TypeMachineController::class,'Delete']) ->name('typemachine.delete');
+  //repair
+  Route::get('machine/table/repairlist'        ,[TableRepairController::class,'Index'])  ->name('tablerepair.list');
+    Route::post('machine/table/store'          ,[TableRepairController::class,'Store']) ->name('tablerepair.store');
+    Route::get('machine/table/edit/{UNID}'     ,[TableRepairController::class,'Edit'])   ->name('tablerepair.edit');
+    Route::post('machine/table/update/{UNID}'  ,[TableRepairController::class,'Update']);
+    Route::get('machine/table/delete/{UNID}'   ,[TableRepairController::class,'Delete']) ->name('tablerepair.delete');
+  //sparepart
+  Route::get('machine/table/sparepartlist'     ,[SpareTabelController::class,'Index'])  ->name('tablesparepart.list');
+    Route::post('machine/table/store'          ,[SpareTabelController::class,'Store']) ->name('tablesparepart.store');
+    Route::get('machine/table/edit/{UNID}'     ,[SpareTabelController::class,'Edit'])   ->name('tablesparepart.edit');
+    Route::post('machine/table/update/{UNID}'  ,[SpareTabelController::class,'Update']);
+    Route::get('machine/table/delete/{UNID}'   ,[SpareTabelController::class,'Delete']) ->name('tablesparepart.delete');
+  //***************************** MENU ****************************************
 //MenuController
 Route::get('machine/setting/menu/home'              ,[MenuController::class,'Home'])   ->name('menu.home');
   Route::post('machine/setting/menu/add'              ,[MenuController::class,'AddMenu'])->name('menu.store');

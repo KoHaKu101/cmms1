@@ -35,8 +35,6 @@ class UploadPdfController extends Controller
   {
     $location = Upload::where('UNID',$UNID)->first();
 
-
-
         return view('machine/showupload/upload', compact('location'));
     // dd($spreadsheet);
 

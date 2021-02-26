@@ -96,12 +96,12 @@
 										<h5>{{ $dataitem->FILE_UPLOADDATETIME }}</h5>
 									</div>
 									<div class="col-md-6 col-lg-2">
-										<a href="">
+										<a href="{{ url('machine/assets/uploadpdf/'.$dataitem->UNID) }}">
 											<span style="color: #2C94FC;">
 												<i class="fas fa-eye fa-lg"></i>
 											</span>
 										</a>
-										<a href="#"class="ml-2" ><span style="color: #2CFC78;"> <i class="fas fa-download fa-lg"></i></span> 	</a>
+										<a href="{{url('machine/upload/download/'.$dataitem->UNID)}}"class="ml-2" ><span style="color: #2CFC78;"> <i class="fas fa-download fa-lg"></i></span> 	</a>
 									</div>
 									@endforeach
 								</div>

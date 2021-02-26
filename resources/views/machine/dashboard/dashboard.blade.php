@@ -173,7 +173,7 @@
 								</div>
 								<div class="card-body">
 
-									@foreach($data_set as $data_sett)
+									@foreach($data_set as $dataitem)
 										{{-- @for($i = 1; $i < 9-$data_set ; $i++) --}}
 									<div class="d-flex">
 										<input type="hidden" value="1">
@@ -181,12 +181,12 @@
 											<span class="avatar-title rounded-circle border border-white bg-info">J</span>
 										</div>
 										<div class="flex-1 ml-3 pt-1">
-											<h4 class="text-uppercase fw-bold mb-1">{{$data_sett->MACHINE_CODE}} <span class="text-success pl-3">ทำงานปกติ</span></h4>
+											<h4 class="text-uppercase fw-bold mb-1">{{$dataitem->MACHINE_CODE}} <span class="text-success pl-3">ทำงานปกติ</span></h4>
 
 											<span class="text-muted">มอเตอร์เสีย</span>
 										</div>
 										<div class="float-right pt-1">
-											<h5 class="text-muted">{{$data_sett->CREATE_TIME}}</h5>
+											<h5 class="text-muted">{{$dataitem->CREATE_TIME}}</h5>
 										</div>
 									</div>
 									<hr>

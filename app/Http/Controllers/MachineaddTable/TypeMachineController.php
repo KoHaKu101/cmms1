@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Machine;
+namespace App\Http\Controllers\MachineaddTable;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //model
-use App\Models\Machine\MachineType;
+use App\Models\MachineAddTable\MachineType;
 use App\Models\Machine\Protected;
 //github
 use RealRashid\SweetAlert\Facades\Alert;
@@ -39,10 +39,10 @@ class TypeMachineController extends Controller
 
     $dataset = MachineType::paginate(10);
 
-    return View('machine/typemachine/typemachinelist',compact('dataset'));
+    return View('machine/add/typemachine/typemachinelist',compact('dataset'));
   }
   public function Create(){
-    return View('machine/typemachine/form');
+    return View('machine/add/typemachine/form');
   }
 
   public function Store(Request $request){
@@ -88,7 +88,7 @@ class TypeMachineController extends Controller
   }
   public function Edit($UNID) {
     $dataset = MachineType::where('UNID','=',$UNID)->first();
-    return view('machine/typemachine/edit',compact('dataset'));
+    return view('machine/add/typemachine/edit',compact('dataset'));
 }
 public function Update(Request $request,$UNID) {
   $imgupdate = $request->imgupdate;

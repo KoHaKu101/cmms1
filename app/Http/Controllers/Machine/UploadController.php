@@ -32,14 +32,70 @@ class UploadController extends Controller
     return $number;
   }
 
+  public function StoreUpload(Request $request){
 
+    //ตัวแปร ชื่อ
+    $TOPIC_NAME = $request->TOPIC_NAME;
+    $MACHINE_CODE = $request->MACHINE_CODE;
+    $UPLOAD_UNID_REF = $request->UPLOAD_UNID_REF;
+    //ตัวแปรไฟล์
+    $FILE_UPLOAD = request()->file('FILE_UPLOAD');
+    // $path = Storage::
+    //ตัวแปร size
+    $FILE_SIZE = 0;
+    //ส่วนของไฟล์
+    //ส่วนของชื่อไฟล์
+     $FILE_NAME = basename($request->file('FILE_UPLOAD')->getClientOriginalName());
+    //ส่วนของนามสกุลไฟล์
+     $FILE_EXTENSION = $request->file('FILE_UPLOAD')->getClientOriginalExtension();
+    //ส่วนของ size ไฟล์
+     $FILE_SIZE = $request->file('FILE_UPLOAD')->getSize();
+       //ส่วนของกำหนดการแสดงsizeไฟล์
+     if ($FILE_SIZE >0 ) {
+       $FILE_SIZE = number_format($FILE_SIZE /100000, 2);
+     }
+      //ส่วนของวันที่ไฟล์
+     $FILE_UPLOADDATETIME = Carbon::now()->format('Y-m-d');
+     //pathfile
+      $filenamemaster = uniqid().basename($request->file('FILE_UPLOAD')->getClientOriginalName());
+
+       $last_upload = $request->file('FILE_UPLOAD')->storeAs('upload/manual',$filenamemaster,'public');
+       // dd($last_upload);
+
+     //สิ้นสุดส่วนของไฟล์
+     //ชื่อ
+    if(!empty($TOPIC_NAME)) {
+        $TOPIC_NAME = $TOPIC_NAME;
+    } else {
+      $TOPIC_NAME = $FILE_NAME;
+      // dd($TOPIC_NAME);
+    }
+    //สิ้นสุดชื่อ
+    Upload::insert([
+      'UPLOAD_UNID_REF'     => $request->UPLOAD_UNID_REF,
+      'MACHINE_CODE'         => $MACHINE_CODE,
+      'TOPIC_NAME'         => $TOPIC_NAME,
+      'FILE_UPLOAD'          => $last_upload,
+      'FILE_SIZE'          => $FILE_SIZE,
+      'FILE_NAME'          => $FILE_NAME,
+      'FILE_EXTENSION'      => $FILE_EXTENSION,
+      'FILE_UPLOADDATETIME'    => $FILE_UPLOADDATETIME,
+      'CREATE_BY'            => Auth::user()->name,
+      'CREATE_TIME'          => Carbon::now(),
+      // 'MODIFY_BY'            => Auth::user()->name,
+      // 'MODIFY_TIME'          => Carbon::now(),
+      'UNID'                 => $this->randUNID('PMCS_MACHINES_UPLOAD'),
+    ]);
+    // $FILE_UPLOAD->move($up_location,$filenamemaster);
+
+    return Redirect()->back();
+  }
   public function Edit($UNID){
     $dataset = Upload::where('UNID',$UNID)->first();
     return view('machine/manual/edit',compact('dataset'));
 
   }
   public function Update(Request $request,$UNID){
-
 
     //ตัวแปร ชื่อ
       $TOPIC_NAME = $request->TOPIC_NAME;
@@ -84,14 +140,7 @@ class UploadController extends Controller
         $FILE_NAME =  $nameupdate;
         $FILE_UPLOADDATETIME =  $datetimeupdate;
       }
-
-  // if ($request->TOPIC_NAME) {
-
-
-
-
     $dataupload = Upload::where('UNID',$UNID)->update([
-
       'MACHINE_CODE'         => $MACHINE_CODE,
       'TOPIC_NAME'         => $TOPIC_NAME,
       'FILE_UPLOAD'          => $last_upload,
@@ -101,11 +150,8 @@ class UploadController extends Controller
       'FILE_UPLOADDATETIME'    => $FILE_UPLOADDATETIME,
       'MODIFY_BY'            => Auth::user()->name,
       'MODIFY_TIME'          => Carbon::now(),
-
     ]);
-
     return Redirect()->back();
-
   }
   public function Delete($UNID){
     // dd($UNID);

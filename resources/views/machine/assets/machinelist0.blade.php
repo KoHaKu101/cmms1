@@ -94,7 +94,7 @@
                       <table class="display table table-striped table-hover">
                       	<thead class="thead-light">
                         	<tr>
-														<th ></th>
+														<th >ลำดับ</th>
 														<th ></th>
                             <th scope="col">LINE</th>
                           	<th scope="col">Name</th>
@@ -116,8 +116,8 @@
 															</td>
 																<td style="width:120px;">
 																<a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
-																	<button type="button" class="btn btn-secondary" style="width:100px">
-																		<i class="fas fa-edit fa-lg float-left" ></i>
+																	<button type="button" class="btn btn-secondary btn-sm btn-block my-1" style="width:100px">
+																		<i class="fas fa-eye fa-lg float-left ">  {{ $row->MACHINE_CODE }}</i>
 																	</button>
 																</a>
 															</td>
@@ -128,7 +128,7 @@
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
 															<td style="width:100px;">
 																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" >
-																	<button type="button" class="ml-4 btn btn-danger" style="width:65px">
+																	<button type="button" class="ml-4 btn btn-danger btn-sm my-1" style="width:40px">
 																		<i class="fas fa-trash  fa-lg float-left ">	</i>
 																	</button>
 																</a></td>

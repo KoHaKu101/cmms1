@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Machnie;
-
 use Illuminate\Support\Facades\DB;
-
-use App\Exports\MachineExport;
-use Maatwebsite\Excel\Facades\Excel;
-
 use Carbon\Carbon;
 use Auth;
+//******************** model ***********************
+use App\Models\MachineAddTable\Repair;
+use App\Models\Machine\Machnie;
+//************** Package form github ***************
+use App\Exports\MachineExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RepairController extends Controller
 {
@@ -40,11 +40,11 @@ class RepairController extends Controller
     return View('machine/repair/repairlist');
   }
   public function Create(){
-      // $dataupload = Machnie::where('MACHINE_CODE','=',$MACHINE_CODE)->get();
-    return View('machine/repair/form');
+      $dataset = Repair::get();
+    return View('machine/repair/form',compact('dataset'));
   }
   public function Search($MACHINE_CODE){
-    
+
       $dataupload = Machnie::where('MACHINE_CODE','=',$MACHINE_CODE)->get();
     return compact('dataupload');
   }

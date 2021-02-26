@@ -36,10 +36,16 @@ class SysCheckController extends Controller
 
   public function Index(){
 
-    $data_set = Machnie::paginate(10);
-    $data_line6 = DB::table('pmcs_machines')->where('MACHINE_LINE','L6')->get()->count();
-    //dd($data_set);
-    return View('machine/syscheck/syschecklist',compact('data_set','data_line6'));
+    $dataset = Machnie::paginate(10);
+
+    return View('machine/syscheck/syschecklist',compact('dataset'));
+  }
+  public function Indexline($LINE_CODE){
+
+    $dataset = Machnie::where('MACHINE_LINE','=',$LINE_CODE)->paginate(10);
+
+      // return view('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
+    return View('machine/syscheck/syschecklist',compact(['dataset']),['dataset' => $dataset]);
   }
   public function Create(){
     return View('machine/syscheck/form');
@@ -48,14 +54,7 @@ class SysCheckController extends Controller
   public function Store(Request $request){
     //code
   }
-  // public function Edit($UNID) {
-  //
-  //   $data_set = Machnie::where('UNID',$UNID)->first();
-  //   // $data = Mainmenu::where('UNID','=',$UNID)->first();
-  //
-  //   return view('machine/assets/edit',compact('data_set'));
-  //
-  // }
+
   public function Edit($UNID) {
 
 

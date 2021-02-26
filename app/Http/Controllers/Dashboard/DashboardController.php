@@ -15,8 +15,8 @@ class DashboardController extends Controller
   public function Dashboard(){
     //dashboardสรุป
     $data_setall = Machnie::all()->count();
-    $data_check = DB::table('pmcs_machines')->where('MACHINE_CHECK','2')->get()->count();
-    $data_nocheck = DB::table('pmcs_machines')->where('MACHINE_CHECK','1')->get()->count();
+    $data_check = DB::table('pmcs_machines')->where('MACHINE_CHECK','กำลังทำงาน')->get()->count();
+    $data_nocheck = DB::table('pmcs_machines')->where('MACHINE_CHECK','ทำงานปกติ')->get()->count();
 
     //dashboardเครื่องจักรLINE
     $data_line1 = DB::table('pmcs_machines')->where('MACHINE_LINE','L1')->get()->count();

@@ -20,16 +20,10 @@ class ManualController extends Controller
 
   public function Index(){
 
-
-    $data_set = Machnie::paginate(10);
-
-
+    $dataset = Machnie::paginate(10);
 
     //dd($data_set);
-    return View('machine/manual/manuallist',compact(['data_set']),['data_set' => $data_set]);
-  }
-
-  public function StoreUpload(Request $request){
+    return View('machine/manual/manuallist',compact(['dataset']),['dataset' => $dataset]);
   }
 
   public function Show($UNID) {
@@ -41,8 +35,13 @@ class ManualController extends Controller
     return view('machine/manual/show',compact('dataset','dataupload'));
 
   }
-
-  public function Update(Request $request,$UNID){
+  public static function Download($UNID){
+    // dd($UNID);
+      $dataset = Upload::find($UNID);
+      $download = $dataset->FILE_UPLOAD;
+      // $data_set = Upload::where('UNID','=',$UNID)->first();
+      // return Response::disk('public')->file($download);
+      return Storage::disk('public')->download($download);
 
   }
 }

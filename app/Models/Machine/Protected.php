@@ -10,4 +10,5 @@ class Protected extends Model
     use HasFactory;
     protected $table = "PMCS_MACHINES";
     protected $table = "PMCS_MACHINE_TYPE";
+    protected $table = "PMCS_CMMS_REPAIR_CHECKBOX";
 }

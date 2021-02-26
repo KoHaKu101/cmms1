@@ -93,7 +93,7 @@
 																					 <div class="btn-group">
 																							 <a href="{{url('machine/assets/machinelist/'.$dataitem->LINE_CODE)}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">ทะเบียนเครื่องจักร</a>
                                                <input type="hidden" value="{{ $dataitem->LINE_CODE }}">
-																					     <a href="{{url('syscheck/syschecklist')}}" class="cbp-lightbox btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro">กำหนดตรวจสอบ</a>
+																					     <a href="{{url('machine/syscheck/syschecklist:/'.$dataitem->LINE_CODE)}}" class=" btn btn-sm btn-right" >กำหนดตรวจสอบ</a>
 																					 </div>
 																			 </div>
 																	 </div>

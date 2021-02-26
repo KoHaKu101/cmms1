@@ -34,7 +34,7 @@
         displayTypeSpeed: 80,
 
         // lightbox
-        lightboxDelegate: '.cbp-lightbox',
+        // lightboxDelegate: '.cbp-lightbox',
         lightboxGallery: true,
         lightboxTitleSrc: 'data-title',
         lightboxCounter: '<div class="cbp-popup-lightbox-counter">{{current}} of {{total}}</div>',

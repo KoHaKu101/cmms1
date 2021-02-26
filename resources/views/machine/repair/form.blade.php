@@ -183,46 +183,25 @@
 															</div>
 																<div class="row">
 
-																	<div class="col-md-8 col-lg-1 ml-2">
-																		@for($i =1; $i < 4 ; $i++)
-																		<div class="form-check">
-											<label class="form-check-label">
-												<input class="form-check-input" type="checkbox" value="">
-												<span class="form-check-sign">{{ $i }}</span>
-											</label>
-										</div>
-									@endfor
+																	<div class="form-check col-md-8 col-lg-5 ml-4">
+																		@foreach ($dataset as $key => $dataitem)
+																			<label class="form-check-label" style="padding:5px">
+																				<input class="form-check-input" type="checkbox" value="{{ $dataitem->REPAIR_CODE }}">
+																				<span class="form-check-sign">{{ $dataitem->REPAIR_NAME }}</span>
+																			</label>
+																	@endforeach
 																	</div>
-																	<div class="col-md-8 col-lg-1">
-																		@for($i =1; $i < 4 ; $i++)
-																			<div class="form-check">
-																				<label class="form-check-label">
-																					<input class="form-check-input" type="checkbox" value="">
-																					<span class="form-check-sign">{{ $i }}</span>
-																				</label>
-																			</div>
-																		@endfor
-																	</div>
-																	<div class="col-md-8 col-lg-1">
-																		@for($i =1; $i < 4 ; $i++)
-																			<div class="form-check">
-																				<label class="form-check-label">
-																					<input class="form-check-input" type="checkbox" value=" {{ $i }}">
-																					<span class="form-check-sign">{{ $i }}</span>
-																				</label>
-																			</div>
-																		@endfor
-																	</div>
-																	<div class="col-md-8 col-lg-3 ml-2">
+
+																	<div class="col-md-8 col-lg-3">
 																		<div class="form-group">
-    																	<label for="exampleFormControlTextarea1">Example textarea</label>
-    																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+    																	<label for="exampleFormControlTextarea1">รายละเอียดเพิ่มเติม</label>
+    																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
   																	</div>
 																	</div>
 
 																		<div class="col-md-8 col-lg-3 ">
 																			<div class="form-group">
-																				<label for="MACHINE_SERIAL">สถานะ</label>
+																				<label for="MACHINE_SERIAL">สถานะเครื่อง</label>
 
 																				<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" >
 																					<option value>--แสดงทั้งหมด--</option>
