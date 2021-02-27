@@ -21,10 +21,12 @@ use App\Http\Controllers\Machine\ManualController;
 use App\Http\Controllers\Machine\SysCheckController;
 use App\Http\Controllers\Machine\PartCheckController;
 use App\Http\Controllers\Machine\PaySpareController;
+
 //************************* add tabel *********************************
 use App\Http\Controllers\MachineaddTable\TypeMachineController;
 use App\Http\Controllers\MachineaddTable\TableRepairController;
 use App\Http\Controllers\MachineaddTable\SpareTabelController;
+use App\Http\Controllers\MachineaddTable\MachineStatusController;
 //****************************** PDF **********************************
 use App\Http\Controllers\PDF\TsetController;
 use App\Http\Controllers\PDF\UploadPdfController;
@@ -91,7 +93,6 @@ Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  
   Route::get('machine/assets/machine'     ,[MachineController::class,'Index'])  ->name('machine');
   Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
-
   Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
   Route::get('machine/assets/edit:/{UPLOAD_UNID_REF}'     ,[MachineController::class,'Editback'])   ->name('machine.edit:');
   Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
@@ -102,6 +103,7 @@ Route::post('machine/assets/storeupload'      ,[UploadController::class,'StoreUp
   Route::get('machine/upload/edit/{UNID}'     ,[UploadController::class,'Edit'])   ->name('manual.edit');
   Route::post('machine/upload/update/{UNID}'  ,[UploadController::class,'Update']);
   Route::get('machine/assets/uploadpdf/{UNID}',[UploadPdfController::class,'Uploadpdf']);
+  Route::get('machine/assets/showpdf/{UNID}'  ,[UploadPdfController::class,'Showpdf'])->name('show.pdf');
   Route::get('machine/upload/delete/{UNID}'   ,[UploadController::class,'Delete']) ->name('upload.delete');
   Route::get('machine/upload/download/{UNID}'  ,[UploadController::class,'Download']) ->name('upload.download');
   Route::get('machine/upload/view/{UNID}'     ,[UploadController::class,'View']) ->name('upload.view');
@@ -169,6 +171,13 @@ Route::get('machine/pay/paylist'      ,[PaySpareController::class,'Index'])  ->n
     Route::get('machine/typemachine/edit/{UNID}'     ,[TypeMachineController::class,'Edit'])   ->name('typemachine.edit');
     Route::post('machine/typemachine/update/{UNID}'  ,[TypeMachineController::class,'Update']);
     Route::get('machine/typemachine/delete/{UNID}'   ,[TypeMachineController::class,'Delete']) ->name('typemachine.delete');
+    //status
+    Route::get('machine/machinestatus/machinestatuslist'      ,[MachineStatusController::class,'Index'])  ->name('machinestatus.list');
+      Route::post('machine/machinestatus/store'            ,[MachineStatusController::class,'Store']) ->name('machinestatus.store');
+      Route::get('machine/machinestatus/form'            ,[MachineStatusController::class,'Create']) ->name('machinestatus.form');
+      Route::get('machine/machinestatus/edit/{UNID}'     ,[MachineStatusController::class,'Edit'])   ->name('machinestatus.edit');
+      Route::post('machine/machinestatus/update/{UNID}'  ,[MachineStatusController::class,'Update']);
+      Route::get('machine/machinestatus/delete/{UNID}'   ,[MachineStatusController::class,'Delete']) ->name('machinestatus.delete');
   //repair
   Route::get('machine/table/repairlist'        ,[TableRepairController::class,'Index'])  ->name('tablerepair.list');
     Route::post('machine/table/store'          ,[TableRepairController::class,'Store']) ->name('tablerepair.store');

@@ -39,4 +39,15 @@ class UploadPdfController extends Controller
     // dd($spreadsheet);
 
   }
+
+  public function Showpdf($UNID)
+  {
+    dd($UNID);
+    $filepdf= $location->FILE_UPLOAD;
+    $fpdf = new fpdf();($file);
+    $fpdf->f=fopen($filepdf);
+    $fpdf->Output();
+    exit;
+
+  }
 }

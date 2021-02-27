@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //model
 use App\Models\Machine\Machnie;
+
 use App\Models\Machine\Protected;
 use App\Models\Machine\Upload;
 use App\Models\Machine\MachineLine;
 use App\Models\MachineaddTable\MachineType;
+use App\Models\MachineAddTable\MachineStatus;
 //laravel
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -64,7 +66,8 @@ class MachineController extends Controller
   public function Create(){
     $dataset = MachineLine::all();
     $dataset1 = MachineType::all();
-    return View('machine/assets/form',compact('dataset','dataset1'));
+    $machinestatus = MachineStatus::where('STATUS','=','9')->get();
+    return View('machine/assets/form',compact('dataset','dataset1','machinestatus'));
   }
 
   public function Store(Request $request){
@@ -162,8 +165,9 @@ class MachineController extends Controller
     $datauploadedit = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
     $dataset1 = MachineType::all();
     $datalineselect = MachineLine::all();
+    $machinestatus = MachineStatus::where('STATUS','=','9')->get();
 
-    return view('machine/assets/edit',compact('dataset','dataset1','dataupload','datalineselect','datauploadedit','dataupload1'));
+    return view('machine/assets/edit',compact('dataset','dataset1','dataupload','datalineselect','datauploadedit','dataupload1','machinestatus'));
   }
   public function Editback($UPLOAD_UNID_REF) {
 

@@ -31,7 +31,7 @@
 						<div class="row">
 							<div class="col-md-1 mt-2">
 								<a href="{{ url('machine/assets/machinelist') }}">
-									<button class="btn btn-primary  btn-sm ">
+									<button class="btn btn-warning  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>
 								</a>
@@ -39,8 +39,8 @@
 							<div class="col-md-11 mt-2 ">
 								<form action="{{ url('machine/assets/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
-									<button class="btn btn-success btn-sm" type="submit">
-										<span class="fas fa-file-medical ">	update	</span>
+									<button class="btn btn-primary btn-sm" type="submit">
+										<span class="fas fa-save ">	save	</span>
 									</button>
 							</div>
 						</div>
@@ -87,15 +87,13 @@
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-6 col-lg-6 has-error">
 													<lebel>สถานะ</lebel>
-													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK">
-
+													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" >
 														<option value>-แสดงทั้งหมด-</option>
+														@foreach ($machinestatus as $key => $srow)
+															<option value="{{ $srow->STATUS_CODE}}"
+																{{ $dataset->MACHINE_CHECK == $srow->STATUS_CODE ? 'selected' : ''}} > {{$srow->STATUS_NAME}} </option>
 
-														<option value="ทำงานปกติ"{{ $dataset->MACHINE_CHECK == "ทำงานปกติ" ? 'selected' : '' }}>ทำงานปกติ</option>
-														<option value="กำลังทำงาน"{{ $dataset->MACHINE_CHECK == "กำลังทำงาน" ? 'selected' : '' }}>กำลังทำงาน</option>
-														<option value="รอผลิต"{{ $dataset->MACHINE_CHECK == "รอผลิต" ? 'selected' : '' }}>รอผลิต</option>
-														<option value="แผนผลิต"{{ $dataset->MACHINE_CHECK == "แผนผลิต" ? 'selected' : '' }}>แผนผลิต</option>
-
+														@endforeach
 													</select>
 												</div>
 												<div class="form-group col-6 has-error">

@@ -86,10 +86,9 @@
 													<lebel>สถานะ</lebel>
 													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" required autofocus>
 														<option value>-แสดงทั้งหมด-</option>
-														<option value="ทำงานปกติ">ทำงานปกติ</option>
-														<option value="กำลังทำงาน">กำลังทำงาน</option>
-														<option value="รอผลิต">รอผลิต</option>
-														<option value="แผนผลิต">แผนผลิต</option>
+														@foreach ($machinestatus as $key => $srow)
+															<option value="{{ $srow->STATUS_CODE }}">{{$srow->STATUS_NAME}}</option>
+														@endforeach
 													</select>
 												</div>
 												<div class="form-group col-6 has-error">

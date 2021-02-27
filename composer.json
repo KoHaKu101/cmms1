@@ -24,6 +24,7 @@
         "mpdf/mpdf": "^8.0",
         "nesbot/carbon": "^2.44",
         "phpoffice/phpspreadsheet": "^1.16",
+        "phpoffice/phpword": "^0.18.0",
         "realrashid/sweet-alert": "^3.2",
         "spatie/laravel-query-builder": "^3.3",
         "tecnickcom/tc-lib-pdf": "^8.0"
