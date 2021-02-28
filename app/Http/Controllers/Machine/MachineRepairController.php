@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 //******************** model ***********************
-use App\Models\MachineAddTable\MachineRepair;
+use App\Models\MachineAddTable\MachineRepairTable;
 use App\Models\Machine\Machine;
 //************** Package form github ***************
 use App\Exports\MachineExport;
@@ -40,7 +40,7 @@ class RepairController extends Controller
     return View('machine/repair/repairlist');
   }
   public function Create(){
-      $dataset = MachineRepair::get();
+      $dataset = MachineRepairTable::get();
     return View('machine/repair/form',compact('dataset'));
   }
   public function Search($MACHINE_CODE){

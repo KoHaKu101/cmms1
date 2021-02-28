@@ -13,8 +13,8 @@ use App\Models\Machine\Machine;
 use App\Models\Machine\Protected;
 use App\Models\Machine\MachineUpload;
 use App\Models\Machine\MachineLine;
-use App\Models\MachineaddTable\MachineType;
-use App\Models\MachineAddTable\MachineStatus;
+use App\Models\MachineaddTable\MachineTypeTable;
+use App\Models\MachineAddTable\MachineStatusTable;
 //************** Package form github ***************
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Exports\MachineExport;
@@ -64,8 +64,8 @@ class MachineController extends Controller
 
   public function Create(){
     $machineline = MachineLine::all();
-    $machinetype = MachineType::all();
-    $machinestatus = MachineStatus::where('STATUS','=','9')->get();
+    $machinetype = MachineTypeTable::all();
+    $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
     return View('machine/assets/form',compact('machineline','machinetype','machinestatus'));
   }
 
@@ -162,9 +162,9 @@ class MachineController extends Controller
     $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinetype = MachineType::all();
+    $machinetype = MachineTypeTable::all();
     $machineline = MachineLine::all();
-    $machinestatus = MachineStatus::where('STATUS','=','9')->get();
+    $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
 
     return view('machine/assets/edit',compact('dataset','machineupload','machineupload1','machineupload2','machinetype','machineline','machinestatus'));
   }
@@ -174,9 +174,9 @@ class MachineController extends Controller
     $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinetype = MachineType::all();
+    $machinetype = MachineTypeTable::all();
     $machineline = MachineLine::all();
-    $machinestatus = MachineStatus::where('STATUS','=','9')->get();
+    $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
 
     return view('machine/assets/edit',compact('dataset','machineupload','machineupload1','machineupload2','machinetype','machineline','machinestatus'));
   }

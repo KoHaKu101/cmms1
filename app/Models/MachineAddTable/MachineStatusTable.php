@@ -5,7 +5,7 @@ namespace App\Models\MachineaddTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MachineStatus extends Model
+class MachineStatusTable extends Model
 {
     use HasFactory;
 

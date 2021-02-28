@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 //******************** model ***********************
-use App\Models\MachineAddTable\MachineRepair;
+use App\Models\MachineAddTable\MachineRepairTable;
 use App\Models\Machine\Protected;
 //******************** github **********************
 use RealRashid\SweetAlert\Facades\Alert;
