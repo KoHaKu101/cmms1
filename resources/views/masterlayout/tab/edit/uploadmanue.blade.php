@@ -40,8 +40,10 @@
                   </tr>
                 </thead>
                 <tbody>
+            machineupload1
+            machineupload2
                   {{-- @foreach ($data_up as $key => $data_up) --}}
-                  @foreach ($dataupload as $key =>$uploaditem)
+                  @foreach ($machineupload as $key =>$uploaditem)
               <tr>
                 <td>
                   {{$key=1 , $key++}}

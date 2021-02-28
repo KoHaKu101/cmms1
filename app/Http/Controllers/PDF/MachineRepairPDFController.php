@@ -4,16 +4,14 @@ namespace App\Http\Controllers\PDF;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Models\PDF\Pdf;
-// use Codedge\Fpdf\Fpdf\Fpdf;
-use RealRashid\SweetAlert\Facades\Alert;
+
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 
 
 
-class TsetController extends Controller
+class MachineRepairPDFController extends Controller
 {
   protected $pdf;
 

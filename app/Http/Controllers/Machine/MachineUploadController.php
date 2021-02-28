@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Upload;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
 use Carbon\Carbon;
 use Auth;
 use Response;
+//******************** model ***********************
+use App\Models\Machine\MachineUpload;
+//************** Package form github ***************
+use RealRashid\SweetAlert\Facades\Alert;
 
-class UploadController extends Controller
+
+class MachineUploadController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
@@ -71,7 +73,7 @@ class UploadController extends Controller
       // dd($TOPIC_NAME);
     }
     //สิ้นสุดชื่อ
-    Upload::insert([
+    MachineUpload::insert([
       'UPLOAD_UNID_REF'     => $request->UPLOAD_UNID_REF,
       'MACHINE_CODE'         => $MACHINE_CODE,
       'TOPIC_NAME'         => $TOPIC_NAME,
@@ -91,7 +93,7 @@ class UploadController extends Controller
     return Redirect()->back();
   }
   public function Edit($UNID){
-    $dataset = Upload::where('UNID',$UNID)->first();
+    $dataset = MachineUpload::where('UNID',$UNID)->first();
     return view('machine/manual/edit',compact('dataset'));
 
   }
@@ -140,7 +142,7 @@ class UploadController extends Controller
         $FILE_NAME =  $nameupdate;
         $FILE_UPLOADDATETIME =  $datetimeupdate;
       }
-    $dataupload = Upload::where('UNID',$UNID)->update([
+    $dataupload = MachineUpload::where('UNID',$UNID)->update([
       'MACHINE_CODE'         => $MACHINE_CODE,
       'TOPIC_NAME'         => $TOPIC_NAME,
       'FILE_UPLOAD'          => $last_upload,
@@ -155,14 +157,14 @@ class UploadController extends Controller
   }
   public function Delete($UNID){
     // dd($UNID);
-      $data_set = Upload::where('UNID','=',$UNID)->delete();
+      $data_set = MachineUpload::where('UNID','=',$UNID)->delete();
 
       return Redirect()->back()-> with('success','Confirm Delete Success');
 
   }
   public static function Download($UNID){
     // dd($UNID);
-      $dataset = Upload::find($UNID);
+      $dataset = MachineUpload::find($UNID);
       $download = $dataset->FILE_UPLOAD;
       // $data_set = Upload::where('UNID','=',$UNID)->first();
       // return Response::disk('public')->file($download);

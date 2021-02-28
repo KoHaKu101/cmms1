@@ -5,7 +5,7 @@ namespace App\Models\MachineAddTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Repair extends Model
+class MachineRepair extends Model
 {
     use HasFactory;
     const CREATED_AT = 'CREATE_TIME';

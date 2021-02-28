@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
-use App\Models\Machine\Stock;
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Auth;
+//******************** model ***********************
+use App\Models\Machine\MachineStock;
+//************** Package form github ***************
 use App\Exports\MachineExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-use Carbon\Carbon;
-use Auth;
 
 class StockController extends Controller
 {

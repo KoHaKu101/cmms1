@@ -31,16 +31,16 @@
 						<div class="row">
 							<div class="col-md-1 mt-2">
 								<a href="{{ url('machine/assets/machinelist') }}">
-									<button class="btn btn-primary  btn-sm ">
+									<button class="btn btn-warning  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>
 								</a>
 							</div>
 							<div class="col-md-11 mt-2 ">
-								<form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ url('machine/assets/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
-									<button class="btn btn-success btn-sm" type="submit">
-										<span class="fas fa-file-medical ">	Save	</span>
+									<button class="btn btn-primary btn-sm" type="submit">
+										<span class="fas fa-save ">	save	</span>
 									</button>
 							</div>
 						</div>
@@ -93,10 +93,9 @@
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
-
 													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" required autofocus>
 														<option value> -แสดงทั้งหมด- </option>
-														@foreach($dataset as $dataline)
+														@foreach($machineline as $dataline)
 														<option value="{{ $dataline->LINE_CODE  }}"> {{$dataline->LINE_NAME}} </option>
 														@endforeach
 
@@ -107,7 +106,7 @@
 												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
 												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" required autofocus>
 													<option value>--แสดงทั้งหมด--</option>
-													@foreach($dataset1 as $datatype)
+													@foreach($machinetype as $datatype)
 													<option value="{{ $datatype->TYPE_CODE  }}"> {{$datatype->TYPE_NAME}} </option>
 													@endforeach
 												</select>

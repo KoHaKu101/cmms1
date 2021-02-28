@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Machnie;
-
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
+use Auth;
+//******************** model ***********************
+use App\Models\Machine\Machine;
+//************** Package form github ***************
 use App\Exports\MachineExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-use Carbon\Carbon;
-use Auth;
 
-class SparePartController extends Controller
+
+class MachineSparePartController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
@@ -35,7 +36,7 @@ class SparePartController extends Controller
 
   public function Index(){
 
-    // $data_set = Machnie::paginate(10);
+    // $data_set = Machine::paginate(10);
     //dd($data_set);
     return View('machine/sparepart/sparepartlist');
   }

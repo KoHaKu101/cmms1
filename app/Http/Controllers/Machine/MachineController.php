@@ -4,23 +4,22 @@ namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-//model
-use App\Models\Machine\Machnie;
-
-use App\Models\Machine\Protected;
-use App\Models\Machine\Upload;
-use App\Models\Machine\MachineLine;
-use App\Models\MachineaddTable\MachineType;
-use App\Models\MachineAddTable\MachineStatus;
-//laravel
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Auth;
-//github
+//******************** model ***********************
+use App\Models\Machine\Machine;
+use App\Models\Machine\Protected;
+use App\Models\Machine\MachineUpload;
+use App\Models\Machine\MachineLine;
+use App\Models\MachineaddTable\MachineType;
+use App\Models\MachineAddTable\MachineStatus;
+//************** Package form github ***************
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Exports\MachineExport;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 
 
@@ -49,25 +48,25 @@ class MachineController extends Controller
     return View('machine/assets/machinelist',compact(['dataset']),['dataset' => $dataset]);
   }
   public function All(){
-    $dataset = Machnie::paginate(10);
+    $dataset = Machine::paginate(10);
     return View('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
   }
   public function Allline($LINE_CODE) {
-    $dataset = Machnie::where('MACHINE_LINE','=',$LINE_CODE)->paginate(10);
+    $dataset = Machine::where('MACHINE_LINE','=',$LINE_CODE)->paginate(10);
 
     return view('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
   }
   public function Alltype($TYPE_CODE) {
-    $dataset = Machnie::where('MACHINE_TYPE','=',$TYPE_CODE)->paginate(10);
+    $dataset = Machine::where('MACHINE_TYPE','=',$TYPE_CODE)->paginate(10);
 
     return view('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
   }
 
   public function Create(){
-    $dataset = MachineLine::all();
-    $dataset1 = MachineType::all();
+    $machineline = MachineLine::all();
+    $machinetype = MachineType::all();
     $machinestatus = MachineStatus::where('STATUS','=','9')->get();
-    return View('machine/assets/form',compact('dataset','dataset1','machinestatus'));
+    return View('machine/assets/form',compact('machineline','machinetype','machinestatus'));
   }
 
   public function Store(Request $request){
@@ -87,14 +86,14 @@ class MachineController extends Controller
         $name_gen = hexdec(uniqid());
         $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
         $img_name = $name_gen.'.'.$img_ext;
-        $up_location = 'image/machnie/';
+        $up_location = 'image/machine/';
         $last_img = $up_location.$img_name;
         $MACHINE_ICON->move($up_location,$img_name);;
     }
 } else {
     $last_img = "";
 }
-      Machnie::insert([
+      Machine::insert([
           'MACHINE_CODE'         => $request->MACHINE_CODE,
           'MACHINE_NAME'         => $request->MACHINE_NAME,
           'MACHINE_CHECK'        => $request->MACHINE_CHECK,
@@ -151,7 +150,7 @@ class MachineController extends Controller
           'ESP_MAC'              => $request->ESP_MAC,
       ]);
 
-      $data_set = Machnie::paginate(12);
+      $data_set = Machine::paginate(12);
 
       return Redirect()->route('machine.list',compact(['data_set']))->with('success','ลงทะเบียน สำเร็จ');
   }
@@ -159,26 +158,27 @@ class MachineController extends Controller
 
   public function Edit($UNID) {
 
-    $dataset = Machnie::where('UNID',$UNID)->first();
-    $dataupload = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $dataupload1 = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $datauploadedit = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $dataset1 = MachineType::all();
-    $datalineselect = MachineLine::all();
+    $dataset = Machine::where('UNID',$UNID)->first();
+    $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
+    $machinetype = MachineType::all();
+    $machineline = MachineLine::all();
     $machinestatus = MachineStatus::where('STATUS','=','9')->get();
 
-    return view('machine/assets/edit',compact('dataset','dataset1','dataupload','datalineselect','datauploadedit','dataupload1','machinestatus'));
+    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1','machineupload2','machinetype','machineline','machinestatus'));
   }
   public function Editback($UPLOAD_UNID_REF) {
 
-    $dataset = Machnie::where('UNID','=',$UPLOAD_UNID_REF)->first();
-    $dataupload = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $dataupload1 = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $datauploadedit = Upload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $dataset1 = MachineType::all();
-    $datalineselect = MachineLine::all();
+    $dataset = Machine::where('UNID','=',$UPLOAD_UNID_REF)->first();
+    $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
+    $machinetype = MachineType::all();
+    $machineline = MachineLine::all();
+    $machinestatus = MachineStatus::where('STATUS','=','9')->get();
 
-    return view('machine/assets/edit',compact('dataset','dataset1','dataupload','datalineselect','datauploadedit','dataupload1'));
+    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1','machineupload2','machinetype','machineline','machinestatus'));
   }
 
 
@@ -192,7 +192,7 @@ class MachineController extends Controller
           $name_gen = hexdec(uniqid());
           $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
           $img_name = $name_gen.'.'.$img_ext;
-          $up_location = 'image/machnie/';
+          $up_location = 'image/machine/';
           $last_img = $up_location.$img_name;
           $MACHINE_ICON->move($up_location,$img_name);
       }
@@ -200,7 +200,7 @@ class MachineController extends Controller
       $last_img = $update;
       // dd($last_img);
   }
-    $data_set = Machnie::where('UNID',$UNID)->update([
+    $data_set = Machine::where('UNID',$UNID)->update([
       'MACHINE_CODE'         => $request->MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,
       'MACHINE_CHECK'        => $request->MACHINE_CHECK,
@@ -261,7 +261,7 @@ class MachineController extends Controller
   }
 
   public function Delete($UNID){
-      $data_up = Machnie::where('UNID','=',$UNID)->delete();
+      $data_up = Machine::where('UNID','=',$UNID)->delete();
 
       return Redirect()->back()-> with('success','Confirm Delete Success');
 

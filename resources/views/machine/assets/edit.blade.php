@@ -95,12 +95,13 @@
 
 														@endforeach
 													</select>
+
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
 													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE">
 													<option value>--แสดงทั้งหมด--</option>
-													@foreach($datalineselect as $dataline)
+													@foreach($machineline as $dataline)
 
 													<option value="{{ $dataline->LINE_CODE}}"
 														{{ $dataset->MACHINE_LINE == $dataline->LINE_CODE ? 'selected' : ''}} > {{$dataline->LINE_NAME}} </option>
@@ -112,7 +113,7 @@
 												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
 												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE">
 													<option value>--แสดงทั้งหมด--</option>
-													@foreach($dataset1 as $datatype)
+													@foreach($machinetype as $datatype)
 														<option value="{{ $datatype->TYPE_CODE}}"
 														{{ $dataset->MACHINE_TYPE == $datatype->TYPE_CODE ? 'selected' : ''}} > {{$datatype->TYPE_CODE}} </option>
 															@endforeach

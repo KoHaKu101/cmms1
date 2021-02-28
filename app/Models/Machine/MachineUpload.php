@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Models\MachineAddTable;
+namespace App\Models\Machine;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SpareTabel extends Model
+class MachineUpload extends Model
 {
     use HasFactory;
-
     const CREATED_AT = 'CREATE_TIME';
     const UPDATED_AT = 'MODIFY_TIME';
 
@@ -16,8 +15,8 @@ class SpareTabel extends Model
     public $timestamps = false;
     protected $primaryKey = "UNID";
     protected $keyType = 'string';
-    public $table ='PMCS_CMMS_SPARE_PART_TABLE';
-    
-    protected $fillable = ['UNID','SPAREPART_CODE','SPAREPART_NAME','SPAREPART_PRICE','SPAREPART_NOTE','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'];
+    public $table ='PMCS_MACHINES_UPLOAD';
 
+    protected $fillable = [
+    'UNID','UPLOAD_UNID_REF' ,'MACHINE_CODE', 'TOPIC_NAME', 'FILE_UPLOAD', 'FILE_SIZE', 'FILE_NAME', 'FILE_EXTENSION', 'FILE_UPLOADDATETIME', 'CREATE_BY', 'CREATE_TIME', 'MODIFY_BY', 'MODIFY_TIME'];
 }

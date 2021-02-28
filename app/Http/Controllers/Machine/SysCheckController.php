@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Machnie;
-use App\Models\Machine\Upload;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
-
-use App\Exports\MachineExport;
-use Maatwebsite\Excel\Facades\Excel;
-
 use Carbon\Carbon;
 use Auth;
+//******************** model ***********************
+use App\Models\Machine\Machine;
+use App\Models\Machine\MachineUpload;
+//************** Package form github ***************
+use App\Exports\MachineExport;
+use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 
 class SysCheckController extends Controller
 {
@@ -36,19 +38,19 @@ class SysCheckController extends Controller
 
   public function Index(){
 
-    $dataset = Machnie::paginate(10);
+    $dataset = Machine::paginate(10);
 
     return View('machine/syscheck/syschecklist',compact('dataset'));
   }
   public function Indexline($LINE_CODE){
 
-    $dataset = Machnie::where('MACHINE_LINE','=',$LINE_CODE)->paginate(10);
+    $dataset = Machine::where('MACHINE_LINE','=',$LINE_CODE)->paginate(10);
 
       // return view('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
     return View('machine/syscheck/syschecklist',compact(['dataset']),['dataset' => $dataset]);
   }
   public function Create(){
-    return View('machine/syscheck/form');
+    return View('maMachineyscheck/form');
   }
 
   public function Store(Request $request){
@@ -58,7 +60,7 @@ class SysCheckController extends Controller
   public function Edit($UNID) {
 
 
-    $data_set = Machnie::where('UNID','=',$UNID)->first();
+    $data_set = Machine::where('UNID','=',$UNID)->first();
 
     return view('machine/syscheck/edit',compact('data_set'));
 }

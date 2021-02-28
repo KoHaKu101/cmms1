@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 
-class TypeMachineController extends Controller
+class MachineTypeTableController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');

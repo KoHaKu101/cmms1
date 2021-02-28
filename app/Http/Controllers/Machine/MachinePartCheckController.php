@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Machine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Machnie;
-use App\Models\Machine\Upload;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
-
-use App\Exports\MachineExport;
-use Maatwebsite\Excel\Facades\Excel;
-
 use Carbon\Carbon;
 use Auth;
+//******************** model ***********************
+use App\Models\Machine\Machine;
+use App\Models\Machine\MachineUpload;
+//************** Package form github ***************
+use App\Exports\MachineExport;
+use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class PartCheckController extends Controller
+
+class MachinePartCheckController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
@@ -36,7 +37,7 @@ class PartCheckController extends Controller
 
   public function Index(){
 
-    $data_set = Machnie::paginate(10);
+    $data_set = Machine::paginate(10);
     $data_line6 = DB::table('pmcs_machines')->where('MACHINE_LINE','L6')->get()->count();
     //dd($data_set);
     return View('machine/partcheck/partchecklist',compact('data_set','data_line6'));
@@ -59,14 +60,14 @@ class PartCheckController extends Controller
   public function Edit($UNID) {
 
 
-    $dataset = Machnie::where('UNID','=',$UNID)->first();
+    $dataset = Machine::where('UNID','=',$UNID)->first();
 
     return view('machine/partcheck/edit',compact('dataset'));
 }
 public function Editmain($UNID) {
 
 
-  $dataset = Machnie::where('UNID','=',$UNID)->first();
+  $dataset = Machine::where('UNID','=',$UNID)->first();
 
   return view('machine/partcheck/editmain',compact('dataset'));
 }
