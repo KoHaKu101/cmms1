@@ -34,7 +34,5 @@ class Machine extends Model
        'CREATE_TIME', 'MODIFY_BY', 'MODIFY_TIME', 'UNID', 'SHIFT_TYPE', 'ESP_MAC'
     ];
 
-    public function upload(){
-      return $this->hasOne(upload::class,'UPLOAD_UNID_REF','UNID');
-    }
+
 }
