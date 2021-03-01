@@ -14,8 +14,8 @@ class MachineTypeTable extends Model
 
     public $incrementing = false;
     public $timestamps = false;
-    protected $primaryKey = "UNID";
-    protected $keyType = 'string';
+    protected $primaryKey = "TYPE_CODE";
+    protected $keyType = 'integer';
     public $table ='PMCS_MACHINE_TYPE';
 
     protected $fillable = ['TYPE_CODE','TYPE_NAME','TYPE_NOTE','TYPE_STATUS',

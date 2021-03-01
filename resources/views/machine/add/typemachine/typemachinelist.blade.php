@@ -31,11 +31,11 @@
 						<div class="row">
 							<div class="col-md-12 gx-4">
 								<a href="{{ url('/machine/dashboard/dashboard') }}">
-									<button class="btn btn-primary  btn-xs ">
+									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
-								<a href="{{ route('typemachine.form') }}"><button class="btn btn-primary  btn-xs">
+								<a href="{{ route('machinetypetable.form') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file fa-lg">	New	</span>
 								</button></a>
 								<a href="{{ url('users/export/') }}">
@@ -63,27 +63,18 @@
   											</button>
 										</div>
 									@endif
-									<div class="card-header">
-
-										<div class="form-inline bg-primary ">
-
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> ประเภทเครื่องจักร </h4>
-
-											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-
-											</div>
-											<div class="form-group form-inline ">
+									<div class="card-header bg-primary form-inline ">
+											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-industry fa-lg mr-1"></i> ประเภทเครื่องจักร </h4>
 												<div class="input-group ml-4">
 													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
 													<div class="input-group-prepend">
 														<button type="submit" class="btn btn-search pr-1 btn-xs	">
-	              							<i class="fa fa-search search-icon"></i>
-	            							</button>
+															<i class="fa fa-search search-icon"></i>
+														</button>
 													</div>
 												</div>
-											</div>
-										</div>
 									</div>
+
 									<div id="result"class="card-body">
 										<div class="container-fluid ml-4">
 
@@ -100,7 +91,7 @@
 									                     <div class="cbp-item-wrap">
 									                         <div class="cbp-caption">
 									                             <div class="cbp-caption-defaultWrap">
-									                               <a href="{{url('machine/typemachine/edit/'.$dataitem->UNID)}}">
+									                               <a href="{{url('machine/machinetypetable/edit/'.$dataitem->UNID)}}">
 									                                 <img src="{{asset('storage/'.$dataitem->TYPE_ICON)}}" alt="img3">
 
 									                               </a> </div>
@@ -108,17 +99,18 @@
 									                                 <div class="cbp-l-caption-alignCenter">
 									                                     <div class="cbp-l-caption-body">
 									                                         <div class="btn-group">
-																														 <a href="{{url('machine/typemachine/edit/'.$dataitem->UNID)}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">รายละเอียด</a>
-									                                             <a href="{{url('machine/assets/machinetype/'.$dataitem->TYPE_CODE)}}" class=" btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro"> เครื่องจักร</a>
+																														 <a href="{{url('machine/machinetypetable/edit/'.$dataitem->UNID)}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">รายละเอียด</a>
+									                                           <a href="{{url('machine/assets/machinetype/'.$dataitem->TYPE_CODE)}}" class=" btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro"> เครื่องจักร</a>
 
 									                                         </div>
 									                                     </div>
 									                                 </div>
 									                             </div>
 									                         </div>
-									                         <div class="cbp-l-grid-projects-title uppercase text-center uppercase text-center">ประเภทเครื่อง {{$dataitem->TYPE_NAME}}</div>
-									                         <div class="cbp-l-grid-projects-desc uppercase text-center uppercase text-center bg-danger">
-																					 <a href="{{ url('machine/typemachine/delete/'.$dataitem->UNID) }}" class="btn btn-danger btn-lg"><span class="fas fa-trash ">Delete</span></a>
+									                         <div class="cbp-l-grid-projects-title uppercase text-center uppercase text-center">ประเภทเครื่อง : {{$dataitem->TYPE_NAME}}</div>
+																					 <div class="cbp-l-grid-projects-desc uppercase text-left uppercase text-left ml-3">สถานะ : {{ $dataitem->TYPE_STATUS == "9" ? 'เปิด' : 'ปิด' }}</div>
+									                         <div class="cbp-l-grid-projects-desc uppercase text-center uppercase text-center bg-danger ">
+																					 <a href="{{ url('machine/machinetypetable/delete/'.$dataitem->UNID) }}" class="btn btn-danger btn-lg mt--2"><span class="fas fa-trash ">Delete</span></a>
 																					 </div>
 																			 </div>
 									                 </div>

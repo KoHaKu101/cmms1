@@ -29,18 +29,18 @@
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/machinestatus/machinestatuslist') }}">
-									<button class="btn btn-primary  btn-sm ">
-										<span class="fas fa-arrow-left ">Back </span>
+							<div class="col-md-1 ">
+								<a href="{{ url('machine/machinestatustable/list') }}">
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-1 mt-2 ">
-								<form action="{{ url('machine/machinestatus/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
+							<div class="col-md-1 ">
+								<form action="{{ url('machine/machinestatustable/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
-									<button class="btn btn-success btn-sm" type="submit">
-										<span class="fas fa-file-medical ">	Save	</span>
+									<button class="btn btn-primary btn-xs" type="submit">
+										<span class="fas fa-save fa-lg">	Save	</span>
 									</button>
 							</div>
 						</div>
@@ -50,13 +50,8 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แก้ไขระบบรายการแจ้ง</p>
-									<div class="btn-group ml-3" role="group" aria-label="Basic example">
-									</div>
-									<div class="form-group form-inline ">
-									</div>
-								</div>
+							<div class="card-header bg-primary">
+								<h4 class="ml-3 mt-2" style="color:white;" >แก้ไขระบบรายการแจ้ง </h4>
 							</div>
 							<div class="card-body">
 								<div class="row">
@@ -76,19 +71,14 @@
 										</div>
 										<div class="form-check has-error">
 											<label for="STATUS">สถานการเปิดใช้งาน</label><br>
-
-
-																							<label class="form-radio-label">
-
-																								<input class="form-radio-input" type="radio" name="STATUS" {{ $dataset->STATUS == "9" ? 'checked' : '' }} value="9" >
-
-																								<span class="form-radio-sign">เปิด</span>
-																							</label>
-																							<label class="form-radio-label ml-3">
-																							<input class="form-radio-input" type="radio" name="STATUS" {{ $dataset->STATUS == "1" ? 'checked' : '' }} value="1">
-																							<span class="form-radio-sign">ปิด</span>
-																						</label>
-
+											<label class="form-radio-label">
+												<input class="form-radio-input" type="radio" name="STATUS" {{ $dataset->STATUS == "9" ? 'checked' : '' }} value="9" >
+												<span class="form-radio-sign">เปิด</span>
+											</label>
+											<label class="form-radio-label ml-3">
+												<input class="form-radio-input" type="radio" name="STATUS" {{ $dataset->STATUS == "1" ? 'checked' : '' }} value="1">
+												<span class="form-radio-sign">ปิด</span>
+											</label>
 										</div>
 										<!-- ช่อง3-->
 										</div>

@@ -30,7 +30,7 @@
 						<div class="row">
 							<div class="col-md-12 gx-4">
 								<a href="{{ route('dashboard') }}">
-								<button class="btn btn-primary  btn-xs ">
+								<button class="btn btn-warning  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
 							</a>
@@ -51,67 +51,50 @@
   											</button>
 										</div>
 									@endif
-									<div class="">
-										<div class="form-inline bg-primary ">
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> เพิ่มรายละเอียดการแจ้งซ่อม </h4>
-											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-											</div>
-											<div class="form-group form-inline ">
-												<div class="input-group ml-4">
-													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
-													<div class="input-group-prepend">
-														<button type="submit" class="btn btn-search pr-1 btn-xs	">
-	              							<i class="fa fa-search search-icon"></i>
-	            							</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div id="result"class="card-body">
-										<div class="table-responsive">
-                      <table class="display table table-striped table-hover">
-                      	<thead class="thead-light">
-                        	<tr>
-														<th style=""></th>
-                            <th scope="col"></th>
-                          	<th scope="col">โค้ดอะไหล่</th>
-                          	<th scope="col">รายการอะไหล่</th>
-                          	<th scope="col">ราคา</th>
-														<th scope="col"></th>
-                        	</tr>
-                      	</thead>
 
-                      	<tbody >
-                          {{-- @php($i = 1) --}}
-													@foreach ($dataset as $key => $dataitem)
-                        		<tr>
-															<td scope="row" style="width:25px"> {{$key+1}}  </td>
-															<td style="width:100px">
-																<a href="{{ url('machine/table/edit/'.$dataitem->UNID) }}">
-																	<button type="button" class="btn btn-secondary btn-sm my-1 mx-2" style="height:30px;width:100px">
-																		{{-- <span style="color: yellow;"> --}}
-																			<i class="fas fa-eye fa-lg float-left"></i>
-																		{{-- </span> --}}
-																	</button>
-																</a>
-															</td>
-															<td style="width:200px">{{$dataitem->SPAREPART_CODE}}</td>
-															<td style="width:200px">{{$dataitem->SPAREPART_NAME}}</td>
-															<td style="width:100px">{{$dataitem->SPAREPART_PRICE}}</td>
-															<td style="white-space:nowrap">
-																<a href="{{ url('machine/table/delete/'.$dataitem->UNID) }}">
-																	<button type="button" class="btn btn-danger btn-sm my-1" style="width:40px">
+										<div class="card-header bg-primary">
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i> รายการอะไหล่ </h4>
+										 </div>
 
-																		<i class="fas fa-trash fa-lg">	</i>
+									<div id="result"class="card-body mt--3">
+										<div class="table-responsive mt--4">
+											<table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
+										<thead>
+											<tr>
+												<th scope="col">CODE</th>
+												<th scope="col">รายการอะไหล่</th>
+												<th scope="col">ราคา</th>
+												<th scope="col">เปิด/ปิด</th>
+												<th scope="col"></th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($dataset as $key => $dataitem)
+											<tr>
+												<td>{{$dataitem->SPAREPART_CODE}}</td>
+												<td style="width:200px">
+													<a href="{{ url('machine/machinespareparttable/edit/'.$dataitem->UNID) }}">
+														<button class="btn btn-primary btn-block btn-sm my-1 mx--2 ">
+															<span class="btn-label float-left">
+																<i class="fa fa-eye mx-1 "></i>
+																{{ $dataitem->SPAREPART_NAME }}
+															</span>
+														</button>
+													</a>
+												</td>
+												<td>{{ $dataitem->SPAREPART_PRICE }} บาท</td>
+												<td>{{ $dataitem->SPAREPART_STATUS == "9" ? 'เปิด' : 'ปิด' }}</td>
+												<td><a href="{{ url('machine/machinespareparttable/delete/'.$dataitem->UNID) }}">
+													<button type="button" class="btn btn-danger btn-block btn-sm my-1" style="width:40px">
+														<i class="fas fa-trash fa-lg">	</i>
+													</button>
+												</a></td>
+											</tr>
+											@endforeach
 
-																	</button>
-																</a>
-															</td>
-                        			</tr>
-                        	@endforeach
-                      	</tbody>
-                    </table>
+										</tbody>
+									</table>
+
 									</div>
 										</div>
 								</div>
@@ -119,10 +102,10 @@
 								<div class="col-md-4">
 									<div class="card">
 										<div class="card-header bg-primary">
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> เพิ่มรายการ </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" > เพิ่มรายการ </h4>
 										 </div>
 										<div class="card-body">
-											<form action="{{ route('tablesparepart.store') }}" method="POST">
+											<form action="{{ route('machinespareparttable.store') }}" method="POST">
 												@csrf
 												<div class="form-group has-error">
 													<label for="SPAREPART_CODE">โค้ดอะไหล่</label>
@@ -152,9 +135,20 @@
 													<label for="SPAREPART_NOTE">รายละเอียดเพิ่มเติม</label>
 													<textarea class="form-control" id="SPAREPART_NOTE" name="SPAREPART_NOTE" rows="4" placeholder="สามารถกรอกรายละเอียดเพิ่มเติมได้"></textarea>
 												</div>
+												<div class="form-check has-error">
+													<label for="SPAREPART_STATUS">เปิด/ปิด</label><br>
+													<label class="form-radio-label">
+														<input class="form-radio-input" type="radio" name="SPAREPART_STATUS" value="9" checked="">
+														<span class="form-radio-sign">เปิด</span>
+													</label>
+													<label class="form-radio-label ml-3">
+														<input class="form-radio-input" type="radio" name="SPAREPART_STATUS" value="1">
+														<span class="form-radio-sign">ปิด</span>
+													</label>
+												</div>
 
 
-												<button tpye="submit" class="btn btn-success">Submit</button>
+												<button tpye="submit" class="btn btn-primary">Save</button>
 											</form>
 										</div>
 									</div>

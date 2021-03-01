@@ -30,7 +30,7 @@
 						<div class="row">
 							<div class="col-md-12 gx-4">
 								<a href="{{ url('/machine/dashboard/dashboard') }}">
-									<button class="btn btn-primary  btn-xs ">
+									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
@@ -64,25 +64,18 @@
   												</button>
 										</div>
 									@endif
-									<div class="">
-										<div class="form-inline bg-primary ">
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-user-cog fa-lg mr-1"></i> พนักงานซ่อมบำรุง </h4>
-												<div class="btn-group ml-3" role="group" aria-label="Basic example">
-  												<button type="button" class="btn btn-info btn-sm"><i class="fas fa-sitemap"></i></button>
-  												<button type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
-												</div>
-											<div class="form-group form-inline ">
+									<div class="card-header bg-primary form-inline ">
+											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-cog fa-lg mr-1"></i> พนักงานซ่อมบำรุง </h4>
 												<div class="input-group ml-4">
 													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
 													<div class="input-group-prepend">
 														<button type="submit" class="btn btn-search pr-1 btn-xs	">
-	              							<i class="fa fa-search search-icon"></i>
-	            							</button>
+															<i class="fa fa-search search-icon"></i>
+														</button>
 													</div>
 												</div>
-											</div>
-										</div>
 									</div>
+
 									{{-- content --}}
 									<div class="container mt-4">
 										<div class="row">

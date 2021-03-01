@@ -164,32 +164,32 @@ Route::get('machine/pay/paylist'      ,[PaySpareController::class,'Index'])  ->n
   Route::get('machine/pay/delete/{UNID}'   ,[PaySpareController::class,'Delete']) ->name('pay.delete');
 
   //***************************** tabledata ****************************************
-  //typemachine
-  Route::get('machine/typemachine/typemachinelist'      ,[MachineTypeTableController::class,'Index'])  ->name('typemachine.list');
-    Route::post('machine/typemachine/store'            ,[MachineTypeTableController::class,'Store']) ->name('typemachine.store');
-    Route::get('machine/typemachine/form'            ,[MachineTypeTableController::class,'Create']) ->name('typemachine.form');
-    Route::get('machine/typemachine/edit/{UNID}'     ,[MachineTypeTableController::class,'Edit'])   ->name('typemachine.edit');
-    Route::post('machine/typemachine/update/{UNID}'  ,[MachineTypeTableController::class,'Update']);
-    Route::get('machine/typemachine/delete/{UNID}'   ,[MachineTypeTableController::class,'Delete']) ->name('typemachine.delete');
+  //machinetypetable
+  Route::get('machine/machinetypetable/list'      ,[MachineTypeTableController::class,'Index'])  ->name('machinetypetable.list');
+    Route::post('machine/machinetypetable/store'            ,[MachineTypeTableController::class,'Store']) ->name('machinetypetable.store');
+    Route::get('machine/machinetypetable/form'            ,[MachineTypeTableController::class,'Create']) ->name('machinetypetable.form');
+    Route::get('machine/machinetypetable/edit/{UNID}'     ,[MachineTypeTableController::class,'Edit'])   ->name('machinetypetable.edit');
+    Route::post('machine/machinetypetable/update/{UNID}'  ,[MachineTypeTableController::class,'Update']);
+    Route::get('machine/machinetypetable/delete/{UNID}'   ,[MachineTypeTableController::class,'Delete']) ->name('machinetypetable.delete');
     //status
-    Route::get('machine/machinestatus/machinestatuslist'      ,[MachineStatusTableController::class,'Index'])  ->name('machinestatus.list');
-      Route::post('machine/machinestatus/store'            ,[MachineStatusTableController::class,'Store']) ->name('machinestatus.store');
-      Route::get('machine/machinestatus/form'            ,[MachineStatusTableController::class,'Create']) ->name('machinestatus.form');
-      Route::get('machine/machinestatus/edit/{UNID}'     ,[MachineStatusTableController::class,'Edit'])   ->name('machinestatus.edit');
-      Route::post('machine/machinestatus/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
-      Route::get('machine/machinestatus/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatus.delete');
+    Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController::class,'Index'])  ->name('machinestatustable.list');
+      Route::post('machine/machinestatustable/store'            ,[MachineStatusTableController::class,'Store']) ->name('machinestatustable.store');
+      Route::get('machine/machinestatustable/form'            ,[MachineStatusTableController::class,'Create']) ->name('machinestatustable.form');
+      Route::get('machine/machinestatustable/edit/{UNID}'     ,[MachineStatusTableController::class,'Edit'])   ->name('machinestatustable.edit');
+      Route::post('machine/machinestatustable/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
+      Route::get('machine/machinestatustable/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatustable.delete');
   //repair
-  Route::get('machine/table/repairlist'        ,[MachineRepairTableController::class,'Index'])  ->name('tablerepair.list');
-    Route::post('machine/table/store'          ,[MachineRepairTableController::class,'Store']) ->name('tablerepair.store');
-    Route::get('machine/table/edit/{UNID}'     ,[MachineRepairTableController::class,'Edit'])   ->name('tablerepair.edit');
-    Route::post('machine/table/update/{UNID}'  ,[MachineRepairTableController::class,'Update']);
-    Route::get('machine/table/delete/{UNID}'   ,[MachineRepairTableController::class,'Delete']) ->name('tablerepair.delete');
+  Route::get('machine/machinerepairtable/list'        ,[MachineRepairTableController::class,'Index'])  ->name('machinerepairtable.list');
+    Route::post('machine/machinerepairtable/store'          ,[MachineRepairTableController::class,'Store']) ->name('machinerepairtable.store');
+    Route::get('machine/machinerepairtable/edit/{UNID}'     ,[MachineRepairTableController::class,'Edit'])   ->name('machinerepairtable.edit');
+    Route::post('machine/machinerepairtable/update/{UNID}'  ,[MachineRepairTableController::class,'Update']);
+    Route::get('machine/machinerepairtable/delete/{UNID}'   ,[MachineRepairTableController::class,'Delete']) ->name('machinerepairtable.delete');
   //sparepart
-  Route::get('machine/table/sparepartlist'     ,[MachineSpareTableController::class,'Index'])  ->name('tablesparepart.list');
-    Route::post('machine/table/store'          ,[MachineSpareTableController::class,'Store']) ->name('tablesparepart.store');
-    Route::get('machine/table/edit/{UNID}'     ,[MachineSpareTableController::class,'Edit'])   ->name('tablesparepart.edit');
-    Route::post('machine/table/update/{UNID}'  ,[MachineSpareTableController::class,'Update']);
-    Route::get('machine/table/delete/{UNID}'   ,[MachineSpareTableController::class,'Delete']) ->name('tablesparepart.delete');
+  Route::get('machine/machinespareparttable/list'     ,[MachineSpareTableController::class,'Index'])  ->name('machinespareparttable.list');
+    Route::post('machine/machinespareparttable/store'          ,[MachineSpareTableController::class,'Store']) ->name('machinespareparttable.store');
+    Route::get('machine/machinespareparttable/edit/{UNID}'     ,[MachineSpareTableController::class,'Edit'])   ->name('machinespareparttable.edit');
+    Route::post('machine/machinespareparttable/update/{UNID}'  ,[MachineSpareTableController::class,'Update']);
+    Route::get('machine/machinespareparttable/delete/{UNID}'   ,[MachineSpareTableController::class,'Delete']) ->name('machinespareparttable.delete');
   //***************************** MENU ****************************************
 //MenuController
 Route::get('machine/setting/menu/home'              ,[MenuController::class,'Home'])   ->name('menu.home');

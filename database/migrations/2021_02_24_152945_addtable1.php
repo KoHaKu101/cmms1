@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddtypeIcon extends Migration
+class addtable1 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddtypeIcon extends Migration
      */
     public function up()
     {
-        Schema::table('PMCS_MACHINE_TYPE', function (Blueprint $table) {
-          $table->string('TYPE_ICON',250)->nullable()->after('TYPE_STATUS');
+        Schema::table('PMCS_CMMS_REPAIR_CHECKBOX', function (Blueprint $table) {
+          $table->integer('REPAIR_STATUS')->nullable()->after('REPAIR_NOTE');
         });
+
     }
 
     /**
@@ -25,6 +26,6 @@ class AddtypeIcon extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('PMCS_MACHINES_UPLOAD');
+        Schema::dropIfExists('PMCS_CMMS_REPAIR_CHECKBOX');
     }
 }

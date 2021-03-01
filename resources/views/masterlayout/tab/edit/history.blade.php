@@ -4,7 +4,7 @@
       <div class="jumbotron">
         <div class="col-md-8 col-lg-12">
           <div class="table">
-          <table class="table table-sm"  >
+          <table class="table table-bordered"  >
             <thead>
               <tr>
                 <th class="bg-primary" colspan="6" >
@@ -12,42 +12,39 @@
                 </th>
               </tr>
               <tr>
-                <th scope="col">
-                  Line
+                <th style="width:70px">
+                  NO.FIX
                 </th>
-                <th scope="col">
+                <th style="width:100px">
                   Docno
                 </th>
-                <th scope="col">
+                <th style="width:100px" >
                   Docdate
                 </th>
-                <th scope="col">
+                <th>
                   User Name
                 </th>
-                <th scope="col">
+                <th>
                   Time
                 </th>
-                <th scope="col">
+                <th>
                   Description
                 </th>
               </tr>
 
             </thead>
             <tbody>
-              <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-              </tr>
+              @foreach ($repairresults as $key => $rowrepair)
+                <tr>
+                  <td> {{ $key+1 }} </td>
+                  <td> {{ $rowrepair->DOCNO }} </td>
+                  <td> {{ $rowrepair->DOCDATE }} </td>
+                  <td> {{ $rowrepair->MODIFY_BY }} </td>
+                  <td> {{ $rowrepair->CREATE_TIME('H:m:s') }} </td>
+                  <td> {{ $rowrepair->NOTE }} </td>
+                </tr>
+              @endforeach
+
             </tbody>
           </table>
         </div>

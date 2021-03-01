@@ -30,17 +30,17 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/table/sparepartlist') }}">
-									<button class="btn btn-primary  btn-sm ">
-										<span class="fas fa-arrow-left ">Back </span>
+								<a href="{{ url('machine/machinespareparttable/list') }}">
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
 							<div class="col-md-1 mt-2 ">
-								<form action="{{ url('machine/table/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ url('machine/machinespareparttable/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
-									<button class="btn btn-success btn-sm" type="submit">
-										<span class="fas fa-file-medical ">	Save	</span>
+									<button class="btn btn-primary btn-xs" type="submit">
+										<span class="fas fa-save fa-lg">	Save	</span>
 									</button>
 							</div>
 						</div>
@@ -50,13 +50,8 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แก้ไขระบบรายการแจ้ง</p>
-									<div class="btn-group ml-3" role="group" aria-label="Basic example">
-									</div>
-									<div class="form-group form-inline ">
-									</div>
-								</div>
+							<div class="card-header bg-primary">
+								<h4 class="ml-3 mt-2" style="color:white;" >แก้ไขระบบรายการแจ้ง </h4>
 							</div>
 							<div class="card-body">
 								<div class="row">
@@ -86,6 +81,17 @@
 												<label for="SPAREPART_NOTE">รายละเอียดเพิ่มเติม</label>
 												<textarea class="form-control" id="SPAREPART_NOTE" name="SPAREPART_NOTE" rows="4" value="{{ $dataset->SPAREPART_NOTE }}"></textarea>
 											</div>
+										</div>
+										<div class="form-check has-error">
+											<label for="SPAREPART_STATUS">สถานการเปิดใช้งาน</label><br>
+											<label class="form-radio-label">
+												<input class="form-radio-input" type="radio" name="SPAREPART_STATUS" {{ $dataset->SPAREPART_STATUS == "9" ? 'checked' : '' }} value="9" >
+												<span class="form-radio-sign">เปิด</span>
+											</label>
+											<label class="form-radio-label ml-3">
+												<input class="form-radio-input" type="radio" name="SPAREPART_STATUS" {{ $dataset->SPAREPART_STATUS == "1" ? 'checked' : '' }} value="1">
+												<span class="form-radio-sign">ปิด</span>
+											</label>
 										</div>
 										</div>
 									</div>

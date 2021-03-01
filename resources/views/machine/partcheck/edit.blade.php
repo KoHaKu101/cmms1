@@ -29,12 +29,16 @@
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-12 mt-2">
+							<div class="col-md-12 ">
 								<a href="{{ url('machine/partcheck/partchecklist') }}">
-									<button class="btn btn-primary  btn-sm ">
-										<span class="fas fa-arrow-left ">Back </span>
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
+								<button  id="popup" type="button" class="btn btn-primary btn-xs "
+								data-toggle="modal" data-target="#partcheckadd">
+											<span class="fas fa-plus fa-lg">เพิ่มระบบ </span>
+										</button>
 
 							</div>
 						</div>
@@ -45,18 +49,9 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="card-header bg-primary">
-								<div class="row">
-								<div class="col-md-4">
-								<h3 class="ml-4 mt-2" style="color:white">อะไหล่ เครื่อง {{ $dataset->MACHINE_CODE }}</h3>
-								</div>
-								<div class="col-md-8">
-									<button  id="popup" type="button" class="btn btn-success btn-sm float-right mt-1"
-									data-toggle="modal" data-target="#partcheckadd">
-												<span class="fas fa-plus ">เพิ่มระบบ </span>
-											</button>
-								</div>
+								<h4 class="ml-3 mt-2" style="color:white;" >อะไหล่ เครื่อง {{ $dataset->MACHINE_CODE }}</h4>
 							</div>
-						</div>
+						
 							<div class="card-body ml-2">
 								<div class="row ">
 									{{-- <input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $data_set->UNID }}"> --}}

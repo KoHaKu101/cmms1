@@ -30,7 +30,7 @@
 						<div class="row">
 							<div class="col-md-12 gx-4">
 								<a href="{{ url('/machine/dashboard/dashboard') }}">
-									<button class="btn btn-primary  btn-xs ">
+									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
@@ -59,69 +59,53 @@
   											</button>
 										</div>
 									@endif
-									<div class="">
-
-										<div class="form-inline bg-primary ">
-
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> รายการตรวจเช็คเครื่องจักร </h4>
-
-											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-
-											</div>
-											<div class="form-group form-inline ">
+									<div class="card-header bg-primary form-inline ">
+											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> รายการตรวจเช็คเครื่องจักร </h4>
 												<div class="input-group ml-4">
 													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
 													<div class="input-group-prepend">
 														<button type="submit" class="btn btn-search pr-1 btn-xs	">
-	              							<i class="fa fa-search search-icon"></i>
-	            							</button>
+															<i class="fa fa-search search-icon"></i>
+														</button>
 													</div>
 												</div>
-											</div>
-										</div>
 									</div>
+									
 									<div id="result"class="card-body">
 										<div class="table-responsive">
                       <table class="display table table-striped table-hover">
                       	<thead class="thead-light">
                         	<tr>
-
-														<th scope="col" style=""></th>
                             <th scope="col">Code</th>
                           	<th scope="col">ชื่อเครื่อง</th>
                           	<th scope="col">LINE</th>
 														<th scope="col">รายการตรวจเช็ค</th>
-
+														<th scope="col">เช็คประจำเดือน</th>
+														<th scope="col">วันที่เช็คล่าสุด</th>
                         	</tr>
                       	</thead>
-
                       	<tbody >
                           {{-- @php($i = 1) --}}
 													@foreach ($dataset as $key => $row)
-
                         		<tr>
-
 															<td width="13%">
-																<a href="{{ url('machine/syscheck/edit/'.$row->UNID) }}">
-																	<span style="color: #2C94FC;">
-																		<i class="fas fa-eye fa-lg"></i>
+																<a href="{{ url('machine/syscheck/edit/'.$row->UNID) }}" class="btn btn-secondary btn-sm btn-block my-1 mx--2" style="height:30px">
+																	<span class="float-left">
+																		<i class="fas fa-eye fa-lg mx-1"></i>{{ $row->MACHINE_CODE }}
 																	</span>
 																</a>
 															</td>
-															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_CODE }}  </td>
-															<td style="white-space:nowrap" class="born">              {{ $row->MACHINE_NAME }}  </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_LINE }}     </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_LINE }}     </td>
+
+															<td >              {{ $row->MACHINE_NAME }}  </td>
+															<td >  						 {{ $row->MACHINE_LINE }}     </td>
+															<td >  						 {{ $row->MACHINE_LINE }}     </td>
+															<td>  01/03/2021</td>
+															<td> 01/03/2021 </td>
+
                         			</tr>
                         	@endforeach
-
-
-
                       	</tbody>
                     </table>
-
-
-
 									</div>
 
 										</div>

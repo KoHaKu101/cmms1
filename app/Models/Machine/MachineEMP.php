@@ -5,7 +5,7 @@ namespace App\Models\Machine;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MachinEMP extends Model
+class MachineEMP extends Model
 {
     use HasFactory;
 
@@ -14,9 +14,9 @@ class MachinEMP extends Model
 
     public $incrementing = false;
     public $timestamps = false;
-    protected $primaryKey = "UNID";
-    protected $keyType = 'string';
-    public $table ='PMCS_EMP_NAME';
+    protected $primaryKey = "EMP_CODE";
+    protected $keyType = 'integer';
+    public $table ='PMCS_MACHINE_EMP';
 
     protected $fillable = ['EMP_CODE','EMP_NAME','EMP_ICON','EMP_GROUP','EMP_NOTE','EMP_STATUS','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME','UNID'];
 }

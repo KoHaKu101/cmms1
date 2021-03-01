@@ -38,10 +38,6 @@ class MachineSpareTableController extends Controller
 
     return View('machine/add/sparepart/tablesparelist',compact('dataset'));
   }
-  public function Create(){
-    return View('machine/add/sparepart/form');
-  }
-
   public function Store(Request $request){
 
     $validated = $request->validate([
@@ -51,7 +47,7 @@ class MachineSpareTableController extends Controller
       [
       'SPAREPART_CODE.required'  => 'กรุณาใส่รหัสอะไหล่',
       'SPAREPART_CODE.unique'    => 'มีรหัสนี้แล้ว',
-      'SPAREPART_NAME.required'  => 'กรุณราใส่ชื่ออะไหล่',
+      'SPAREPART_NAME.required'  => 'กรุณาใส่ชื่ออะไหล่',
       'SPAREPART_NAME.unique'    => 'มีชื่อนี้แล้ว'
       ]);
     SpareTabel::insert([
@@ -59,12 +55,13 @@ class MachineSpareTableController extends Controller
       'SPAREPART_NAME'  => $request->SPAREPART_NAME,
       'SPAREPART_PRICE' => $request->SPAREPART_PRICE,
       'SPAREPART_NOTE'  => $request->SPAREPART_NOTE,
+      'SPAREPART_STATUS'=> $request->SPAREPART_STATUS,
       'CREATE_BY'       => Auth::user()->name,
       'CREATE_TIME'     => Carbon::now(),
       'UNID'            => $this->randUNID('PMCS_CMMS_SPARE_PART_TABLE'),
     ]);
     $dataset = MachineSpareTable::paginate(10);
-    return Redirect()->route('tablesparepart.list',compact('dataset'))->with('success','บันทึก สำเร็จ');
+    return Redirect()->route('machinespareparttable.list',compact('dataset'))->with('success','บันทึก สำเร็จ');
   }
 
   public function Edit($UNID) {
@@ -74,10 +71,11 @@ class MachineSpareTableController extends Controller
 public function Update(Request $request,$UNID) {
 
     $dataset = MachineSpareTable::where('UNID',$UNID)->update([
-    'REPAIR_CODE'     => $request->REPAIR_CODE,
-    'REPAIR_NAME'     => $request->REPAIR_NAME,
-    'REPAIR_TYPE_CODE'=> $request->REPAIR_TYPE_CODE,
-    'REPAIR_NOTE'     => $request->REPAIR_NOTE,
+    'SPAREPART_CODE'     => $request->SPAREPART_CODE,
+    'SPAREPART_NAME'     => $request->SPAREPART_NAME,
+    'SPAREPART_PRICE'=> $request->SPAREPART_PRICE,
+    'SPAREPART_NOTE'     => $request->SPAREPART_NOTE,
+    'SPAREPART_STATUS'=> $request->SPAREPART_STATUS,
     'MODIFY_BY'       => Auth::user()->name,
     'MODIFY_TIME'     => Carbon::now(),
   ]);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\PDF;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Upload;
+use App\Models\Machine\MachineUpload;
 // use App\Models\PDF\Pdf;
 // use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +33,7 @@ class UploadPdfController extends Controller
 
   public function Uploadpdf($UNID)
   {
-    $location = Upload::where('UNID',$UNID)->first();
+    $location = MachineUpload::where('UNID',$UNID)->first();
 
         return view('machine/showupload/upload', compact('location'));
     // dd($spreadsheet);

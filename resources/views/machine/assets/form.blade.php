@@ -27,36 +27,34 @@
 			<div class="page-inner">
 				<!--ส่วนปุ่มด้านบน-->
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-					<div class="container">
+          <div class="container">
 						<div class="row">
-							<div class="col-md-1 mt-2">
+							<div class="col-md-1 gx-4">
+
 								<a href="{{ url('machine/assets/machinelist') }}">
-									<button class="btn btn-warning  btn-sm ">
-										<span class="fas fa-arrow-left ">Back </span>
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-11 mt-2 ">
-								<form action="{{ url('machine/assets/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
+								<div class="col-md-2 gx-4">
+								<form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
 									@csrf
-									<button class="btn btn-primary btn-sm" type="submit">
-										<span class="fas fa-save ">	save	</span>
+									<button class="btn btn-primary btn-xs" type="submit">
+										<span class="fas fa-save fa-lg">	save	</span>
 									</button>
+
 							</div>
 						</div>
-					</div>
+          </div>
 				</div>
+
 				<!--ส่วนกรอกข้อมูล-->
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="">
-								<div class="form-inline bg-primary"><h3 class="ml-4 mt-2" style="color:white">ลงทะเบียนเครื่องจักร</h3>
-									<div class="btn-group ml-3" role="group" aria-label="Basic example">
-									</div>
-									<div class="form-group form-inline ">
-									</div>
-								</div>
+							<div class="card-header bg-primary">
+								<h4 class="ml-3 mt-2" style="color:white;" >ลงทะเบียนเครื่องจักร </h4>
 							</div>
 							<div class="card-body">
 								<div class="row">

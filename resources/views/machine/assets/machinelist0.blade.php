@@ -30,18 +30,18 @@
 						<div class="row">
 							<div class="col-md-12 gx-4">
 								<a href="{{ route('machine') }}">
-									<button class="btn btn-primary  btn-xs ">
+									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 								<a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file fa-lg">	New	</span>
 								</button></a>
-								{{-- <a href="{{ url('users/import/show') }}">
+								<a href="{{ url('users/import/show') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-import fa-lg">	Import	</span>
 								</button>
-							</a> --}}
+							</a>
 								<a href="{{ url('users/export/') }}">
 								<button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file-export fa-lg">	Export	</span>
@@ -68,16 +68,8 @@
   											</button>
 										</div>
 									@endif
-									<div class="">
-
-										<div class="form-inline bg-primary ">
-
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> เครื่องจักร </h4>
-
-											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-
-											</div>
-											<div class="form-group form-inline ">
+									<div class="card-header bg-primary form-inline ">
+											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> เครื่องจักร </h4>
 												<div class="input-group ml-4">
 													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
 													<div class="input-group-prepend">
@@ -86,8 +78,6 @@
 	            							</button>
 													</div>
 												</div>
-											</div>
-										</div>
 									</div>
 									<div id="result"class="card-body">
 										<div class="table-responsive">
@@ -98,7 +88,7 @@
 														<th ></th>
                             <th scope="col">LINE</th>
                           	<th scope="col">Name</th>
-                          	<th scope="col">Code</th>
+
                           	<th scope="col">Asset Status</th>
 														<th scope="col">วันที่เริ่มใช้งาน</th>
 														<th></th>
@@ -111,25 +101,28 @@
 
 
                         		<tr class="mt-4">
-															<td style="width:24px">
-																<h5 class="ml-4">{{ $key+1 }}</h5>
+															<td style="width:25px">
+																<center>{{ $key+1 }}</center>
 															</td>
-																<td style="width:120px;">
+																<td style="width:170px;">
 																<a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
-																	<button type="button" class="btn btn-secondary btn-sm btn-block my-1" style="width:100px">
-																		<i class="fas fa-eye fa-lg float-left ">  {{ $row->MACHINE_CODE }}</i>
+																	<button type="button" class="btn btn-secondary btn-sm btn-block my-1" style="width:130px">
+																		<span class="float-left">
+																			<i class="fas fa-eye fa-lg  mx-1 mt-1"></i>{{ $row->MACHINE_CODE }}
+																		</span>
 																	</button>
 																</a>
 															</td>
-															<td scope="row" style="white-space:nowrap" class="name">  {{ $row->MACHINE_LINE }}  </td>
-															<td style="white-space:nowrap" class="born">              {{ $row->MACHINE_NAME }}  </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CODE }}   </td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_CHECK }}   </td>
+															<td >  {{ $row->MACHINE_LINE }}  </td>
+															<td >              {{ $row->MACHINE_NAME }}  </td>
+
+															<td style="white-space:nowrap">  	{{ $row->MACHINE_CHECK == '2' ? 'เครื่องทำงาน' : 'หยุดทำงาน'}}		</td>
 															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
 															<td style="width:100px;">
-																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" >
-																	<button type="button" class="ml-4 btn btn-danger btn-sm my-1" style="width:40px">
-																		<i class="fas fa-trash  fa-lg float-left ">	</i>
+																<a onclick="return confirm('ต้องการจำหน่ายเครื่อง {{ $row->MACHINE_CODE }} หรือมั้ย?')" href="{{ url('machine/assets/delete/'.$row->UNID) }}" >
+																	<button type="button" class="btn   btn-block btn-danger btn-sm my-1" style="width:150px">
+																		<i class="fab fa-btc fa-lg mx-1">	</i> จำหน่ายเครื่องจักร
+
 																	</button>
 																</a></td>
                         			</tr>

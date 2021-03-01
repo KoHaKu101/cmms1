@@ -30,7 +30,7 @@
 						<div class="row">
 							<div class="col-md-12 gx-4">
 								<a href="{{ route('dashboard') }}">
-								<button class="btn btn-primary  btn-xs ">
+								<button class="btn btn-warning  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
 								</button></a>
@@ -59,26 +59,16 @@
   											</button>
 										</div>
 									@endif
-									<div class="">
-
-										<div class="form-inline bg-primary ">
-
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
-
-											<div class="btn-group ml-3" role="group" aria-label="Basic example">
-  											
-											</div>
-											<div class="form-group form-inline ">
+									<div class="card-header bg-primary form-inline ">
+											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
 												<div class="input-group ml-4">
 													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
 													<div class="input-group-prepend">
 														<button type="submit" class="btn btn-search pr-1 btn-xs	">
-	              							<i class="fa fa-search search-icon"></i>
-	            							</button>
+															<i class="fa fa-search search-icon"></i>
+														</button>
 													</div>
 												</div>
-											</div>
-										</div>
 									</div>
 									<div id="result"class="card-body">
 										<div class="table-responsive">
@@ -86,41 +76,40 @@
                       	<thead class="thead-light">
                         	<tr>
 
-														<th scope="col" style=""></th>
+
                             <th scope="col">เลขที่เอกสาร</th>
-                          	<th scope="col">วันที่เอกสาร</th>
                           	<th scope="col">รหัสเครื่อง</th>
                           	<th scope="col">ชื่อเครื่องจักร</th>
 														<th scope="col">Line</th>
+														<th scope="col">วันที่เอกสาร</th>
 														<th scope="col">สถานะ</th>
+														<th scope="col" style=""></th>
 
                         	</tr>
                       	</thead>
 
                       	<tbody >
-                          {{-- @php($i = 1) --}}
 													{{-- @foreach ($data_set as $key => $row) --}}
-
                         		<tr>
-
-															<td style="white-space:nowrap">
-																<a href="{{ url('machine/repair/edit/') }}">
-																	<span style="color: green;">
-																		<i class="fas fa-edit fa-lg"></i>
+															<td style="width:200px">
+																<a href="{{ url('machine/repair/edit/') }}" class="btn btn-secondary btn-block btn-sm my-1 " style="width:180px;height:30px">
+																	<span class="btn-label float-left">
+																		<i class="fas fa-eye mx-1"></i>RE6402-0023
 																	</span>
 																</a>
+															</td>
+															<td >  				Mc-001		     </td>
+															<td >  				Tamaka		    </td>
+															<td >  				L1	    </td>
+															<td >      09-02-2021          </td>
+															<td >  				รอดำเนินการ	    </td>
+															<td >
 																<a href="{{ url('machine/assets/delete/') }}" class="ml-3">
 																	<span style="color: Tomato;">
 																		<i class="fas fa-trash fa-lg ml-2">	</i>
 																	</span>
 																</a>
 															</td>
-															<td scope="row" style="white-space:nowrap" class="name">  RE6402-0023  </td>
-															<td style="white-space:nowrap" class="born">      09-02-2021          </td>
-															<td style="white-space:nowrap">  				Mc-001		     </td>
-															<td style="white-space:nowrap">  				Tamaka		    </td>
-															<td style="white-space:nowrap">  				L1	    </td>
-															<td style="white-space:nowrap">  				รอดำเนินการ	    </td>
                         			</tr>
                         	{{-- @endforeach --}}
 

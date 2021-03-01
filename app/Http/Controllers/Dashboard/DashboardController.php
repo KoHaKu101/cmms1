@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Machine\Machnie;
+use App\Models\Machine\Machine;
 use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
@@ -14,14 +14,15 @@ class DashboardController extends Controller
   }
   public function Dashboard(){
     //dashboardสรุป
-    $data_setall = Machnie::all()->count();
-    $data_check = DB::table('pmcs_machines')->where('MACHINE_CHECK','กำลังทำงาน')->get()->count();
-    $data_nocheck = DB::table('pmcs_machines')->where('MACHINE_CHECK','ทำงานปกติ')->get()->count();
+    $data_setall = DB::table('pmcs_machines')->where('MACHINE_CHECK','=','2')
+                                             ->orwhere('MACHINE_CHECK','=','4')
+                                             ->orwhere('MACHINE_CHECK','=','3')
+                                             ->get()->count();
+    $data_check = DB::table('pmcs_machines')->where('MACHINE_CHECK','=','2')->get()->count();
+    $data_nocheck = DB::table('pmcs_machines')->where('MACHINE_CHECK','=','4')->get()->count();
 
     //dashboardเครื่องจักรLINE
     $data_line1 = DB::table('pmcs_machines')->where('MACHINE_LINE','L1')->get()->count();
-    //data_line คือตัวแปร = db::table คือ ตำแหน่งของtable ในฐานข้อมูล where คือการตามหา machinec_line คือ คอลัมที่ต้องการหา L1 คือชื่อในคอลัมนั้นที่เราต้องการหา get คือนำข้อมูลที่หามาเก็บไว้
-    //count คือการนับจำนวนที่ get เก็บมา
     $data_line2 = DB::table('pmcs_machines')->where('MACHINE_LINE','L2')->get()->count();
     $data_line3 = DB::table('pmcs_machines')->where('MACHINE_LINE','L3')->get()->count();
     $data_line4 = DB::table('pmcs_machines')->where('MACHINE_LINE','L4')->get()->count();

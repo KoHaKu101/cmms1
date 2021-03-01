@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
 //******************** model ***********************
-use App\Models\Machine\MachinEMP;
+use App\Models\Machine\EMPName;
 use App\Models\Machine\MachineLine;
 //************** Package form github ***************
 use App\Exports\MachineExport;
@@ -37,7 +37,7 @@ class PersonalController extends Controller
 
   public function Index(){
 
-    $dataset = MachinEMP::paginate(10);
+    $dataset = EMPName::paginate(10);
     //dd($data_set);
     return View('machine/personal/personallist',compact('dataset'));
   }
@@ -89,13 +89,13 @@ class PersonalController extends Controller
       'UNID'                 => $this->randUNID('PMCS_EMP_NAME'),
 
     ]);
-    $dataset = MachinEMP::paginate(12);
+    $dataset = EMPName::paginate(12);
 
     return Redirect()->route('personal.list',compact(['dataset']))->with('success','ลงทะเบียน สำเร็จ');
 
   }
   public function Edit($UNID) {
-    $dataset = MachinEMP::where('UNID','=',$UNID)->first();
+    $dataset = EMPName::where('UNID','=',$UNID)->first();
     $datalineselect = MachineLine::all();
     return view('machine/personal/edit',compact('dataset','datalineselect'));
 
@@ -116,7 +116,7 @@ class PersonalController extends Controller
   } else {
       $last_img = "";
   }
-  $dataset = MachinEMP::where('UNID',$UNID)->update([
+  $dataset = EMPName::where('UNID',$UNID)->update([
 
     'EMP_CODE'         => $request->EMP_CODE,
     'EMP_NAME'         => $request->EMP_NAME,
@@ -134,7 +134,7 @@ class PersonalController extends Controller
   return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
   }
   public function Delete($UNID){
-      $data_up = MachinEMP::where('UNID','=',$UNID)->delete();
+      $data_up = EMPName::where('UNID','=',$UNID)->delete();
 
       return Redirect()->back()-> with('success','Confirm Delete Success');
 

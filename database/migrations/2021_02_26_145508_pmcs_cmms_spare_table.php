@@ -14,11 +14,12 @@ class PmcsCmmsSpareTable extends Migration
     public function up()
     {
       Schema::create('PMCS_CMMS_SPARE_PART_TABLE', function (Blueprint $table) {
-      $table->BigInteger('UNID')->primary();
-      $table->string('SPAREPART_CODE',40)->nullable()->index();
-      $table->string('SPAREPART_NAME',250)->nullable()->index();
+      $table->BigInteger('UNID')->nullable();
+      $table->integer('SPAREPART_CODE')->primary();
+      $table->string('SPAREPART_NAME',200)->nullable();
       $table->float('SPAREPART_PRICE')->nullable();
-      $table->string('SPAREPART_NOTE',200)->nullable();
+      $table->string('SPAREPART_NOTE',500)->nullable();
+      $table->integer('SPAREPART_STATUS')->nullable();
 
       $table->string('CREATE_BY',200)->nullable();
       $table->string('CREATE_TIME',40)->nullable();

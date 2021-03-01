@@ -14,7 +14,7 @@ use App\Models\Machine\Machine;
 use App\Exports\MachineExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class RepairController extends Controller
+class MachineRepairController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
@@ -62,10 +62,10 @@ class RepairController extends Controller
   // }
   public function Edit() {
 
-
+      $dataset = MachineRepairTable::get();
     // $data = Mainmenu::where('UNID','=',$UNID)->first();
 
-    return view('machine/repair/edit');
+    return view('machine/repair/edit',compact('dataset'));
 
   }
 

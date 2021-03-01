@@ -13,6 +13,8 @@ use App\Models\Machine\Machine;
 use App\Models\Machine\Protected;
 use App\Models\Machine\MachineUpload;
 use App\Models\Machine\MachineLine;
+use App\Models\Machine\MachineEMP;
+use App\Models\Machine\RepairResults;
 use App\Models\MachineaddTable\MachineTypeTable;
 use App\Models\MachineAddTable\MachineStatusTable;
 //************** Package form github ***************
@@ -63,8 +65,8 @@ class MachineController extends Controller
   }
 
   public function Create(){
-    $machineline = MachineLine::all();
-    $machinetype = MachineTypeTable::all();
+    $machineline = MachineLine::where('LINE_STATUS','=','9')->get();
+    $machinetype = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
     $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
     return View('machine/assets/form',compact('machineline','machinetype','machinestatus'));
   }
@@ -93,6 +95,7 @@ class MachineController extends Controller
 } else {
     $last_img = "";
 }
+$request->MACHINE_STATUS = '9';
       Machine::insert([
           'MACHINE_CODE'         => $request->MACHINE_CODE,
           'MACHINE_NAME'         => $request->MACHINE_NAME,
@@ -162,11 +165,16 @@ class MachineController extends Controller
     $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinetype = MachineTypeTable::all();
-    $machineline = MachineLine::all();
+    $machinetype = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
+    $machineline = MachineLine::where('LINE_STATUS','=','9')->get();
     $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
+    $machineemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
+    $repairresults = RepairResults::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
+                                    ->where('STATUS','=','5')
+                                    ->get();
 
-    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1','machineupload2','machinetype','machineline','machinestatus'));
+    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1'
+      ,'machineupload2','machinetype','machineline','machinestatus','machineemp','repairresults'));
   }
   public function Editback($UPLOAD_UNID_REF) {
 
@@ -174,11 +182,13 @@ class MachineController extends Controller
     $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinetype = MachineTypeTable::all();
-    $machineline = MachineLine::all();
+    $machinetype = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
+    $machineline = MachineLine::where('LINE_STATUS','=','9')->get();
     $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
+    $machineemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
 
-    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1','machineupload2','machinetype','machineline','machinestatus'));
+    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1'
+      ,'machineupload2','machinetype','machineline','machinestatus','machineemp'));
   }
 
 
@@ -200,6 +210,8 @@ class MachineController extends Controller
       $last_img = $update;
       // dd($last_img);
   }
+  $request->MACHINE_STATUS = $request->MACHINE_CHECK == "1" ? $request->MACHINE_STATUS = '1' : $request->MACHINE_STATUS = '9' ;
+
     $data_set = Machine::where('UNID',$UNID)->update([
       'MACHINE_CODE'         => $request->MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,
@@ -261,9 +273,19 @@ class MachineController extends Controller
   }
 
   public function Delete($UNID){
-      $data_up = Machine::where('UNID','=',$UNID)->delete();
 
-      return Redirect()->back()-> with('success','Confirm Delete Success');
+    $MACHINE_CHECK = '4';
+    $MACHINE_STATUS = '1';
+
+      $data_set = Machine::where('UNID',$UNID)->update([
+        'MACHINE_CHECK'        => $MACHINE_CHECK,
+        'MACHINE_STATUS'       => $MACHINE_STATUS,
+        'MODIFY_BY'            => Auth::user()->name,
+        'MODIFY_TIME'          => Carbon::now(),
+        ]);
+
+
+      return Redirect()->back()-> with('success','จำหน่ายเครื่องสำเร็จ ');
 
   }
 

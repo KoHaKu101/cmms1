@@ -29,13 +29,18 @@
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-12 mt-2">
+							<div class="col-md-1">
 								<a href="{{ url('machine/syscheck/syschecklist') }}">
-									<button class="btn btn-primary  btn-sm ">
-										<span class="fas fa-arrow-left ">Back </span>
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg ">Back </span>
 									</button>
 								</a>
-
+							</div>
+							<div class="col-md-1">
+								<button  id="popup" type="button" class="btn btn-primary btn-xs "
+								data-toggle="modal" data-target="#syscheckmain">
+											<span class="fas fa-plus fa-lg ">เพิ่มระบบ </span>
+										</button>
 							</div>
 						</div>
 					</div>
@@ -45,23 +50,8 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="card-header bg-primary">
-								<div class="row">
-								<div class="col-md-4">
-								<h3 class="ml-4 mt-2" style="color:white">รายการตรวจเช็คเครื่องจักร {{ $data_set->MACHINE_CODE }}</h3>
-								</div>
-								<div class="col-md-8">
-
-
-									<button  id="popup" type="button" class="btn btn-success btn-sm float-right mt-1"
-									data-toggle="modal" data-target="#syscheckmain">
-												<span class="fas fa-plus ">เพิ่มระบบ </span>
-											</button>
-
-
-
-								</div>
+								<h4 class="ml-3 mt-2" style="color:white;" >รายการตรวจเช็คเครื่องจักร {{ $data_set->MACHINE_CODE }}</h4>
 							</div>
-						</div>
 							<div class="card-body ml-2">
 								<div class="row ">
 									{{-- <input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $data_set->UNID }}"> --}}
@@ -95,7 +85,11 @@
 
 									</div>
 									<div class="col-md-6 col-lg-2">
-										3 รายการ
+										<button  id="popup" type="button" class="btn btn-secondary btn-block btn-sm my-1 mt--2"
+										data-toggle="modal" data-target="#syscheck">
+										<span class="float-left"><i class="fas fa-eye fa-lg mx-1"></i>3 รายการ
+										</span></button>
+
 									</div>
 									<div class="col-md-6 col-lg-2">
 										3 เดือน
@@ -106,19 +100,12 @@
 									<div class="col-md-6 col-lg-2">
 										ครบกำหนด 3 รายการ
 									</div>
-
-
 									<div class="col-md-6 col-lg-2">
-										<div class="form-group form-inline">
-												<button  id="popup" type="button" class="btn btn-link mt--3"
-		                    data-toggle="modal" data-target="#syscheck">
-												<span style="color: #2C94FC;"><i class="fas fa-eye fa-lg"></i>
-												</span></button>
-												<button  id="popup" type="button" class="btn btn-link mt--3"
+												<button  id="popup" type="button" class="btn btn-primary btn-block btn-sm my-1 mt--2"
 												data-toggle="modal" data-target="#syschecksub">
-												<span style="color: #1CFD48;font-size:18px"><i class="fas fa-plus fa-lg"></i>
+												<span class="float-left"><i class="fas fa-plus fa-lg mx-1"></i> เพิ่มรายการ
 												</span></button>
-									</div>
+
 
 								</div>
 

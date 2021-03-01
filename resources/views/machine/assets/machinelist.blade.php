@@ -27,16 +27,16 @@
 @section('contentandfooter')
 	<div class="content">
 		<div class="page-inner">
-			<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row ml-4">
+			<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row ml-3">
 
 					<div class="row">
 						<div class="col-md-12 gx-4">
-							<a href="{{ url('/machine/dashboard/dashboard') }}">
-								<button class="btn btn-primary  btn-sm ">
-									<span class="fas fa-arrow-left fa-lg">Back </span>
-								</button>
-							</a>
-              <a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-sm">
+              <a href="{{ route('dashboard') }}">
+                <button class="btn btn-warning  btn-xs ">
+                  <span class="fas fa-arrow-left fa-lg">Back </span>
+                </button>
+              </a>
+              <a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-xs">
                 <span class="fas fa-file fa-lg">	New	</span>
               </button></a>
 						</div>
@@ -44,7 +44,7 @@
 
 			</div>
 
-	<div class="container-fluid ml-4">
+	<div class="container-fluid ml-4 mt--2">
 
 				 <div class="main">
 

@@ -4,7 +4,7 @@ namespace App\Imports;
 
 // use App\Machine\Machnie;
 use Maatwebsite\Excel\Concerns\ToModel;
-use App\Models\Machine\Machnie;
+use App\Models\Machine\Machine;
 use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
@@ -37,7 +37,7 @@ class MachineImport implements ToModel
 
     public function model(array $row)
     {
-        return new Machnie([
+        return new Machine([
           'MACHINE_CODE' => $row[0],
           'MACHINE_NAME'=> $row[1],
           'MACHINE_CHECK'=> $row[2],

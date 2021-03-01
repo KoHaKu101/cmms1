@@ -33,25 +33,24 @@
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-1 mt-2">
+							<div class="col-md-1">
 								<a href="{{ url('machine/repair/repairlist') }}">
-									<button class="btn btn-primary  btn-sm ">
-										<span class="fas fa-arrow-left ">Back </span>
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-1 mt-2 ">
+							<div class="col-md-0 ">
 								<form action="" method="POST" enctype="multipart/form-data">
 									@csrf
-									<button class="btn btn-success btn-sm" type="submit">
-										<span class="fas fa-file-medical ">	Save	</span>
+									<button class="btn btn-primary btn-xs" type="submit">
+										<span class="fas fa-save fa-lg">	save	</span>
 									</button>
 							</div>
-							<div class="col-md-1 mt-2 ">
-
+							<div class="col-md-0  ml-2">
 								<button id="popup"data-toggle="modal" data-target="#Scan"
-									class="btn btn-secondary btn-sm" type="button">
-										<span class="fas fa-qrcode">	Scan QRCode	</span>
+									class="btn btn-secondary btn-xs" type="button">
+										<span class="fas fa-qrcode fa-lg">	Scan QRCode	</span>
 									</button>
 							</div>
 						</div>
@@ -61,13 +60,8 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แจ้งซ่อมเครื่องจักร</p>
-									<div class="btn-group ml-3" role="group" aria-label="Basic example">
-									</div>
-									<div class="form-group form-inline ">
-									</div>
-								</div>
+							<div class="card-header bg-primary">
+								<h4 class="ml-3 mt-2" style="color:white;" >แจ้งซ่อมเครื่องจักร </h4>
 							</div>
 							<div class="card-body">
 								<div class="row">

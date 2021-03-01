@@ -1,4 +1,3 @@
-<!-- พนักงานประจำเครื่อง -->
 <div class="tab-pane" id="personal" >
   <div class="row">
     <div class="col-sm-12">
@@ -19,9 +18,7 @@
                   <th scope="col">
                     รหัสพนักงาน
                   </th>
-                  <th scope="col">
-                  Product Code
-                  </th>
+
                   <th scope="col">
                     ชื่อพนักงาน
                   </th>
@@ -40,22 +37,19 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach ($machineemp as $key => $rowmachineemp)
               <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
+
+                <td> {{ $key+1 }} </td>
+                <td> {{ $rowmachineemp->EMP_CODE }}</td>
+                <td> {{ $rowmachineemp->EMP_NAME }}</td>
+                <td>{{ $rowmachineemp->EMP_NAME_LAST }}</td>
+                <td>{{ $rowmachineemp->COUNTRY_CODE }}</td>
+                <td>{{ $rowmachineemp->EMP_KA }}</td>
+                <td> {{ $rowmachineemp->EMP_TYPE = '2' ? 'พนักงานรอง' : 'พนักงานหลัก' }}</td>
+
               </tr>
+              @endforeach
               </tbody>
             </table>
           </div>

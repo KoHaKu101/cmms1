@@ -29,31 +29,25 @@
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-1 mt-2">
+							<div class="col-md-1">
 								<a href="{{ url('machine/repair/repairlist') }}">
-									<button class="btn btn-primary  btn-sm ">
-										<span class="fas fa-arrow-left ">Back </span>
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-1 mt-2 ">
+							<div class="col-md-1 ">
 								<form action="" method="POST" enctype="multipart/form-data">
 									@csrf
-									<button class="btn btn-success btn-sm" type="submit">
-										<span class="fas fa-file-medical ">	Save	</span>
+									<button class="btn btn-primary btn-xs" type="submit">
+										<span class="fas fa-save fa-lg">	save	</span>
 									</button>
 							</div>
-							<div class="col-md-1 mt-2 ">
 
-									<button id="popup"data-toggle="modal" data-target="#Scan"
-										class="btn btn-secondary btn-sm" type="button">
-										<span class="fas fa-qrcode">	Scan QRCode	</span>
-									</button>
-							</div>
-							<div class="col-md-9 mt-2 ">
-								<a href="{{ url('machine/repair/pdf') }}"
-									<button class="btn btn-secondary btn-sm float-right" type="button">
-										<span class="fas fa-print">	print	</span>
+							<div class="col-md-10 ">
+								<a href="{{ url('machine/repair/pdf') }}">
+									<button class="btn btn-secondary btn-xs float-right" type="button">
+										<span class="fas fa-print fa-lg">	print	</span>
 									</button>
 								</a>
 							</div>
@@ -64,14 +58,10 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="">
-								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แจ้งซ่อมเครื่องจักร</p>
-									<div class="btn-group ml-3" role="group" aria-label="Basic example">
-									</div>
-									<div class="form-group form-inline ">
-									</div>
-								</div>
+							<div class="card-header bg-primary">
+								<h4 class="ml-3 mt-2" style="color:white;" >แจ้งซ่อมเครื่องจักร </h4>
 							</div>
+
 							<div class="card-body">
 								<div class="row">
 										<!-- ช่อง1-->
@@ -186,36 +176,15 @@
 															</div>
 																<div class="row">
 
-																	<div class="col-md-8 col-lg-1 ml-2">
-																		@for($i =1; $i < 4 ; $i++)
-																		<div class="form-check">
-											<label class="form-check-label">
-												<input class="form-check-input" type="checkbox" value="">
-												<span class="form-check-sign">{{ $i }}</span>
-											</label>
-										</div>
-									@endfor
+																	<div class="form-check col-md-8 col-lg-5 ml-4">
+																		@foreach ($dataset as $key => $dataitem)
+																			<label class="form-check-label" style="padding:5px">
+																				<input class="form-check-input" type="checkbox" value="{{ $dataitem->REPAIR_CODE }}">
+																				<span class="form-check-sign">{{ $dataitem->REPAIR_NAME }}</span>
+																			</label>
+																	@endforeach
 																	</div>
-																	<div class="col-md-8 col-lg-1">
-																		@for($i =1; $i < 4 ; $i++)
-																			<div class="form-check">
-																				<label class="form-check-label">
-																					<input class="form-check-input" type="checkbox" value="">
-																					<span class="form-check-sign">{{ $i }}</span>
-																				</label>
-																			</div>
-																		@endfor
-																	</div>
-																	<div class="col-md-8 col-lg-1">
-																		@for($i =1; $i < 4 ; $i++)
-																			<div class="form-check">
-																				<label class="form-check-label">
-																					<input class="form-check-input" type="checkbox" value=" {{ $i }}">
-																					<span class="form-check-sign">{{ $i }}</span>
-																				</label>
-																			</div>
-																		@endfor
-																	</div>
+
 																	<div class="col-md-8 col-lg-3 ml-2">
 																		<div class="form-group">
     																	<label for="exampleFormControlTextarea1">Example textarea</label>

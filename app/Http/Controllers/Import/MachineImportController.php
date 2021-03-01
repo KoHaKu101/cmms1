@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 // use Maatwebsite\Excel\Excel;
-use App\Models\Machine\Machnie;
+use App\Models\Machine\Machine;
 use App\Imports\MachineImport;
 
 class MachineImportController extends Controller
