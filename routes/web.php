@@ -24,9 +24,14 @@ use App\Http\Controllers\Machine\PaySpareController;
 
 //************************* add tabel *********************************
 use App\Http\Controllers\MachineaddTable\MachineTypeTableController;
-use App\Http\Controllers\MachineaddTable\MachineSpareTableController;
 use App\Http\Controllers\MachineaddTable\MachineRepairTableController;
+use App\Http\Controllers\MachineaddTable\MachineSpareTableController;
 use App\Http\Controllers\MachineaddTable\MachineStatusTableController;
+use App\Http\Controllers\MachineaddTable\MachineSysTemTableController;
+use App\Http\Controllers\MachineaddTable\MachineSysTemSubTableController;
+//************************* Search *********************************
+use App\Http\Controllers\Search\RepairSearchController;
+
 //****************************** PDF **********************************
 use App\Http\Controllers\PDF\MachineRepairPDFController;
 use App\Http\Controllers\PDF\UploadPdfController;
@@ -79,7 +84,7 @@ Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboa
 
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
 //serach
-Route::get('/search', [MachineController::class,'search']);
+Route::get('/search', [RepairSearchController::class,'search'])->name('repair.search');
 
 //Exportandimport
 Route::get('users/export', [MachineExportController::class,'export']);
@@ -171,13 +176,6 @@ Route::get('machine/pay/paylist'      ,[PaySpareController::class,'Index'])  ->n
     Route::get('machine/machinetypetable/edit/{UNID}'     ,[MachineTypeTableController::class,'Edit'])   ->name('machinetypetable.edit');
     Route::post('machine/machinetypetable/update/{UNID}'  ,[MachineTypeTableController::class,'Update']);
     Route::get('machine/machinetypetable/delete/{UNID}'   ,[MachineTypeTableController::class,'Delete']) ->name('machinetypetable.delete');
-    //status
-    Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController::class,'Index'])  ->name('machinestatustable.list');
-      Route::post('machine/machinestatustable/store'            ,[MachineStatusTableController::class,'Store']) ->name('machinestatustable.store');
-      Route::get('machine/machinestatustable/form'            ,[MachineStatusTableController::class,'Create']) ->name('machinestatustable.form');
-      Route::get('machine/machinestatustable/edit/{UNID}'     ,[MachineStatusTableController::class,'Edit'])   ->name('machinestatustable.edit');
-      Route::post('machine/machinestatustable/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
-      Route::get('machine/machinestatustable/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatustable.delete');
   //repair
   Route::get('machine/machinerepairtable/list'        ,[MachineRepairTableController::class,'Index'])  ->name('machinerepairtable.list');
     Route::post('machine/machinerepairtable/store'          ,[MachineRepairTableController::class,'Store']) ->name('machinerepairtable.store');
@@ -190,6 +188,26 @@ Route::get('machine/pay/paylist'      ,[PaySpareController::class,'Index'])  ->n
     Route::get('machine/machinespareparttable/edit/{UNID}'     ,[MachineSpareTableController::class,'Edit'])   ->name('machinespareparttable.edit');
     Route::post('machine/machinespareparttable/update/{UNID}'  ,[MachineSpareTableController::class,'Update']);
     Route::get('machine/machinespareparttable/delete/{UNID}'   ,[MachineSpareTableController::class,'Delete']) ->name('machinespareparttable.delete');
+  //status
+  Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController::class,'Index'])  ->name('machinestatustable.list');
+    Route::post('machine/machinestatustable/store'            ,[MachineStatusTableController::class,'Store']) ->name('machinestatustable.store');
+    Route::get('machine/machinestatustable/form'            ,[MachineStatusTableController::class,'Create']) ->name('machinestatustable.form');
+    Route::get('machine/machinestatustable/edit/{UNID}'     ,[MachineStatusTableController::class,'Edit'])   ->name('machinestatustable.edit');
+    Route::post('machine/machinestatustable/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
+    Route::get('machine/machinestatustable/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatustable.delete');
+  //system
+  Route::get('machine/machinesystemtable/list'     ,[MachineSysTemTableController::class,'Index'])  ->name('machinesystemtable.list');
+    Route::post('machine/machinesystemtable/store'          ,[MachineSysTemTableController::class,'Store']) ->name('machinesystemtable.store');
+    Route::get('machine/machinesystemtable/edit/{UNID}'     ,[MachineSysTemTableController::class,'Edit'])   ->name('machinesystemtable.edit');
+    Route::post('machine/machinesystemtable/update/{UNID}'  ,[MachineSysTemTableController::class,'Update']);
+    Route::get('machine/machinesystemtable/delete/{UNID}'   ,[MachineSysTemTableController::class,'Delete']) ->name('machinesystemtable.delete');
+  //system
+  Route::get('machine/machinesystemsubtable/list'     ,[MachineSysTemSubTableController::class,'Index'])  ->name('machinesystemsubtable.list');
+    Route::post('machine/machinesystemsubtable/store'          ,[MachineSysTemSubTableController::class,'Store']) ->name('machinesystemsubtable.store');
+    Route::get('machine/machinesystemsubtable/edit/{UNID}'     ,[MachineSysTemSubTableController::class,'Edit'])   ->name('machinesystemsubtable.edit');
+    Route::post('machine/machinesystemsubtable/update/{UNID}'  ,[MachineSysTemSubTableController::class,'Update']);
+    Route::get('machine/machinesystemsubtable/delete/{UNID}'   ,[MachineSysTemSubTableController::class,'Delete']) ->name('machinesystemsubtable.delete');
+
   //***************************** MENU ****************************************
 //MenuController
 Route::get('machine/setting/menu/home'              ,[MenuController::class,'Home'])   ->name('menu.home');

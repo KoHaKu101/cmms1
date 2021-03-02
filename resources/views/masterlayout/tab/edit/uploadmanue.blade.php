@@ -40,8 +40,7 @@
                   </tr>
                 </thead>
                 <tbody>
-            machineupload1
-            machineupload2
+            
                   {{-- @foreach ($data_up as $key => $data_up) --}}
                   @foreach ($machineupload as $key =>$uploaditem)
               <tr>

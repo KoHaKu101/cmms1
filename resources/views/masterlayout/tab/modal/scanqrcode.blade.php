@@ -16,52 +16,59 @@
       <div class="modal-body">
   				<div class="row">
   					<div class="col-md-6 col-lg-12">
-              <form id=search action="#">
+
   						<div class="form-group has-error">
   							<label for="MACHINE_CODE">แสกนQR Code/กรอกรหัสเครื่อง</label>
+                {{-- <form  action="javascript:search();"> --}}
                 <div class="form-group form-inline">
                   <div class="input-group col-md-6 col-lg-12 ml--4">
-  								<input type="search" class="form-control form-control-sm" id="MACHINE_CODE" name="MACHINE_CODE">
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div class="input-group-prepend">
-                      <button type="button" class="btn btn-danger btn-sm">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
+
+  								   <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data" />
+                              <div class="input-group-prepend">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                  <i class="fas fa-search"></i>
+                                </button>
+                              </div>
+
                   </div>
                 </div>
+                {{-- </form> --}}
   						</div>
-            </form>
+
   					</div>
   				</div>
-
           <div class="row">
-            {{-- @foreach ($dataset as $key => $dataitem) --}}
               <div class="col-md-6 col-lg-5">
                 <div class="card card-post card-round">
 
                   <div class="card-body">
 
-                      {{-- @foreach ($datasearch as $dataitem) --}}
-                      {{-- {{ $dataitem->MACHINE_CODE }} --}}
-  {{-- {{$dataitem->MACHINE_LINE}} --}}
-                      {{-- @endforeach --}}
-                      <h3>  <b>รหัสเครื่อง</b>  </h3>
-                      <h4>  <b>Line</b> </h4>
-                      <center class="bg-success">
-                        <button type="button" class="btn btn-success" id="getRequest">เลือก</button>
-
-                      <input type="hidden" value="">
-                  </div>
+                    <div class="table-responsive">
+                      <h3 align="center">Total Data : <span id="total_records"></span></h3>
+                      <table class="table table-striped table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Customer Name</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Postal Code</th>
+                            <th>Country</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
 
                 </div>
               </div>
-            {{-- @endforeach --}}
+
           </div>
             </div>
 		        <div class="modal-footer">
   	           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	              <input type="submit" class="btn btn-primary" value="Save changes"></input>
             </div>
 
       </div>

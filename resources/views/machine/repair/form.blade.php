@@ -205,8 +205,6 @@
 																				</select>
 																			</div>
 																		</div>
-
-
 																	</div>
 																</div>
         											</div>
@@ -238,27 +236,9 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-<script type="text/javascript">
-$.ajaxSetup({
-	headers: {
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        }
-});
-	$(document).ready(function(){
-		$('#getRequest').click(function(){
-			$.get('getRequest', function(data){
-				console.log(data);
-			});
-		});
-		$('#search').click(function(){
-			var MACHINE_CODE = $('#MACHINE_CODE').val();
-			$.get('search',{MACHINE_CODE:MACHINE_CODE},function(data){
-				console.log(data);
-				// $('#search').html(data);
-			});
+	<script type="text/javascript" src="{{ asset('/js/java.js') }}">
 
-		});
-	});
-</script>
+	</script>
+
 @stop
 {{-- ปิดส่วนjava --}}

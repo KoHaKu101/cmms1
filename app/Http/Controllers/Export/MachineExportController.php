@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exports\MachineExport;
 use Maatwebsite\Excel\Excel;
-use App\Models\Machine\Machnie;
+use App\Models\Machine\Machine;
 
 
 

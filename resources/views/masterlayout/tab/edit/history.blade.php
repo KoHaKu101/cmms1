@@ -40,7 +40,7 @@
                   <td> {{ $rowrepair->DOCNO }} </td>
                   <td> {{ $rowrepair->DOCDATE }} </td>
                   <td> {{ $rowrepair->MODIFY_BY }} </td>
-                  <td> {{ $rowrepair->CREATE_TIME('H:m:s') }} </td>
+                  <td> {{ $rowrepair->CREATE_TIME }} </td>
                   <td> {{ $rowrepair->NOTE }} </td>
                 </tr>
               @endforeach

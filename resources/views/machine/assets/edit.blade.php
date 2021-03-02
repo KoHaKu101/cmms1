@@ -58,7 +58,13 @@
 									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="{{asset($dataset->MACHINE_ICON)}}" width="200" height="200px" class="mt-4">
+												<img
+												<?php
+												$noimg = asset("assets/img/nobody.jpg");
+												$hasimg = asset($dataset->MACHINE_ICON);
+												echo ($dataset->MACHINE_ICON == "") ? 'src= '.$noimg.' ' : 'src= '.$hasimg.' ' ;
+												?>
+												 width="200" height="200px" class="mt-4">
 												  <input type="hidden" id="MACHINE_UPDATE" name="MACHINE_UPDATE" value="{{$dataset->MACHINE_ICON}}">
 													<input type="file" class="form-control mt-4" id="MACHINE_ICON" name="MACHINE_ICON"  >
 
