@@ -34,7 +34,7 @@
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
 								</button></a>
-								<a href="{{ route('repair.form') }}"><button class="btn btn-primary  btn-xs">
+								<a href="{{ route('repair.repairsearch') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file fa-lg">	New	</span>
 								</button></a>
 								<a href="{{ url('users/export/') }}">

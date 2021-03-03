@@ -1,29 +1,72 @@
 $(document).ready(function(){
-
- fetch_customer_data();
-
- function fetch_customer_data(query = '')
- {
-  $.ajax({
-
-   url:"/search",
-   method:'GET',
-   data:{query:query},
+$('#search').on('keyup',function(){
+ var code =$(this).val();
+ if(code.length>=3){
+   $.ajax({
+   url : '/machine/repair/search',
+   data:{
+     machine_code:code
+   },
    dataType:'json',
+   beforeSend:function(){
+     $("#data").html('<tr><td>ไม่พบข้อมูล </td></tr>')
+   },
+   success:function(res){
+   console.log(res);
+    var _html='';
 
-   success:function(data)
+    $.each(res.dataset,function(prepairsearch,dataset){
 
-   {
-    $('tbody').html(data.table_data);
-    $('#total_records').text(data.total_data);
+        _html+='<div class="card card-post card-round">'+
+        '<div class="card-header bg-primary text-white">'+
+        '<center><h4 class="mt-1"><b> '+dataset.MACHINE_CODE+' </b></h4></center>'+
+        '</div>'+
+        '<div class="card-body">'+
+        '<span>Machine Name : '+dataset.MACHINE_NAME+'</span><br/>'+
+        '<span class="mt-3"> Line : '+dataset.MACHINE_LINE+'</span><br/>'+
+        '<a href="form/'+dataset.MACHINE_CODE+'" class="btn btn-success btn-sm btn-block my-1">'+
+        '<span style="font-size:13px">'+
+        ' <i class="fas fa-hand-pointer fa-lg mx-2"></i>เลือกรายการ'+
+        '  </span>'+
+        '</a>'+
+        // '<input type="hidden" value="'+data.MACHINE_CODE+'">'+
+        '</div>'+
+        '  </div>';
+    });
+    $("#data").html(_html);
    }
 
-  })
+   });
+ }else {
+   $("#data").html('ไม่พบข้อมูล ');
+   return false;
  }
-
- $(document).on('keyup', '#search', function(){
-  var query = $(this).val();
-  fetch_customer_data(query);
-  
- });
+console.log(code);
 });
+});
+
+
+
+
+
+
+
+// $(document).ready(function(){
+//
+//   $('#form').submit(function(e){
+//     e.preventDefault();
+//     data = $(this).serialize();
+//
+//     $.post('/machine/repair/search',data,function(Search){
+//       $('#data').html('');
+//       $.each(Search,function(key,val){
+//         $('#data').append(
+//           '<tr>'+
+//           '<td>'+ val.MACHINE_CODE+ '</td>'+
+//           '<td>'+ val.MACHINE_NAME+ '</td>'+
+//           '<tr>');
+//         });
+//       console.log(data);
+//       });
+//     });
+//   });

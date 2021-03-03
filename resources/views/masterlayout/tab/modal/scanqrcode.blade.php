@@ -1,4 +1,4 @@
-<style>
+{{-- <style>
 .modal-sm {
     max-width: 50% !important;
 }
@@ -19,7 +19,7 @@
 
   						<div class="form-group has-error">
   							<label for="MACHINE_CODE">แสกนQR Code/กรอกรหัสเครื่อง</label>
-                {{-- <form  action="javascript:search();"> --}}
+                <form  action="javascript:search();">
                 <div class="form-group form-inline">
                   <div class="input-group col-md-6 col-lg-12 ml--4">
 
@@ -32,7 +32,7 @@
 
                   </div>
                 </div>
-                {{-- </form> --}}
+                </form>
   						</div>
 
   					</div>
@@ -56,7 +56,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          
+
                         </tbody>
                       </table>
                     </div>
@@ -73,4 +73,4 @@
 
       </div>
     </div>
-</div>
+</div> --}}

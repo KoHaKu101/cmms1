@@ -84,7 +84,7 @@ Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboa
 
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
 //serach
-Route::get('/search', [RepairSearchController::class,'search'])->name('repair.search');
+Route::get('/search', [RepairSearchController::class,'search']);
 
 //Exportandimport
 Route::get('users/export', [MachineExportController::class,'export']);
@@ -140,8 +140,10 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
   Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 //repair
 Route::get('machine/repair/repairlist'         ,[MachineRepairController::class,'Index'])  ->name('repair.list');
-  Route::get('machine/repair/form'            ,[MachineRepairController::class,'Create']) ->name('repair.form');
-  Route::get('machine/repair/formdata'            ,[MachineRepairController::class,'Create']) ->name('repair.formdata');
+  Route::get('machine/repair/form/{MACHINE_CODE}'            ,[MachineRepairController::class,'Create']) ->name('repair.form');
+  Route::get('machine/repair/repairsearch'            ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
+  // Route::post('machine/repair/search'            ,[MachineRepairController::class,'Search']) ;
+  Route::get('machine/repair/search' ,[MachineRepairController::class,'Search']) ;
   Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
   Route::get('machine/repair/edit'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);

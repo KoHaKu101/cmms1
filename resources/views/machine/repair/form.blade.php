@@ -1,10 +1,6 @@
 @extends('masterlayout.masterlayout')
-@section('meta')
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-@endsection
 @section('tittle','homepage')
 @section('css')
-
 
 @endsection
 {{-- ส่วนหัว --}}
@@ -33,26 +29,34 @@
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-1">
-								<a href="{{ url('machine/repair/repairlist') }}">
-									<button class="btn btn-warning  btn-xs ">
-										<span class="fas fa-arrow-left fa-lg">Back </span>
+							<div class="col-md-1 ">
+								<a href="{{ url('machine/repair/repairsearch') }}">
+									<button class="btn btn-warning  btn-xs  ">
+										<span class="fas fa-arrow-left fa-lg	"> back </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-0 ">
+							<div class="col-md-1 ml--3">
+								<a href="{{ url('machine/repair/repairlist') }}">
+									<button class="btn btn-warning  btn-xs ">
+										<span class="fas fa-arrow-left fa-lg	"> กลับหน้าหลัก </span>
+									</button>
+								</a>
+							</div>
+							<div class="col-md-1 ml-5">
 								<form action="" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
-										<span class="fas fa-save fa-lg">	save	</span>
+										<span class="fas fa-file-medical fa-lg	">	Save	</span>
 									</button>
 							</div>
-							<div class="col-md-0  ml-2">
+							{{-- <div class="col-md-1 mt-2 ">
+
 								<button id="popup"data-toggle="modal" data-target="#Scan"
-									class="btn btn-secondary btn-xs" type="button">
-										<span class="fas fa-qrcode fa-lg">	Scan QRCode	</span>
+									class="btn btn-secondary btn-sm" type="button">
+										<span class="fas fa-qrcode">	Scan QRCode	</span>
 									</button>
-							</div>
+							</div> --}}
 						</div>
 					</div>
 				</div>
@@ -60,8 +64,13 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="card-header bg-primary">
-								<h4 class="ml-3 mt-2" style="color:white;" >แจ้งซ่อมเครื่องจักร </h4>
+							<div class="">
+								<div class="form-inline bg-primary"><p style="color:white;font-size:17px" class="ml-4 mt-3">แจ้งซ่อมเครื่องจักร</p>
+									<div class="btn-group ml-3" role="group" aria-label="Basic example">
+									</div>
+									<div class="form-group form-inline ">
+									</div>
+								</div>
 							</div>
 							<div class="card-body">
 								<div class="row">
@@ -80,8 +89,9 @@
 												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
 												<select class="form-control">
 													<option>พนักงาน</option>
-													<option value="ก">นาย ก</option>
-													<option value="ข">นาย ข</option>
+													@foreach ($dataemp as $key => $dataitem)
+													<option value="{{ $dataitem->EMP_CODE }}">{{ $dataitem->EMP_NAME }}   {{ $dataitem->EMP_NAME_LAST }}</option>
+													@endforeach
 											</select>
 											</div>
 										</div>
@@ -109,7 +119,7 @@
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_PARTNO">รหัสเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" placeholder="รหัสเครื่อง" disabled >
+													<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" value="{{ $datamachine->MACHINE_CODE }}" disabled >
 											</div>
 										</div>
 									</div>
@@ -117,13 +127,13 @@
 											<div class="col-md-8 col-lg-4">
 												<div class="form-group has-error">
 													<label for="MACHINE_MODEL">ชื่อเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="ชื่อเครื่อง" disabled>
+													<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL"  value="{{ $datamachine->MACHINE_NAME }}" disabled>
 												</div>
 											</div>
 											<div class="col-md-8 col-lg-4">
 												<div class="form-group has-error">
 													<label for="MACHINE_SERIAL">Line</label>
-													<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" placeholder="Serial" disabled>
+													<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" value="{{ $datamachine->MACHINE_LINE }}" disabled>
 												</div>
 											</div>
 									</div>
@@ -177,25 +187,27 @@
 															</div>
 																<div class="row">
 
-																	<div class="form-check col-md-8 col-lg-5 ml-4">
-																		@foreach ($dataset as $key => $dataitem)
-																			<label class="form-check-label" style="padding:5px">
-																				<input class="form-check-input" type="checkbox" value="{{ $dataitem->REPAIR_CODE }}">
-																				<span class="form-check-sign">{{ $dataitem->REPAIR_NAME }}</span>
-																			</label>
-																	@endforeach
+																	<div class="col-md-8 col-lg-3 ml-2">
+																		@for($i =1; $i < 4 ; $i++)
+																		<div class="form-check">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" value="">
+												<span class="form-check-sign">{{ $i }}</span>
+											</label>
+										</div>
+									@endfor
 																	</div>
 
-																	<div class="col-md-8 col-lg-3">
+																	<div class="col-md-8 col-lg-3 ml-2">
 																		<div class="form-group">
-    																	<label for="exampleFormControlTextarea1">รายละเอียดเพิ่มเติม</label>
-    																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+    																	<label for="exampleFormControlTextarea1">Example textarea</label>
+    																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
   																	</div>
 																	</div>
 
 																		<div class="col-md-8 col-lg-3 ">
 																			<div class="form-group">
-																				<label for="MACHINE_SERIAL">สถานะเครื่อง</label>
+																				<label for="MACHINE_SERIAL">สถานะ</label>
 
 																				<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" >
 																					<option value>--แสดงทั้งหมด--</option>
@@ -205,6 +217,8 @@
 																				</select>
 																			</div>
 																		</div>
+
+
 																	</div>
 																</div>
         											</div>
@@ -225,7 +239,7 @@
 
 
 
-@include('masterlayout\tab\modal\scanqrcode')
+
 
 
 
@@ -236,9 +250,6 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-	<script type="text/javascript" src="{{ asset('/js/java.js') }}">
-
-	</script>
 
 @stop
 {{-- ปิดส่วนjava --}}
