@@ -55,15 +55,16 @@
 
 									<input type="text" class="form-control" id="search" name="search" placeholder="กรอกรหัสเครื่อง / แสกนQR Code ที่นี้"></input>
 									{{-- <button type="submit" class="btn btn-primary btn-sm">search</button> --}}
-									
+
 								</div>
 							</div>
 							</div>
 							<div class="card-body">
-								<div class="row">
+								<div class="row" id='data'>
 
-									<div class="col-md-6 col-lg-3" id='data'>
-									</div>
+
+
+
 								</div>
 							</div>
 					</div>
@@ -73,25 +74,6 @@
 
 	</div>
 
-	{{-- <table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Product Name</th>
-				<th>Description</th>
-				<th>Price</th>
-			</tr>
-		</thead>
-		<tbody >
-
-		</tbody>
-	</table> --}}
-
-
-{{-- @include('masterlayout\tab\modal\scanqrcode') --}}
-
-
-
 
 
 @stop
@@ -99,7 +81,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-	<script type="text/javascript" src="{{ asset('/js/java.js') }}">
+	<script type="text/javascript" src="{{ asset('/js/serach/searchnewrepair.js') }}">
 
 	</script>
 	<script type="text/javascript">

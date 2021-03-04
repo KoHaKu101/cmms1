@@ -140,19 +140,21 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
   Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 //repair
 Route::get('machine/repair/repairlist'         ,[MachineRepairController::class,'Index'])  ->name('repair.list');
+  Route::get('machine/repair/repairlistserach'         ,[MachineRepairController::class,'Indexsearch'])  ->name('repair.listserach');
   Route::get('machine/repair/form/{MACHINE_CODE}'            ,[MachineRepairController::class,'Create']) ->name('repair.form');
   Route::get('machine/repair/repairsearch'            ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
-  // Route::post('machine/repair/search'            ,[MachineRepairController::class,'Search']) ;
+  // Route::get('machine/repair/emp'            ,[MachineRepairController::class,'Emp']) ;
+  Route::get('machine/repair/{EMP_NAME}', [MachineRepairController::class,'Emp'])->name('get.repair');
   Route::get('machine/repair/search' ,[MachineRepairController::class,'Search']) ;
   Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
-  Route::get('machine/repair/edit'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
+  Route::get('machine/repair/edit/{UNID}'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);
   Route::get('machine/repair/delete/{UNID}'   ,[MachineRepairController::class,'Delete']) ->name('repair.delete');
 //sparepart
 Route::get('machine/sparepart/sparepartlist'   ,[MachineSparePartController::class,'Index'])  ->name('sparepart.list');
   Route::get('machine/sparepart/form'            ,[MachineSparePartController::class,'Create']) ->name('sparepart.form');
   Route::post('machine/sparepart/store'          ,[MachineSparePartController::class,'Store'])  ->name('sparepart.store');
-  Route::get('machine/sparepart/edit'            ,[MachineSparePartController::class,'Edit'])   ->name('sparepart.edit');
+  Route::get('machine/sparepart/edit/'            ,[MachineSparePartController::class,'Edit'])   ->name('sparepart.edit');
   Route::post('machine/sparepart/update/{UNID}'  ,[MachineSparePartController::class,'Update']);
   Route::get('machine/sparepart/delete/{UNID}'   ,[MachineSparePartController::class,'Delete']) ->name('sparepart.delete');
 //stock

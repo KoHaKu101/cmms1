@@ -1,7 +1,10 @@
 @extends('masterlayout.masterlayout')
-@section('tittle','homepage')
+@section('tittle','แจ้งซ่อม')
+@section('meta')
+<meta name="_token" content="{{ csrf_token() }}">
+@endsection
 @section('css')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
+
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -62,7 +65,7 @@
 									<div class="card-header bg-primary form-inline ">
 											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
 												<div class="input-group ml-4">
-													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
+													<input type="text" id="serach"  name="serach" class="form-control form-control-sm">
 													<div class="input-group-prepend">
 														<button type="submit" class="btn btn-search pr-1 btn-xs	">
 															<i class="fa fa-search search-icon"></i>
@@ -75,8 +78,6 @@
                       <table class="display table table-striped table-hover">
                       	<thead class="thead-light">
                         	<tr>
-
-
                             <th scope="col">เลขที่เอกสาร</th>
                           	<th scope="col">รหัสเครื่อง</th>
                           	<th scope="col">ชื่อเครื่องจักร</th>
@@ -84,50 +85,42 @@
 														<th scope="col">วันที่เอกสาร</th>
 														<th scope="col">สถานะ</th>
 														<th scope="col" style=""></th>
-
                         	</tr>
                       	</thead>
 
                       	<tbody >
-													{{-- @foreach ($data_set as $key => $row) --}}
+													@foreach ($dataset as $key => $row)
                         		<tr>
 															<td style="width:200px">
-																<a href="{{ url('machine/repair/edit/') }}" class="btn btn-secondary btn-block btn-sm my-1 " style="width:180px;height:30px">
+																<a href="{{ route('repair.edit',[$row->UNID]) }}" class="btn btn-secondary btn-block btn-sm my-1 " style="width:180px;height:30px">
 																	<span class="btn-label float-left">
-																		<i class="fas fa-eye mx-1"></i>RE6402-0023
+																		<i class="fas fa-eye mx-1"></i>{{ $row->MACHINE_DOCNO }}
 																	</span>
 																</a>
 															</td>
-															<td >  				Mc-001		     </td>
-															<td >  				Tamaka		    </td>
-															<td >  				L1	    </td>
-															<td >      09-02-2021          </td>
-															<td >  				รอดำเนินการ	    </td>
+															<td >  				{{ $row->MACHINE_CODE }}		     </td>
+															<td >  				{{ $row->MACHINE_NAME }}		    </td>
+															<td >  				{{ $row->MACHINE_LOCATION }}	    </td>
+															<td >      		{{ $row->MACHINE_TIME }}          </td>
+															<td >  				{{ $row->MACHINE_TYPE == 'STOP' ? 'เครื่องหยุดทำงาน' : 'เครื่องทำงาน'}}	    </td>
 															<td >
-																<a href="{{ url('machine/assets/delete/') }}" class="ml-3">
+																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" class="ml-3">
 																	<span style="color: Tomato;">
 																		<i class="fas fa-trash fa-lg ml-2">	</i>
 																	</span>
 																</a>
 															</td>
                         			</tr>
-                        	{{-- @endforeach --}}
-
-
-
+                        	@endforeach
                       	</tbody>
                     </table>
-
-
-
+										<input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+										    <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
+										    <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
 									</div>
-
 										</div>
-										{{-- {{ $data_set->links('pagination.default',['paginator' => $data_set,
-					 'link_limit' => $data_set->perPage()]) }} --}}
-
 								</div>
-
+								{!! $dataset->links() !!}
 								</div>
               </div>
 
@@ -142,28 +135,16 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-{{-- <script>
-$(document).ready(function(){
-	var table = $('datatable').DataTable({
-			'processing' : true,
-			'serverSide' : true,
-			'ajax': "{{ route('machine.list') }}",
-			'column':[
-				{'data': 'MACHINE_LOCATION'},
-				{'data': 'MACHINE_NAME'},
-				{'data': 'MACHINE_CODE'}
-			],
-	});
+	<script type="text/javascript" src="{{ asset('/js/serach/serachrepair.js') }}">
 
-  $("#myInput").keyup (function() {
-		table.column($)
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script> --}}
+	</script>
+	<script type="text/javascript">
+	$.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
+	});
+	</script>
 
 
 @stop

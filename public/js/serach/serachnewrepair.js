@@ -17,7 +17,8 @@ $('#search').on('keyup',function(){
 
     $.each(res.dataset,function(prepairsearch,dataset){
 
-        _html+='<div class="card card-post card-round">'+
+        _html+='<div class="col-md-6 col-lg-3" >'+
+        '<div class="card card-post card-round">'+
         '<div class="card-header bg-primary text-white">'+
         '<center><h4 class="mt-1"><b> '+dataset.MACHINE_CODE+' </b></h4></center>'+
         '</div>'+
@@ -31,7 +32,8 @@ $('#search').on('keyup',function(){
         '</a>'+
         // '<input type="hidden" value="'+data.MACHINE_CODE+'">'+
         '</div>'+
-        '  </div>';
+        '</div>'+
+        '</div>';
     });
     $("#data").html(_html);
    }
@@ -44,29 +46,3 @@ $('#search').on('keyup',function(){
 console.log(code);
 });
 });
-
-
-
-
-
-
-
-// $(document).ready(function(){
-//
-//   $('#form').submit(function(e){
-//     e.preventDefault();
-//     data = $(this).serialize();
-//
-//     $.post('/machine/repair/search',data,function(Search){
-//       $('#data').html('');
-//       $.each(Search,function(key,val){
-//         $('#data').append(
-//           '<tr>'+
-//           '<td>'+ val.MACHINE_CODE+ '</td>'+
-//           '<td>'+ val.MACHINE_NAME+ '</td>'+
-//           '<tr>');
-//         });
-//       console.log(data);
-//       });
-//     });
-//   });

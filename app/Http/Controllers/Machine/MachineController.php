@@ -14,7 +14,7 @@ use App\Models\Machine\Protected;
 use App\Models\Machine\MachineUpload;
 use App\Models\Machine\MachineLine;
 use App\Models\Machine\MachineEMP;
-use App\Models\Machine\RepairResults;
+use App\Models\Machine\MachineRepair;
 use App\Models\MachineaddTable\MachineTypeTable;
 use App\Models\MachineAddTable\MachineStatusTable;
 //************** Package form github ***************
@@ -169,12 +169,12 @@ $request->MACHINE_STATUS = '9';
     $machineline = MachineLine::where('LINE_STATUS','=','9')->get();
     $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
     $machineemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
-    $repairresults = RepairResults::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
-                                    ->where('STATUS','=','5')
+    $machinerepair = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
+                                    ->where('STATUS','=','9')
                                     ->get();
 
     return view('machine/assets/edit',compact('dataset','machineupload','machineupload1'
-      ,'machineupload2','machinetype','machineline','machinestatus','machineemp','repairresults'));
+      ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
   public function Editback($UPLOAD_UNID_REF) {
 

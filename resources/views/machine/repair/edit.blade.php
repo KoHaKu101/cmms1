@@ -1,5 +1,9 @@
 @extends('masterlayout.masterlayout')
-@section('tittle','homepage')
+@section('tittle','แจ้งซ่อม')
+@section('meta')
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('css')
 
 @endsection
@@ -37,7 +41,7 @@
 								</a>
 							</div>
 							<div class="col-md-1 ">
-								<form action="" method="POST" enctype="multipart/form-data">
+								<form action="{{ url('machine/repair/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
 										<span class="fas fa-save fa-lg">	save	</span>
@@ -67,62 +71,58 @@
 										<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="MACHINE_CODE">เลขที่เอกสาร</label>
-												<?php
-												$number = date("ymdhis");
-
-												echo'<input type="text" class="form-control" id="" name="" placeholder="เลขที่เอกสาร"  value=RE-'.$number.' disabled> ';
-
-													?>
+												<label for="MACHINE_DOCNO">เลขที่เอกสาร</label>
+											<input type="text" class="form-control" id="MACHINE_DOCNO" name="MACHINE_DOCNO"value={{ $dataset->MACHINE_DOCNO }} readonly>
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
-												<select class="form-control">
+												<select class="form-control" id="EMP_NAME" name="EMP_NAME">
 													<option>พนักงาน</option>
-													<option value="ก">นาย ก</option>
-													<option value="ข">นาย ข</option>
+													@foreach ($dataemp as $key => $row)
+														<option value="{{$row->EMP_NAME}}"
+															{{ $dataset->EMP_NAME == $row->EMP_NAME ? 'selected' : ''}}>{{ $row->EMP_NAME }}</option>
+													@endforeach
+
+
 											</select>
 											</div>
 										</div>
 										<!-- ช่อง2-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="MACHINE_MANU">วันที่เอกสาร	</label>
-												<input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU"
-												<?php echo'value="'.date("Y-m-d").'"';?>disabled >
+												<label for="MACHINE_DOCDATE">วันที่เอกสาร	</label>
+												<input type="text" class="form-control" id="MACHINE_DOCDATE" name="MACHINE_DOCDATE"
+												value="{{ $dataset->MACHINE_DOCDATE }}"readonly >
 											</div>
 											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">รหัสพนักงาน	</label>
-												<select class="form-control">
-													<option value>รหัสพนักงาน</option>
-													<option >6000</option>
-													<option >5000</option>
-												</select>
+												<label for="EMP_CODE">รหัสพนักงาน	</label>
+												<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" value="{{ $dataset->EMP_CODE }}" readonly>
 											</div>
 										</div>
+											{{ csrf_field() }}
 										<!-- ช่อง3-->
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">เวลาแจ้งซ่อม	</label>
-												<?php echo '<input type="text" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value='.date("H:i:s").' disabled>'; ?>
+												<label for="MACHINE_TIME">เวลาแจ้งซ่อม	</label>
+											<input type="text" class="form-control" id="MACHINE_TIME" name="MACHINE_TIME" value={{ $dataset->MACHINE_TIME }} readonly>
 											</div>
 											<div class="form-group has-error">
-												<label for="MACHINE_PARTNO">รหัสเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" placeholder="รหัสเครื่อง" disabled >
+												<label for="MACHINE_CODE">รหัสเครื่อง</label>
+													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE}}" readonly >
 											</div>
 										</div>
 									</div>
 									<div class="row">
 											<div class="col-md-8 col-lg-4">
 												<div class="form-group has-error">
-													<label for="MACHINE_MODEL">ชื่อเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="ชื่อเครื่อง" disabled>
+													<label for="MACHINE_NAME">ชื่อเครื่อง</label>
+													<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME" value="{{ $dataset->MACHINE_NAME}}" readonly>
 												</div>
 											</div>
 											<div class="col-md-8 col-lg-4">
 												<div class="form-group has-error">
-													<label for="MACHINE_SERIAL">Line</label>
-													<input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" placeholder="Serial" disabled>
+													<label for="MACHINE_LOCATION">Line</label>
+													<input type="text" class="form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION" value="{{ $dataset->MACHINE_LOCATION }}" readonly>
 												</div>
 											</div>
 									</div>
@@ -145,9 +145,6 @@
     											border: none;
     											margin: 30px 2px 0;
 												}
-
-
-
 											</style>
 											<ul class="nav nav-pills justify-content-left mt--4">
   											<li>
@@ -176,30 +173,20 @@
 															</div>
 																<div class="row">
 
-																	<div class="form-check col-md-8 col-lg-5 ml-4">
-																		@foreach ($dataset as $key => $dataitem)
-																			<label class="form-check-label" style="padding:5px">
-																				<input class="form-check-input" type="checkbox" value="{{ $dataitem->REPAIR_CODE }}">
-																				<span class="form-check-sign">{{ $dataitem->REPAIR_NAME }}</span>
-																			</label>
-																	@endforeach
-																	</div>
-
 																	<div class="col-md-8 col-lg-3 ml-2">
 																		<div class="form-group">
-    																	<label for="exampleFormControlTextarea1">Example textarea</label>
-    																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+    																	<label for="MACHINE_CAUSE">Example textarea</label>
+    																	<textarea class="form-control" id="MACHINE_CAUSE" name="MACHINE_CAUSE" rows="4">{{ $dataset->MACHINE_CAUSE }}</textarea>
   																	</div>
 																	</div>
 
 																		<div class="col-md-8 col-lg-3 ">
 																			<div class="form-group">
 																				<label for="MACHINE_SERIAL">สถานะ</label>
-
-																				<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" >
-																					<option value>--แสดงทั้งหมด--</option>
-																					<option value="1">หยุดทำงาน</option>
-																					<option value="2">ทำงานปกติ</option>
+																				<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" >
+																					<option >--แสดงทั้งหมด--</option>
+																					<option value="STOP"{{$dataset->MACHINE_TYPE == 'STOP' ? 'selected' : ''}}>หยุดทำงาน</option>
+																					<option value="RUN"{{$dataset->MACHINE_TYPE == 'RUN' ? 'selected' : ''}}>ทำงานปกติ</option>
 
 																				</select>
 																			</div>
@@ -237,6 +224,33 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+	<script>
+    $('#EMP_NAME').change(function() {
+        var id = $(this).val();
+        var url = '{{ route("get.repair", ":EMP_NAME") }}';
+        urllink = url.replace(':EMP_NAME', id);
 
+        $.ajax({
+            url: urllink,
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+                if (response != null) {
+                    $('#EMP_CODE').val(response.EMP_CODE);
+										// console.log($('.epm'));
+									}
+            }
+						// console.log(success:);
+        });console.log(urllink);
+    });
+</script>
+
+	 <script type="text/javascript">
+	$.ajaxSetup({
+	  headers: {
+	    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	  }
+	});
+	</script>
 @stop
 {{-- ปิดส่วนjava --}}

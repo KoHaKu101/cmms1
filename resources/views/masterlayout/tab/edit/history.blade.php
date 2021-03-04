@@ -12,36 +12,36 @@
                 </th>
               </tr>
               <tr>
-                <th style="width:70px">
-                  NO.FIX
+                <th style="width:60px">
+                  NO.
                 </th>
-                <th style="width:100px">
+                <th style="width:130px">
                   Docno
                 </th>
                 <th style="width:100px" >
                   Docdate
                 </th>
-                <th>
+                <th style="width:100px">
                   User Name
                 </th>
-                <th>
-                  Time
+                <th style="width:100px">
+                  เวลา
                 </th>
                 <th>
-                  Description
-                </th>
+                  อาการเสีย
+                </th style="width:100px">
               </tr>
 
             </thead>
             <tbody>
-              @foreach ($repairresults as $key => $rowrepair)
+              @foreach ($machinerepair as $key => $rowrepair)
                 <tr>
-                  <td> {{ $key+1 }} </td>
-                  <td> {{ $rowrepair->DOCNO }} </td>
-                  <td> {{ $rowrepair->DOCDATE }} </td>
-                  <td> {{ $rowrepair->MODIFY_BY }} </td>
-                  <td> {{ $rowrepair->CREATE_TIME }} </td>
-                  <td> {{ $rowrepair->NOTE }} </td>
+                  <td style="width:60px"> {{ $key+1 }} </td>
+                  <td style="width:150px"> {{ $rowrepair->MACHINE_DOCNO }} </td>
+                  <td style="width:100px"> {{ $rowrepair->MACHINE_DOCDATE }} </td>
+                  <td style="width:100px"> {{ $rowrepair->EMP_NAME }} </td>
+                  <td style="width:100px"> {{ $rowrepair->CREATE_TIME }} </td>
+                  <td style="width:150px"> {{ $rowrepair->MACHINE_CAUSE }} </td>
                 </tr>
               @endforeach
 
