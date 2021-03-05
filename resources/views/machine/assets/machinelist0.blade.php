@@ -1,7 +1,11 @@
 @extends('masterlayout.masterlayout')
-@section('tittle','homepage')
+@section('tittle','Machine')
+@section('meta')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+@endsection
 @section('css')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
+
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -71,9 +75,9 @@
 									<div class="card-header bg-primary form-inline ">
 											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> เครื่องจักร </h4>
 												<div class="input-group ml-4">
-													<input type="text" id="search_text"  name="search_text"onkeyup="myFunction()" class="form-control form-control-sm">
+													<input type="text" id="serach"  name="serach" class="form-control form-control-sm">
 													<div class="input-group-prepend">
-														<button type="submit" class="btn btn-search pr-1 btn-xs	">
+														<button type="button" class="btn btn-search pr-1 btn-xs	">
 	              							<i class="fa fa-search search-icon"></i>
 	            							</button>
 													</div>
@@ -96,43 +100,17 @@
                       	</thead>
 
                       	<tbody >
-                          {{-- @php($i = 1) --}}
-													@foreach ($dataset as $key => $row)
 
-
-                        		<tr class="mt-4">
-															<td style="width:25px">
-																<center>{{ $key+1 }}</center>
-															</td>
-																<td style="width:170px;">
-																<a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
-																	<button type="button" class="btn btn-secondary btn-sm btn-block my-1" style="width:130px">
-																		<span class="float-left">
-																			<i class="fas fa-eye fa-lg  mx-1 mt-1"></i>{{ $row->MACHINE_CODE }}
-																		</span>
-																	</button>
-																</a>
-															</td>
-															<td >  {{ $row->MACHINE_LINE }}  </td>
-															<td >              {{ $row->MACHINE_NAME }}  </td>
-
-															<td style="white-space:nowrap">  	{{ $row->MACHINE_CHECK == '2' ? 'เครื่องทำงาน' : 'หยุดทำงาน'}}		</td>
-															<td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
-															<td style="width:100px;">
-																<a onclick="return confirm('ต้องการจำหน่ายเครื่อง {{ $row->MACHINE_CODE }} หรือมั้ย?')" href="{{ url('machine/assets/delete/'.$row->UNID) }}" >
-																	<button type="button" class="btn   btn-block btn-danger btn-sm my-1" style="width:150px">
-																		<i class="fab fa-btc fa-lg mx-1">	</i> จำหน่ายเครื่องจักร
-
-																	</button>
-																</a></td>
-                        			</tr>
-                        	@endforeach
+													@include('machine/assets/machinesearch')
                       	</tbody>
                     </table>
+										<input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+										<input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
+										<input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
 									</div>
 
 										</div>
-										{{ $dataset->links() }}
+							
 
 								</div>
 
@@ -150,28 +128,16 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-{{-- <script>
-$(document).ready(function(){
-	var table = $('datatable').DataTable({
-			'processing' : true,
-			'serverSide' : true,
-			'ajax': "{{ route('machine.list') }}",
-			'column':[
-				{'data': 'MACHINE_LOCATION'},
-				{'data': 'MACHINE_NAME'},
-				{'data': 'MACHINE_CODE'}
-			],
-	});
+	<script type="text/javascript" src="{{ asset('/js/serach/serachmachine.js') }}">
 
-  $("#myInput").keyup (function() {
-		table.column($)
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
+	</script>
+	<script type="text/javascript">
+	$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
 });
-</script> --}}
+	</script>
 
 
 @stop

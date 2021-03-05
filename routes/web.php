@@ -83,9 +83,6 @@ Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboa
 
 
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
-//serach
-Route::get('/search', [RepairSearchController::class,'search']);
-
 //Exportandimport
 Route::get('users/export', [MachineExportController::class,'export']);
 Route::get('users/import/show', [MachineImportController::class,'show']);
@@ -96,6 +93,7 @@ Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  
   Route::get('machine/assets/machinelist/{LINE_CODE}'     ,[MachineController::class,'Allline'])  ->name('machine.listline');
   Route::get('machine/assets/machinetype/{TYPE_CODE}'     ,[MachineController::class,'Alltype'])  ->name('machine.listtype');
   Route::get('machine/assets/machine'     ,[MachineController::class,'Index'])  ->name('machine');
+  Route::get('machine/assets/searchmachine'     ,[MachineController::class,'Indexserach'])  ->name('machine.search');
   Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
   Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
@@ -121,7 +119,7 @@ Route::get('machine/manual/manuallist'      ,[MachineManualController::class,'In
 
 //syscheck
 Route::get('machine/syscheck/syschecklist'    ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
-Route::get('machine/syscheck/syschecklist:/{LINE_CODE}'    ,[SysCheckController::class,'Indexline'])  ->name('syscheck.listline');
+  Route::get('machine/syscheck/syschecklist:/{LINE_CODE}'    ,[SysCheckController::class,'Indexline'])  ->name('syscheck.listline');
   Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
   Route::post('machine/syscheck/update/{UNID}'  ,[SysCheckController::class,'Update']);
   Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
@@ -140,13 +138,13 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
   Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 //repair
 Route::get('machine/repair/repairlist'         ,[MachineRepairController::class,'Index'])  ->name('repair.list');
-  Route::get('machine/repair/repairlistserach'         ,[MachineRepairController::class,'Indexsearch'])  ->name('repair.listserach');
+  Route::get('machine/repair/repairlistserach'         ,[MachineRepairController::class,'Indexserach'])  ->name('repair.listserach');
   Route::get('machine/repair/form/{MACHINE_CODE}'            ,[MachineRepairController::class,'Create']) ->name('repair.form');
   Route::get('machine/repair/repairsearch'            ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
-  // Route::get('machine/repair/emp'            ,[MachineRepairController::class,'Emp']) ;
   Route::get('machine/repair/{EMP_NAME}', [MachineRepairController::class,'Emp'])->name('get.repair');
   Route::get('machine/repair/search' ,[MachineRepairController::class,'Search']) ;
   Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
+  Route::post('machine/repair/notificaiton'          ,[MachineRepairController::class,'Notification'])  ->name('repair.notificaiton');
   Route::get('machine/repair/edit/{UNID}'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);
   Route::get('machine/repair/delete/{UNID}'   ,[MachineRepairController::class,'Delete']) ->name('repair.delete');

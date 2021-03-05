@@ -9,7 +9,7 @@ $('#search').on('keyup',function(){
    },
    dataType:'json',
    beforeSend:function(){
-     $("#data").html('<tr><td>ไม่พบข้อมูล </td></tr>')
+     $("#data").html('<tr><td> Loading ........... </td></tr>')
    },
    success:function(res){
    console.log(res);

@@ -167,8 +167,11 @@ return [
          */
          Elibyy\TCPDF\ServiceProvider::class,
          Maatwebsite\Excel\ExcelServiceProvider::class,
+         
          RealRashid\SweetAlert\SweetAlertServiceProvider::class,
          LaravelDaily\Invoices\InvoiceServiceProvider::class,
+
+
 
         /*
          * Application Service Providers...
@@ -235,7 +238,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class
+        'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class,
 
 
     ],

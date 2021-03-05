@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "5dmatweb/streamlab": "dev-master",
         "codedge/laravel-fpdf": "^1.7",
         "elibyy/tcpdf-laravel": "^8.0",
         "fideloper/proxy": "^4.4",

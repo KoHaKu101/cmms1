@@ -1,7 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','แจ้งซ่อม')
 @section('meta')
-<meta name="_token" content="{{ csrf_token() }}">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
 
@@ -65,7 +65,8 @@
 									<div class="card-header bg-primary form-inline ">
 											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
 												<div class="input-group ml-4">
-													<input type="text" id="serach"  name="serach" class="form-control form-control-sm">
+													<input type="text" name="serach" id="serach" class="form-control form-control-sm" placeholder="ค้นหา........." />
+
 													<div class="input-group-prepend">
 														<button type="submit" class="btn btn-search pr-1 btn-xs	">
 															<i class="fa fa-search search-icon"></i>
@@ -74,12 +75,12 @@
 												</div>
 									</div>
 									<div id="result"class="card-body">
-										<div class="table-responsive">
+										<div class="table-responsive" id="dynamic_content">
                       <table class="display table table-striped table-hover">
                       	<thead class="thead-light">
                         	<tr>
-                            <th scope="col">เลขที่เอกสาร</th>
-                          	<th scope="col">รหัสเครื่อง</th>
+                            <th scope="col">เลขที่เอกสาร </th>
+                          	<th scope="col">รหัสเครื่อง </th>
                           	<th scope="col">ชื่อเครื่องจักร</th>
 														<th scope="col">Line</th>
 														<th scope="col">วันที่เอกสาร</th>
@@ -89,38 +90,17 @@
                       	</thead>
 
                       	<tbody >
-													@foreach ($dataset as $key => $row)
-                        		<tr>
-															<td style="width:200px">
-																<a href="{{ route('repair.edit',[$row->UNID]) }}" class="btn btn-secondary btn-block btn-sm my-1 " style="width:180px;height:30px">
-																	<span class="btn-label float-left">
-																		<i class="fas fa-eye mx-1"></i>{{ $row->MACHINE_DOCNO }}
-																	</span>
-																</a>
-															</td>
-															<td >  				{{ $row->MACHINE_CODE }}		     </td>
-															<td >  				{{ $row->MACHINE_NAME }}		    </td>
-															<td >  				{{ $row->MACHINE_LOCATION }}	    </td>
-															<td >      		{{ $row->MACHINE_TIME }}          </td>
-															<td >  				{{ $row->MACHINE_TYPE == 'STOP' ? 'เครื่องหยุดทำงาน' : 'เครื่องทำงาน'}}	    </td>
-															<td >
-																<a href="{{ url('machine/assets/delete/'.$row->UNID) }}" class="ml-3">
-																	<span style="color: Tomato;">
-																		<i class="fas fa-trash fa-lg ml-2">	</i>
-																	</span>
-																</a>
-															</td>
-                        			</tr>
-                        	@endforeach
+													@include('machine/repair/searchrepair')
                       	</tbody>
                     </table>
-										<input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-										    <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
-										    <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
+
 									</div>
 										</div>
 								</div>
-								{!! $dataset->links() !!}
+								<input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+    						<input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
+    						<input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
+
 								</div>
               </div>
 

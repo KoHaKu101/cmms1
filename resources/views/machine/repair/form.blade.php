@@ -48,7 +48,7 @@
 								</a>
 							</div>
 							<div class="col-md-1 ml-5">
-								<form action="{{url('machine/repair/store')}}" method="POST" enctype="multipart/form-data">
+								<form action="{{url('machine/repair/store')}}" method="POST" enctype="multipart/form-data" id='messagerepair'>
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
 										<span class="fas fa-file-medical fa-lg	">	Save	</span>
@@ -264,6 +264,40 @@
 	    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	  }
 	});
+	</script>
+	<script>
+		$(document).ready(function(){
+
+			function showUnreadNotification(option=''){
+				$.ajax({
+					url:'/machine/repair/notificaiton',
+					method:'POST',
+					data: {option:option},
+					dataType:'json',
+					success:function(data){
+						$('.dropdown-menu').html(data.notificaiton);
+						if(data.unreadNotification > 0){
+							$('.count').html(data.unreadNotification);
+						}
+
+					}
+				});
+			}
+			showUnreadNotification();
+
+			$('.messagerepair').on('submit',function(event){
+				event.preventDefault();
+				var formData = $(this).serialize();
+				 $.ajax({
+					 url:'/machine/repair/store',
+					 method:'POST',
+					 data: formData,
+					 success:function(data){
+
+					 }
+				 });
+			});
+		});
 	</script>
 @stop
 {{-- ปิดส่วนjava --}}

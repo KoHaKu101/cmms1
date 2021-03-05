@@ -49,6 +49,21 @@ class MachineController extends Controller
     $dataset = MachineLine::all();
     return View('machine/assets/machinelist',compact(['dataset']),['dataset' => $dataset]);
   }
+  public function Indexserach(Request $request){
+
+    if($request->ajax())
+  {
+         $querydata = $request->get('query');
+         $query = str_replace(" ", "%", $querydata);
+   $dataset = DB::table('PMCS_MACHINES')
+                 ->where('MACHINE_CODE', 'like', '%'.$query.'%')
+                 ->orWhere('MACHINE_LINE', 'like', '%'.$query.'%')
+                 ->orWhere('MACHINE_NAME', 'like', '%'.$query.'%')
+                 ->paginate(10);
+   return view('machine/assets/machinesearch', compact('dataset'))->render();
+  }
+}
+
   public function All(){
     $dataset = Machine::paginate(10);
     return View('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);

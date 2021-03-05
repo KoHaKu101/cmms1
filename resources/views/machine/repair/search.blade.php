@@ -1,7 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('meta')
-{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
-<meta name="_token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+{{-- <meta name="_token" content="{{ csrf_token() }}"> --}}
 @endsection
 @section('tittle','homepage')
 @section('css')
@@ -61,10 +61,6 @@
 							</div>
 							<div class="card-body">
 								<div class="row" id='data'>
-
-
-
-
 								</div>
 							</div>
 					</div>
@@ -81,7 +77,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-	<script type="text/javascript" src="{{ asset('/js/serach/searchnewrepair.js') }}">
+	<script type="text/javascript" src="{{ asset('/js/serach/serachnewrepair.js') }}">
 
 	</script>
 	<script type="text/javascript">
