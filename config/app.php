@@ -167,7 +167,7 @@ return [
          */
          Elibyy\TCPDF\ServiceProvider::class,
          Maatwebsite\Excel\ExcelServiceProvider::class,
-         
+
          RealRashid\SweetAlert\SweetAlertServiceProvider::class,
          LaravelDaily\Invoices\InvoiceServiceProvider::class,
 
@@ -178,7 +178,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,

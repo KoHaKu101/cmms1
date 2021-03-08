@@ -242,7 +242,6 @@
         var id = $(this).val();
         var url = '{{ route("get.repair", ":EMP_NAME") }}';
         urllink = url.replace(':EMP_NAME', id);
-
         $.ajax({
             url: urllink,
             type: 'get',
@@ -265,39 +264,6 @@
 	  }
 	});
 	</script>
-	<script>
-		$(document).ready(function(){
 
-			function showUnreadNotification(option=''){
-				$.ajax({
-					url:'/machine/repair/notificaiton',
-					method:'POST',
-					data: {option:option},
-					dataType:'json',
-					success:function(data){
-						$('.dropdown-menu').html(data.notificaiton);
-						if(data.unreadNotification > 0){
-							$('.count').html(data.unreadNotification);
-						}
-
-					}
-				});
-			}
-			showUnreadNotification();
-
-			$('.messagerepair').on('submit',function(event){
-				event.preventDefault();
-				var formData = $(this).serialize();
-				 $.ajax({
-					 url:'/machine/repair/store',
-					 method:'POST',
-					 data: formData,
-					 success:function(data){
-
-					 }
-				 });
-			});
-		});
-	</script>
 @stop
 {{-- ปิดส่วนjava --}}

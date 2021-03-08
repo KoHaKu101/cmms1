@@ -57,7 +57,7 @@ use App\Models\SettingMenu\Menusubitem;
 Route::get('/', function () {
     return view('auth/login');
 });
-Route::get('/machine/repair/pdf', 'App\Http\Controllers\PDF\TsetController@HtmlToPDF');
+Route::get('/machine/repair/pdf', 'App\Http\Controllers\PDF\MachineRepairPDFController@HtmlToPDF');
 
 
 
@@ -81,7 +81,8 @@ Route::get('/machine/dashboard',[DashboardController::class,'Dashboard'])->name(
 Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard');
 
 
-
+Route::get('machine/repair/notificaiton' ,[DashboardController::class,'Notification']);
+Route::get('machine/repair/notificaitoncount' ,[DashboardController::class,'NotificationCount'])  ->name('repair.notificaitoncount');
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
 //Exportandimport
 Route::get('users/export', [MachineExportController::class,'export']);
@@ -144,7 +145,7 @@ Route::get('machine/repair/repairlist'         ,[MachineRepairController::class,
   Route::get('machine/repair/{EMP_NAME}', [MachineRepairController::class,'Emp'])->name('get.repair');
   Route::get('machine/repair/search' ,[MachineRepairController::class,'Search']) ;
   Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
-  Route::post('machine/repair/notificaiton'          ,[MachineRepairController::class,'Notification'])  ->name('repair.notificaiton');
+
   Route::get('machine/repair/edit/{UNID}'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);
   Route::get('machine/repair/delete/{UNID}'   ,[MachineRepairController::class,'Delete']) ->name('repair.delete');

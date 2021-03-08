@@ -50,7 +50,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องจักรทั้งหมด</p>
-											<h4 class="card-title">{{$data_setall}}</h4>
+											<h4 class="card-title">{{$dataset}}</h4>
 										</div>
 									</div>
 								</div>
@@ -70,7 +70,7 @@
 										<div class="numbers">
 											<p class="card-category">เครื่องเปิดใช้งาน</p>
 
-											<h4 class="card-title">{{$data_check}}</h4>
+											<h4 class="card-title">{{$dataprocess}}</h4>
 										</div>
 									</div>
 								</div>
@@ -89,7 +89,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องรอขึ้นงาน</p>
-											<h4 class="card-title">{{$data_nocheck}}</h4>
+											<h4 class="card-title">{{$datawait}}</h4>
 										</div>
 									</div>
 								</div>
@@ -108,7 +108,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องแจ้งซ่อม</p>
-											<h4 class="card-title"></h4>
+											<h4 class="card-title"> {{ $datarepair }}</h4>
 										</div>
 									</div>
 								</div>
@@ -173,21 +173,27 @@
 								</div>
 								<div class="card-body">
 
-									@foreach($data_set as $dataitem)
+									@foreach($datarepairlist as $dataitem)
 										{{-- @for($i = 1; $i < 9-$data_set ; $i++) --}}
-									<div class="d-flex">
+										<div class="row">
+									<div class="d-flex col-md-6 col-lg-1">
 										<input type="hidden" value="1">
 										<div class="avatar avatar-online">
-											<span class="avatar-title rounded-circle border border-white bg-info">J</span>
+											<span class="avatar-title rounded-circle border border-white bg-danger" style="width:50px"><i class="fa fa-wrench"></i></span>
 										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h4 class="text-uppercase fw-bold mb-1">{{$dataitem->MACHINE_CODE}} <span class="text-success pl-3">ทำงานปกติ</span></h4>
 
-											<span class="text-muted">มอเตอร์เสีย</span>
-										</div>
-										<div class="float-right pt-1">
-											<h5 class="text-muted">{{$dataitem->CREATE_TIME}}</h5>
-										</div>
+
+									</div>
+									<div class="flex-1 ml-3 pt-1 col-md-6 col-lg-7">
+										<h4 class="text-uppercase fw-bold mb-1">{{$dataitem->MACHINE_CODE}}
+										<span class="text-success pl-3">	{{$dataitem->MACHINE_TYPE == 'RUN' ? 'ทำงานปกติ' : 'หยุดทำงาน'}}
+										</span></h4>
+
+										<span class="text-muted" >{{ $dataitem->MACHINE_CAUSE }}</span>
+									</div>
+									<div class="float-right pt-1 col-md-6 col-lg-3">
+										<h5 class="text-muted">{{$dataitem->MACHINE_DOCDATE}}</h5>
+									</div>
 									</div>
 									<hr>
 									{{-- @endfor --}}
@@ -203,7 +209,7 @@
 							</div>
 							<div class="card-body">
 								<div class="chart-container">
-									<div id="repair" style="width: 740px;height:350px;"></div>
+									<div id="repair" style="width: 650px;height:350px;"></div>
 								</div>
 							</div>
 						</div>
@@ -215,7 +221,7 @@
 							</div>
 							<div class="card-body">
 								<div class="chart-container">
-									<div id="price" style="width: 740px;height:350px;"></div>
+									<div id="price" style="width: 650px;height:350px;"></div>
 								</div>
 							</div>
 						</div>
@@ -260,247 +266,99 @@
 <script src="{{asset('/assets/js/plugin/chart.js/chart.min.js')}}"></script>
 <script src="{{asset('/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
 	{{-- แจ้งซ่อมแต่ล่ะLine--}}
-<script type="text/javascript">
-
-	var chartDom = document.getElementById('repair');
-	var myChart = echarts.init(chartDom);
-	var option;
-	option = {
-		legend: {show: true,textStyle: {
-      fontSize: 14
-    }},
-		tooltip: {},
-		dataset: {
-			source: [
-			['product', 'Line1', 'Line2', 'Line3','Line4', 'Line5', 'Line6'],
-			['แจ้งซ่อมในแต่ล่ะ LINE', 43.3, 85.8, 93.7,43.3, 85.8, 93.7],
-		]
-	},
-	xAxis: {type: 'category'},
-	yAxis: {},
-	// Declare several bar series, each will be mapped
-	// to a column of dataset.source by default.
-	series: [
-		{type: 'bar',color: '#14BAFD',
-		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
-		{type: 'bar',color: '#FF944F',
-		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
-		{type: 'bar',color: '#BAFF4F',
-		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
-		{type: 'bar',color: '#FF4F4F',
-		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
-		{type: 'bar',color: '#FF4FCF',
-		label: {position: "top",show: true,fontSize: 16,color: 'black'},},
-		{type: 'bar',color: '#4F62FF',
-		label: {position: "top",show: true,fontSize: 16,color: 'black'},}
-	]
-	};
-	option && myChart.setOption(option);
-
-</script>
+<script type="text/javascript" src="{{ asset('/js/dashboard/repair.js') }}">
+	</script>
 	{{-- ค่าใช้จ่าย--}}
-<script type="text/javascript">
-	var chartDom1 = document.getElementById('price');
-	var myChart1 = echarts.init(chartDom1,);
-	var option;
-	var dataAxis = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-	var data1 = [300, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-	var yMax = 500;
-	var dataShadow = [];
-	for (var i = 0; i < data.length; i++) {	dataShadow.push(yMax);
-	}
-	option = {
-		legend: {show: true,textStyle: {
-			fontSize: 14
-		},data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
-		},
-		title: {
-				text: 'ค่าซ่อมประจำเดือน',
-
-		},
-		xAxis: {
-				data: dataAxis,
-				axisLabel: {
-						inside: false,
-						textStyle: {
-								color: 'black'
-						}
-				},
-				axisTick: {
-						show: false
-				},
-				axisLine: {
-						show: false
-				},
-				z: 10
-		},
-		yAxis: {
-				axisLine: {
-						show: false
-				},
-				axisTick: {
-						show: false
-				},
-				axisLabel: {
-						textStyle: {
-								color: 'black'
-						}
-				}
-		},
-
-		series: [
-				{
-						name: 'ค่าอะไหล่',
-						type: 'bar',
-
-						itemStyle: {
-								color: new echarts.graphic.LinearGradient(
-										0, 0, 0, 1,
-										[
-												{offset: 0, color: '#83bff6'},
-												{offset: 0.5, color: '#188df0'},
-												{offset: 1, color: '#188df0'}
-										]
-								)
-						},
-
-						emphasis: {
-								itemStyle: {
-										color: new echarts.graphic.LinearGradient(
-												0, 0, 0, 1,
-												[
-														{offset: 0, color: '#2378f7'},
-														{offset: 0.7, color: '#2378f7'},
-														{offset: 1, color: '#83bff6'}
-												]
-										)
-								}
-						},
-
-						data: data
-
-				},
-				{
-						name: 'ค่าจ้าง SubContaine',
-						type: 'bar',
-
-						itemStyle: {
-								color: new echarts.graphic.LinearGradient(
-										0, 0, 0, 1,
-										[
-												{offset: 0, color: '#FF9595'},
-												{offset: 0.5, color: '#FF5656'},
-												{offset: 1, color: '#FF1616'}
-										]
-								)
-						},
-						 emphasis: {
-								itemStyle: {
-										color: new echarts.graphic.LinearGradient(
-												0, 0, 0, 1,
-												[
-														{offset: 0, color: '#FF1616'},
-														{offset: 0.7, color: '#FF5656'},
-														{offset: 1, color: '#FF9595'}
-												]
-										)
-								}
-						},
-
-						data : data1
-				}
-		],
-
-	};
-	option && myChart1.setOption(option);
-
-</script>
-<script>
+<script type="text/javascript" src="{{ asset('/js/dashboard/repairpay.js') }}">
+	</script>
+<script type="text/javascript" >
 	Circles.create({
-		id:'circles-1',
-		radius:45,
-		value:{{$data_line1}},
-		maxValue:500,
-		width:10,
-		text: {{$data_line1}},
-		colors:['#585963', '#14BAFD'],
-		duration:400,
-		wrpClass:'circles-wrp',
-		textClass:'circles-text',
-		styleWrapper:true,
-		styleText:true
+	  id:'circles-1',
+	  radius:45,
+	  value:{{$data_line1}},
+	  maxValue:500,
+	  width:10,
+	  text: {{$data_line1}},
+	  colors:['#585963', '#14BAFD'],
+	  duration:400,
+	  wrpClass:'circles-wrp',
+	  textClass:'circles-text',
+	  styleWrapper:true,
+	  styleText:true
 	})
 	Circles.create({
-		id:'circles-2',
-		radius:45,
-		value:{{$data_line2}},
-		maxValue:500,
-		width:10,
-		text: {{$data_line2}},
-		colors:['#585963', '#FF944F'],
-		duration:400,
-		wrpClass:'circles-wrp',
-		textClass:'circles-text',
-		styleWrapper:true,
-		styleText:true
+	  id:'circles-2',
+	  radius:45,
+	  value:{{$data_line2}},
+	  maxValue:500,
+	  width:10,
+	  text: {{$data_line2}},
+	  colors:['#585963', '#FF944F'],
+	  duration:400,
+	  wrpClass:'circles-wrp',
+	  textClass:'circles-text',
+	  styleWrapper:true,
+	  styleText:true
 	})
 	Circles.create({
-		id:'circles-3',
-		radius:45,
-		value:{{$data_line3}},
-		maxValue:500,
-		width:10,
-		text: {{$data_line3}},
-		colors:['#585963', '#BAFF4F'],
-		duration:400,
-		wrpClass:'circles-wrp',
-		textClass:'circles-text',
-		styleWrapper:true,
-		styleText:true
+	  id:'circles-3',
+	  radius:45,
+	  value:{{$data_line3}},
+	  maxValue:500,
+	  width:10,
+	  text: {{$data_line3}},
+	  colors:['#585963', '#BAFF4F'],
+	  duration:400,
+	  wrpClass:'circles-wrp',
+	  textClass:'circles-text',
+	  styleWrapper:true,
+	  styleText:true
 	})
 	Circles.create({
-		id:'circles-4',
-		radius:45,
-		value:{{$data_line4}},
-		maxValue:500,
-		width:10,
-		text: {{$data_line4}},
-		colors:['#585963', '#FF4F4F'],
-		duration:400,
-		wrpClass:'circles-wrp',
-		textClass:'circles-text',
-		styleWrapper:true,
-		styleText:true
+	  id:'circles-4',
+	  radius:45,
+	  value:{{$data_line4}},
+	  maxValue:500,
+	  width:10,
+	  text: {{$data_line4}},
+	  colors:['#585963', '#FF4F4F'],
+	  duration:400,
+	  wrpClass:'circles-wrp',
+	  textClass:'circles-text',
+	  styleWrapper:true,
+	  styleText:true
 	})
 	Circles.create({
-		id:'circles-5',
-		radius:45,
-		value:{{$data_line5}},
-		maxValue:500,
-		width:10,
-		text: {{$data_line5}},
-		colors:['#585963', '#FF4FCF'],
-		duration:400,
-		wrpClass:'circles-wrp',
-		textClass:'circles-text',
-		styleWrapper:true,
-		styleText:true
+	  id:'circles-5',
+	  radius:45,
+	  value:{{$data_line5}},
+	  maxValue:500,
+	  width:10,
+	  text: {{$data_line5}},
+	  colors:['#585963', '#FF4FCF'],
+	  duration:400,
+	  wrpClass:'circles-wrp',
+	  textClass:'circles-text',
+	  styleWrapper:true,
+	  styleText:true
 	})
 	Circles.create({
-		id:'circles-6',
-		radius:45,
-		value:{{$data_line6}},
-		maxValue:500,
-		width:10,
-		text: {{$data_line6}},
-		colors:['#585963', '#4F62FF'],
-		duration:400,
-		wrpClass:'circles-wrp',
-		textClass:'circles-text',
-		styleWrapper:true,
-		styleText:true
+	  id:'circles-6',
+	  radius:45,
+	  value:{{$data_line6}},
+	  maxValue:500,
+	  width:10,
+	  text: {{$data_line6}},
+	  colors:['#585963', '#4F62FF'],
+	  duration:400,
+	  wrpClass:'circles-wrp',
+	  textClass:'circles-text',
+	  styleWrapper:true,
+	  styleText:true
 	})
-</script>
+
+	</script>
+
+
 @stop
 {{-- ปิดส่วนjava --}}

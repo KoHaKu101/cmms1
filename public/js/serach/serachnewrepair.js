@@ -1,7 +1,7 @@
 $(document).ready(function(){
 $('#search').on('keyup',function(){
  var code =$(this).val();
- if(code.length>=3){
+ if(code.length>=2){
    $.ajax({
    url : '/machine/repair/search',
    data:{
@@ -12,7 +12,7 @@ $('#search').on('keyup',function(){
      $("#data").html('<tr><td> Loading ........... </td></tr>')
    },
    success:function(res){
-   console.log(res);
+   // console.log(res);
     var _html='';
 
     $.each(res.dataset,function(prepairsearch,dataset){

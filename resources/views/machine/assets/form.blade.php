@@ -154,8 +154,7 @@
 												@include('masterlayout.tab.history')
 												<!-- แผนการปฎิบัติการ -->
   											@include('masterlayout.tab.plan')
-												<!-- พนักงานประจำเครื่อง -->
-												@include('masterlayout.tab.personal')
+
 
 									</div>
 								</div>
@@ -168,10 +167,6 @@
 	</div>
 </div>
 
-@include('masterlayout.tab.modal.systemcheck.systemcheck')
-@include('masterlayout.tab.modal.systemcheck.systemcheckedit')
-@include('masterlayout.tab.modal.partchange.partchange')
-@include('masterlayout.tab.modal.partchange.partchangeedit')
 
 
 

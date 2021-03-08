@@ -206,46 +206,5 @@ class MachineRepairController extends Controller
                 ]);
               return Redirect()->back()-> with('success','ซ่อนเอกสารเสำเร็จ ');
           }
-  public function Notification(Request $request){
 
-    if ($request->has('option')) {
-      $NOTIFICATION = '1';
-      $data_set = MachineRepair::where('NOTIFICATION_STATUS','=','')->update([
-        'NOTIFICATION_STATUS' => $NOTIFICATION,
-      ]);
-    }
-    // MachineRepair::orderBy('UNID','DESC')->get()->count();
-    $query = DB::table('PMCS_REPAIR_MACHINE')->orderBy('UNID','desc')->take(3)->count();
-    $result = $query;
-    $output = "";
-    if ($query > 0) {
-      while($row = $query){
-        $output .='
-        <a href="#">
-          <div class="notif-icon notif-danger"> <i class="">J</i> </div>
-          <div class="notif-content">
-            <span class="block">  '.$row['MACHINE_CODE'].' LINE:'.$row['MACHINE_LOCATION'].'  </span>
-            <span class="block">  '.$row['MACHINE_CAUSE'].'  </span>
-            <span class="time">'.$row['MACHINE_TIME'].'</span>
-          </div>
-        </a>';
-
-      }
-    }else {
-      $output .='
-      <a href="#">
-        <div class="notif-content">
-          <span class="block"> รายการแจ้งซ่อม 0 รายการ </span>
-        </div>
-      </a>';
-    }
-    $status_query = MachineRepair::where('NOTIFICATION_STATUS','=','0')->get();
-    $result_query = MachineRepair::where('NOTIFICATION_STATUS','=',$status_query)->get();
-    $count = mysqli_num_rows($result_query);
-    $data = array(
-      'notification' => $output,
-      'unreadNotification' => $count,
-    );
-    echo json_encode($data);
-  }
 }

@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "5dmatweb/streamlab": "dev-master",
+        "beyondcode/laravel-websockets": "^1.11",
         "codedge/laravel-fpdf": "^1.7",
         "elibyy/tcpdf-laravel": "^8.0",
         "fideloper/proxy": "^4.4",
@@ -26,6 +27,7 @@
         "nesbot/carbon": "^2.44",
         "phpoffice/phpspreadsheet": "^1.16",
         "phpoffice/phpword": "^0.18.0",
+        "pusher/pusher-php-server": "~4.0",
         "realrashid/sweet-alert": "^3.2",
         "spatie/laravel-query-builder": "^3.3",
         "tecnickcom/tc-lib-pdf": "^8.0"

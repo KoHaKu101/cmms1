@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
 	@yield('meta')
 	<title>@yield('tittle')</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
@@ -46,40 +47,32 @@
 
 	</div>
 	<!--   Core JS Files   -->
-	<script type="text/javascript" src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/core/jquery.3.2.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/core/popper.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/core/bootstrap.min.js') }}"></script>
 
 	<!-- jQuery UI -->
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
 
 	<!-- jQuery Scrollbar -->
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
-
-
+	<script type="text/javascript" src="{{ asset('/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
 
 
 	<!-- jQuery Sparkline -->
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
 
 
 	<!-- Datatables -->
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
-	<!-- Bootstrap Notify -->
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 
-	<!-- jQuery Vector Maps -->
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/js/dashboard/notifity.js') }}">
 
-	<!-- Sweet Alert -->
-		{{-- <script type="text/javascript" src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script> --}}
-	{{-- <script type="text/javascript" src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script> --}}
+	</script>
 
-	<!-- Atlantis JS -->
+
 	<script type="text/javascript" src="{{ asset('assets/js/atlantis.min.js') }}"></script>
 		@include('sweetalert::alert')
 
