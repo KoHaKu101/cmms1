@@ -37,7 +37,7 @@ class MachineRepairController extends Controller
   }
   public function Index(){
 
-    $dataset = MachineRepair::paginate(10);
+    $dataset = MachineRepair::orderBy('MACHINE_DOCDATE','DESC')->paginate(10);
     //dd($data_set);
     return View('machine/repair/repairlist',compact('dataset'));
   }
@@ -45,13 +45,15 @@ class MachineRepairController extends Controller
 
     if($request->ajax())
     {
-
          $querydata = $request->get('query');
          $query = str_replace(" ", "%", $querydata);
          $dataset = DB::table('PMCS_REPAIR_MACHINE')
                  ->where('MACHINE_CODE', 'like', '%'.$query.'%')
                  ->orWhere('MACHINE_LOCATION', 'like', '%'.$query.'%')
                  ->orWhere('MACHINE_NAME', 'like', '%'.$query.'%')
+                 // ->orWhere('MACHINE_DOCNO', 'like', '%'.$query.'%')
+                 // ->orWhere('MACHINE_DOCDATE', 'like', '%'.$query.'%')
+
                  // ->orderBy($sort_by, $sort_type)
                  ->paginate(10);
    return view('machine/repair/searchrepair', compact('dataset'))->render();
@@ -85,12 +87,24 @@ class MachineRepairController extends Controller
     return response()->json($data);
   }
   public function Store(Request $request){
+
+    $machinedocno = MachineRepair::where('MACHINE_DOCNO','=',$request->MACHINE_DOCNO)->first();
+    if ($machinedocno) {
+      $request->MACHINE_DOCNO = 'RE-'.rand(100,500).date('ymdhis');;
+      // code...
+    }else {
+      $request->MACHINE_DOCNO = $request->MACHINE_DOCNO;
+    }
+
     if(!empty($request->MACHINE_NOTE)){
       // $arraymachinerepair = array($request->MACHINE_REPAIR);
       $machinerepair = implode(",",$request->MACHINE_NOTE);
-      $array = array($machinerepair,$request->machinerepair);
+      $array = array($machinerepair,$request->MACHINE_CAUSE);
       $machinecause = implode(",",$array);
+    }else {
+      $machinerepair = $request->MACHINE_NOTE;
     }
+    $request->CLOSE_STATUS = '9';
     MachineRepair::insert([
         'MACHINE_DOCNO'         => $request->MACHINE_DOCNO,
         'MACHINE_DOCDATE'       => $request->MACHINE_DOCDATE,
@@ -150,6 +164,7 @@ class MachineRepairController extends Controller
 
   }
   public function Update(Request $request,$UNID){
+    $request->CLOSE_STATUS = '9';
     $data_set = MachineRepair::where('UNID','=',$UNID)->update([
           'MACHINE_DOCNO'         => $request->MACHINE_DOCNO,
           'MACHINE_DOCDATE'       => $request->MACHINE_DOCDATE,
@@ -194,17 +209,17 @@ class MachineRepairController extends Controller
           'MODIFY_BY'             => Auth::user()->name,
           'MODIFY_TIME'           => Carbon::now(),
       ]);
-            return Redirect()->route('repair.list')->with('success','อัพเดทรายการ สำเร็จ');
+            return Redirect()->route('repair.edit',[$UNID])->with('success','อัพเดทรายการ สำเร็จ');
           }
-          public function Delete($UNID){
-            $STATUS = '1';
-              $data_set = Machine::where('UNID',$UNID)->update([
-                      'STATUS'          => $STATUS,
+  public function Delete($UNID){
+            $CLOSE_STATUS = '1';
+              $data_set = MachineRepair::where('UNID',$UNID)->update([
+                      'CLOSE_STATUS'          => $CLOSE_STATUS,
 
                 'MODIFY_BY'            => Auth::user()->name,
                 'MODIFY_TIME'          => Carbon::now(),
                 ]);
-              return Redirect()->back()-> with('success','ซ่อนเอกสารเสำเร็จ ');
+              return Redirect()->back()-> with('success','ปิดเอกสารเสำเร็จ ');
           }
 
 }

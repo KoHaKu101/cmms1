@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Codedge\Fpdf\Fpdf\Fpdf;
 
-class Pdf extends Fpdf
+class PdfRepair extends Fpdf
 {
   function Header()
 {
@@ -61,7 +61,7 @@ function Footer()
       $this->SetX(180);
       $this->SetFont('THSarabunNew','',13);
       $this->Cell(1, 8, iconv('UTF-8', 'cp874', 'FM-MA-05 REV.4:15 Aug 18'),0,0,'C');
-      
+
     // Page number
     // $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
   }

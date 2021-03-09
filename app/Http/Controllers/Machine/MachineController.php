@@ -50,9 +50,8 @@ class MachineController extends Controller
     return View('machine/assets/machinelist',compact(['dataset']),['dataset' => $dataset]);
   }
   public function Indexserach(Request $request){
-
     if($request->ajax())
-  {
+    {
          $querydata = $request->get('query');
          $query = str_replace(" ", "%", $querydata);
    $dataset = DB::table('PMCS_MACHINES')
@@ -61,8 +60,8 @@ class MachineController extends Controller
                  ->orWhere('MACHINE_NAME', 'like', '%'.$query.'%')
                  ->paginate(10);
    return view('machine/assets/machinesearch', compact('dataset'))->render();
+    }
   }
-}
 
   public function All(){
     $dataset = Machine::paginate(10);
@@ -95,8 +94,8 @@ class MachineController extends Controller
       'MACHINE_CODE.unique'    => 'มีรหัสเครื่องแล้ว'
       ]);
 
-  if ($request->hasFile('MACHINE_ICON')) {
-    if ($request->file('MACHINE_ICON')->isValid()) {
+      if ($request->hasFile('MACHINE_ICON')) {
+        if ($request->file('MACHINE_ICON')->isValid()) {
 
          // $filenamemaster = uniqid()."_".basename($request->file('MACHINE_ICON')->getClientOriginalName());
         $MACHINE_ICON = $request->file('MACHINE_ICON');
@@ -106,12 +105,12 @@ class MachineController extends Controller
         $up_location = 'image/machine/';
         $last_img = $up_location.$img_name;
         $MACHINE_ICON->move($up_location,$img_name);;
-    }
-} else {
-    $last_img = "";
-}
-  $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
-$request->MACHINE_STATUS = '9';
+        }
+      } else {
+        $last_img = "";
+      }
+      $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
+      $request->MACHINE_STATUS = '9';
       Machine::insert([
           'MACHINE_CODE'         => $MACHINE_CODE,
           'MACHINE_NAME'         => $request->MACHINE_NAME,
@@ -174,7 +173,6 @@ $request->MACHINE_STATUS = '9';
       return Redirect()->route('machine.list',compact(['data_set']))->with('success','ลงทะเบียน สำเร็จ');
   }
 
-
   public function Edit($UNID) {
 
     $dataset = Machine::where('UNID',$UNID)->first();
@@ -204,8 +202,6 @@ $request->MACHINE_STATUS = '9';
     return view('machine/assets/edit',compact('dataset','machineupload','machineupload1'
       ,'machineupload2','machinetype','machineline','machinestatus','machineemp'));
   }
-
-
   public function Update(Request $request,$UNID){
     $update = $request->MACHINE_UPDATE;
     if ($request->hasFile('MACHINE_ICON')) {
@@ -302,9 +298,6 @@ $request->MACHINE_STATUS = '9';
   }
 
 
-  public function Logout(){
-      Auth::logout();
-      return Redirect()->route('login')->with('success','User Logout');
-  }
+
 
 }

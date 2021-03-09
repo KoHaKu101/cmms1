@@ -35,23 +35,18 @@
 							<div class="col-md-12 gx-4">
 								<a href="{{ route('machine') }}">
 									<button class="btn btn-warning  btn-xs ">
-										<span class="fas fa-arrow-left fa-lg">Back </span>
+										<span class="fas fa-arrow-left fa-lg"> Back </span>
 									</button>
 								</a>
 								<a href="{{ route('machine.form') }}"><button class="btn btn-primary  btn-xs">
 									<span class="fas fa-file fa-lg">	New	</span>
 								</button></a>
-								<a href="{{ url('users/import/show') }}">
+								<a href="{{ url('machine/export/') }}">
 								<button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file-import fa-lg">	Import	</span>
-								</button>
-							</a>
-								<a href="{{ url('users/export/') }}">
-								<button class="btn btn-primary  btn-xs">
-									<span class="fas fa-file-export fa-lg">	Export	</span>
+									<span class="fas fa-file-export fa-lg">	ExportAll	</span>
 								</button>
 								</a>
-								<button class="btn btn-primary  btn-xs">
+								<button class="btn btn-primary  btn-xs" type="button" id="button">
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
 
@@ -110,7 +105,7 @@
 									</div>
 
 										</div>
-							
+
 
 								</div>
 
@@ -138,7 +133,12 @@
   }
 });
 	</script>
-
+	<script>
+	var button = document.getElementById('button');
+	button.addEventListener('click', function(){
+		window.open('/machine/assets/machineall','Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+	})
+	</script>
 
 @stop
 {{-- ปิดส่วนjava --}}

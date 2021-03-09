@@ -67,6 +67,8 @@
 	<!-- Datatables -->
 	<script type="text/javascript" src="{{ asset('/assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
+	<script type="text/javascript" src="{{ asset('/assets/js/plugin/sweetalert/sweetalert2.min.js') }}"></script>
+
 
 	<script type="text/javascript" src="{{ asset('/js/dashboard/notifity.js') }}">
 

@@ -38,15 +38,7 @@
                 </thead>
                 <tbody>
               <tr>
-                @foreach ($machineemp as $key => $rowmachineemp)
-                <td> {{ $key+1 }} </td>
-                <td> {{ $rowmachineemp->EMP_CODE }}</td>
-                <td> {{ $rowmachineemp->EMP_NAME }}</td>
-                <td>{{ $rowmachineemp->EMP_NAME_LAST }}</td>
-                <td>{{ $rowmachineemp->COUNTRY_CODE }}</td>
-                <td>{{ $rowmachineemp->EMP_KA }}</td>
-                <td> {{ $rowmachineemp->EMP_TYPE = '2' ? 'พนักงานรอง' : 'พนักงานหลัก' }}</td>
-                @endforeach
+
               </tr>
               </tbody>
             </table>

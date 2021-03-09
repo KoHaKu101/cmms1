@@ -36,7 +36,7 @@ use App\Http\Controllers\Search\RepairSearchController;
 use App\Http\Controllers\PDF\MachineRepairPDFController;
 use App\Http\Controllers\PDF\UploadPdfController;
 //Model
-use App\Models\Machine\Machnie;
+use App\Models\Machine\Machine;
 use App\Models\SettingMenu\Mainmenu;
 use App\Models\SettingMenu\Menusubitem;
 
@@ -57,7 +57,8 @@ use App\Models\SettingMenu\Menusubitem;
 Route::get('/', function () {
     return view('auth/login');
 });
-Route::get('/machine/repair/pdf', 'App\Http\Controllers\PDF\MachineRepairPDFController@HtmlToPDF');
+Route::get('/machine/repair/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineRepairPDFController@RepairPdf');
+Route::get('/machine/assets/machineall', 'App\Http\Controllers\PDF\MachinePDFController@MachinePdf');
 
 
 
@@ -73,21 +74,21 @@ Route::get('/machine/repair/search',function(){
 
 
 Route::middleware(['auth:sanctum', 'verified']);
-
+//Dashboard
 Route::get('/machine/dashboard/sumaryline',[DashboardController::class,'Sumaryline'])->name('dashboard.sumaryline');
 Route::get('/machine/dashboard/dashboard',[DashboardController::class,'Dashboard']);
 Route::get('/machine',[DashboardController::class,'Dashboard']);
 Route::get('/machine/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
 Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard');
-
-
+//Notification
 Route::get('machine/repair/notificaiton' ,[DashboardController::class,'Notification']);
 Route::get('machine/repair/notificaitoncount' ,[DashboardController::class,'NotificationCount'])  ->name('repair.notificaitoncount');
+//Logout
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
-//Exportandimport
-Route::get('users/export', [MachineExportController::class,'export']);
-Route::get('users/import/show', [MachineImportController::class,'show']);
-Route::post('users/import', [MachineImportController::class,'store']);
+//Export and import
+Route::get('machine/export', [MachineExportController::class,'export']);
+// Route::get('users/import/show', [MachineImportController::class,'show']);
+// Route::post('users/import', [MachineImportController::class,'store']);
 
 //assets
 Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  ->name('machine.list');
@@ -138,14 +139,15 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
   Route::post('machine/personal/update/{UNID}'  ,[PersonalController::class,'Update']);
   Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 //repair
-Route::get('machine/repair/repairlist'         ,[MachineRepairController::class,'Index'])  ->name('repair.list');
-  Route::get('machine/repair/repairlistserach'         ,[MachineRepairController::class,'Indexserach'])  ->name('repair.listserach');
-  Route::get('machine/repair/form/{MACHINE_CODE}'            ,[MachineRepairController::class,'Create']) ->name('repair.form');
-  Route::get('machine/repair/repairsearch'            ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
-  Route::get('machine/repair/{EMP_NAME}', [MachineRepairController::class,'Emp'])->name('get.repair');
-  Route::get('machine/repair/search' ,[MachineRepairController::class,'Search']) ;
-  Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
+Route::get('machine/repair/repairlist'            ,[MachineRepairController::class,'Index'])  ->name('repair.list');
+  Route::get('machine/repair/repairlistserach'    ,[MachineRepairController::class,'Indexserach'])  ->name('repair.listserach');
+  Route::get('machine/repair/search'              ,[MachineRepairController::class,'Search']) ;
 
+  Route::get('machine/repair/form/{MACHINE_CODE}' ,[MachineRepairController::class,'Create']) ->name('repair.form');
+  Route::get('machine/repair/repairsearch'        ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
+  Route::get('machine/repair/{EMP_NAME}'          ,[MachineRepairController::class,'Emp'])->name('get.repair');
+
+  Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
   Route::get('machine/repair/edit/{UNID}'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);
   Route::get('machine/repair/delete/{UNID}'   ,[MachineRepairController::class,'Delete']) ->name('repair.delete');

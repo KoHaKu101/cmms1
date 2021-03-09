@@ -154,7 +154,8 @@
 												@include('masterlayout.tab.history')
 												<!-- แผนการปฎิบัติการ -->
   											@include('masterlayout.tab.plan')
-
+												<!-- พนักงานประจำเครื่อง -->
+												@include('masterlayout.tab.personal')
 
 									</div>
 								</div>

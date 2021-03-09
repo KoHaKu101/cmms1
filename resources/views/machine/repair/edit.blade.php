@@ -49,11 +49,11 @@
 							</div>
 
 							<div class="col-md-10 ">
-								<a href="{{ url('machine/repair/pdf') }}">
-									<button class="btn btn-secondary btn-xs float-right" type="button">
+
+									<button class="btn btn-secondary btn-xs float-right" type="button" id="button">
 										<span class="fas fa-print fa-lg">	print	</span>
 									</button>
-								</a>
+
 							</div>
 						</div>
 					</div>
@@ -192,7 +192,7 @@
 																			</div>
 																		</div>
 
-
+																		<input type="hidden" id="UNID" value="{{ $dataset->UNID }}">
 																	</div>
 																</div>
         											</div>
@@ -251,6 +251,13 @@
 	    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	  }
 	});
+	</script>
+	<script>
+	var button = document.getElementById('button');
+	var unid = $('#UNID').val(); console.log(unid);
+	button.addEventListener('click', function(){
+		window.open('/machine/repair/pdf/'+unid,'Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+	})
 	</script>
 @stop
 {{-- ปิดส่วนjava --}}

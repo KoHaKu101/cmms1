@@ -84,8 +84,9 @@
                           	<th scope="col">ชื่อเครื่องจักร</th>
 														<th scope="col">Line</th>
 														<th scope="col">วันที่เอกสาร</th>
-														<th scope="col">สถานะ</th>
-														<th scope="col" style=""></th>
+														<th scope="col">สถานะเครื่องจักร</th>
+														<th scope="col">สถานะซ่อมแซ่ม</th>
+														<th scope="col" style="width:100px"></th>
                         	</tr>
                       	</thead>
 
@@ -118,6 +119,7 @@
 	<script type="text/javascript" src="{{ asset('/js/serach/serachrepair.js') }}">
 
 	</script>
+
 	<script type="text/javascript">
 	$.ajaxSetup({
 	headers: {
@@ -125,6 +127,27 @@
 	}
 	});
 	</script>
-	
+<script>
+// var button = document.getElementById('button');
+var unid = $('#UNID').val(); console.log(unid);
+
+$(document).on('click','#button', function(){
+Swal.fire({
+  title: 'ต้องการปิดเอกสารมั้ย?',
+  text: "หากทำการปิดเอกสารแล้วไม่สามารถเปิดได้ ต้องทำการสร้างใหม่ทำนั้น!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes!'
+}).then((result) => {
+  if (result.isConfirmed) {
+		window.location.href = "/machine/repair/delete/"+unid;
+
+
+  }
+})
+});
+</script>
 @stop
 {{-- ปิดส่วนjava --}}

@@ -76,7 +76,7 @@
 											<div class="form-group has-error">
 												<label for="MACHINE_DOCNO">เลขที่เอกสาร</label>
 												<?php
-												$number = date("ymdhis");
+												$number = rand(100,500).date('ymdhis');
 												echo'<input type="text" class="form-control" id="MACHINE_DOCNO" name="MACHINE_DOCNO" placeholder="เลขที่เอกสาร"  value=RE-'.$number.' readonly> ';
 													?>
 											</div>
@@ -181,8 +181,8 @@
 																		@foreach($dataset as $datarepair)
 																		<div class="form-check">
 																			<label  class="form-check-label">
-																				<input class="form-check-input" type="checkbox" id="MACHINE_NOTE" name="MACHINE_NOTE[]" value="{{ $datarepair->REPAIR_NAME }}">
-																				<span class="form-check-sign"></span>
+																				<input class="form-check-input" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]" value="{{ $datarepair->REPAIR_NAME }}">
+																				<span class="form-check-sign">{{ $datarepair->REPAIR_NAME }}</span>
 																			</label>
 																		</div>
 																	@endforeach
@@ -191,7 +191,7 @@
 																	<div class="col-md-8 col-lg-4 ml-2">
 																		<div class="form-group">
     																	<label for="MACHINE_CAUSE">รายละเอียดอาการ</label>
-    																	<textarea class="form-control" id="MACHINE_CAUSE" name="MACHINE_CAUSE" rows="4"></textarea>
+    																	<textarea class="form-control" id="MACHINE_CAUSE" name="MACHINE_CAUSE" rows="4"></textarea >
   																	</div>
 																	</div>
 

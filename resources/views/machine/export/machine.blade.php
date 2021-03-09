@@ -1,23 +1,38 @@
-<table>
+<table >
   <thead>
+    <tr><th colspan="8" style="text-align:center">ข้อมูลเครื่องจักรทั้งหมด</th></tr>
+    <tr><th colspan="2">จำนวนเครื่องจักร</th></tr>
+    <tr><td colspan="2">Total : {{ $data_set->count() }} เครื่อง</td></tr>
+    <tr></tr>
     <tr>
-      <th >location</th>
-      <th >name</th>
-      <th >Code</th>
-      <th >machinecheck</th>
-      <th >Last Price Currency</th>
+
+      <th >Line</th>
+      <th >ชื่อเครื่อง</th>
+      <th >รหัสเครื่อง</th>
+      <th >สถานะ</th>
+      <th >เริ่มใช้งาน</th>
+      <th >ซื้อจากบริษัท</th>
+      <th >ประเภทเครื่องจักร</th>
 
     </tr>
   </thead>
   <tbody>
 
+
     @foreach ($data_set as $row)
+
       <tr>
+
         <td >  {{ $row->MACHINE_LINE }}  </td>
         <td >  {{ $row->MACHINE_NAME }}  </td>
         <td >  {{ $row->MACHINE_CODE }}   </td>
-        <td >  {{ $row->MACHINE_CHECK }}   </td>
+        <td style="white-space:nowrap">  	{{ $row->MACHINE_CHECK == '1' ? 'หยุดทำงาน'
+                                          :( $row->MACHINE_CHECK == '2' ? 'เครื่องทำงาน'
+                                          :( $row->MACHINE_CHECK == '3' ? 'เครื่องกำลังซ่อม'
+                                          :( $row->MACHINE_CHECK == '4' ? 'เครื่องจำหน่าย' : 'สถานะไม่แน่ชัด' ))) }}		</td>
         <td >  {{ $row->MACHINE_RVE_DATE }}     </td>
+        <td >  {{ $row->PURCHASE_FORM }}     </td>
+        <td >  {{ $row->MACHINE_TYPE }}     </td>
         </tr>
     @endforeach
   </tbody>

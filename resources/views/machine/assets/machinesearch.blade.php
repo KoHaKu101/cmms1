@@ -14,7 +14,10 @@
             </td>
             <td >  {{ $row->MACHINE_LINE }}  </td>
             <td >              {{ $row->MACHINE_NAME }}  </td>
-            <td style="white-space:nowrap">  	{{ $row->MACHINE_CHECK == '2' ? 'เครื่องทำงาน' : 'หยุดทำงาน'}}		</td>
+            <td style="white-space:nowrap">  	{{ $row->MACHINE_CHECK == '1' ? 'หยุดทำงาน'
+                                              : ($row->MACHINE_CHECK == '2' ? 'เครื่องทำงาน'
+                                              : ($row->MACHINE_CHECK == '3' ? 'เครื่องกำลังซ่อม'
+                                              :($row->MACHINE_CHECK == '4' ? 'เครื่องจำหน่าย' : 'สถานะไม่แน่ชัด' ))) }}		</td>
             <td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
             <td style="width:100px;">
               <a onclick="return confirm('ต้องการจำหน่ายเครื่อง {{ $row->MACHINE_CODE }} หรือมั้ย?')" href="{{ url('machine/assets/delete/'.$row->UNID) }}" >

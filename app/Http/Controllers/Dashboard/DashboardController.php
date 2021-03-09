@@ -9,6 +9,9 @@ use App\Models\Machine\MachineRepair;
 use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
+  public function __construct(){
+    $this->middleware('auth');
+  }
   public function Sumaryline(){
     //dd($data_set);
     return View('machine/dashboard/sumaryline');
@@ -28,7 +31,7 @@ class DashboardController extends Controller
     $data_line6 = Machine::where('MACHINE_LINE','L6')->get()->count();
     //แจ้งซ่อม
     $datarepairlist = MachineRepair::select('MACHINE_CODE','MACHINE_TYPE','MACHINE_DOCDATE','MACHINE_CAUSE')
-                                    ->where('CLOSE_STATUS','=','9')->take(9)->get();
+                                    ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_DOCDATE','DESC')->take(9)->get();
     $datarepair = MachineRepair::where('CLOSE_STATUS','=','9')->get()->count();
 
 
@@ -38,20 +41,19 @@ class DashboardController extends Controller
     ,'datawait','data_line1','data_line2','data_line3','data_line4','data_line5','data_line6'));
   }
   public function Notification(Request $request){
-
     $data = MachineRepair::select('PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINES.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
                           ->leftJoin('PMCS_MACHINES','PMCS_MACHINES.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
                           ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_TIME','DESC')->take(4)->get();
     // $datacount = MachineRepair::where('CLOSE_STATUS','9')->get()->count();
 
     return response()->json(['datarepair' => $data]);
-
   }
   public function NotificationCount(Request $request){
-
     $data = MachineRepair::where('CLOSE_STATUS','9')->take(4)->get()->count();
-
     return response()->json(['datacount' => $data]);
-
+  }
+  public function Logout(){
+      Auth::logout();
+      return Redirect()->route('login')->with('success','User Logout');
   }
 }
