@@ -73,12 +73,11 @@
 											@foreach ($dataset as $key => $dataitem)
 											<tr>
 												<td>{{$dataitem->SYSTEMSUB_CODE}}</td>
-												<td>
-												<?php
-												$name = $systemshow->SYSTEM_NAME;
-												echo ($dataitem->SYSTEM_CODE == $systemshow->SYSTEM_CODE) ? ''.$name.'' : 'รวม';
-												?>
-												</td>
+
+													<td>{{ $dataitem->SYSTEM_CODE == $dataitem->SYSTEM_CODE ? $dataitem->SYSTEM_NAME : '' }}
+
+													</td>
+
 												<td style="width:200px">
 													<a href="{{ url('machine/machinesystemsubtable/edit/'.$dataitem->UNID) }}">
 														<button class="btn btn-primary btn-block btn-sm my-1 mx--2 ">
@@ -116,7 +115,7 @@
 												<div class="form-group has-error">
 												<lebel>ในระบบ</lebel>
 												<select class="form-control form-control" id="SYSTEM_CODE" name="SYSTEM_CODE" required autofocus>
-													<option value='0'>-แสดงทั้งหมด-</option>
+													<option value="">-แสดงทั้งหมด-</option>
 													@foreach ($system as $key => $srow)
 														<option value="{{ $srow->SYSTEM_CODE }}">{{$srow->SYSTEM_NAME}}</option>
 													@endforeach
@@ -125,19 +124,12 @@
 												<div class="form-group has-error">
 													<label for="SYSTEMSUB_CODE">code</label>
 													<input type="text"  class="form-control" id="SYSTEMSUB_CODE" name="SYSTEMSUB_CODE" placeholder="code" required autofocus>
-													@error ('REPAIR_CODE')
-
-
-
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+													
 												</div>
 												<div class="form-group has-error">
 													<label for="SYSTEMSUB_NAME">รายการระบบเครื่องจักร</label>
 													<input type="text"  class="form-control" id="SYSTEMSUB_NAME" name="SYSTEMSUB_NAME" placeholder="รายการระบบเครื่องจักร" required autofocus>
-													@error ('REPAIR_NAME')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 												</div>
 												<div class="form-check has-error">
 													<label for="SYSTEMSUB_STATUS">เปิด/ปิด</label><br>

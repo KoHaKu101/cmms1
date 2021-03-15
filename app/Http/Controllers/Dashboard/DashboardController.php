@@ -41,7 +41,7 @@ class DashboardController extends Controller
     ,'datawait','data_line1','data_line2','data_line3','data_line4','data_line5','data_line6'));
   }
   public function Notification(Request $request){
-    $data = MachineRepair::select('PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINES.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
+    $data = MachineRepair::select('PMCS_REPAIR_MACHINE.UNID','PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINES.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
                           ->leftJoin('PMCS_MACHINES','PMCS_MACHINES.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
                           ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_TIME','DESC')->take(4)->get();
     // $datacount = MachineRepair::where('CLOSE_STATUS','9')->get()->count();
@@ -52,6 +52,29 @@ class DashboardController extends Controller
     $data = MachineRepair::where('CLOSE_STATUS','9')->take(4)->get()->count();
     return response()->json(['datacount' => $data]);
   }
+
+  public function SystemcheckMonthly(Request $request){
+    $data = MachineSysTemCheck::select('PMCS_REPAIR_MACHINE.UNID','PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINES.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
+                          ->leftJoin('PMCS_MACHINES','PMCS_MACHINES.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
+                          ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_TIME','DESC')->take(4)->get();
+    // $datacount = MachineRepair::where('CLOSE_STATUS','9')->get()->count();
+
+    return response()->json(['datarepair' => $data]);
+  }
+  public function SystemcheckMonthlycount(Request $request){
+    $data = MachineSysTemCheck::where('CLOSE_STATUS','9')->take(4)->get()->count();
+    return response()->json(['datacount' => $data]);
+  }
+
+
+
+
+
+
+
+
+
+  //**********************************************************************************************************//
   public function Logout(){
       Auth::logout();
       return Redirect()->route('login')->with('success','User Logout');

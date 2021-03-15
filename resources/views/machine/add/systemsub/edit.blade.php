@@ -30,14 +30,14 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/machinesystemtable/list') }}">
+								<a href="{{ url('machine/machinesystemsubtable/list') }}">
 									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
 							<div class="col-md-1 mt-2 ">
-								<form action="{{ url('machine/machinesystemtable/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ url('machine/machinesystemsubtable/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
 										<span class="fas fa-save fa-lg">	Save	</span>
@@ -56,18 +56,32 @@
 							<div class="card-body">
 								<div class="row">
 										<!-- ช่อง1-->
-										<div class="col-md-6 col-lg-4">
-											<div class="form-group has-error">
-												<label for="SYSTEMSUB_CODE">Code*</label>
-												<input type="text" class="form-control" id="SYSTEMSUB_CODE" name="SYSTEMSUB_CODE" value="{{$dataset->SYSTEMSUB_CODE}}">
-											</div>
+									<div class="col-md-6 col-lg-3 mt-1">
+										<div class="form-group has-error">
+											<lebel for="SYSTEM_CODE">ในระบบ*</lebel>
+											<select class="form-control my-1" id="SYSTEM_CODE" name="SYSTEM_CODE" required autofocus>
+												<option value="">-แสดงทั้งหมด-</option>
+												@foreach ($system as $key => $srow)
+													<option value="{{ $srow->SYSTEM_CODE }}"{{ $dataset->SYSTEM_CODE == $srow->SYSTEM_CODE ? 'selected' : '' }}>{{$srow->SYSTEM_NAME}}</option>
+												@endforeach
+											</select>
 										</div>
+									</div>
+
+									<div class="col-md-6 col-lg-2">
+										<div class="form-group has-error">
+											<label for="SYSTEMSUB_CODE">Code*</label>
+											<input type="text" class="form-control" id="SYSTEMSUB_CODE" name="SYSTEMSUB_CODE" value="{{$dataset->SYSTEMSUB_CODE}}">
+										</div>
+										
+									</div>
 										<!-- ช่อง2-->
-										<div class="col-md-6 col-lg-4">
+										<div class="col-md-6 col-lg-3">
 											<div class="form-group has-error">
 												<label for="SYSTEMSUB_NAME">รายการเครื่องจักร*	</label>
 												<input type="text" class="form-control" id="SYSTEMSUB_NAME" name="SYSTEMSUB_NAME" value="{{$dataset->SYSTEMSUB_NAME}}">
 											</div>
+											
 										</div>
 										<div class="form-check has-error">
 											<label for="SYSTEMSUB_STATUS">สถานการเปิดใช้งาน</label><br>

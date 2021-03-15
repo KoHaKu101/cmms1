@@ -53,7 +53,7 @@
 							<div class="card-header bg-primary">
 								<h4 class="ml-3 mt-2" style="color:white;" >ลงทะเบียนประเภทเครื่องจักร </h4>
 							</div>
-							
+
 							<div class="card-body">
 								<div class="row">
 									<!-- ช่อง1-->
@@ -68,9 +68,7 @@
 											<div class="form-group has-error">
 												<label for="TYPE_CODE">รหัสประเภทเครื่องจักร</label>
 													<input type="text" class="form-control" id="TYPE_CODE" name="TYPE_CODE" placeholder="รหัสประเภทเครื่องจักร" required autofocus>
-													@error ('TYPE_CODE')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+
 											</div>
 											<div class="col-md-6 col-lg-12">
 												<div class="form-group ">
@@ -87,9 +85,7 @@
 											<div class="form-group has-error">
 												<label for="TYPE_NAME">ชื่อประเภทเครื่องจักร</label>
 												<input type="text" class="form-control" id="TYPE_NAME" name="TYPE_NAME" placeholder="ชื่อประเภทเครื่องจักร" required autofocus>
-												@error ('TYPE_NAME')
-													<span class="text-danger"> {{ $message }}</span>
-												@enderror
+											
 											</div>
 											<div class="form-check has-error">
 												<label for="TYPE_STATUS">เปิด/ปิด</label><br>

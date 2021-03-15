@@ -64,9 +64,7 @@
                       			<div class="form-group">
 															<label for="SUBMENU_ICON">SUBMENU Icon</label>
 															<input type="text" class="form-control" id="SUBMENU_ICON" name="SUBMENU_ICON"  placeholder="SUBMENU Icon" value="{{ $data_set->SUBMENU_ICON }}">
-                        				@error ('SUBMENU_NAME')
-                            			<span class="text-danger"> {{ $message }}</span>
-                        				@enderror
+                        			
 														</div>
 
 

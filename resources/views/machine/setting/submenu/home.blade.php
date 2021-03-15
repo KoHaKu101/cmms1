@@ -120,9 +120,7 @@
                       			<div class="form-group">
 															<label for="SUBMENU_ICON">Submenu Icon</label>
 															<input type="text" class="form-control" id="SUBMENU_ICON" name="SUBMENU_ICON"  placeholder="MENU Icon">
-                        				@error ('SUBMENU_NAME')
-                            			<span class="text-danger"> {{ $message }}</span>
-                        				@enderror
+                        			
 														</div>
 
 														<button tpye="submit" class="btn btn-success">Submit</button>

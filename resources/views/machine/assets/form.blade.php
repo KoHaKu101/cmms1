@@ -31,7 +31,7 @@
 						<div class="row">
 							<div class="col-md-1 gx-4">
 
-								<a href="{{ url('machine/assets/machinelist') }}">
+								<a href="{{ route('machine.list') }}">
 									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
@@ -70,9 +70,6 @@
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
 													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" placeholder="รหัสเครื่องจักร" required autofocus>
-													@error ('MACHINE_CODE')
-														<h3 class="text-danger"> !!!! {{ $message }}</h3>
-													@enderror
 											</div>
 
 											<div class="form-group">

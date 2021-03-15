@@ -32,6 +32,13 @@
 
 <body >
 	<div class="wrapper sidebar_minimize">
+		@if ($errors->count() > 0)
+			<div id="Errorsystem" style="display:none;" class="alert alert-danger">
+				@foreach ($errors->all() as $error)
+						{{ $error }}<br/>
+				@endforeach
+			</div>
+		@endif
 		<div class="main-header">
 
       @yield('Logoandnavbar')
@@ -67,12 +74,12 @@
 	<!-- Datatables -->
 	<script type="text/javascript" src="{{ asset('/assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
-	<script type="text/javascript" src="{{ asset('/assets/js/plugin/sweetalert/sweetalert2.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/assets/js/plugin/sweetalert/sweetalert2.js') }}"></script>
+{{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
 
-
-	<script type="text/javascript" src="{{ asset('/js/dashboard/notifity.js') }}">
-
-	</script>
+	<script type="text/javascript" src="{{ asset('/js/dashboard/notifity.js') }}"></script>
+	@include('/errorsweetalert/errormessed')
+	{{-- <script type="text/javascript" src="{{ asset('/js/errorsweetalert/errormessed.js') }}"></script> --}}
 
 
 	<script type="text/javascript" src="{{ asset('assets/js/atlantis.min.js') }}"></script>

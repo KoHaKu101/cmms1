@@ -49,8 +49,8 @@ class MachineTypeTableController extends Controller
   public function Store(Request $request){
 
     $validated = $request->validate([
-      'TYPE_CODE'           => 'required|unique:PMCS_MACHINE_TYPE|max:255',
-      'TYPE_NAME'           => 'required|unique:PMCS_MACHINE_TYPE|max:255',
+      'TYPE_CODE'           => 'required|unique:PMCS_MACHINE_TYPE|max:50',
+      'TYPE_NAME'           => 'required|unique:PMCS_MACHINE_TYPE|max:200',
       ],
       [
       'TYPE_CODE.required'  => 'กรุณราใส่รหัสประเภทเครื่องจักร',

@@ -45,8 +45,8 @@ class MachineRepairTableController extends Controller
   public function Store(Request $request){
 
     $validated = $request->validate([
-      'REPAIR_CODE'           => 'required|unique:PMCS_CMMS_REPAIR_CHECKBOX|max:255',
-      'REPAIR_NAME'           => 'required|unique:PMCS_CMMS_REPAIR_CHECKBOX|max:255',
+      'REPAIR_CODE'           => 'required|unique:PMCS_CMMS_REPAIR_CHECKBOX|max:50',
+      'REPAIR_NAME'           => 'required|unique:PMCS_CMMS_REPAIR_CHECKBOX|max:200',
       ],
       [
       'REPAIR_CODE.required'  => 'กรุณราใส่รหัส',

@@ -134,7 +134,7 @@ var unid = $('#UNID').val(); console.log(unid);
 $(document).on('click','#button', function(){
 Swal.fire({
   title: 'ต้องการปิดเอกสารมั้ย?',
-  text: "หากทำการปิดเอกสารแล้วไม่สามารถเปิดได้ ต้องทำการสร้างใหม่ทำนั้น!",
+  text: "หากทำการปิดเอกสารแล้วไม่สามารถแก้ไขได้ ต้องทำการสร้างใหม่เท่านั้น!",
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',

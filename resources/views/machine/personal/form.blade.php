@@ -60,9 +60,7 @@
 											<div class="form-group mt-4">
 												<img src="/assets/img/nobody.jpg" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="EMP_ICON" name="EMP_ICON" >
-													@error ('MACHINE_ICON')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 											</div>
 										</div>
 										<!-- ช่อง2-->
@@ -70,9 +68,7 @@
 											<div class="form-group has-error">
 												<label for="EMP_CODE">รหัสพนักงาน</label>
 													<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" placeholder="รหัสพนักงาน" required autofocus>
-													@error ('MACHINE_CODE')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 											</div>
 
 

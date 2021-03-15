@@ -38,8 +38,11 @@ class MachineSysTemSubTableController extends Controller
   }
 
   public function Index(){
-
-    $dataset = MachineSysTemSubTable::paginate(10);
+    $m = 'PMCS_CMMS_MACHINE_SYSTEMTABLE';
+    $s = 'PMCS_CMMS_MACHINE_SYSTEMSUBTABLE';
+    $dataset = MachineSysTemSubTable::select($s.'.SYSTEMSUB_STATUS',$m.'.SYSTEM_NAME',$s.'.SYSTEM_CODE',$s.'.UNID',$s.'.SYSTEMSUB_NAME',$s.'.SYSTEMSUB_CODE')
+                                    ->leftJoin($m,$m.'.SYSTEM_CODE',$s.'.SYSTEM_CODE')
+                                    ->paginate(10);
     $system = MachineSysTemTable::where('SYSTEM_STATUS','=','9')->get();
     $systemshow = MachineSysTemTable::where('SYSTEM_STATUS','=','9')->first();
 
@@ -49,13 +52,11 @@ class MachineSysTemSubTableController extends Controller
   public function Store(Request $request){
 
     $validated = $request->validate([
-      'SYSTEM_CODE'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMSUBTABLE|max:255',
+
       'SYSTEMSUB_CODE'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMSUBTABLE|max:255',
       'SYSTEMSUB_NAME'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMSUBTABLE|max:255',
       ],
       [
-      'SYSTEM_CODE.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',
-      'SYSTEM_CODE.unique'    => 'มีรหัสระบบเครื่องจักรนี้แล้ว',
       'SYSTEMSUB_CODE.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',
       'SYSTEMSUB_CODE.unique'    => 'มีรหัสระบบเครื่องจักรนี้แล้ว',
       'SYSTEMSUB_NAME.required'  => 'กรุณาใสรายการระบบเครื่องจักร',
@@ -77,14 +78,17 @@ class MachineSysTemSubTableController extends Controller
   }
   public function Edit($UNID) {
     $dataset = MachineSysTemSubTable::where('UNID','=',$UNID)->first();
-    return view('machine/add/systemsub/edit',compact('dataset'));
+    $system = MachineSysTemTable::where('SYSTEM_STATUS','=','9')->get();
+    return view('machine/add/systemsub/edit',compact('dataset','system'));
 }
 public function Update(Request $request,$UNID) {
+  
 
-  $data_set = MachineSysTemSubTable::where('UNID',$UNID)->update([
+  $dataset = MachineSysTemSubTable::where('UNID',$UNID)->update([
     'SYSTEM_CODE'       => $request->SYSTEM_CODE,
-    'SYSTEM_NAME'       => $request->SYSTEM_NAME,
-    'SYSTEM_STATUS'     => $request->SYSTEM_STATUS,
+    'SYSTEMSUB_CODE'       => $request->SYSTEMSUB_CODE,
+    'SYSTEMSUB_NAME'       => $request->SYSTEMSUB_NAME,
+    'SYSTEMSUB_STATUS'     => $request->SYSTEMSUB_STATUS,
     'MODIFY_BY'       => Auth::user()->name,
     'MODIFY_TIME'     => Carbon::now(),
 

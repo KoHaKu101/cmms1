@@ -109,19 +109,11 @@
 												<div class="form-group has-error">
 													<label for="STATUS_CODE">CODE</label>
 													<input type="text"  class="form-control" id="STATUS_CODE" name="STATUS_CODE" placeholder="CODE" required autofocus>
-													@error ('STATUS_CODE')
-
-
-
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
 												</div>
 												<div class="form-group has-error">
 													<label for="STATUS_NAME">สถานะ</label>
 													<input type="text"  class="form-control" id="STATUS_NAME" name="STATUS_NAME" placeholder="สถานะ" required autofocus>
-													@error ('STATUS_NAME')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+						
 												</div>
 												<div class="form-check has-error">
 													<label for="STATUS">เปิด/ปิด</label><br>

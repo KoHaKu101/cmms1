@@ -110,26 +110,17 @@
 												<div class="form-group has-error">
 													<label for="SPAREPART_CODE">โค้ดอะไหล่</label>
 													<input type="text"  class="form-control" id="SPAREPART_CODE" name="SPAREPART_CODE" placeholder="โค้ดอะไหล่" required autofocus>
-													@error ('REPAIR_CODE')
 
-
-
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
 												</div>
 												<div class="form-group has-error">
 													<label for="SPAREPART_NAME">ชื่ออะไหล่</label>
 													<input type="text"  class="form-control" id="SPAREPART_NAME" name="SPAREPART_NAME" placeholder="ชื่ออะไหล่" required autofocus>
-													@error ('REPAIR_NAME')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+
 												</div>
 												<div class="form-group has-error">
 													<label for="SPAREPART_PRICE">ราคา</label>
 													<input type="text"  class="form-control" id="SPAREPART_PRICE" name="SPAREPART_PRICE" placeholder="ราคา" required autofocus>
-													@error ('REPAIR_NAME')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 												</div>
 												<div class="form-group">
 													<label for="SPAREPART_NOTE">รายละเอียดเพิ่มเติม</label>

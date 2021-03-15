@@ -109,19 +109,12 @@
 												<div class="form-group has-error">
 													<label for="SYSTEM_CODE">code</label>
 													<input type="text"  class="form-control" id="SYSTEM_CODE" name="SYSTEM_CODE" placeholder="code" required autofocus>
-													@error ('REPAIR_CODE')
-
-
-
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+													
 												</div>
 												<div class="form-group has-error">
 													<label for="SYSTEM_NAME">รายการระบบเครื่องจักร</label>
 													<input type="text"  class="form-control" id="SYSTEM_NAME" name="SYSTEM_NAME" placeholder="รายการระบบเครื่องจักร" required autofocus>
-													@error ('REPAIR_NAME')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 												</div>
 												<div class="form-check has-error">
 													<label for="SPAREPART_STATUS">เปิด/ปิด</label><br>

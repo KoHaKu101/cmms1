@@ -50,8 +50,8 @@ class PersonalController extends Controller
 
   public function Store(Request $request){
     $validated = $request->validate([
-      'EMP_CODE'           => 'required|max:255',
-      'EMP_NAME'           => 'required|max:255'
+      'EMP_CODE'           => 'required|max:50',
+      'EMP_NAME'           => 'required|max:200'
       ],
       [
       'EMP_CODE.required'  => 'กรุณราใส่รหัสพนักงาน',

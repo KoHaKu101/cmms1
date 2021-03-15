@@ -49,8 +49,8 @@ class MachineSysTemTableController extends Controller
   public function Store(Request $request){
 
     $validated = $request->validate([
-      'SYSTEM_CODE'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMTABLE|max:255',
-      'SYSTEM_NAME'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMTABLE|max:255',
+      'SYSTEM_CODE'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMTABLE|max:50',
+      'SYSTEM_NAME'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMTABLE|max:200',
       ],
       [
       'SYSTEM_CODE.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',

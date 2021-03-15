@@ -40,6 +40,25 @@
           </li>
         </ul>
       </li>
+      <li class="nav-item dropdown hidden-caret">
+        <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-calendar-check" id="count"></i>
+
+        </a>
+        <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+
+          <li>
+            <div class="notif-scroll scrollbar-outer">
+              <div class="notif-center" id="loaddatacode">
+
+              </div>
+            </div>
+          </li>
+          <li>
+            <a class="see-all" href="{{route('repair.list')}}">See all notifications<i class="fa fa-angle-right"></i> </a>
+          </li>
+        </ul>
+      </li>
 
       <li class="nav-item dropdown hidden-caret">
         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">

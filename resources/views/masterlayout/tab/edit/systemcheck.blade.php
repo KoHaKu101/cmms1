@@ -1,66 +1,133 @@
+<meta name="_token" content="{{ csrf_token() }}" />
 <div class="tab-pane" id="systemcheck" >
   <div class="row">
     <div class="col-sm-12">
       <div class="jumbotron">
         <div class="col-md-8 col-lg-12">
           <div class="table">
-            <table class="table table-sm"  >
+            <form action="{{ url('machine/syscheck/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
+              @csrf
+            <table class="table table-sm table-head-bg-primary  ">
               <thead>
                 <tr>
                   <th class="bg-primary" colspan="6" >
                     <h3 align="center" style="color:white;" class="mt-2">ตรวจสอบระบบ</h3>
-
                   </th>
+                  <th class="bg-primary" >
+                    <button type="submit" class="btn btn-warning float-right btn-sm"><span style="color:black;font-size:14px">Save</span></button>
+                  </th>
+
                   <th class="bg-primary" >
                     <button  id="popup" type="button" class="btn btn-warning float-right btn-sm"
                     data-toggle="modal" data-target="#syscheckmain"><span style="color:black;font-size:14px">เพิ่มระบบที่ต้องตรวจเช็ค</span></button>
                   </th>
                 </tr>
-                <tr>
-                  <th scope="col" colspan="2">
-                  </th>
-                  <th scope="col" colspan="2">
-                    ตรวจสอบระบบ
-                  </th>
-                  <th scope="col" colspan="1">
-                    รายการที่ต้องตรวจเช็ค
-                  </th>
-                  <th>
-                    <h5>ตรวจสอบประจำ เดือน/ปี</h5>
-                  </th>
-                  <th scope="col" colspan="1">
-                  </th>
 
-                  </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td style="width:50px"></td>
+                    <td>ระบบ</td>
+                    <td>รายการ</td>
+                    <td>ระยะเวลา</td>
+                    <td>ครบกำหนด</td>
+                    <td>เช็คครั้งล่าสุด</td>
+                    <td>สถานะ</td>
+                    <td></td>
+                  </tr>
+                  @foreach ($machinesystem as $key => $datasystem)
+                    {{ var_dump($datasystem) }}
               <tr>
-                <td colspan="2">
-                  1
+                <td style="width:25px;text-align:center">{{ $key+1 }}</td>
+                <td style="width:80px">
+                  {{ $datasystem->SYSTEM_CODE == $datasystem->SYSTEM_CODE ? $datasystem->SYSTEM_NAME : '' }}
+                </td>
+                <td style="width:80px">
+                  <div class="form-inline ">
+                    <button  id="popup" type="button" style="width:100px" class="btn btn-primary  btn-sm  btn-block mt--1"
+                    data-toggle="modal" data-target="#syscheck">
+                    <span style="text-align:left;font-size:12px">
+                      <i style="font-size:15px" class="icon-printer mx-1 ">	</i>
+                       {{ \App\Models\Machine\MachineSysTemSubCheck::select('SYSTEMCHECK_UNID_REF')
+                       ->where('SYSTEMCHECK_UNID_REF',$datasystem->UNID)->count() }} รายการ </span>	</button>
+                  </div>
+                  <input type="hidden" name="DATAUNID[]" value="{{ $datasystem->UNID }}">
                 </td>
 
-                <td colspan="2">
-                  ระบบไฟฟ้า
-                </td>
-                <td>
-                  3 รายการ
-                </td>
-                <td>
-                  3 เดือน
-                </td>
+                  @if($datasystem->SYSTEM_MONTH === NULL)
+                    <td style="width:150px">
+                      <div class="input-group mb-3 mt-2">
+                        <select class="form-control form-control" id="SYSTEM_MONTH" name="SYSTEM_MONTH[]" required autofocus>
+                          <option value="">0</option>
+	                           @for ($i=1; $i < 13; $i++)
+                               <option value= '{{$i}}' >{{$i}}</option>
+                             @endfor
+                        </select>
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="basic-addon2"> เดือน</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="width:115px"><input type="text" class="form-control" value="" readonly></td>
+                    <td style="width:165px"><input style="width:165px" type="date" class="form-control"
+                    name="SYSTEM_MONTHCHECK[]"value="" required autofocus>
+                    </td>'
+                    <td style="width:150px" >
+                        <a href="{{ url('machine/syscheck/delete/'.$datasystem->UNID) }}">
+                          <button type="button" style="width:150px" class="btn btn-danger btn-sm btn-block mx-2 ">
+                            <span style="text-align:left;font-size:14px">ลบรายการ</span>
+                          </button>
+                        </a>
+                    </td>
+                  @elseif($datasystem->SYSTEM_MONTH !== NULL)
+                    <td style="width:132px">
+                      <div class="input-group mb-3 mt-2">
+                        <select class="form-control form-control" id="SYSTEM_MONTH[]" name="SYSTEM_MONTH[]" required autofocus>
+                              @for ($i=1; $i < 13; $i++)
+                                 <option value="{{$i}}"{{ $datasystem->SYSTEM_MONTH == $i ? 'selected' : ''}}>{{$i}}</option>
 
-                <td >
-                  <button  id="popup" type="button" class="btn btn-success float-right ml-4"
-                  data-toggle="modal" data-target="#syschecksub" >เพิ่มรายการตรวจสอบ	</button>
-                  <button  id="popup" type="button" class="btn btn-primary float-right"
-                  data-toggle="modal" data-target="#syscheck" >รายการตรวจสอบ	</button>
+                               @endfor
+                        </select>
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="basic-addon2"> เดือน</span>
+                        </div>
+                      </div>
+                    </td>
 
-                </td>
-
+                      <?php
+                      echo '<td style="width:115px"><input type="text" class="form-control"
+                      value="'.Carbon\Carbon::parse($datasystem->SYSTEM_MONTHCHECK)->addmonth($datasystem->SYSTEM_MONTH)->Format('d/m/Y').'"
+                      readonly></td>';
+                      echo '<td style="width:165px">
+                      <input style="width:165px" type="date" class="form-control" name="SYSTEM_MONTHCHECK[]"
+                      value="'.Carbon\Carbon::parse($datasystem->SYSTEM_MONTHCHECK)->toDateString().'" required autofocus>
+                      </td>';
+                     ?>
+                     <td style="width:100px">
+                       <div class="form-check" style="width:120px">
+                         <label  class="form-check-label">
+                           <input class="form-check-input" type="checkbox"
+                            <?php echo (Carbon\Carbon::now() >= Carbon\Carbon::parse($datasystem->SYSTEM_MONTHCHECK)
+                                                                    ->addmonth($datasystem->SYSTEM_MONTH)
+                                                                    ) ? ""  : "checked" ; ?> onclick="return false;">
+                           <span class="form-check-sign">ตรวจเช็คแล้ว</span>
+                         </label>
+                       </div>
+                     </td>
+                     <td style="width:150px" >
+                       <div class="form-inline ">
+                         <a href="{{ url('/machine/syschecksub/showback/'.$datasystem->UNID) }}">
+                          <button  type="button" style="width:150px" class="btn btn-success btn-sm btn-block mx-2 load-ajax-modal">
+                          <span style="text-align:left;font-size:14px">รายการตรวจสอบ</span></button>
+                         </a>
+                       </div>
+                     </td>
+                  @endif
               </tr>
-
+              @endforeach
               </tbody>
             </table>
+           </form>
           </div>
         </div>
       </div>

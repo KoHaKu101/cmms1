@@ -41,8 +41,8 @@ class MachineSpareTableController extends Controller
   public function Store(Request $request){
 
     $validated = $request->validate([
-      'SPAREPART_CODE'           => 'required|unique:PMCS_CMMS_SPARE_PART_TABLE|max:255',
-      'SPAREPART_NAME'           => 'required|unique:PMCS_CMMS_SPARE_PART_TABLE|max:255',
+      'SPAREPART_CODE'           => 'required|unique:PMCS_CMMS_SPARE_PART_TABLE|max:50',
+      'SPAREPART_NAME'           => 'required|unique:PMCS_CMMS_SPARE_PART_TABLE|max:250',
       ],
       [
       'SPAREPART_CODE.required'  => 'กรุณาใส่รหัสอะไหล่',

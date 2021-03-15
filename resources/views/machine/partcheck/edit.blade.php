@@ -30,7 +30,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12 ">
-								<a href="{{ url('machine/partcheck/partchecklist') }}">
+								<a href="{{ url()->previous() }}">
 									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
@@ -51,7 +51,7 @@
 							<div class="card-header bg-primary">
 								<h4 class="ml-3 mt-2" style="color:white;" >อะไหล่ เครื่อง {{ $dataset->MACHINE_CODE }}</h4>
 							</div>
-						
+
 							<div class="card-body ml-2">
 								<div class="row ">
 									{{-- <input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $data_set->UNID }}"> --}}

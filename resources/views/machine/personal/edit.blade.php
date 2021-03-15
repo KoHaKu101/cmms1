@@ -60,9 +60,7 @@
 											<div class="form-group mt-4">
 												<img src="{{asset($dataset->EMP_ICON)}}" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="EMP_ICON" name="EMP_ICON" >
-													@error ('EMP_ICON')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 											</div>
 										</div>
 										<!-- ช่อง2-->
@@ -71,9 +69,7 @@
 												<label for="EMP_CODE">รหัสพนักงาน</label>
 													<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" value="{{ $dataset->EMP_CODE }}">
 														<input type="hidden" id="UNID" name="UNID" value="{{ $dataset->UNID }}">
-													@error ('EMP_CODE')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 											</div>
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-12 has-error">

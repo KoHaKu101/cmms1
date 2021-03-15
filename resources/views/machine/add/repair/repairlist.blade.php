@@ -109,16 +109,12 @@
 												<div class="form-group has-error">
 													<label for="REPAIR_CODE">ลำดับรายการ</label>
 													<input type="text"  class="form-control" id="REPAIR_CODE" name="REPAIR_CODE" placeholder="ลำดับรายการ" required autofocus>
-													@error ('REPAIR_CODE')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 												</div>
 												<div class="form-group has-error">
 													<label for="REPAIR_NAME">ประเภทอาการ</label>
 													<input type="text"  class="form-control" id="REPAIR_NAME" name="REPAIR_NAME" placeholder="ประเภทอาการ" required autofocus>
-													@error ('REPAIR_NAME')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+												
 												</div>
 												<div class="form-group">
 													<label for="REPAIR_NOTE">รายละเอียดเพิ่มเติม</label>

@@ -91,6 +91,7 @@
                           	<th scope="col">Asset Status</th>
 														<th scope="col">วันที่เริ่มใช้งาน</th>
 														<th></th>
+														<th></th>
                         	</tr>
                       	</thead>
 
@@ -139,6 +140,28 @@
 		window.open('/machine/assets/machineall','Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
 	})
 	</script>
+	<script>
+	// var button = document.getElementById('button');
+	var unid = $('#UNID').val(); console.log(unid);
+	var mc = $('#MACHINE_CODE').val();
 
+	$(document).on('click','#button', function(){
+	Swal.fire({
+	  title: 'จำหน่ายเครื่องจักร: ' +mc+ ' ?',
+	  text: "หากจำหน่ายแล้วไม่สามารถกลับคืนมาได้!",
+	  icon: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
+	  confirmButtonText: 'Yes!'
+	}).then((result) => {
+	  if (result.isConfirmed) {
+			window.location.href = "/machine/assets/delete/"+unid;
+
+
+	  }
+	})
+	});
+	</script>
 @stop
 {{-- ปิดส่วนjava --}}

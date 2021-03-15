@@ -34,8 +34,19 @@
 						</div>
 				</div>
 			</div>
-
 			<div class="row">
+				<div class="card mx-5 mt-3">
+
+					<a href="{{ url()->previous() }}">
+						<button class="btn btn-warning  btn-sm">
+							<span class="fas fa-arrow-left fa-lg">Back </span>
+						</button>
+					</a>
+
+			</div>
+				</div>
+			<div class="row mt--3">
+
 				<div class="col-md-6">
 					<div class="card">
 						<div class="card-header">
@@ -163,7 +174,7 @@
 		legend: {show: true,textStyle: {fontSize: 14 },
 			data: ['ค่าอะไหล่','ค่าจ้าง SubContaine']
 						},
-	 	 
+
 		 xAxis: {
 			data: dataAxis,
 			axisLabel: {inside: false,textStyle:{color: 'black'} },

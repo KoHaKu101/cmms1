@@ -15,8 +15,11 @@ use App\Models\Machine\MachineUpload;
 use App\Models\Machine\MachineLine;
 use App\Models\Machine\MachineEMP;
 use App\Models\Machine\MachineRepair;
+use App\Models\Machine\MachineSysTemCheck;
 use App\Models\MachineaddTable\MachineTypeTable;
 use App\Models\MachineAddTable\MachineStatusTable;
+use App\Models\MachineAddTable\MachineSysTemTable;
+
 //************** Package form github ***************
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Exports\MachineExport;
@@ -174,20 +177,31 @@ class MachineController extends Controller
   }
 
   public function Edit($UNID) {
+    $m = 'PMCS_CMMS_MACHINE_SYSTEMTABLE';
+    $s = 'PMCS_CMMS_MACHINE_SYSTEMCHECK';
 
     $dataset = Machine::where('UNID',$UNID)->first();
+    $machinesystem = MachineSysTemCheck::select($s.'.SYSTEM_MONTHCHECK',$s.'.SYSTEM_MONTH',$m.'.SYSTEM_NAME',$s.'.SYSTEM_CODE',$s.'.UNID')
+                                        ->leftJoin($m,$m.'.SYSTEM_CODE',$s.'.SYSTEM_CODE')
+                                        ->where('MACHINE_UNID_REF',$UNID)
+                                        ->get();
     $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
     $machinetype = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
-    $machineline = MachineLine::where('LINE_STATUS','=','9')->get();
+
     $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
     $machineemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
+    $machineline = MachineLine::select('LINE_CODE','LINE_NAME','LINE_STATUS')
+                                ->where('LINE_STATUS','=','9')
+                                ->get();
     $machinerepair = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                     ->where('STATUS','=','9')
                                     ->get();
-
-    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1'
+    $machinesystemtable = MachineSysTemTable::select('SYSTEM_CODE','SYSTEM_NAME','SYSTEM_STATUS')
+                                              ->where('SYSTEM_STATUS','=','9')
+                                              ->get();
+    return view('machine/assets/edit',compact('machinesystem','machinesystemtable','dataset','machineupload','machineupload1'
       ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
   public function Editback($UPLOAD_UNID_REF) {

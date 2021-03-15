@@ -16,37 +16,33 @@
       </div>
       <div class="modal-body">
         <div class="card-body ml-2">
+          <label>ระบบ</label>
 
-          <div class="row ">
-            <div class="col-md-6 col-lg-6">
-              ระบบ
+          <form action="{{url('/machine/syscheck/store')}}" method="POST" enctype="multipart/form-data" >
+            @csrf
+            <div class="row ">
+              
+              @foreach ($machinesystemtable as $datasystable )
+                <div class="col-md-6 col-lg-3">
+                  <div class="form-check">
+                    <label  class="form-check-label">
+                      <input type="hidden" id="MACHINE_UNID_REF[]" name="MACHINE_UNID_REF[]" for="SYSTEM_CODE[]" value="{{ $dataset->UNID }}">
+                      <input  class="form-check-input" type="checkbox" id="SYSTEM_CODE[]" name="SYSTEM_CODE[]" value="{{ $datasystable->SYSTEM_CODE }}">
+                      <span class="form-check-sign">{{ $datasystable->SYSTEM_NAME }}</span>
+                    </label>
+                  </div>
+                </div>
+              @endforeach
             </div>
-            <div class="col-md-6 col-lg-6">
-              <select class="form-control">
-                <option value="">--ทั้งหมด--</option>
-                <option value="1">มอเตอร์</option>
-                <option value="2">ไฟฟ้า</option>
-                <option value="3">ความเย็น</option>
-              </select>
-            </div>
+
+
           </div>
-
-
-              <div class="row ">
-            <div class="col-md-6 col-lg-6">
-              ตรวจเช็คประจำเดือน
-            </div>
-            <div class="col-md-6 col-lg-6">
-              <input type="text" class="form-control" placeholder="ใสจำนวนเดือน">
-            </div>
-          </div>
-          </div>
-
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+      </form>
     </div>
   </div>
 </div>

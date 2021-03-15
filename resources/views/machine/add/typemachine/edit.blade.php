@@ -70,9 +70,7 @@
 											<div class="form-group has-error">
 												<label for="EMP_CODE">ชื่อประเภทเครื่องจักร</label>
 													<input type="text" class="form-control" id="TYPE_NAME" name="TYPE_NAME" value="{{$dataset->TYPE_NAME}}" required autofocus>
-													@error ('MACHINE_CODE')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
+													
 											</div>
 											<div class="col-md-6 col-lg-12">
 												<div class="form-group ">

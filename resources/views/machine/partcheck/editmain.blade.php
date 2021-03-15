@@ -30,7 +30,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12 mt-2">
-								<a href="{{ url('machine/assets/edit/'.$dataset->UNID) }}">
+								<a href="{{ url()->previous() }}">
 									<button class="btn btn-primary  btn-sm ">
 										<span class="fas fa-arrow-left ">Back </span>
 									</button>

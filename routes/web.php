@@ -19,8 +19,10 @@ use App\Http\Controllers\Machine\StockController;
 use App\Http\Controllers\Machine\MachineUploadController;
 use App\Http\Controllers\Machine\MachineManualController;
 use App\Http\Controllers\Machine\SysCheckController;
+use App\Http\Controllers\Machine\SysCheckSubController;
 use App\Http\Controllers\Machine\MachinePartCheckController;
 use App\Http\Controllers\Machine\PaySpareController;
+
 
 //************************* add tabel *********************************
 use App\Http\Controllers\MachineaddTable\MachineTypeTableController;
@@ -122,9 +124,19 @@ Route::get('machine/manual/manuallist'      ,[MachineManualController::class,'In
 //syscheck
 Route::get('machine/syscheck/syschecklist'    ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
   Route::get('machine/syscheck/syschecklist:/{LINE_CODE}'    ,[SysCheckController::class,'Indexline'])  ->name('syscheck.listline');
-  Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
+  Route::post('machine/syscheck/store'          ,[SysCheckController::class,'Store'])  ->name('syscheck.store');
+  Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('edit.show');
+
   Route::post('machine/syscheck/update/{UNID}'  ,[SysCheckController::class,'Update']);
   Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
+//syschecksub
+Route::get('machine/syschecksub/showback/{UNID}'      ,[SysCheckSubController::class,'Showback'])   ->name('syscheck.showback');
+Route::get('machine/syschecksub/show/{UNID}'      ,[SysCheckSubController::class,'Show'])   ->name('syscheck.show');
+Route::post('machine/syschecksub/store'            ,[SysCheckSubController::class,'Store']);
+Route::get('machine/syschecksub/edit/{UNID}'      ,[SysCheckSubController::class,'Edit']);
+Route::post('machine/syschecksub/update/{UNID}'    ,[SysCheckSubController::class,'Update'])  ->name('syschecksub.list');
+  Route::get('machine/syschecksub/delete/{UNID}'   ,[SysCheckSubController::class,'Delete']) ->name('syschecksub.delete');
+
 //partcheck
 Route::get('machine/partcheck/partchecklist'   ,[MachinePartCheckController::class,'Index'])  ->name('partcheck.list');
   Route::get('machine/partcheck/add/{UNID}'    ,[MachinePartCheckController::class,'Editmain'])   ->name('partcheck.add');
@@ -142,11 +154,9 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
 Route::get('machine/repair/repairlist'            ,[MachineRepairController::class,'Index'])  ->name('repair.list');
   Route::get('machine/repair/repairlistserach'    ,[MachineRepairController::class,'Indexserach'])  ->name('repair.listserach');
   Route::get('machine/repair/search'              ,[MachineRepairController::class,'Search']) ;
-
   Route::get('machine/repair/form/{MACHINE_CODE}' ,[MachineRepairController::class,'Create']) ->name('repair.form');
   Route::get('machine/repair/repairsearch'        ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
   Route::get('machine/repair/{EMP_NAME}'          ,[MachineRepairController::class,'Emp'])->name('get.repair');
-
   Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
   Route::get('machine/repair/edit/{UNID}'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);

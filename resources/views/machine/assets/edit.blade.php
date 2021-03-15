@@ -36,7 +36,7 @@
 									</button>
 								</a>
 							</div>
-								<div class="col-md-2 gx-4">
+							<div class="col-md-2 gx-4">
 								<form action="{{ url('machine/assets/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
@@ -50,12 +50,13 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="card">
-							<div class="card-header bg-primary">
-								<h4 class="ml-3 mt-2" style="color:white;" >ลงทะเบียนเครื่องจักร </h4>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<!-- ช่อง1-->
+								<div class="card-header bg-primary">
+									<h4 class="ml-3 mt-2" style="color:white;" >ลงทะเบียนเครื่องจักร </h4>
+
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
 												<img
@@ -76,9 +77,6 @@
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
 													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $dataset->MACHINE_CODE }}">
 													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $dataset->MACHINE_UNID }}">
-													@error ('MACHINE_CODE')
-														<span class="text-danger"> {{ $message }}</span>
-													@enderror
 											</div>
 
 											<div class="form-group">
@@ -103,7 +101,6 @@
 													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE">
 													<option value>--แสดงทั้งหมด--</option>
 													@foreach($machineline as $dataline)
-
 													<option value="{{ $dataline->LINE_CODE}}"
 														{{ $dataset->MACHINE_LINE == $dataline->LINE_CODE ? 'selected' : ''}} > {{$dataline->LINE_NAME}} </option>
 													@endforeach
@@ -138,94 +135,88 @@
 
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-md-12 mt-2">
+											<div class="card-body">
+												@include('masterlayout.tab.styletab')
+												<ul class="nav nav-pills justify-content-center mt--4">
+	  											<li>
+	    											<a id="home-tab" data-toggle="tab" href="#home" class="active" >ข้อมูลทั่วไป</a>
+	  											</li>
+	  											<li>
+	    											<a id="profile-tab" data-toggle="tab" href="#history" >ประวัติการแจ้งซ่อม</a>
+	  											</li>
+	  											<li>
+	    											<a id="messages-tab" data-toggle="tab" href="#plan" >แผนการปฎิบัติการ</a>
+								  				</li>
+								  				<li>
+	    											<a id="settings-tab" data-toggle="tab" href="#personal">พนักงานประจำเครื่อง</a>
+	  											</li>
+													<li>
+	    											<a id="settings-tab" data-toggle="tab" href="#systemcheck">ตรวจสอบระบบ</a>
+	  											</li>
+													<li>
+	    											<a id="settings-tab" data-toggle="tab" href="#partchange">เปลี่ยนอะไหล่</a>
+	  											</li>
+													<li>
+	    											<a id="settings-tab" data-toggle="tab" href="#uploadmanue">Upload</a>
+	  											</li>
+	  										</ul>
+	  										<div class="tab-content clearfix">
+														<!-- ข้อมูลทั่วไป -->
+	  												@include('masterlayout.tab.homeedit')
+														</form>
+														<!-- ประวัติการแจ้งซ่อม -->
+														@include('masterlayout.tab.edit.history')
 
-								<div class="row">
-									<div class="col-md-12 mt-2">
-										<div class="card-body">
+														@include('masterlayout.tab.edit.plan')
 
-											@include('masterlayout.tab.styletab')
-
-											<ul class="nav nav-pills justify-content-center mt--4">
-  											<li>
-    											<a id="home-tab" data-toggle="tab" href="#home" class="active" >ข้อมูลทั่วไป</a>
-  											</li>
-  											<li>
-    											<a id="profile-tab" data-toggle="tab" href="#history" >ประวัติการแจ้งซ่อม</a>
-  											</li>
-  											<li>
-    											<a id="messages-tab" data-toggle="tab" href="#plan" >แผนการปฎิบัติการ</a>
-							  				</li>
-							  				<li>
-    											<a id="settings-tab" data-toggle="tab" href="#personal">พนักงานประจำเครื่อง</a>
-  											</li>
-												<li>
-    											<a id="settings-tab" data-toggle="tab" href="#systemcheck">ตรวจสอบระบบ</a>
-  											</li>
-												<li>
-    											<a id="settings-tab" data-toggle="tab" href="#partchange">เปลี่ยนอะไหล่</a>
-  											</li>
-												<li>
-    											<a id="settings-tab" data-toggle="tab" href="#uploadmanue">Upload</a>
-  											</li>
-  										</ul>
-  										<div class="tab-content clearfix">
-												<!-- ข้อมูลทั่วไป -->
-  											@include('masterlayout.tab.homeedit')
-												<!-- ประวัติการแจ้งซ่อม -->
-												@include('masterlayout.tab.edit.history')
-
-												@include('masterlayout.tab.edit.plan')
-
-												@include('masterlayout.tab.edit.personal')
-												<!-- ตรวจสอบระบบ -->
-												@include('masterlayout.tab.edit.systemcheck')
-												<!-- อะไหล่ที่ต้องเปลี่ยน -->
-												@include('masterlayout.tab.edit.partchange')
-												<!-- upload -->
-												@include('masterlayout.tab.edit.uploadmanue')
-
+														@include('masterlayout.tab.edit.personal')
+														<!-- ตรวจสอบระบบ -->
+														@include('masterlayout.tab.edit.systemcheck')
+														<!-- อะไหล่ที่ต้องเปลี่ยน -->
+														@include('masterlayout.tab.edit.partchange')
+														<!-- upload -->
+														@include('masterlayout.tab.edit.uploadmanue')
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<div class="row">
+											<div class="col-md-6 col-lg-1">
+												<small><b>สร้างโดย</b></small>
+											</div>
+											<div class="col-md-6 col-lg-1">
+												<small>{{ $dataset->CREATE_BY }}</small>
+											</div>
+											<div class="col-md-6 col-lg-1">
+												<small><b>วันที่สร้าง</b></small>
+											</div>
+											<div class="col-md-6 col-lg-3">
+												<small>{{ $dataset->CREATE_TIME }}</small>
+											</div>
+											<div class="col-md-6 col-lg-1">
+												<small><b>แก้ไขโดย</b></small>
+											</div>
+											<div class="col-md-6 col-lg-1">
+												<small>{{ $dataset->MODIFY_BY }}</small>
+											</div>
+											<div class="col-md-6 col-lg-1">
+												<small><b>วันที่แก้ไข</b></small>
+											</div>
+											<div class="col-md-6 col-lg-3">
+												<small>{{ $dataset->MODIFY_TIME }}</small>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-							</div>
-							<div class="card-footer">
-								<div class="row">
-									<div class="col-md-6 col-lg-1">
-										<small><b>สร้างโดย</b></small>
-									</div>
-									<div class="col-md-6 col-lg-1">
-										<small>{{ $dataset->CREATE_BY }}</small>
-									</div>
-									<div class="col-md-6 col-lg-1">
-										<small><b>วันที่สร้าง</b></small>
-									</div>
-									<div class="col-md-6 col-lg-3">
-										<small>{{ $dataset->CREATE_TIME }}</small>
-									</div>
-									<div class="col-md-6 col-lg-1">
-										<small><b>แก้ไขโดย</b></small>
-									</div>
-									<div class="col-md-6 col-lg-1">
-										<small>{{ $dataset->MODIFY_BY }}</small>
-									</div>
-									<div class="col-md-6 col-lg-1">
-										<small><b>วันที่แก้ไข</b></small>
-									</div>
-									<div class="col-md-6 col-lg-3">
-										<small>{{ $dataset->MODIFY_TIME }}</small>
-									</div>
-								</div>
-							</div>
+						</div>
 					</div>
 				</div>
-				</div>
 			</div>
-		</form>
-	</div>
-</div>
+		</div>
 
-@include('masterlayout.tab.edit.systemcheck.syscheck')
-@include('masterlayout.tab.edit.systemcheck.syschecksub')
 @include('masterlayout.tab.edit.systemcheck.syscheckmain')
 
 @include('masterlayout.tab.modal.partchange.partchange')
@@ -233,17 +224,23 @@
 @include('masterlayout.tab.modal.uploadmanue')
 @include('masterlayout.tab.modal.edit.uploadmanueedit')
 
-
-
-
-
-
-
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}
 
 {{-- ส่วนjava --}}
 @section('javascript')
+	<script>
+	$('.load-ajax-modal').click(function(){
 
+	    $.ajax({
+	        type : 'GET',
+	        url : $(this).data('path'),
+
+	        success: function(result) {
+	            $('#syschecksub div.modal-body').html(result);
+	        }
+	    });
+	});
+	</script>
 @stop
 {{-- ปิดส่วนjava --}}

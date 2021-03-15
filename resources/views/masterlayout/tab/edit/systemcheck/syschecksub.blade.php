@@ -1,9 +1,3 @@
-{{--
-<style>
-.modal-sm {
-    max-width: 80% !important;
-}
-</style> --}}
 <!-- Modal -->
 <div class="modal fade" id="syschecksub" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -14,6 +8,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="{{ url('/machine/syschecksub/store') }}"  method="POST" enctype="multipart/form-data">
+        @csrf
+
       <div class="modal-body">
         <div class="card-body ml-2">
           <div class="row ">
@@ -23,14 +20,17 @@
 
             </div>
             <div class="row ">
-              @for($i =1; $i < 10 ; $i++)
+              @foreach($machinesystemsub as $datasystemsub )
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                  <span class="form-check-sign">{{ $i }}</span>
+                  <input  type="hidden" name="SYSTEM_CODE[]" value="{{$dataname->SYSTEM_CODE}}">
+                  <input  type="hidden" name="SYSTEMCHECK_UNID_REF[]" value="{{$dataname->UNID}}">
+                  <input  type="hidden" name="SYSTEMSUB_NAME[]" value="{{ $datasystemsub->SYSTEMSUB_NAME }}">
+                  <input class="form-check-input" type="checkbox" name="SYSTEMSUB_CODE[]" value="{{ $datasystemsub->SYSTEMSUB_CODE }}">
+                  <span class="form-check-sign"  >{{ $datasystemsub->SYSTEMSUB_NAME }}</span>
                 </label>
               </div>
-            @endfor
+            @endforeach
           </div>
 
           </div>

@@ -19,13 +19,16 @@
                                               : ($row->MACHINE_CHECK == '3' ? 'เครื่องกำลังซ่อม'
                                               :($row->MACHINE_CHECK == '4' ? 'เครื่องจำหน่าย' : 'สถานะไม่แน่ชัด' ))) }}		</td>
             <td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td>
+            <td style="white-space:nowrap">  						 {{ $row->MACHINE_STATUS == '1' ? 'จำหน่าย' : "" }}     </td>
             <td style="width:100px;">
-              <a onclick="return confirm('ต้องการจำหน่ายเครื่อง {{ $row->MACHINE_CODE }} หรือมั้ย?')" href="{{ url('machine/assets/delete/'.$row->UNID) }}" >
-                <button type="button" class="btn   btn-block btn-danger btn-sm my-1" style="width:150px">
+
+                <button type="button" class="btn btn-block btn-danger btn-sm my-1 " id="button" style="width:150px">
                   <i class="fab fa-btc fa-lg mx-1">	</i> จำหน่ายเครื่องจักร
+                  <input type="hidden" id="UNID"value="{{ $row->UNID }}">
+                  <input type="hidden" id="MACHINE_CODE"value="{{ $row->MACHINE_CODE }}">
 
                 </button>
-              </a></td>
+              </td>
             </tr>
         @endforeach
         <tr>
