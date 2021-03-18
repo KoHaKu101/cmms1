@@ -17,7 +17,7 @@ class Machine extends Model
     public $timestamps = false;
     protected $primaryKey = "MACHINE_CODE";
     protected $keyType = 'string';
-    public $table ='PMCS_MACHINES';
+    public $table ='PMCS_MACHINE';
 
 
     protected $fillable = [

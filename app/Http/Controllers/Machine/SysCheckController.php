@@ -87,11 +87,11 @@ class SysCheckController extends Controller
     $m = 'PMCS_CMMS_MACHINE_SYSTEMTABLE';
     $s = 'PMCS_CMMS_MACHINE_SYSTEMCHECK';
     $dataset = Machine::where('UNID',$UNID)->first();
-    $machinesystem = MachineSysTemCheck::select($s.'.SYSTEM_MONTHCHECK',$s.'.SYSTEM_MONTH',$m.'.SYSTEM_NAME',$s.'.SYSTEM_CODE',$s.'.UNID')
+    $machinesystem = MachineSysTemCheck::select($s.'.SYSTEM_MONTHCHECK',$s.'.SYSTEM_MONTH',$m.'.MACHINE_TYPE',$s.'.SYSTEM_CODE',$s.'.UNID')
                                         ->leftJoin($m,$m.'.SYSTEM_CODE',$s.'.SYSTEM_CODE')
                                         ->where('MACHINE_UNID_REF',$UNID)
                                         ->get();
-    $machinesystemtable = MachineSysTemTable::select('SYSTEM_CODE','SYSTEM_NAME','SYSTEM_STATUS')
+    $machinesystemtable = MachineSysTemTable::select('SYSTEM_CODE','MACHINE_TYPE','SYSTEM_STATUS')
                                             ->where('SYSTEM_STATUS','=','9')
                                             ->get();
 
@@ -115,6 +115,7 @@ class SysCheckController extends Controller
         $datasys = array(
           'SYSTEM_MONTH'     => $request->SYSTEM_MONTH[$dataset],
           'SYSTEM_MONTHCHECK'=> $request->SYSTEM_MONTHCHECK[$dataset],
+          'SYSTEM_MONTHSTORE'=> Carbon::parse($request->SYSTEM_MONTHCHECK[$dataset])->addmonth($request->SYSTEM_MONTH[$dataset]),
           'MODIFY_BY'        => Auth::user()->name,
           'MODIFY_TIME'      => Carbon::now(),
 

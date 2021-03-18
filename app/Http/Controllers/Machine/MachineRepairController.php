@@ -88,82 +88,102 @@ class MachineRepairController extends Controller
   }
   public function Store(Request $request){
 
-    $machinedocno = MachineRepair::where('MACHINE_DOCNO','=',$request->MACHINE_DOCNO)->first();
-    if ($machinedocno) {
-      $request->MACHINE_DOCNO = 'RE-'.rand(100,500).date('ymdhis');;
-      // code...
-    }else {
-      $request->MACHINE_DOCNO = $request->MACHINE_DOCNO;
-    }
+    if ($request->MACHINE_NOTE or $request->MACHINE_CAUSE > 0 ) {
 
-    if(!empty($request->MACHINE_NOTE)){
-      // $arraymachinerepair = array($request->MACHINE_REPAIR);
-      $machinerepair = implode(",",$request->MACHINE_NOTE);
-      $array = array($machinerepair,$request->MACHINE_CAUSE);
-      $machinecause = implode(",",$array);
-    }else {
-      $machinerepair = $request->MACHINE_NOTE;
-    }
-    $request->CLOSE_STATUS = '9';
-    MachineRepair::insert([
-        'MACHINE_DOCNO'         => $request->MACHINE_DOCNO,
-        'MACHINE_DOCDATE'       => $request->MACHINE_DOCDATE,
-        'MACHINE_TIME'          => $request->MACHINE_TIME,
-        'MACHINE_NUMBER'        => $request->MACHINE_NUMBER,
-        'MACHINE_CODE'          => $request->MACHINE_CODE,
-        'MACHINE_NAME'          => $request->MACHINE_NAME,
-        'MACHINE_LOCATION'      => $request->MACHINE_LOCATION,
-        'MACHINE_CAUSE'         => $machinecause,
-        'MACHINE_CAUSE_DT'      => $request->MACHINE_CAUSE_DT,
-        'MACHINE_BY_REPAIR'     => $request->MACHINE_BY_REPAIR,
-        'REPAIR_DOCDATE'        => $request->REPAIR_DOCDATE,
-        'REPAIR_TIME'           => $request->REPAIR_TIME,
-        'MACHINE_INSPECTION'    => $request->MACHINE_INSPECTION,
-        'MACHINE_BECAUSE'       => $request->MACHINE_BECAUSE,
-        'MACHINE_NOTE'          => $machinerepair,
-        'STATUS'                => $request->STATUS,
-        'POSTED'                => $request->POSTED,
-        'TODAY_DOC'             => $request->TODAY_DOC,
-        'TODAY_YY'              => $request->TODAY_YY,
-        'TODAY_MM'              => $request->TODAY_MM,
-        'TODAY_MAX'             => $request->TODAY_MAX,
-        'EMP_CODE'              => $request->EMP_CODE,
-        'EMP_NAME'              => $request->EMP_NAME,
-        'SECTION_CODE'          => $request->SECTION_CODE,
-        'MACHINE_TYPE'          => $request->MACHINE_TYPE,
-        'BU_JOB_NAME'           => $request->BU_JOB_NAME,
-        'BU_TYPE'               => $request->BU_TYPE,
-        'BU_DESCRIPTION'        => $request->BU_DESCRIPTION,
-        'BU_DUEDATE'            => $request->BU_DUEDATE,
-        'RP_CODE'               => $request->RP_CODE,
-        'EG_DESC'               => $request->EG_DESC,
-        'EG_TYYPE'              => $request->EG_TYYPE,
-        'EX_DESC1'              => $request->EX_DESC1,
-        'RECORD_STATUS'         => $request->RECORD_STATUS,
-        'TIMESTAMP'             => $request->TIMESTAMP,
-        'CLOSE_STATUS'          => $request->CLOSE_STATUS,
-        'CM_STARTDATE'          => $request->CM_STARTDATE,
-        'CM_ENDDATE'            => $request->CM_ENDDATE,
-        'CLOSE_BY'              => $request->CLOSE_BY,
-        'CLOSE_TIME'            => $request->CLOSE_TIME,
-        'CREATE_BY'             => $request->EMP_NAME,
-        'CREATE_TIME'           => Carbon::now(),
-        'UNID'                  => $this->randUNID('PMCS_REPAIR_MACHINE'),
+      if(!empty($request->MACHINE_NOTE)){
+        // $arraymachinerepair = array($request->MACHINE_REPAIR);
+        $MACHINE_NOTE = implode(",",$request->MACHINE_NOTE);
 
-    ]);
-    return redirect()->route('repair.list');
+      }elseif(empty($request->MACHINE_NOTE)) {
+        $MACHINE_NOTE = NULL;
+      }
+      $request->CLOSE_STATUS = '9';
+      MachineRepair::insert([
+          'MACHINE_DOCNO'         => $request->MACHINE_DOCNO,
+          'MACHINE_DOCDATE'       => $request->MACHINE_DOCDATE,
+          'MACHINE_TIME'          => $request->MACHINE_TIME,
+          'MACHINE_NUMBER'        => $request->MACHINE_NUMBER,
+          'MACHINE_CODE'          => $request->MACHINE_CODE,
+          'MACHINE_NAME'          => $request->MACHINE_NAME,
+          'MACHINE_LOCATION'      => $request->MACHINE_LOCATION,
+          'MACHINE_CAUSE'         => $request->MACHINE_CAUSE,
+          'MACHINE_CAUSE_DT'      => $request->MACHINE_CAUSE_DT,
+          'MACHINE_BY_REPAIR'     => $request->MACHINE_BY_REPAIR,
+          'REPAIR_DOCDATE'        => $request->REPAIR_DOCDATE,
+          'REPAIR_TIME'           => $request->REPAIR_TIME,
+          'MACHINE_INSPECTION'    => $request->MACHINE_INSPECTION,
+          'MACHINE_BECAUSE'       => $request->MACHINE_BECAUSE,
+          'MACHINE_NOTE'          => $MACHINE_NOTE,
+          'STATUS'                => $request->STATUS,
+          'POSTED'                => $request->POSTED,
+          'TODAY_DOC'             => $request->TODAY_DOC,
+          'TODAY_YY'              => $request->TODAY_YY,
+          'TODAY_MM'              => $request->TODAY_MM,
+          'TODAY_MAX'             => $request->TODAY_MAX,
+          'EMP_CODE'              => $request->EMP_CODE,
+          'EMP_NAME'              => $request->EMP_NAME,
+          'SECTION_CODE'          => $request->SECTION_CODE,
+          'MACHINE_TYPE'          => $request->MACHINE_TYPE,
+          'BU_JOB_NAME'           => $request->BU_JOB_NAME,
+          'BU_TYPE'               => $request->BU_TYPE,
+          'BU_DESCRIPTION'        => $request->BU_DESCRIPTION,
+          'BU_DUEDATE'            => $request->BU_DUEDATE,
+          'RP_CODE'               => $request->RP_CODE,
+          'EG_DESC'               => $request->EG_DESC,
+          'EG_TYYPE'              => $request->EG_TYYPE,
+          'EX_DESC1'              => $request->EX_DESC1,
+          'RECORD_STATUS'         => $request->RECORD_STATUS,
+          'TIMESTAMP'             => $request->TIMESTAMP,
+          'CLOSE_STATUS'          => $request->CLOSE_STATUS,
+          'CM_STARTDATE'          => $request->CM_STARTDATE,
+          'CM_ENDDATE'            => $request->CM_ENDDATE,
+          'CLOSE_BY'              => $request->CLOSE_BY,
+          'CLOSE_TIME'            => $request->CLOSE_TIME,
+          'CREATE_BY'             => $request->EMP_NAME,
+          'CREATE_TIME'           => Carbon::now(),
+          'UNID'                  => $this->randUNID('PMCS_REPAIR_MACHINE'),
+
+      ]);
+      return redirect()->route('repair.list');
+    }else {
+      $validated = $request->validate([
+        'MACHINE_NOTE'           => 'required|max:50',
+        'MACHINE_CAUSE'           => 'required|max:200'
+        ],
+        [
+        'MACHINE_NOTE.required'  => 'ไม่มีข้อมูล',
+        'MACHINE_CAUSE.required'  => 'ไม่มีข้อมูล'
+        ]);
+    }
   }
   public function Edit($UNID) {
+
       $dataset = MachineRepair::where('UNID','=',$UNID)->first();
+
+      $data = MachineRepair::select('MACHINE_NOTE','UNID')->where('UNID',$UNID)->first();
+      $datanote = array( 'data' => explode(',',$data->MACHINE_NOTE),);
+      // $datanote = explode(',',$data->MACHINE_NOTE);
       $datarepair = MachineRepairTable::where('REPAIR_STATUS','=','9')->get();
       $datamachine = Machine::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->first();
       $dataemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
 
-
-    return view('machine/repair/edit',compact('dataset','datarepair','datamachine','dataemp',));
+      // var_dump($dataset);
+    return view('machine/repair/edit',compact('data','datanote','dataset','datarepair','datamachine','dataemp',));
 
   }
   public function Update(Request $request,$UNID){
+
+
+
+      if(!empty($request->MACHINE_NOTE)){
+        // $arraymachinerepair = array($request->MACHINE_REPAIR);
+        $MACHINE_NOTE = implode(",",$request->MACHINE_NOTE);
+
+      }elseif(empty($request->MACHINE_NOTE)) {
+
+        $MACHINE_NOTE = $request->MACHINE_NOTE;
+
+      }
     $request->CLOSE_STATUS = '9';
     $data_set = MachineRepair::where('UNID','=',$UNID)->update([
           'MACHINE_DOCNO'         => $request->MACHINE_DOCNO,
@@ -180,7 +200,7 @@ class MachineRepairController extends Controller
           'REPAIR_TIME'           => $request->REPAIR_TIME,
           'MACHINE_INSPECTION'    => $request->MACHINE_INSPECTION,
           'MACHINE_BECAUSE'       => $request->MACHINE_BECAUSE,
-          'MACHINE_NOTE'          => $request->MACHINE_NOTE,
+          'MACHINE_NOTE'          => $MACHINE_NOTE,
           'STATUS'                => $request->STATUS,
           'POSTED'                => $request->POSTED,
           'TODAY_DOC'             => $request->TODAY_DOC,

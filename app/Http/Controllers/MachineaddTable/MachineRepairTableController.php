@@ -57,7 +57,6 @@ class MachineRepairTableController extends Controller
     MachineRepairTable::insert([
       'REPAIR_CODE'     => $request->REPAIR_CODE,
       'REPAIR_NAME'     => $request->REPAIR_NAME,
-      'REPAIR_TYPE_CODE'=> $request->REPAIR_TYPE_CODE,
       'REPAIR_NOTE'     => $request->REPAIR_NOTE,
       'REPAIR_STATUS'   => $request->REPAIR_STATUS,
       'CREATE_BY'       => Auth::user()->name,
@@ -77,7 +76,6 @@ public function Update(Request $request,$UNID) {
     $dataset = MachineRepairTable::where('UNID',$UNID)->update([
     'REPAIR_CODE'     => $request->REPAIR_CODE,
     'REPAIR_NAME'     => $request->REPAIR_NAME,
-    'REPAIR_TYPE_CODE'=> $request->REPAIR_TYPE_CODE,
     'REPAIR_NOTE'     => $request->REPAIR_NOTE,
     'REPAIR_STATUS'   => $request->REPAIR_STATUS,
     'MODIFY_BY'       => Auth::user()->name,

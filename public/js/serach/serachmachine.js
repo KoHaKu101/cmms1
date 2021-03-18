@@ -16,6 +16,7 @@ $(document).ready(function(){
     var column_name = $('#hidden_column_name').val();
     var sort_type = $('#hidden_sort_type').val();
     var page = $('#hidden_page').val();
+    console.log(query);
     fetch_data(page, sort_type, column_name, query);
    });
 

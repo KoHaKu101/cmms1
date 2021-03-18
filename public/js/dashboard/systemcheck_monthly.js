@@ -1,20 +1,20 @@
 $(document).ready(function(){
-  var notifity = function (){
+  var notifitysystemcheckmonthly = function (){
     $.ajax({
-      url:'/machine/repair/notificaiton',
+      url:'/machine/monthly/notificaiton',
       method:'GET',
       dataType:'json',
-      success:function(res){
-        if (res != null) {
+      success:function(resu){
+        if (resu != null) {
           var _html='';
 
-          $.each(res.datarepair,function(notificaiton,datarepair){
-            var url = '/machine/repair/edit/'+datarepair.UNID;
+          $.each(resu.datamonth,function(systemcheckmonthly,datamonth){
+            var url = '/machine/syscheck/edit/'+datamonth.MACHINE_UNID_REF;
             _html += '<a href="'+url+'">'+
                 '<div class="notif-icon notif-danger"> <i class="fa fa-wrench"></i> </div>'+
                 '<div class="notif-content">'+
-                '<span class="block" >Line :'+datarepair.MACHINE_LINE+' MC: '+datarepair.MACHINE_CODE+ '</span>' +
-                  '<span class="time">'+datarepair.MACHINE_DOCDATE+'</span>'+
+                '<span class="block" >Line :'+datamonth.MACHINE_LINE+' MC: '+datamonth.MACHINE_CODE+ '</span>' +
+                  '<span class="time">'+datamonth.SYSTEM_NAME+'</span>'+
                 '</div>'+
               '</a>';
           });
@@ -23,28 +23,28 @@ $(document).ready(function(){
           var _html='';
            _html +=
            '<center> <div class="notif-content">'+
-            '<span class="block" >' +'รายการแจ้งซ่อม'+ '</span>' +
+            '<span class="block" >' +'รายการตรวจเช็คเครื่องจักร'+ '</span>' +
             '</div> </center>'+
             '<center> <div class="notif-content">'+
             '<span class="block" >' +'0 รายการ'+ '</span>' +
             '</div> </center>';  }
-        $("#loaddatacode").html(_html);
+        $("#monthly").html(_html);
      // Ask for new notifications every second
       }
       });
     }
-    setInterval(notifity,50000);
+    setInterval(notifitysystemcheckmonthly,20000);
 
     var count = function (){
       $.ajax({
-        url:'/machine/repair/notificaitoncount',
+        url:'/machine/monthly/notificaitoncount',
         method:'GET',
         dataType:'json',
 
         success:function(data){
 
-            var datacount = '<span class="notification">' +data.datacount+ '</span>';
-            $("#count").html(datacount);
+            var datamonthcount = '<span class="notification">' +data.datamonthcount+ '</span>';
+            $("#monthlycount").html(datamonthcount);
 
 
 
@@ -52,5 +52,5 @@ $(document).ready(function(){
         }
         });
       }
-      setInterval(count,50000);
+      setInterval(count,20000);
   });

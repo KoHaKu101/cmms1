@@ -18,7 +18,7 @@ class MachineSysTemCheck extends Model
   public $table ='PMCS_CMMS_MACHINE_SYSTEMCHECK';
 
 
-  protected $fillable = ['UNID','MACHINE_UNID_REF','SYSTEM_CODE','SYSTEM_MONTH','SYSTEM_MONTHCHECK'
+  protected $fillable = ['UNID','MACHINE_UNID_REF','SYSTEM_CODE','SYSTEM_MONTH','SYSTEM_MONTHCHECK','SYSTEM_MONTHSTORE'
   ,'CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'
   ];
 }

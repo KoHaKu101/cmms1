@@ -11,6 +11,7 @@ use Auth;
 use Response;
 //******************** model ***********************
 use App\Models\Machine\MachineUpload;
+use App\Models\Machine\Machine;
 //************** Package form github ***************
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -94,7 +95,10 @@ class MachineUploadController extends Controller
   }
   public function Edit($UNID){
     $dataset = MachineUpload::where('UNID',$UNID)->first();
-    return view('machine/manual/edit',compact('dataset'));
+    $databack = Machine::select('UNID','MACHINE_CODE')->where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
+
+    return view('machine/manual/edit',compact('databack','dataset'));
+
 
   }
   public function Update(Request $request,$UNID){

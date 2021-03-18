@@ -82,8 +82,8 @@
 											</div>
 											<div class="form-group has-error">
 												<label for="EMP_NAME">ชื่อพนักงาน</label>
-												<select class="form-control" id="EMP_NAME" name="EMP_NAME">
-													<option>พนักงาน</option>
+												<select class="form-control" id="EMP_NAME" name="EMP_NAME" required autofocus>
+													<option value="">พนักงาน</option>
 													@foreach ($dataemp as $key => $dataitem)
 
 													<option value="{{ $dataitem->EMP_NAME }}">{{ $dataitem->EMP_NAME }}   {{ $dataitem->EMP_NAME_LAST }}</option>
@@ -199,8 +199,8 @@
 																			<div class="form-group">
 																				<label for="MACHINE_TYPE">สถานะ</label>
 
-																				<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" >
-																					<option>--แสดงทั้งหมด--</option>
+																				<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" required autofocus>
+																					<option value="">--แสดงทั้งหมด--</option>
 																					<option value="STOP">หยุดทำงาน</option>
 																					<option value="RUN">ทำงานปกติ</option>
 

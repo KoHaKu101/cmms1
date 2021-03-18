@@ -26,15 +26,24 @@ class MachineRepairPDFController extends Controller
 
   public function RepairPdf($UNID)
     {
-      
-      $dataset = MachineRepair::leftJoin('PMCS_MACHINES','PMCS_MACHINES.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
+      $machine = "PMCS_MACHINES";
+      $repair  = "PMCS_REPAIR_MACHINE";
+      $dataset = MachineRepair::select($machine.'.MACHINE_CODE',$machine.'.MACHINE_NAME',$machine.'.MACHINE_LINE',$repair.'.MACHINE_DOCNO'
+      ,$repair.'.MACHINE_DOCDATE',$repair.'.MACHINE_TIME',$repair.'.MACHINE_NOTE',$repair.'.MACHINE_CAUSE')
+                                ->leftJoin($machine,$machine.'.MACHINE_CODE',$repair.'.MACHINE_CODE')
                                 ->where('PMCS_REPAIR_MACHINE.UNID',$UNID)->first();
+
+
+        $array = array($dataset->MACHINE_NOTE,$dataset->MACHINE_CAUSE);
+        $detail = implode(" ",$array);
+
      //add font
      $this->fpdf->AddFont('THSarabunNew','','THSarabunNew.php');
      $this->fpdf->AddFont('THSarabunNew','B','THSarabunNew_b.php');
      //หน้ากระดาษ
      $this->fpdf->SetFont('Arial','B',16);
      $this->fpdf->AddPage('L','A5');
+     $this->fpdf->SetTitle('รายการแจ้งซ่อมเครื่องจักร','isUTF8');
      //data header
      $this->fpdf->SetFont('THSarabunNew','',13 );
       $this->fpdf->Text(158.5,16,iconv('UTF-8', 'cp874', $dataset->MACHINE_DOCNO  ));
@@ -53,7 +62,7 @@ class MachineRepairPDFController extends Controller
       $this->fpdf->Text(45,48,  $dataset->MACHINE_LINE );//สถานที่ติดตั้ง
       $this->fpdf->SetY(49.2);
       $this->fpdf->SetX(44.5);
-      $this->fpdf->MultiCell(132,5, $dataset->MACHINE_CAUSE ,0,0,"",false);//อาการที่เสีย
+      $this->fpdf->MultiCell(132,5,iconv('UTF-8', 'cp874', $detail ) ,0,0,"",false);//อาการที่เสีย
      //line 1
      $this->fpdf->SetFont('THSarabunNew','B',13);
       $this->fpdf->Text(45,43,'________________________________');//หมายเลขเครื่องจักร

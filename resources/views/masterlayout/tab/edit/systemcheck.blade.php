@@ -44,14 +44,13 @@
                 </td>
                 <td style="width:80px">
                   <div class="form-inline ">
-                    <button  id="popup" type="button" style="width:100px" class="btn btn-primary  btn-sm  btn-block mt--1"
-                    data-toggle="modal" data-target="#syscheck">
+                    <button  id="btn" type="button" style="width:100px" class="btn btn-primary  btn-sm  btn-block mt--1">
                     <span style="text-align:left;font-size:12px">
                       <i style="font-size:15px" class="icon-printer mx-1 ">	</i>
                        {{ \App\Models\Machine\MachineSysTemSubCheck::select('SYSTEMCHECK_UNID_REF')
                        ->where('SYSTEMCHECK_UNID_REF',$datasystem->UNID)->count() }} รายการ </span>	</button>
                   </div>
-                  <input type="hidden" name="DATAUNID[]" value="{{ $datasystem->UNID }}">
+                  <input type="hidden" name="DATAUNID[]" id="UNID" value="{{ $datasystem->UNID }}">
                 </td>
 
                   @if($datasystem->SYSTEM_MONTH === NULL)
@@ -80,7 +79,7 @@
                         </a>
                     </td>
                   @elseif($datasystem->SYSTEM_MONTH !== NULL)
-                    <td style="width:132px">
+                    <td style="width:240px">
                       <div class="input-group mb-3 mt-2">
                         <select class="form-control form-control" id="SYSTEM_MONTH[]" name="SYSTEM_MONTH[]" required autofocus>
                               @for ($i=1; $i < 13; $i++)
@@ -95,8 +94,8 @@
                     </td>
 
                       <?php
-                      echo '<td style="width:115px"><input type="text" class="form-control"
-                      value="'.Carbon\Carbon::parse($datasystem->SYSTEM_MONTHCHECK)->addmonth($datasystem->SYSTEM_MONTH)->Format('d/m/Y').'"
+                      echo '<td style="width:160px"><input style="width:160px" type="date" class="form-control" name="SYSTEM_SYSTEM_MONTHSTORE[]"
+                      value="'.Carbon\Carbon::parse($datasystem->SYSTEM_MONTHCHECK)->addmonth($datasystem->SYSTEM_MONTH)->toDateString().'"
                       readonly></td>';
                       echo '<td style="width:165px">
                       <input style="width:165px" type="date" class="form-control" name="SYSTEM_MONTHCHECK[]"

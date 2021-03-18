@@ -29,7 +29,7 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
-								<a href="{{ route('dashboard') }}">
+								<a href="{{ url('machine/machinesystemtable/edit/'.$dataset->UNID) }}">
 								<button class="btn btn-warning  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
@@ -53,7 +53,7 @@
 									@endif
 
 										<div class="card-header bg-primary">
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>ต้นแบบรายการตรวจเช็คเครื่องจักร </h4>
+											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i> รายการระบบเครื่องจักร </h4>
 										 </div>
 
 									<div id="result"class="card-body mt--3">
@@ -61,36 +61,36 @@
 											<table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
 												<thead>
 													<tr>
-														<th scope="col">ประเภทเครื่องจักร</th>
-														<th scope="col">PM</th>
-														<th scope="col"></th>
+														<th scope="col">CODE</th>
+														<th scope="col">ระบบเครื่องจักร</th>
+														<th> ตรวจเช็ค </th>
+														<th scope="col">เปิด/ปิด</th>
 														<th scope="col"></th>
 													</tr>
 												</thead>
 												<tbody>
-													{{-- @foreach ($dataset as $key => $dataitem) --}}
+													@foreach ($datapoint as $key => $dataitem)
 													<tr>
-														<td>AUTODIRLL</td>
-														<td>PM 3 รายการ</td>
-														<td style="width:100px">
-															<a href="#">
+														<td>{{$dataitem->DETAILPOINTTABLE_ID}}</td>
+														<td style="width:200px">
+															<a href="{{ url('machine/machinesystemtable/edit/'.$dataitem->UNID) }}">
 																<button class="btn btn-primary btn-block btn-sm my-1 mx--2 ">
 																	<span class="btn-label float-left">
 																		<i class="fa fa-eye mx-1 "></i>
-																		เพิ่ม PM
+																		{{ $dataitem->MACHINE_TYPE }}
 																	</span>
 																</button>
 															</a>
 														</td>
-														<td style="width:10px">
-															<a href="#">
+														<td>{{$dataitem->DETAILPOINTTABLE_NAME}}</td>
+														<td>{{ $dataitem->SYSTEM_STATUS == "9" ? 'เปิด' : 'ปิด' }}</td>
+														<td><a href="{{ url('machine/machinesystemtable/delete/'.$dataitem->UNID) }}">
 															<button type="button" class="btn btn-danger btn-block btn-sm my-1" style="width:40px">
 																<i class="fas fa-trash fa-lg">	</i>
 															</button>
-														</a>
-													</td>
+														</a></td>
 													</tr>
-													{{-- @endforeach --}}
+													@endforeach
 
 												</tbody>
 											</table>
@@ -115,9 +115,9 @@
 													<label for="MACHINE_TYPE">รายการระบบเครื่องจักร</label>
 													<select class="form-control" name="MACHINE_TYPE" required autofocus>
 														<option value="">ประเภทเครื่องจักร</option>
-														{{-- @foreach ($datatype as $key => $dataitem)
+														@foreach ($datatype as $key => $dataitem)
 														<option value="{{ $dataitem->TYPE_NAME }}">{{ $dataitem->TYPE_NAME }}</option>
-														@endforeach --}}
+														@endforeach
 													</select>
 												</div>
 												<div class="form-group has-error">

@@ -173,9 +173,9 @@
 
 														@include('masterlayout.tab.edit.personal')
 														<!-- ตรวจสอบระบบ -->
-														@include('masterlayout.tab.edit.systemcheck')
+														{{-- @include('masterlayout.tab.edit.systemcheck') --}}
 														<!-- อะไหล่ที่ต้องเปลี่ยน -->
-														@include('masterlayout.tab.edit.partchange')
+														{{-- @include('masterlayout.tab.edit.partchange') --}}
 														<!-- upload -->
 														@include('masterlayout.tab.edit.uploadmanue')
 												</div>
@@ -217,9 +217,9 @@
 			</div>
 		</div>
 
-@include('masterlayout.tab.edit.systemcheck.syscheckmain')
+{{-- @include('masterlayout.tab.edit.systemcheck.syscheckmain') --}}
 
-@include('masterlayout.tab.modal.partchange.partchange')
+{{-- @include('masterlayout.tab.modal.partchange.partchange') --}}
 @include('masterlayout.tab.modal.partchange.partchangeedit')
 @include('masterlayout.tab.modal.uploadmanue')
 @include('masterlayout.tab.modal.edit.uploadmanueedit')
@@ -229,18 +229,13 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+
 	<script>
-	$('.load-ajax-modal').click(function(){
-
-	    $.ajax({
-	        type : 'GET',
-	        url : $(this).data('path'),
-
-	        success: function(result) {
-	            $('#syschecksub div.modal-body').html(result);
-	        }
-	    });
-	});
+	var button = document.getElementById('btn');
+	var unid = $('#UNID').val(); console.log(unid);
+	button.addEventListener('click', function(){
+		window.open('/machine/systemcheck/pdf/'+unid,'Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+	})
 	</script>
 @stop
 {{-- ปิดส่วนjava --}}

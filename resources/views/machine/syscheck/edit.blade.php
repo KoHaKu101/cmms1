@@ -87,13 +87,14 @@
 				                </td>
 				                <td style="width:80px">
 				                  <div class="form-inline ">
-				                    <button  id="popup" type="button" style="width:100px" class="btn btn-primary  btn-sm  btn-block mt--1"
-				                    data-toggle="modal" data-target="#syscheck">
+
+				                    <button  id="btn" type="button" style="width:100px" class="btn btn-primary  btn-sm  btn-block mt--1">
 				                    <span style="text-align:left;font-size:12px">
 				                    <i style="font-size:15px" class="icon-printer mx-1 ">	</i>
 														 {{ \App\Models\Machine\MachineSysTemSubCheck::select('SYSTEMCHECK_UNID_REF')->where('SYSTEMCHECK_UNID_REF',$datasystem->UNID)->count() }} รายการ </span>	</button>
-				                  </div>
-				                  <input type="hidden" name="DATAUNID[]" value="{{ $datasystem->UNID }}">
+
+													</div>
+				                  <input type="hidden" name="DATAUNID[]" id="UNID"value="{{ $datasystem->UNID }}">
 				                </td>
 
 				                  @if($datasystem->SYSTEM_MONTH === NULL)
@@ -191,6 +192,12 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-
+	<script>
+	var button = document.getElementById('btn');
+	var unid = $('#UNID').val(); console.log(unid);
+	button.addEventListener('click', function(){
+		window.open('/machine/systemcheck/pdf/'+unid,'Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+	})
+	</script>
 @stop
 {{-- ปิดส่วนjava --}}

@@ -78,6 +78,7 @@
 {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
 
 	<script type="text/javascript" src="{{ asset('/js/dashboard/notifity.js') }}"></script>
+		{{-- <script type="text/javascript" src="{{ asset('/js/dashboard/systemcheck_monthly.js') }}"></script> --}}
 	@include('/errorsweetalert/errormessed')
 	{{-- <script type="text/javascript" src="{{ asset('/js/errorsweetalert/errormessed.js') }}"></script> --}}
 

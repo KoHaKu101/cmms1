@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class addtable2 extends Migration
+class addtable3 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class addtable2 extends Migration
      */
     public function up()
     {
-        Schema::table('PMCS_REPAIR_MACHINE', function (Blueprint $table) {
-          $table->integer('NOTIFICATION_STATUS')->nullable()->after('CLOSE_TIME');
+        Schema::table('PMCS_CMMS_MACHINE_SYSTEMCHECK', function (Blueprint $table) {
+          $table->date('SYSTEM_MONTHSTORE')->nullable()->after('SYSTEM_MONTHCHECK');
         });
-
     }
 
     /**
@@ -26,6 +25,6 @@ class addtable2 extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('PMCS_REPAIR_MACHINE');
+        Schema::dropIfExists('PMCS_CMMS_MACHINE_SYSTEMCHECK');
     }
 }

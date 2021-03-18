@@ -171,12 +171,30 @@
 																	</table>
 																</div>
 															</div>
+
 																<div class="row">
+
+																	<div class="col-md-8 col-lg-3 ml-2">
+
+																		@foreach($datarepair as $dataitem)
+																		<div class="form-check">
+																			<label  class="form-check-label">
+																				<input class="form-check-input" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]"
+
+																				value="{{ $dataitem->REPAIR_NAME }}" @if (in_array($dataitem->REPAIR_NAME,$datanote['data'])) checked @else "" @endif>
+																				<span class="form-check-sign">{{ $dataitem->REPAIR_NAME }}</span>
+																			</label>
+																		</div>
+																		{{-- <?php var_dump(in_array($dataitem->REPAIR_NAME,$datanote['data'])); ?> --}}
+																	@endforeach
+
+																	</div>
 
 																	<div class="col-md-8 col-lg-3 ml-2">
 																		<div class="form-group">
     																	<label for="MACHINE_CAUSE">Example textarea</label>
-    																	<textarea class="form-control" id="MACHINE_CAUSE" name="MACHINE_CAUSE" rows="4">{{ $dataset->MACHINE_CAUSE }}</textarea>
+    																	<textarea class="form-control" id="MACHINE_CAUSE" name="MACHINE_CAUSE" rows="4">{{ $dataset->MACHINE_CAUSE }}
+																			 </textarea>
   																	</div>
 																	</div>
 

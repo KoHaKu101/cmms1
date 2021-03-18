@@ -46,7 +46,7 @@
 									<span class="fas fa-file-export fa-lg">	ExportAll	</span>
 								</button>
 								</a>
-								<button class="btn btn-primary  btn-xs" type="button" id="button">
+								<button class="btn btn-primary  btn-xs" type="button" id="buttonprint">
 									<span class="fas fa-print fa-lg">	Print	</span>
 								</button>
 
@@ -87,11 +87,9 @@
 														<th ></th>
                             <th scope="col">LINE</th>
                           	<th scope="col">Name</th>
-
-                          	<th scope="col">Asset Status</th>
-														<th scope="col">วันที่เริ่มใช้งาน</th>
-														<th></th>
-														<th></th>
+														<th scope="col">แผนการผลิต</th>
+														<th scope="col">ประวัติการซ่อม</th>
+														<th scope="col">แจ้งซ่อม</th>
                         	</tr>
                       	</thead>
 
@@ -135,7 +133,7 @@
 });
 	</script>
 	<script>
-	var button = document.getElementById('button');
+	var button = document.getElementById('buttonprint');
 	button.addEventListener('click', function(){
 		window.open('/machine/assets/machineall','Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
 	})

@@ -18,6 +18,6 @@ class MachineSysTemTable extends Model
     protected $keyType = 'integer';
     public $table ='PMCS_CMMS_MACHINE_SYSTEMTABLE';
 
-    protected $fillable = ['SYSTEM_CODE','SYSTEM_NAME','SYSTEM_NOTE','SYSTEM_STATUS',
+    protected $fillable = ['SYSTEM_CODE','MACHINE_TYPE','SYSTEM_MONTH','SYSTEM_NOTE','SYSTEM_STATUS',
     'SYSTEM_ICON','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME','UNID'];
 }

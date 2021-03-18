@@ -57,7 +57,7 @@ class MachineController extends Controller
     {
          $querydata = $request->get('query');
          $query = str_replace(" ", "%", $querydata);
-   $dataset = DB::table('PMCS_MACHINES')
+   $dataset = DB::table('PMCS_MACHINE')
                  ->where('MACHINE_CODE', 'like', '%'.$query.'%')
                  ->orWhere('MACHINE_LINE', 'like', '%'.$query.'%')
                  ->orWhere('MACHINE_NAME', 'like', '%'.$query.'%')
@@ -67,6 +67,7 @@ class MachineController extends Controller
   }
 
   public function All(){
+
     $dataset = Machine::paginate(10);
     return View('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
   }
@@ -177,14 +178,10 @@ class MachineController extends Controller
   }
 
   public function Edit($UNID) {
-    $m = 'PMCS_CMMS_MACHINE_SYSTEMTABLE';
-    $s = 'PMCS_CMMS_MACHINE_SYSTEMCHECK';
+
 
     $dataset = Machine::where('UNID',$UNID)->first();
-    $machinesystem = MachineSysTemCheck::select($s.'.SYSTEM_MONTHCHECK',$s.'.SYSTEM_MONTH',$m.'.SYSTEM_NAME',$s.'.SYSTEM_CODE',$s.'.UNID')
-                                        ->leftJoin($m,$m.'.SYSTEM_CODE',$s.'.SYSTEM_CODE')
-                                        ->where('MACHINE_UNID_REF',$UNID)
-                                        ->get();
+
     $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
     $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
@@ -198,23 +195,9 @@ class MachineController extends Controller
     $machinerepair = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                     ->where('STATUS','=','9')
                                     ->get();
-    $machinesystemtable = MachineSysTemTable::select('SYSTEM_CODE','SYSTEM_NAME','SYSTEM_STATUS')
-                                              ->where('SYSTEM_STATUS','=','9')
-                                              ->get();
-    return view('machine/assets/edit',compact('machinesystem','machinesystemtable','dataset','machineupload','machineupload1'
-      ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
-  }
-  public function Editback($UPLOAD_UNID_REF) {
-    $dataset = Machine::where('UNID','=',$UPLOAD_UNID_REF)->first();
-    $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinetype = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
-    $machineline = MachineLine::where('LINE_STATUS','=','9')->get();
-    $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
-    $machineemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
+
     return view('machine/assets/edit',compact('dataset','machineupload','machineupload1'
-      ,'machineupload2','machinetype','machineline','machinestatus','machineemp'));
+      ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
   public function Update(Request $request,$UNID){
     $update = $request->MACHINE_UPDATE;

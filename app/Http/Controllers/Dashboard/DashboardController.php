@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machine;
 use App\Models\Machine\MachineRepair;
+use App\Models\Machine\MachineSysTemCheck;
+// use App\Models\Machine\MachineRepair;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
@@ -54,16 +57,25 @@ class DashboardController extends Controller
   }
 
   public function SystemcheckMonthly(Request $request){
-    $data = MachineSysTemCheck::select('PMCS_REPAIR_MACHINE.UNID','PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINES.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
-                          ->leftJoin('PMCS_MACHINES','PMCS_MACHINES.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
-                          ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_TIME','DESC')->take(4)->get();
+    $systemcheck = 'PMCS_CMMS_MACHINE_SYSTEMCHECK';
+    $systemtable = 'PMCS_CMMS_MACHINE_SYSTEMTABLE';
+    $machine = 'PMCS_MACHINES';
+    $data = MachineSysTemCheck::select($systemcheck.'.MACHINE_UNID_REF',$systemtable.'.SYSTEM_NAME'
+                                ,$machine.'.MACHINE_LINE',$machine.'.MACHINE_CODE',$systemcheck.'.SYSTEM_MONTHSTORE')
+                          ->leftJoin($systemtable,$systemtable.'.SYSTEM_CODE',$systemcheck.'.SYSTEM_CODE')
+                          ->leftJoin($machine,$machine.'.UNID',$systemcheck.'.MACHINE_UNID_REF')
+                          ->whereDate('SYSTEM_MONTHSTORE','<=',Carbon::now('Asia/Bangkok'))
+                          ->orderBy('SYSTEM_MONTHSTORE','DESC')->take(4)->get();
+    // $notify = (Carbon::now() >= $data->SYSTEM_MONTHSTORE) ? $data->get()  : ""  ;
     // $datacount = MachineRepair::where('CLOSE_STATUS','9')->get()->count();
+    // dd($data);
 
-    return response()->json(['datarepair' => $data]);
+    return response()->json(['datamonth' => $data]);
   }
   public function SystemcheckMonthlycount(Request $request){
-    $data = MachineSysTemCheck::where('CLOSE_STATUS','9')->take(4)->get()->count();
-    return response()->json(['datacount' => $data]);
+    $data = MachineSysTemCheck::select('SYSTEM_MONTHSTORE')->whereDate('SYSTEM_MONTHSTORE','<=',Carbon::now('Asia/Bangkok'))->take(4)
+                                ->get()->count();
+    return response()->json(['datamonthcount' => $data]);
   }
 
 
