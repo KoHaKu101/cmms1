@@ -27,7 +27,7 @@
                  <ul class="nav nav-collapse">
              ';
 
-            $MenuSubitem=Menusubitem::where('SUBUNID_REF',$_UNID)->get();
+            $MenuSubitem=Menusubitem::where('SUBUNID_REF',$_UNID)->orderby('SUBMENU_INDEX','ASC')->get();
             foreach ($MenuSubitem as $subvalue) {
 
               $_SUBNAME = $subvalue['SUBMENU_NAME'];

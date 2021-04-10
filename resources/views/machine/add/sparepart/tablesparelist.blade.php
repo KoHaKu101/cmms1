@@ -41,7 +41,7 @@
 				<div class="py-12">
 	        <div class="container mt-2">
 						<div class="row">
-							<div class="col-md-8">
+							<div class="col-md-12">
 								<div class="card ">
                 	@if(session('success'))
                   	<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -52,98 +52,272 @@
 										</div>
 									@endif
 
-										<div class="card-header bg-primary">
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i> รายการอะไหล่ </h4>
+										<div class="card-header bg-primary col-md-6 col-lg-12">
+											<h4 class="ml-3 mt-2" style="color:white;" >
+											<i class="fas fa-cubes fa-lg mr-1"></i>ต้นแบบ SparePart
+											<button class="btn btn-danger btn-sm float-right mx-1" type="button	">Delete</button>
+
+											<button  id="popup" type="button" class="btn btn-warning float-right btn-sm "
+												data-toggle="modal" data-target="#Newtemplate">
+												<i class="fas fa-file" style="color:white;font-size:14px"> New</i>
+											</button>
+											{{-- <a href=" {{  url('machine/pm/template/add') }}">
+											<button class="btn btn-warning btn-sm float-right" type="button	">New</button>
+											</a> --}}
+											</h4>
 										 </div>
+										 </div>
+										{{-- <div class="card full-height"> --}}
+												<div class="row">
+													<div class="col-md-6 col-lg-4 ">
+														<div class="card">
+															<div class="card-header bg-primary">
+															<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>	ต้นแบบ (Template)</h4>
+															</div>
+															<div class="card-body">
+																		<div class="row my-2">
+																			<ul class="nav nav-tab flex-column col-md-6 col-lg-12">
+						            									<li class="nav-item active">
+																								<input class="form-check-input ml-4" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">
+																								<a class="tab" href="#AUTODRILL" data-toggle="tab">
+																									<button class="btn btn-primary btn-sm  mx-2 my-2" type="button">
+																										AUTODRILL 1
+																									</button>
+																								</a>
+																								<button class="btn btn-primary btn-link  float-right" type="button"
+																								data-toggle="modal" data-target="#Edittemplate">
+																									<i class="fas fa-edit fa-lg"></i>
+																								</button>
+																					</li>
+																					<li class="nav-item active">
+																						<input class="form-check-input ml-4" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">
 
-									<div id="result"class="card-body mt--3">
-										<div class="table-responsive mt--4">
-											<table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
-										<thead>
-											<tr>
-												<th scope="col">CODE</th>
-												<th scope="col">รายการอะไหล่</th>
-												<th scope="col">ราคา</th>
-												<th scope="col">เปิด/ปิด</th>
-												<th scope="col"></th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach ($dataset as $key => $dataitem)
-											<tr>
-												<td>{{$dataitem->SPAREPART_CODE}}</td>
-												<td style="width:200px">
-													<a href="{{ url('machine/machinespareparttable/edit/'.$dataitem->UNID) }}">
-														<button class="btn btn-primary btn-block btn-sm my-1 mx--2 ">
-															<span class="btn-label float-left">
-																<i class="fa fa-eye mx-1 "></i>
-																{{ $dataitem->SPAREPART_NAME }}
-															</span>
-														</button>
-													</a>
-												</td>
-												<td>{{ $dataitem->SPAREPART_PRICE }} บาท</td>
-												<td>{{ $dataitem->SPAREPART_STATUS == "9" ? 'เปิด' : 'ปิด' }}</td>
-												<td><a href="{{ url('machine/machinespareparttable/delete/'.$dataitem->UNID) }}">
-													<button type="button" class="btn btn-danger btn-block btn-sm my-1" style="width:40px">
-														<i class="fas fa-trash fa-lg">	</i>
-													</button>
-												</a></td>
-											</tr>
-											@endforeach
+																						<a class="tab" href="#CNC" data-toggle="tab">
+																							<button class="btn btn-primary btn-sm  mx-2 my-2" type="button">
+																								CNC
+																							</button>
+																						</a>
+																						<button class="btn btn-primary btn-link  float-right" type="button"
+																							data-toggle="modal" data-target="#Edittemplate">
+																							<i class="fas fa-edit fa-lg"></i>
+																						</button>
+																					</li>
+																					<li class="nav-item active">
+																						<input class="form-check-input ml-4" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">
+																						<a class="tab" href="#GRILLDING" data-toggle="tab">
+																							<button class="btn btn-primary btn-sm mx-2 my-2" type="button">
+																								GRILLDING
+																							</button>
+																						</a>
+																						<button class="btn btn-primary btn-link  float-right" type="button"
+																						data-toggle="modal" data-target="#Edittemplate">
+																							<i class="fas fa-edit fa-lg"></i>
+																						</button>
+																					</li>
 
-										</tbody>
-									</table>
+						        									</ul>
+
+																		</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="col-md-6 col-lg-8 ">
+														<div class="card">
+															<div class="card-header bg-primary">
+																<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>รายการ SparePart</h4>
+															</div>
+															<div class="card-body">
+																<div class="tab-content my-2">
+
+		            										<div class="tab-pane" id="AUTODRILL">
+																			<div class="col-md-12 ml-3">
+
+																				<button class="btn btn-danger btn-sm float-right mx-1" type="button	">Delete</button>
+																				<button class="btn btn-warning btn-sm float-right" type="button	"
+																				data-toggle="modal" data-target="#Newpm">New</button>
+																			</div>
+		            											<div class="row">
+		            												<div class="col-md-12">
+		            											 		<div class="table">
+																						<table class="table ">
+																							<thead>
+																								<tr>
+																									<th scope="col">ลำดับ</th>
+																									<th scope="col">รายการ SparePart</th>
+																									<th scope="col">ระยะเวลา</th>
+																									<th scope="col">ตรวจเช็คครั้งแรก</th>
+																									<th scope="col">ราคา</th>
+																									<th scope="col">จำนวน</th>
+
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<tr id="edit">
+																									<td> <input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">1</td>
+																									<td>สายพาน</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>200 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																								<tr>
+																									<td><input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">2</td>
+																									<td>หลอดไฟ</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>200 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																								<tr>
+																									<td><input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">3</td>
+																									<td>เซอโว</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>300 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																							</tbody>
+																						</table>
+																					</div>
+
+
+		            												</div>
+
+		            											</div>
+		            										</div>
+																		<div class="tab-pane" id="CNC">
+																			<div class="col-md-12 ml-3">
+
+																				<button class="btn btn-danger btn-sm float-right mx-1" type="button	">Delete</button>
+																				<a href=" {{  url('machine/pm/template/add') }}">
+																				<button class="btn btn-primary btn-sm float-right" type="button	">New</button>
+																				</a>
+																			</div>
+																			<div class="row">
+																				<div class="col-md-12">
+		            											 		<div class="table">
+																						<table class="table ">
+																							<thead>
+																								<tr>
+																									<th scope="col">ลำดับ</th>
+																									<th scope="col">รายการ SparePart</th>
+																									<th scope="col">ระยะเวลา</th>
+																									<th scope="col">ตรวจเช็คครั้งแรก</th>
+																									<th scope="col">ราคา</th>
+																									<th scope="col">จำนวน</th>
+
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<tr id="edit">
+																									<td> <input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">1</td>
+																									<td>สายพาน 1</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>200 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																								<tr>
+																									<td><input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">2</td>
+																									<td>หลอดไฟ .</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>200 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																								<tr>
+																									<td><input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">3</td>
+																									<td>เซอโว</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>300 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																							</tbody>
+																						</table>
+																					</div>
+
+
+		            												</div>
+
+																			</div>
+																		</div>
+																		<div class="tab-pane" id="GRILLDING">
+																			<div class="col-md-12 ml-3">
+																				<button class="btn btn-danger btn-sm float-right mx-1" type="button	">Delete</button>
+																				<a href=" {{  url('machine/pm/template/add') }}">
+																				<button class="btn btn-primary btn-sm float-right" type="button	">New</button>
+																				</a>
+																			</div>
+																			<div class="row">
+																				<div class="col-md-12">
+																					<div class="table">
+																						<table class="table ">
+																							<thead>
+																								<tr>
+																									<th scope="col">ลำดับ</th>
+																									<th scope="col">รายการ SparePart</th>
+																									<th scope="col">ระยะเวลา</th>
+																									<th scope="col">ตรวจเช็คครั้งแรก</th>
+																									<th scope="col">ราคา</th>
+																									<th scope="col">จำนวน</th>
+
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<tr id="edit">
+																									<td> <input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">1</td>
+																									<td>สายพาน 2</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>200 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																								<tr>
+																									<td><input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">2</td>
+																									<td>หลอดไฟ 1</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>200 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																								<tr>
+																									<td><input class="form-check-input mx-2" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]">3</td>
+																									<td>เซอโว</td>
+																									<td>3 เดือน</td>
+																									<td>14/02/21</td>
+																									<td>300 บาท</td>
+																									<td>2 จำนวน</td>
+
+																								</tr>
+																							</tbody>
+																						</table>
+																					</div>
+
+
+																				</div>
+
+																			</div>
+																		</div>
+
+
+		        											</div>
+																</div>
+															</div>
+													</div>
 
 									</div>
-										</div>
-								</div>
-								</div>
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header bg-primary">
-											<h4 class="ml-3 mt-2" style="color:white;" > เพิ่มรายการ </h4>
-										 </div>
-										<div class="card-body">
-											<form action="{{ route('machinespareparttable.store') }}" method="POST">
-												@csrf
-												<div class="form-group has-error">
-													<label for="SPAREPART_CODE">โค้ดอะไหล่</label>
-													<input type="text"  class="form-control" id="SPAREPART_CODE" name="SPAREPART_CODE" placeholder="โค้ดอะไหล่" required autofocus>
-
-												</div>
-												<div class="form-group has-error">
-													<label for="SPAREPART_NAME">ชื่ออะไหล่</label>
-													<input type="text"  class="form-control" id="SPAREPART_NAME" name="SPAREPART_NAME" placeholder="ชื่ออะไหล่" required autofocus>
-
-												</div>
-												<div class="form-group has-error">
-													<label for="SPAREPART_PRICE">ราคา</label>
-													<input type="text"  class="form-control" id="SPAREPART_PRICE" name="SPAREPART_PRICE" placeholder="ราคา" required autofocus>
-												
-												</div>
-												<div class="form-group">
-													<label for="SPAREPART_NOTE">รายละเอียดเพิ่มเติม</label>
-													<textarea class="form-control" id="SPAREPART_NOTE" name="SPAREPART_NOTE" rows="4" placeholder="สามารถกรอกรายละเอียดเพิ่มเติมได้"></textarea>
-												</div>
-												<div class="form-check has-error">
-													<label for="SPAREPART_STATUS">เปิด/ปิด</label><br>
-													<label class="form-radio-label">
-														<input class="form-radio-input" type="radio" name="SPAREPART_STATUS" value="9" checked="">
-														<span class="form-radio-sign">เปิด</span>
-													</label>
-													<label class="form-radio-label ml-3">
-														<input class="form-radio-input" type="radio" name="SPAREPART_STATUS" value="1">
-														<span class="form-radio-sign">ปิด</span>
-													</label>
-												</div>
 
 
-												<button tpye="submit" class="btn btn-primary">Save</button>
-											</form>
-										</div>
-									</div>
-								</div>
               </div>
 
 						</div>
@@ -152,34 +326,192 @@
 			</div>
 		</div>
 
+
+
+		<style>
+		.modal-sm {
+		    max-width: 30% !important;
+		}
+		.modal-md {
+		    max-width: 50% !important;
+		}
+		</style>
+		<!-- Modal -->
+		<div class="modal fade" id="Newtemplate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <div class="card-body ml-2">
+		          <div class="row ">
+		            <div class="col-md-6 col-lg-12">
+		              ชือ ต้นแบบ(template)
+		            </div>
+		          </div>
+
+		          <div class="row mt-4">
+		            <div class="col-md-6 col-lg-12 has-error">
+		              <input type="text" class="form-control" placeholder="กรุณาใส่ชื่อต้นแบบ(template)">
+		            </div>
+
+
+
+		          </div>
+
+
+		          </div>
+
+		        </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		</div>
+		<div class="modal fade" id="Edittemplate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card-body ml-2">
+							<div class="row ">
+								<div class="col-md-6 col-lg-12">
+									ชือ ต้นแบบ(template)
+								</div>
+							</div>
+
+							<div class="row mt-4">
+								<div class="col-md-6 col-lg-12 has-error">
+									<input type="text" class="form-control" placeholder="กรุณาใส่ชื่อต้นแบบ(template)">
+								</div>
+
+
+
+							</div>
+
+
+							</div>
+
+						</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="modal fade" id="Newpm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card-body ml-2">
+							<div class="row ">
+								<div class="col-md-6 col-lg-6">
+									รายการ SparePart
+								</div>
+								<div class="col-md-6 col-lg-6 has-error">
+									<select class="form-control">
+										<option>
+											สายพาน
+										</option>
+										<option>
+											หลอดไฟ
+										</option>
+									</select>
+								</div>
+								<div class="col-md-6 col-lg-6">
+									ระยะเวลา
+								</div>
+								<div class="col-md-6 col-lg-6 has-error my-2">
+									<input type="text" class="form-control" placeholder="ใส่ระยะเวลา">
+								</div>
+								<div class="col-md-6 col-lg-6">
+									แจ้งเตือน
+								</div>
+								<div class="col-md-6 col-lg-6 has-error">
+									<input type="text" class="form-control" placeholder="ใส่ระยะเวลา">
+								</div>
+								<div class="col-md-6 col-lg-6">
+									ตรวจเช็คครั้งแรก
+								</div>
+								<div class="col-md-6 col-lg-6 has-error my-2">
+									<input type="date" class="form-control">
+								</div>
+								<div class="col-md-6 col-lg-6">
+									ราคา
+								</div>
+								<div class="col-md-6 col-lg-6 has-error">
+									<div class="input-group">
+									<input type="text" class="form-control" placeholder="ราคา">
+									<div class="input-group-append">
+														<span class="input-group-text">บาท</span>
+													</div>
+										</div>
+								</div>
+								<div class="col-md-6 col-lg-6">
+									จำนวน
+								</div>
+								<div class="col-md-6 col-lg-6 has-error my-2">
+									<div class="input-group">
+									<input type="text" class="form-control" placeholder="">
+									<div class="input-group-append">
+														<span class="input-group-text">จำนวน</span>
+													</div>
+										</div>
+								</div>
+
+							</div>
+
+
+							</div>
+
+						</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}
 
 {{-- ส่วนjava --}}
 @section('javascript')
-{{-- <script>
-$(document).ready(function(){
-	var table = $('datatable').DataTable({
-			'processing' : true,
-			'serverSide' : true,
-			'ajax': "{{ route('machine.list') }}",
-			'column':[
-				{'data': 'MACHINE_LOCATION'},
-				{'data': 'MACHINE_NAME'},
-				{'data': 'MACHINE_CODE'}
-			],
-	});
-
-  $("#myInput").keyup (function() {
-		table.column($)
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script> --}}
-
-
+	<script>
+		$( "#edit" ).dblclick(function() {
+			// var unid = ('#UNID').val();
+			// console.log(unid);
+  	window.location.href = "/machine/pm/template/add/";
+		});
+	</script>
+	<script>
+		function pmtemplate(){
+			window.open('/machine/machinepmtemplate/','PmTemplate','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+		}
+	</script>
+	<script src="{{asset('/js/dashboard/bootstrap-toggle.min.js')}}">
+	</script>
 @stop
 {{-- ปิดส่วนjava --}}

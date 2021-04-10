@@ -80,6 +80,7 @@
                       	<thead class="thead-light">
                         	<tr>
                             <th scope="col">เลขที่เอกสาร </th>
+														<th></th>
                           	<th scope="col">รหัสเครื่อง </th>
                           	<th scope="col">ชื่อเครื่องจักร</th>
 														<th scope="col">Line</th>
@@ -128,26 +129,36 @@
 	});
 	</script>
 <script>
+
+ function closework(u){
+
+	var unid = (u);
+	console.log(unid);
+		Swal.fire({
+			title: 'ต้องการปิดเอกสารมั้ย?',
+			text: "หากทำการปิดเอกสารแล้วไม่สามารถแก้ไขได้ ต้องทำการสร้างใหม่เท่านั้น!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+			window.location.href = "/machine/repair/delete/"+unid;
+			}	
+		})
+
+	}
+</script>
+<script type="text/javascript">
 // var button = document.getElementById('button');
-var unid = $('#UNID').val(); console.log(unid);
-
-$(document).on('click','#button', function(){
-Swal.fire({
-  title: 'ต้องการปิดเอกสารมั้ย?',
-  text: "หากทำการปิดเอกสารแล้วไม่สามารถแก้ไขได้ ต้องทำการสร้างใหม่เท่านั้น!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes!'
-}).then((result) => {
-  if (result.isConfirmed) {
-		window.location.href = "/machine/repair/delete/"+unid;
+	function pdfrepair(m){
+		console.log(m);
+		var unid = (m);
+		window.open('/machine/repair/pdf/'+unid,'Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+	}
 
 
-  }
-})
-});
 </script>
 @stop
 {{-- ปิดส่วนjava --}}

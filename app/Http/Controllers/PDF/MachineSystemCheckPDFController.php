@@ -23,7 +23,7 @@ class MachineSystemCheckPDFController extends Fpdf
   public function SystemCheckPdf($UNID)
     {
 
-      // $dataset = MachineRepair::leftJoin('PMCS_MACHINES','PMCS_MACHINES.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
+      // $dataset = MachineRepair::leftJoin('PMCS_MACHINE','PMCS_MACHINE.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
       //                           ->where('PMCS_REPAIR_MACHINE.UNID',$UNID)->first();
      //add font
      $pdf = new FPDF();

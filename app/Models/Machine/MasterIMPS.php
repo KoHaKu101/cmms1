@@ -5,7 +5,7 @@ namespace App\Models\Machine;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MachineSysTemCheck extends Model
+class MasterIMPS extends Model
 {
   use HasFactory;
   const CREATED_AT = 'CREATE_TIME';
@@ -15,10 +15,9 @@ class MachineSysTemCheck extends Model
   public $timestamps = false;
   protected $primaryKey = "UNID";
   protected $keyType = 'string';
-  public $table ='PMCS_CMMS_MACHINE_SYSTEMCHECK';
+  public $table ='PMCS_CMMS_MASTER_IMPS';
 
-
-  protected $fillable = ['UNID','MACHINE_UNID_REF','SYSTEM_CODE','SYSTEM_MONTH','SYSTEM_MONTHCHECK','SYSTEM_MONTHSTORE'
+  protected $fillable = ['UNID','PM_TEMPLATE_UNID_REF','MACHINE_CODE','PM_TEMPLATE_NAME'
   ,'CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'
   ];
 }

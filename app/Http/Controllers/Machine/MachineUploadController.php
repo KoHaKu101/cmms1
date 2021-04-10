@@ -87,7 +87,7 @@ class MachineUploadController extends Controller
       'CREATE_TIME'          => Carbon::now(),
       // 'MODIFY_BY'            => Auth::user()->name,
       // 'MODIFY_TIME'          => Carbon::now(),
-      'UNID'                 => $this->randUNID('PMCS_MACHINES_UPLOAD'),
+      'UNID'                 => $this->randUNID('PMCS_MACHINE_UPLOAD'),
     ]);
     // $FILE_UPLOAD->move($up_location,$filenamemaster);
 

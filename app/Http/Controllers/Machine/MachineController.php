@@ -15,10 +15,16 @@ use App\Models\Machine\MachineUpload;
 use App\Models\Machine\MachineLine;
 use App\Models\Machine\MachineEMP;
 use App\Models\Machine\MachineRepair;
-use App\Models\Machine\MachineSysTemCheck;
+use App\Models\Machine\MasterIMPS;
+use App\Models\Machine\MasterIMPSGroup;
+use App\Models\Machine\MachinePMCheckDetail;
+
+use App\Models\MachineaddTable\MachinePmTemplate;
 use App\Models\MachineaddTable\MachineTypeTable;
 use App\Models\MachineAddTable\MachineStatusTable;
 use App\Models\MachineAddTable\MachineSysTemTable;
+use App\Models\MachineaddTable\MachinePmTemplateList;
+
 
 //************** Package form github ***************
 use RealRashid\SweetAlert\Facades\Alert;
@@ -27,8 +33,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 
 
-
-
+  
 class MachineController extends Controller
 {
   public function __construct(){
@@ -57,9 +62,12 @@ class MachineController extends Controller
     {
          $querydata = $request->get('query');
          $query = str_replace(" ", "%", $querydata);
+         $paginate = $request->get('column_name');
+         // $where = ['%'.$query.'%','MACHINE_LINE' => $LINE_CODE,'MACHINE_STATUS' != '4'];
+
    $dataset = DB::table('PMCS_MACHINE')
                  ->where('MACHINE_CODE', 'like', '%'.$query.'%')
-                 ->orWhere('MACHINE_LINE', 'like', '%'.$query.'%')
+                 ->orwhere('MACHINE_LINE', 'like', '%'.$query.'%')
                  ->orWhere('MACHINE_NAME', 'like', '%'.$query.'%')
                  ->paginate(10);
    return view('machine/assets/machinesearch', compact('dataset'))->render();
@@ -72,9 +80,11 @@ class MachineController extends Controller
     return View('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
   }
   public function Allline($LINE_CODE) {
-    $dataset = Machine::where('MACHINE_LINE','=',$LINE_CODE)->paginate(10);
 
-    return view('machine/assets/machinelist0',compact(['dataset']),['dataset' => $dataset]);
+    $data = Machine::select('MACHINE_LINE','MACHINE_TYPE')->where('MACHINE_LINE',$LINE_CODE)->first();
+    $dataset = Machine::where([['MACHINE_LINE',$LINE_CODE],['MACHINE_CHECK' ,'!=', '4']])->paginate(10);
+
+    return view('machine/assets/machinelist0',compact(['dataset','data']),['dataset' => $dataset]);
   }
   public function Alltype($TYPE_CODE) {
     $dataset = Machine::where('MACHINE_TYPE','=',$TYPE_CODE)->paginate(10);
@@ -91,7 +101,7 @@ class MachineController extends Controller
 
   public function Store(Request $request){
     $validated = $request->validate([
-      'MACHINE_CODE'           => 'required|unique:PMCS_MACHINES|max:50',
+      'MACHINE_CODE'           => 'required|unique:PMCS_MACHINE|max:50',
       ],
       [
       'MACHINE_CODE.required'  => 'กรุณราใส่รหัสเครื่องจักร',
@@ -167,7 +177,7 @@ class MachineController extends Controller
           'CREATE_TIME'          => Carbon::now(),
           // 'MODIFY_BY'            => Auth::user()->name,
           // 'MODIFY_TIME'          => Carbon::now(),
-          'UNID'                 => $this->randUNID('PMCS_MACHINES'),
+          'UNID'                 => $this->randUNID('PMCS_MACHINE'),
           'SHIFT_TYPE'           => $request->SHIFT_TYPE,
           'ESP_MAC'              => $request->ESP_MAC,
       ]);
@@ -178,25 +188,34 @@ class MachineController extends Controller
   }
 
   public function Edit($UNID) {
-
-
-    $dataset = Machine::where('UNID',$UNID)->first();
-
-    $machineupload = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload1 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload2 = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinetype = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
-
-    $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
-    $machineemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
-    $machineline = MachineLine::select('LINE_CODE','LINE_NAME','LINE_STATUS')
-                                ->where('LINE_STATUS','=','9')
-                                ->get();
-    $machinerepair = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
-                                    ->where('STATUS','=','9')
+    //ใช้
+    $dataset           = Machine::where('UNID',$UNID)->first();
+    $machineupload     = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $machineupload1    = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
+    $machineupload2    = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
+    $machinetype       = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
+    $machinestatus     = MachineStatusTable::where('STATUS','=','9')->get();
+    $machineemp        = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
+    $machineline       = MachineLine::select('LINE_CODE','LINE_NAME')
+                                    ->where('LINE_STATUS','=','9')
                                     ->get();
+    $machinerepair     = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
+                                      ->where('STATUS','=','9')
+                                      ->get();
+    $masterimps = MasterIMPS::where('MACHINE_CODE',$dataset->MACHINE_CODE)->orderBy('CREATE_TIME','ASC')->get();
+    $machinepmtemplate = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
+    $machinepmtemplateremove = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
 
-    return view('machine/assets/edit',compact('dataset','machineupload','machineupload1'
+    //
+
+    $masterimpsgroup    = MasterIMPSGroup::where('MACHINE_CODE',$dataset->MACHINE_CODE)->orderBy('PM_TEMPLATELIST_DAY','ASC')->get();
+
+    // dd($machinepmtemplate);
+
+    $machinecheckpmdetail = MachinePMCheckDetail::all();
+
+
+    return view('machine/assets/edit',compact('machinepmtemplateremove','machinecheckpmdetail','masterimps','machinepmtemplate','masterimpsgroup','dataset','machineupload','machineupload1'
       ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
   public function Update(Request $request,$UNID){
@@ -211,12 +230,12 @@ class MachineController extends Controller
           $last_img = $up_location.$img_name;
           $MACHINE_ICON->move($up_location,$img_name);
       }
-  } else {
+    } else {
       $last_img = $update;
       // dd($last_img);
-  }
-  $request->MACHINE_STATUS = $request->MACHINE_CHECK == "1" ? $request->MACHINE_STATUS = '1' : $request->MACHINE_STATUS = '9' ;
-  $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
+    }
+    $request->MACHINE_STATUS = $request->MACHINE_CHECK == "1" ? $request->MACHINE_STATUS = '1' : $request->MACHINE_STATUS = '9' ;
+    $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
     $data_set = Machine::where('UNID',$UNID)->update([
       'MACHINE_CODE'         => $MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,

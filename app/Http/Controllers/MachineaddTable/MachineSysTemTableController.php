@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 //******************** model ***********************
-use App\Models\MachineAddTable\MachineSysTemTable;
-use App\Models\MachineAddTable\MachineSysTemPointTable;
-use App\Models\MachineAddTable\MachineTypeTable;
+use App\Models\Machine\Machine;
+use App\Models\MachineAddTable\MachinePmTemplate;
+use App\Models\MachineAddTable\MachinePmTemplateList;
+use App\Models\MachineAddTable\MachinePmTemplateDetail;
+use App\Models\Machine\MasterIMPS;
 use App\Models\Machine\Protected;
 //************** Package form github ***************
 use RealRashid\SweetAlert\Facades\Alert;
@@ -38,101 +40,157 @@ class MachineSysTemTableController extends Controller
     return $number;
   }
 
-  public function Index(){
-
-
-
-    return View('machine/add/system/systemlist');
+  public function Index(Request $request,$UNID = NULL){
+    $datapmtemplate           = MachinePmTemplate::orderBy('CREATE_TIME','ASC')->get();
+    $countdetail = 0;
+    $datapmtemplatelist       = NULL;
+    $datapmtemplatefirst      = NULL;
+    $datamachine              = NULL;
+    if($UNID){
+      $datapmtemplatelist       = MachinePmTemplateList::where('PM_TEMPLATE_UNID_REF','=',$UNID)->get();
+      $datapmtemplatefirst      = MachinePmTemplate::where('UNID',$UNID)->first();
+      $datamachine         = MasterIMPS::where('PM_TEMPLATE_UNID_REF',$UNID)->get();
+      $countdetail = $datapmtemplatelist->count();
+    }
+    return View('machine/add/system/systemlist',compact('datapmtemplate','datapmtemplatelist','countdetail','datapmtemplatefirst','datamachine'));
   }
-  public function Create(){
-    return View('machine/add/machinesystemtable/form');
-  }
-
-  public function Store(Request $request){
-
+  public function StoreTemplate(Request $request){
     $validated = $request->validate([
-      'SYSTEM_CODE'           => 'required|unique:PMCS_CMMS_MACHINE_SYSTEMTABLE|max:50',
-      'MACHINE_TYPE'          => 'required|max:200',
-      'SYSTEM_MONTH'          => 'required',
+      'PM_TEMPLATE_NAME'           => 'required|unique:PMCS_CMMS_PM_TEMPLATE|max:200',
       ],
       [
-      'SYSTEM_CODE.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',
-      'SYSTEM_CODE.unique'    => 'มีรหัสระบบเครื่องจักรนี้แล้ว',
-      'MACHINE_TYPE.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',
-      'SYSTEM_MONTH.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',
+      'PM_TEMPLATE_NAME.required'  => 'กรุณาใส่ชื่อกลุ่ม',
+      'PM_TEMPLATE_NAME.unique'    => 'มีชื่อกลุ่มนี้แล้ว',
+      'PM_TEMPLATE_NAME.max'  => 'ชื่อยาวเกินไป',
       ]);
-
-
-    MachineSysTemTable::insert([
-      'SYSTEM_CODE'       => $request->SYSTEM_CODE,
-
-      'MACHINE_TYPE'       => $request->MACHINE_TYPE,
-      'SYSTEM_MONTH'       => $request->SYSTEM_MONTH,
-
-      'SYSTEM_STATUS'     => $request->SYSTEM_STATUS,
-      'CREATE_BY'       => Auth::user()->name,
-      'CREATE_TIME'     => Carbon::now(),
-      'UNID'            => $this->randUNID('PMCS_CMMS_MACHINE_SYSTEMTABLE'),
+    MachinePmTemplate::insert([
+      'PM_TEMPLATE_NAME'       => $request->PM_TEMPLATE_NAME,
+      'CREATE_BY'              => Auth::user()->name,
+      'CREATE_TIME'            => Carbon::now(),
+      'UNID'                   => $this->randUNID('PMCS_CMMS_PM_TEMPLATE'),
     ]);
-    $dataset = MachineSysTemTable::paginate(10);
-    return Redirect()->route('machinesystemtable.list',compact('dataset'))->with('success','ลงทะเบียน สำเร็จ');
+    return Redirect()->back()->with('success','เพิ่มระบบ สำเร็จ');
+  }
+  public function StoreList(Request $request){
+    $validated = $request->validate([
+      'PM_TEMPLATELIST_NAME'            => 'required|max:200',
+      'PM_TEMPLATELIST_DAY'             => 'integer|min:1|max:12'
+      ],
+      [
+      'PM_TEMPLATELIST_NAME.required'   => 'กรุณาใส่รายการ Inspection Item',
+      'PM_TEMPLATELIST_NAME.max'        => 'ชื่อInspection Item ยาวเกินไป',
+      'PM_TEMPLATELIST_DAY.integer'     => 'กรุณาใส่ข้อมูลเป็นตัวเลขและไม่มีจุดทศนิยม',
+      'PM_TEMPLATELIST_DAY.min'         => 'ใส่จำนวนเดือนต่ำสุดได้ 1',
+      'PM_TEMPLATELIST_DAY.max'         => 'ใส่จำนวนเดือนสูงสุดได้ 12'
+      ]);
+    MachinePmTemplateList::insert([
+      'PM_TEMPLATE_UNID_REF'         => $request->PM_TEMPLATE_UNID_REF,
+      'PM_TEMPLATELIST_NAME'         => $request->PM_TEMPLATELIST_NAME,
+      'PM_TEMPLATELIST_POINT'        => $request->PM_TEMPLATELIST_POINT,
+      'PM_TEMPLATELIST_DAY'          => ($request->PM_TEMPLATELIST_DAY * 30),
+      'PM_TEMPLATELIST_STATUS'       => '1',
+      'CREATE_BY'                    => Auth::user()->name,
+      'CREATE_TIME'                  => Carbon::now(),
+      'UNID'                         => $this->randUNID('PMCS_CMMS_PM_TEMPLATE_LIST'),
+    ]);
+    if ($request->save == "new") {
+      return Redirect()->back()->with('success','เพิ่มระบบ สำเร็จ');
+    }else {
+      $data = MachinePmTemplateList::where('PM_TEMPLATE_UNID_REF',$request->PM_TEMPLATE_UNID_REF)->orderBy('CREATE_TIME','DESC')->first();
+          return Redirect('machine/pm/templatelist/edit/'.$data->UNID);
+    }
   }
 
-  public function Edit($UNID) {
-    $dataset = MachineSysTemTable::where('UNID','=',$UNID)->first();
-    $datapoint = MachineSysTemPointTable::where('SYSTEMTABLE_UNID_REF',$UNID)->get();
-    return view('machine/add/system/edit',compact('dataset','datapoint'));
-    }
-  public function Update(Request $request,$UNID) {
-
-    $data_set = MachineSysTemTable::where('UNID',$UNID)->update([
-      'SYSTEM_CODE'       => $request->SYSTEM_CODE,
-
-      'MACHINE_TYPE'       => $request->MACHINE_TYPE,
-      'SYSTEM_MONTH'       => $request->SYSTEM_MONTH,
-
-      'SYSTEM_STATUS'     => $request->SYSTEM_STATUS,
-      'MODIFY_BY'       => Auth::user()->name,
-      'MODIFY_TIME'     => Carbon::now(),
-
+  public function UpdateTemplate(Request $request) {
+   MachinePmTemplate::where('UNID',$request->UNID)->update([
+        'PM_TEMPLATE_NAME'      => $request->PM_TEMPLATE_NAME,
+        'MODIFY_BY'              => Auth::user()->name,
+        'MODIFY_TIME'            => Carbon::now(),
     ]);
-
     return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
     }
 
-  public function Delete($UNID) {
+  public function UpdatePMList(Request $request,$UNID) {
+    $validated = $request->validate([
+      'PM_TEMPLATELIST_NAME'           => 'required|max:200',
+      'PM_TEMPLATELIST_DAY'            => 'integer|min:1|max:365'
+      ],
+      [
+      'PM_TEMPLATELIST_NAME.required'  => 'กรุณาใส่รายการ PM',
+      'PM_TEMPLATELIST_NAME.max'  => 'ชื่อยาวเกินไป',
+      'PM_TEMPLATELIST_DAY.integer' => 'กรุณาใส่จำนวนวันเป็นตัวเลขและไม่มีจุดทศนิยม',
+      'PM_TEMPLATELIST_DAY.min'   => 'ใส่จำนวนเดือนต่ำสุดได้ 1',
+      'PM_TEMPLATELIST_DAY.max' => 'ใส่จำนวนเดือนสูงสุดได้ 12'
+      ]);
+    $data_set = MachinePmTemplateList::where('UNID',$UNID)->update([
+        'PM_TEMPLATELIST_NAME'      => $request->PM_TEMPLATELIST_NAME,
+        'PM_TEMPLATELIST_POINT'     => $request->PM_TEMPLATELIST_POINT,
+        'PM_TEMPLATELIST_DAY'       => ($request->PM_TEMPLATELIST_DAY*30),
+        'PM_TEMPLATELIST_STATUS'    => $request->PM_TEMPLATELIST_STATUS,
+        'MODIFY_BY'              => Auth::user()->name,
+        'MODIFY_TIME'            => Carbon::now(),
+    ]);
+        return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
+    }
 
-
-    $dataset = MachineSysTemTable::where('UNID','=',$UNID)->delete();
-
+  public function DeletePMDetail($UNID) {
+    $dataset = MachinePmTemplateDetail::where('UNID','=',$UNID)->delete();
     return Redirect()->back()->with('success','ลบสำเร็จ สำเร็จ');
   }
 
-  public function StorePoint(Request $request){
+  public function DeletePMList($UNID) {
+
+        MachinePmTemplateList::where('UNID',$UNID)->delete();
+        MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$UNID)->delete();
+
+      return Redirect()->back()->with('success','ลบข้อมูลสำเร็จ');
+    }
+
+  public function DeleteTemplate($UNID) {
+      MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$UNID)->delete();
+      MachinePmTemplateList::where('PM_TEMPLATE_UNID_REF',$UNID)->delete();
+      MachinePmTemplate::where('UNID',$UNID)->delete();
+      return Redirect()->back()->with('success','ลบข้อมูลสำเร็จ');
+
+    }
+
+  public function PmTemplateAdd($UNID) {
+      $datapmtemplate = MachinePmTemplate::where('UNID',$UNID)->first();
+      return view('machine/add/system/add',compact('datapmtemplate'));
+      }
+
+  public function PmTemplateListEdit($UNID){
+    $datapmtemplatelist = MachinePmTemplateList::where('UNID',$UNID)->first();
+    $datapmtemplate     = MachinePmTemplate::where('UNID',$datapmtemplatelist->PM_TEMPLATE_UNID_REF)->first();
+    $datapmtemplatedetail = MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$UNID)->get();
+    return View('machine/add/system/edit',compact('datapmtemplatelist','datapmtemplatedetail','datapmtemplate'));
+  }
+
+  public function PmTemplateDetailStore(Request $request){
     $validated = $request->validate([
-      'SYSTEMPOINT_TABLE_ID'           => 'required',
-      'SYSTEMPOINT_TABLE_NAME'          => 'required|max:200',
+      'PM_DETAIL_NAME'           => 'required|max:200',
       ],
       [
-      'SYSTEMPOINT_TABLE_ID.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',
-      'SYSTEMPOINT_TABLE_NAME.required'  => 'กรุณาใส่รหัสระบบเครื่องจักร',
+      'PM_DETAIL_NAME.required'  => 'กรุณาใส่ชื่อกลุ่ม',
+      'PM_DETAIL_NAME.max'  => 'ชื่อยาวเกินไป',
       ]);
-
-    MachineSysTemPointTable::insert([
-      'SYSTEMPOINT_TABLE_ID'    => $request->SYSTEMPOINT_TABLE_ID,
-
-      'SYSTEMPOINT_TABLE_NAME'  => $request->SYSTEMPOINT_TABLE_NAME,
-      'CREATE_BY'               => Auth::user()->name,
-      'CREATE_TIME'             => Carbon::now(),
-      'SYSTEMTABLE_UNID_REF'    => $request->SYSTEMTABLE_UNID_REF,
-      'UNID'                    => $this->randUNID('PMCS_CMMS_MACHINE_SYSTEMPOINTTABLE'),
+    MachinePmTemplateDetail::insert([
+      'PM_DETAIL_NAME'         => $request->PM_DETAIL_NAME,
+      'PM_TEMPLATELIST_UNID_REF' => $request->PM_TEMPLATELIST_UNID_REF,
+      'CREATE_BY'              => Auth::user()->name,
+      'CREATE_TIME'            => Carbon::now(),
+      'UNID'                   => $this->randUNID('PMCS_CMMS_PM_TEMPLATE_DETAIL'),
     ]);
+    return Redirect()->back()->with('success','เพิ่มระบบ สำเร็จ');
+  }
+  public function PmTemplateDetailUpdate(Request $request){
+    MachinePmTemplateDetail::where('UNID',$request->UNID)->update([
+      'PM_DETAIL_NAME'         => $request->PM_DETAIL_NAME,
+      'MODIFY_BY'              => Auth::user()->name,
+      'MODIFY_TIME'            => Carbon::now(),
+    ]);
+    return Redirect()->back()->with('success','เพิ่มระบบ สำเร็จ');
+  }
 
-    return Redirect()->back()->with('success','บันทึก สำเร็จ');
-  }
-  public function DeletePoint($UNID) {
-    $dataset = MachineSysTemPointTable::where('UNID','=',$UNID)->delete();
-    return Redirect()->back()->with('success','ลบสำเร็จ');
-  }
 
 }

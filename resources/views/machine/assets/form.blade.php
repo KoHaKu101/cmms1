@@ -79,7 +79,7 @@
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-6 col-lg-6 has-error">
 													<lebel>สถานะ</lebel>
-													<select class="form-control form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" required autofocus>
+													<select class="form-control" id="MACHINE_CHECK" name="MACHINE_CHECK" required autofocus>
 														<option value>-แสดงทั้งหมด-</option>
 														@foreach ($machinestatus as $key => $srow)
 															<option value="{{ $srow->STATUS_CODE }}">{{$srow->STATUS_NAME}}</option>
@@ -88,7 +88,7 @@
 												</div>
 												<div class="form-group col-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
-													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE" required autofocus>
+													<select class="form-control" id="MACHINE_LINE" name="MACHINE_LINE" required autofocus>
 														<option value> -แสดงทั้งหมด- </option>
 														@foreach($machineline as $dataline)
 														<option value="{{ $dataline->LINE_CODE  }}"> {{$dataline->LINE_NAME}} </option>

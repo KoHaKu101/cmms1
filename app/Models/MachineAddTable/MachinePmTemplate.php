@@ -5,7 +5,7 @@ namespace App\Models\MachineAddTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MachineDetailPointTable extends Model
+class MachinePmTemplate extends Model
 {
 
     use HasFactory;
@@ -15,9 +15,8 @@ class MachineDetailPointTable extends Model
     public $incrementing = false;
     public $timestamps = false;
     protected $primaryKey = "UNID";
-    protected $keyType = 'string';
-    public $table ='PMCS_CMMS_MACHINE_DETAILPOINTTABLE';
+    protected $keyType = 'BigInteger';
+    public $table ='PMCS_CMMS_PM_TEMPLATE';
 
-    protected $fillable = ['UNID','SYSTEMPOINTTABLE_UNID_REF','DETAILPOINTTABLE_ID','DETAILPOINTTABLE_NAME'
-    ,'CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'];
+    protected $fillable = ['UNID','PM_TEMPLATE_NAME','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'];
 }

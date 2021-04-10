@@ -16,22 +16,22 @@ $(document).ready(function(){
     var column_name = $('#hidden_column_name').val();
     var sort_type = $('#hidden_sort_type').val();
     var page = $('#hidden_page').val();
-    console.log(query);
     fetch_data(page, sort_type, column_name, query);
+    $(document).on('click', '.pagination a', function(event){
+     event.preventDefault();
+     var page = $(this).attr('href').split('page=')[1];
+     $('#hidden_page').val(page);
+     var column_name = $('#hidden_column_name').val();
+     var sort_type = $('#hidden_sort_type').val();
+
+     var query = $('#serach').val();
+
+
+           $(this).parent().addClass('active');
+     fetch_data(page, sort_type, column_name, query);
+    });
    });
 
-   $(document).on('click', '.pagination a', function(event){
-    event.preventDefault();
-    var page = $(this).attr('href').split('page=')[1];
-    $('#hidden_page').val(page);
-    var column_name = $('#hidden_column_name').val();
-    var sort_type = $('#hidden_sort_type').val();
 
-    var query = $('#serach').val();
-
-
-          $(this).parent().addClass('active');
-    fetch_data(page, sort_type, column_name, query);
-   });
 
    });

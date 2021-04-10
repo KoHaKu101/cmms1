@@ -26,7 +26,7 @@ class MachineRepairPDFController extends Controller
 
   public function RepairPdf($UNID)
     {
-      $machine = "PMCS_MACHINES";
+      $machine = "PMCS_MACHINE";
       $repair  = "PMCS_REPAIR_MACHINE";
       $dataset = MachineRepair::select($machine.'.MACHINE_CODE',$machine.'.MACHINE_NAME',$machine.'.MACHINE_LINE',$repair.'.MACHINE_DOCNO'
       ,$repair.'.MACHINE_DOCDATE',$repair.'.MACHINE_TIME',$repair.'.MACHINE_NOTE',$repair.'.MACHINE_CAUSE')

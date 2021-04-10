@@ -1,7 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -75,7 +75,7 @@
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
-													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $dataset->MACHINE_CODE }}">
+													<input type="text" class="form-control " id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $dataset->MACHINE_CODE }}">
 													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $dataset->MACHINE_UNID }}">
 											</div>
 
@@ -173,7 +173,7 @@
 
 														@include('masterlayout.tab.edit.personal')
 														<!-- ตรวจสอบระบบ -->
-														{{-- @include('masterlayout.tab.edit.systemcheck') --}}
+														@include('masterlayout.tab.edit.systemcheck')
 														<!-- อะไหล่ที่ต้องเปลี่ยน -->
 														{{-- @include('masterlayout.tab.edit.partchange') --}}
 														<!-- upload -->
@@ -188,13 +188,13 @@
 												<small><b>สร้างโดย</b></small>
 											</div>
 											<div class="col-md-6 col-lg-1">
-												<small>{{ $dataset->CREATE_BY }}</small>
+												<small>{{ $dataset->CREATE_TIME }}</small>
 											</div>
 											<div class="col-md-6 col-lg-1">
 												<small><b>วันที่สร้าง</b></small>
 											</div>
 											<div class="col-md-6 col-lg-3">
-												<small>{{ $dataset->CREATE_TIME }}</small>
+												<small>{{ $dataset->CREATE_BY }}</small>
 											</div>
 											<div class="col-md-6 col-lg-1">
 												<small><b>แก้ไขโดย</b></small>
@@ -223,6 +223,8 @@
 @include('masterlayout.tab.modal.partchange.partchangeedit')
 @include('masterlayout.tab.modal.uploadmanue')
 @include('masterlayout.tab.modal.edit.uploadmanueedit')
+@include('masterlayout.tab.modal.pmmachine')
+
 
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}
@@ -230,12 +232,92 @@
 {{-- ส่วนjava --}}
 @section('javascript')
 
+	<script type="text/javascript">
+	// var button = document.getElementById('button');
+		function printhistory(u){
+			console.log(u);
+			var unid = (u);
+			window.open('/machine/repairhistory/pdf/'+unid,'RepairHistory','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+		}
+
+
+	</script>
 	<script>
-	var button = document.getElementById('btn');
-	var unid = $('#UNID').val(); console.log(unid);
-	button.addEventListener('click', function(){
-		window.open('/machine/systemcheck/pdf/'+unid,'Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+	$(document).on('click','.delete-confirm', function (event) {
+	    Swal.fire({
+	        title: 'คุณต้องการลบข้อมูลหรือไม่?',
+	        text: 'หากลบข้อมูลแล้วจะไม่สามารถกู้คืนมาได้!',
+	        icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes!'
+	    }).then(function(result) {
+				if (result.isConfirmed) {
+					var id = [];
+					$('#MACHINE_CODE').each(function(){
+							var mc = $(this).val();
+							console.log(mc);
+							$('#PM_TEMPLATE_UNID_REF:checked').each(function(){
+									id.push($(this).val());
+									console.log(id);
+									window.location.href = '/machine/system/remove/'+id+'/'+mc;
+							});
+					});
+				}
+	    });
+	});
+	</script>
+<script>
+		$(document).ready(function(){
+		$(document).on('click','#add',function(){
+		$(document).on('click', '.pagination a', function(event){
+			event.preventDefault();
+			var page = $(this).attr('href').split('page=')[1];
+			console.log(page);
+			fetch_data(page);
+		});
+	});
+		function fetch_data(page)
+		{
+			$('#MACHINE_CODE').each(function(){
+					var mc = $(this).val();
+					console.log(mc);
+			$.ajax({
+ 			url:'/machine/system/check/paginate/?mc='+mc+'&page='+page,
+ 		success:function(data){
+		$('#table_data').html(data);}
+	});
 	})
+	}
+
+
+	});
+	</script>
+	<script>
+$(document).ready(function(){
+	$(document).on('click','#remove',function(){
+		$(document).on('click', '.pagination a', function(event){
+
+			event.preventDefault();
+			var page2 = $(this).attr('href').split('page=')[1];
+			tableremove(page2);
+		});
+
+		function tableremove(page)
+		{
+			$('#MACHINE_CODE').each(function(){
+					var mc = $(this).val();
+					console.log(mc);
+			$.ajax({
+			url:'/machine/system/check/paginateremove/?mc='+mc+'&page='+page,
+		success:function(data){
+		$('#tableremove').html(data);}
+		});
+		})
+		}
+		});
+		});
 	</script>
 @stop
 {{-- ปิดส่วนjava --}}

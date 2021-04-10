@@ -22,6 +22,7 @@ use App\Http\Controllers\Machine\SysCheckController;
 use App\Http\Controllers\Machine\SysCheckSubController;
 use App\Http\Controllers\Machine\MachinePartCheckController;
 use App\Http\Controllers\Machine\PaySpareController;
+use App\Http\Controllers\Machine\MailConfigController;
 
 
 //************************* add tabel *********************************
@@ -39,6 +40,7 @@ use App\Http\Controllers\Search\RepairSearchController;
 use App\Http\Controllers\PDF\MachineRepairPDFController;
 use App\Http\Controllers\PDF\UploadPdfController;
 use App\Http\Controllers\PDF\MachineSystemCheckPDFController;
+use App\Http\Controllers\PDF\MachineHistoryRepairPDFController;
 //Model
 use App\Models\Machine\Machine;
 use App\Models\SettingMenu\Mainmenu;
@@ -60,6 +62,8 @@ use App\Models\SettingMenu\Menusubitem;
 Route::get('/', function () {
     return view('auth/login');
 })->middleware('auth');
+//PDF FILE
+Route::get('/machine/repairhistory/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineHistoryRepairPDFController@RepairHistory');
 Route::get('/machine/repair/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineRepairPDFController@RepairPdf');
 Route::get('/machine/systemcheck/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineSystemCheckPDFController@SystemCheckPdf');
 Route::get('/machine/assets/machineall', 'App\Http\Controllers\PDF\MachinePDFController@MachinePdf');
@@ -122,19 +126,22 @@ Route::get('machine/manual/manuallist'      ,[MachineManualController::class,'In
   Route::get('machine/manual/delete/{UNID}'   ,[MachineManualController::class,'Delete']) ->name('manual.delete');
 //syscheck
 Route::get('machine/syscheck/syschecklist'    ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
-  Route::get('machine/syscheck/syschecklist:/{LINE_CODE}'    ,[SysCheckController::class,'Indexline'])  ->name('syscheck.listline');
-  Route::post('machine/syscheck/store'          ,[SysCheckController::class,'Store'])  ->name('syscheck.store');
-  Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('edit.show');
+  // Route::get('machine/syscheck/syschecklist:/{LINE_CODE}'    ,[SysCheckController::class,'Indexline'])  ->name('syscheck.listline');
+  // Route::post('machine/syscheck/store'          ,[SysCheckController::class,'Store'])  ->name('syscheck.store');
+  // Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('edit.show');
 
-  Route::post('machine/syscheck/update/{UNID}'  ,[SysCheckController::class,'Update']);
-  Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
+  Route::post('machine/syscheck/update'  ,[SysCheckController::class,'Update']);
+  // Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
 //syschecksub
-Route::get('machine/syschecksub/showback/{UNID}'      ,[SysCheckSubController::class,'Showback'])   ->name('syscheck.showback');
-  Route::get('machine/syschecksub/show/{UNID}'      ,[SysCheckSubController::class,'Show'])   ->name('syscheck.show');
-  Route::post('machine/syschecksub/store'            ,[SysCheckSubController::class,'Store']);
-  Route::get('machine/syschecksub/edit/{UNID}'      ,[SysCheckSubController::class,'Edit']);
-  Route::post('machine/syschecksub/update/{UNID}'    ,[SysCheckSubController::class,'Update'])  ->name('syschecksub.list');
-  Route::get('machine/syschecksub/delete/{UNID}'   ,[SysCheckSubController::class,'Delete']) ->name('syschecksub.delete');
+  //ในedit machine
+  Route::post('machine/system/check/storelistupdate'    ,[SysCheckController::class,'StoreListUpdate'])   ->name('syscheck.storelistupdate');
+  Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');
+  Route::post('machine/system/check/store'              ,[SysCheckController::class,'Store'])   ->name('syscheck.store');
+  Route::get('machine/system/check/{UNID}/{UNIDPM}'     ,[SysCheckController::class,'Check'])   ->name('syscheck.check');
+  Route::get('machine/system/edit/{UNID}/{UNIDPM}'      ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
+  Route::get('machine/system/remove/{UNID}/{MC}'           ,[SysCheckController::class,'DeletePMMachine'])   ->name('syscheck.remove');
+  Route::get('machine/system/check/paginate'              ,[SysCheckController::class,'Paginate']);
+  Route::get('machine/system/check/paginateremove'              ,[SysCheckController::class,'PaginateRemove']);
 //partcheck
 Route::get('machine/partcheck/partchecklist'   ,[MachinePartCheckController::class,'Index'])  ->name('partcheck.list');
   Route::get('machine/partcheck/add/{UNID}'    ,[MachinePartCheckController::class,'Editmain'])   ->name('partcheck.add');
@@ -208,15 +215,20 @@ Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController
   Route::get('machine/machinestatustable/edit/{UNID}'     ,[MachineStatusTableController::class,'Edit'])   ->name('machinestatustable.edit');
   Route::post('machine/machinestatustable/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
   Route::get('machine/machinestatustable/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatustable.delete');
-//system
-Route::get('machine/machinesystemtable/list'     ,[MachineSysTemTableController::class,'Index'])  ->name('machinesystemtable.list');
-  Route::post('machine/machinesystemtable/store'          ,[MachineSysTemTableController::class,'Store']) ->name('machinesystemtable.store');
-  Route::get('machine/machinesystemtable/edit/{UNID}'     ,[MachineSysTemTableController::class,'Edit'])   ->name('machinesystemtable.edit');
-  Route::post('machine/machinesystemtable/update/{UNID}'  ,[MachineSysTemTableController::class,'Update']);
-  Route::get('machine/machinesystemtable/delete/{UNID}'   ,[MachineSysTemTableController::class,'Delete']) ->name('machinesystemtable.delete');
-  Route::post('machine/machinesystempointtable/store'          ,[MachineSysTemTableController::class,'StorePoint']) ->name('machinesystempointtable.store');
-  Route::get('machine/machinesystempointtable/delete/{UNID}'   ,[MachineSysTemTableController::class,'DeletePoint']) ->name('machinesystempointtable.delete');
-  //systemsub
+//PM
+Route::get('machine/pm/template/list/{UNID?}'                 ,[MachineSysTemTableController::class,'Index'])                     ->name('pmtemplate.list');
+  Route::post('machine/pm/template/store'                       ,[MachineSysTemTableController::class,'StoreTemplate'])           ->name('pmtemplate.store');
+  Route::post('machine/pm/template/storelist'                   ,[MachineSysTemTableController::class,'StoreList'])               ->name('pmtemplate.storelist');
+  Route::get('machine/pm/template/add/{UNID}'                   ,[MachineSysTemTableController::class,'PmTemplateAdd'])           ->name('pmtemplate.add');
+  Route::get('machine/pm/templatelist/edit/{UNID}'              ,[MachineSysTemTableController::class,'PmTemplateListEdit'])      ->name('pmtemplate.edit');
+  Route::post('machine/pm/template/storedetail'                 ,[MachineSysTemTableController::class,'PmTemplateDetailStore'])   ->name('pmtemplatedetail.store');
+  Route::post('machine/pm/template/storedetailupdate'           ,[MachineSysTemTableController::class,'PmTemplateDetailUpdate'])  ->name('pmtemplatedetail.update');
+  Route::post('machine/pm/template/updatepmtemplate'            ,[MachineSysTemTableController::class,'UpdateTemplate'])          ->name('pmtemplate.update');
+  Route::post('machine/pm/template/update/{UNID}'               ,[MachineSysTemTableController::class,'UpdatePMList']);
+  Route::get('machine/pm/template/deletepmdetail/{UNID}'        ,[MachineSysTemTableController::class,'DeletePMDetail']);
+  Route::get('machine/pm/template/deletepmcheckbox/{UNID}'      ,[MachineSysTemTableController::class,'DeletePMList']);
+  Route::get('machine/pm/template/deletecheckbox/{UNID}'        ,[MachineSysTemTableController::class,'DeleteTemplate']);
+//systemsub
   Route::get('machine/machinesystemsubtable/list'     ,[MachineSysTemSubTableController::class,'Index'])  ->name('machinesystemsubtable.list');
   Route::post('machine/machinesystemsubtable/store'          ,[MachineSysTemSubTableController::class,'Store']) ->name('machinesystemsubtable.store');
   Route::get('machine/machinesystemsubtable/edit/{UNID}'     ,[MachineSysTemSubTableController::class,'Edit'])   ->name('machinesystemsubtable.edit');
@@ -228,7 +240,13 @@ Route::post('machine/detailpoint/store'          ,[MachineDetailPointTableContro
   Route::post('machine/detailpoint/update/{UNID}'  ,[MachineDetailPointTableController::class,'Update']);
   Route::get('machine/detailpoint/delete/{UNID}'   ,[MachineDetailPointTableController::class,'Delete']) ->name('detailpoint.delete');
 
-  //***************************** MENU ****************************************
+  //***************************** SETTING ****************************************
+//config
+  Route::get('machine/config/home'                  ,[MailConfigController::class,'Index'])->name('machine.config');
+  Route::post('machine/config/save'                  ,[MailConfigController::class,'Save'])->name('machine.save');
+  Route::post('machine/config/savealert'                  ,[MailConfigController::class,'SaveAlert'])->name('machine.savealert');
+  Route::post('machine/config/update'                  ,[MailConfigController::class,'Update'])->name('machine.update');
+
 //MenuController
 Route::get('machine/setting/menu/home'              ,[MenuController::class,'Home'])   ->name('menu.home');
   Route::post('machine/setting/menu/add'              ,[MenuController::class,'AddMenu'])->name('menu.store');
@@ -240,4 +258,4 @@ Route::get('machine/setting/submenu/home/{UNID}'    ,[MenuSubController::class,'
   Route::post('machine/setting/submenu/add'           ,[MenuSubController::class,'AddMenu'])->name('submenu.store');
   Route::get('machine/setting/submenu/edit/{UNID}'    ,[MenuSubController::class,'Edit']);
   Route::post('machine/setting/submenu/update/{UNID}' ,[MenuSubController::class,'Update']);
-  Route::get('machine/setting/submenu/delete{UNID}'   ,[MenuSubController::class,'Delete']);
+  Route::get('machine/setting/submenu/delete/{UNID}'   ,[MenuSubController::class,'Delete']);

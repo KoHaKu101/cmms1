@@ -2,6 +2,7 @@
 @section('tittle','homepage')
 @section('css')
 {{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
+
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -25,133 +26,147 @@
 
 	  <div class="content">
       <div class="page-inner">
-				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-          <div class="container">
-						<div class="row">
-							<div class="col-md-12 gx-4">
-								<a href="{{ route('dashboard') }}">
-								<button class="btn btn-warning  btn-xs ">
-									<span class="fas fa-arrow-left fa-lg">Back </span>
-								</button>
-							</a>
-							</div>
-						</div>
-          </div>
-				</div>
 				<div class="py-12">
-	        <div class="container mt-2">
+	        <div class="container mt--4">
 						<div class="row">
-							<div class="col-md-8">
-								<div class="card ">
-                	@if(session('success'))
-                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    										<span aria-hidden="true">&times;</span>
-  											</button>
-										</div>
-									@endif
-
-										<div class="card-header bg-primary">
-											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>ต้นแบบรายการตรวจเช็คเครื่องจักร </h4>
-										 </div>
-
-									<div id="result"class="card-body mt--3">
-										<div class="table-responsive mt--4">
-											<table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
-												<thead>
-													<tr>
-														<th scope="col">ประเภทเครื่องจักร</th>
-														<th scope="col">PM</th>
-														<th scope="col"></th>
-														<th scope="col"></th>
-													</tr>
-												</thead>
-												<tbody>
-													{{-- @foreach ($dataset as $key => $dataitem) --}}
-													<tr>
-														<td>AUTODIRLL</td>
-														<td>PM 3 รายการ</td>
-														<td style="width:100px">
-															<a href="#">
-																<button class="btn btn-primary btn-block btn-sm my-1 mx--2 ">
-																	<span class="btn-label float-left">
-																		<i class="fa fa-eye mx-1 "></i>
-																		เพิ่ม PM
-																	</span>
-																</button>
-															</a>
-														</td>
-														<td style="width:10px">
-															<a href="#">
-															<button type="button" class="btn btn-danger btn-block btn-sm my-1" style="width:40px">
-																<i class="fas fa-trash fa-lg">	</i>
-															</button>
-														</a>
-													</td>
-													</tr>
-													{{-- @endforeach --}}
-
-												</tbody>
-											</table>
+							<div class="col-md-12">
+								<div class="card "></div>
+								<div class="row">
+									<div class="col-md-6 col-lg-4 ">
+										<div class="card">
+											<div class="card-header bg-primary">
+												<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>	ประเภทรายการ (Template)
+													<button  id="popup" type="button" class="btn btn-warning float-right btn-sm" data-toggle="modal" data-target="#Newtemplate">
+														<i class="fas fa-file" style="color:white;font-size:14px"> New</i>
+													</button>
+												</h4>
+											</div>
+											<div class="card-body">
+												<ul class="nav nav-tab flex-column col-md-6 col-lg-12" id="tabActive" >
+													@foreach ($datapmtemplate as $key => $dataset)
+														<li>
+															<a href="{{ url('machine/pm/template/list/'.$dataset->UNID) }}"  class="btn btn-primary btn-sm my-2" style="width:190px" > {{ $dataset->PM_TEMPLATE_NAME }} </a>
+															<button class="btn btn-primary btn-link btn-sm" type="button" data-toggle="modal" data-target="#Edittemplate" onclick="datapmachine('{{ $dataset->UNID}}','{{$dataset->PM_TEMPLATE_NAME }}')">
+															<i class="fas fa-edit fa-2x"></i> </button>
+															<button class="btn btn-danger btn-link btn-sm" type="button	" onclick="deletecheckboxpm('{{ $dataset->UNID }}')">
+															<i class="fas fa-trash" style="font-size:20px"></i> </button>
+														</li>
+													@endforeach
+						        		</ul>
+											</div>
 										</div>
 									</div>
-								</div>
-								</div>
-								<div class="col-md-4">
-									<div class="card">
-										<div class="card-header bg-primary">
-											<h4 class="ml-3 mt-2" style="color:white;" > เพิ่มรายการ </h4>
-										 </div>
-										<div class="card-body">
-											<form action="{{ route('machinesystemtable.store') }}" method="POST">
-												@csrf
-												<div class="form-group has-error">
-													<label for="SYSTEM_CODE">code</label>
-													<input type="text"  class="form-control" id="SYSTEM_CODE" name="SYSTEM_CODE" placeholder="code" required autofocus>
-
+									<div class="col-md-6 col-lg-8">
+										<div class="" id="tabdetail" name="tabdetail">
+											@if ($countdetail > 0)
+												<div class="card" >
+													<div class="tab-content clearfix">
+														<div class="tab-pane active" >
+															<div class="card-header bg-primary">
+																<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>รายการ : {{ $datapmtemplatefirst->PM_TEMPLATE_NAME }}
+																	<a href="{{ url('/machine/pm/template/add/'.$datapmtemplatefirst->UNID) }}">
+																		<button class="btn btn-warning btn-sm float-right mx-2 " type="button	">
+																		<i class="fas fa-file" style="color:white;font-size:14px"> เพิ่มรายการ PM</i> </button>
+																	</a>
+																</h4>
+															</div>
+														</div>
+													</div>
+													<div class="card-body">
+														<div class="col-md-12">
+															<div class="table">
+																<table class="table table-bordered table-head-bg-info table-bordered-bd-info">
+																	<thead>
+																		<tr>
+																			<th>##</th>
+																			<th scope="col">Inspection Item</th>
+																			<th scope="col">ระยะเวลา</th>
+																			<th style="width:120px">Action</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		@foreach ($datapmtemplatelist as $key => $dataitem)
+																			<tr>
+																				<td class="text-center"> {{ $key+1 }}</td>
+																				<td>{{$dataitem->PM_TEMPLATELIST_NAME}}</td>
+																				<td class="text-center">{{($dataitem->PM_TEMPLATELIST_DAY/30).' เดือน' }}</td>
+																				<td>
+																					<div class="form-inline">
+																						<a href="{{ url('/machine/pm/templatelist/edit/'.$dataitem->UNID) }}">
+																							<button class="btn btn-primary btn-link btn-sm " type="button	">
+																							<i class="fas fa-edit fa-2x"></i> </button>
+																						</a>
+																						<button class="btn btn-danger btn-link btn-sm my-1" type="button	" onclick="deletecheckbox('{{ $dataitem->UNID }}')">
+																							<i class="fas fa-trash" style="font-size:20px"> </i>
+																						</button>
+																					</div>
+																				</td>
+																			</tr>
+																		@endforeach
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
 												</div>
-												<div class="form-group has-error">
-													<label for="MACHINE_TYPE">รายการระบบเครื่องจักร</label>
-													<select class="form-control" name="MACHINE_TYPE" required autofocus>
-														<option value="">ประเภทเครื่องจักร</option>
-														{{-- @foreach ($datatype as $key => $dataitem)
-														<option value="{{ $dataitem->TYPE_NAME }}">{{ $dataitem->TYPE_NAME }}</option>
-														@endforeach --}}
-													</select>
+												<div class="card" >
+													<div class="card-header bg-primary">
+														<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>	รายการเครื่องจักรที่ใช้งาน
+															{{-- <button  id="popup" type="button" class="btn btn-warning float-right btn-sm" data-toggle="modal" data-target="#Newtemplate">
+																<i class="fas fa-file" style="color:white;font-size:14px"> New</i>
+															</button> --}}
+														</h4>
+													</div>
+													<div class="card-body">
+														<div class="col-md-12">
+															<div class="table">
+																<table class="table table-bordered table-head-bg-info table-bordered-bd-info">
+																	<thead>
+																		<tr>
+																			<th style="width:46.67px">##</th>
+																			<th scope="col">รหัสเครื่องจักร</th>
+																			<th style="width:46.67px">Action</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		@foreach ($datamachine as $key => $datarow)
+																			<tr>
+																				<td class="text-center"> {{ $key+1 }}</td>
+																				<td>{{$datarow->MACHINE_CODE}}</td>
+																				<td>
+																					<div class="form-inline">
+																						{{-- <a href="{{ url('/machine/pm/templatelist/edit/'.$datarow->UNID) }}">
+																							<button class="btn btn-primary btn-link btn-sm " type="button	">
+																							<i class="fas fa-edit fa-2x"></i> </button>
+																						</a> --}}
+																						<button class="btn btn-danger btn-link btn-sm my-1" type="button	" onclick="removemachine('{{ $datarow->PM_TEMPLATE_UNID_REF}}','{{$datarow->MACHINE_CODE}}')">
+																							<i class="fas fa-trash" style="font-size:20px"> </i>
+																						</button>
+																					</div>
+																				</td>
+																			</tr>
+																		@endforeach
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
 												</div>
-												<div class="form-group has-error">
-													<label for="SYSTEM_MONTH">ระยะเวลา</label>
-													<select class="form-control" name="SYSTEM_MONTH" required autofocus>
-														<option value="">ระยะเวลา</option>
-														@for ($i=3; $i <= 12; $i+=3)
-														<option value="{{$i}}">{{ $i }}</option>
-														@endfor
-													</select>
-												</div>
-												<div class="form-check has-error">
-													<label for="SYSTEM_STATUS">เปิด/ปิด</label><br>
-													<label class="form-radio-label">
-														<input class="form-radio-input" type="radio" name="SYSTEM_STATUS" value="9" checked="">
-														<span class="form-radio-sign">เปิด</span>
-													</label>
-													<label class="form-radio-label ml-3">
-														<input class="form-radio-input" type="radio" name="SYSTEM_STATUS" value="1">
-														<span class="form-radio-sign">ปิด</span>
-													</label>
-												</div>
-												<button tpye="submit" class="btn btn-primary">Save</button>
-											</form>
+											@endif
 										</div>
 									</div>
 								</div>
               </div>
-
 						</div>
 					</div>
   			</div>
 			</div>
 		</div>
+
+		<!-- Modal -->
+		@include('machine/add/system/modalpmtemplate')
+		@include('machine/add/system/modalpmtemplatelist')
+
 
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}
@@ -160,5 +175,70 @@
 @section('javascript')
 
 
+<script>
+	function dataunid(unid){
+		var unid = (unid) ;
+		var _html='<input type="hidden" name="PM_TEMPLATE_UNID_REF" value="'+unid+'">'+
+		 					'<input type="text" class="form-control" name="PM_TEMPLATELIST_NAME" placeholder="กรุณาใส่ชื่อ PM ที่จะตรวจเช็ค">';
+
+	$("#sendunid").html(_html);
+	}
+</script>
+
+<script>
+	function datapmachine(unid,name){
+		var unid = (unid) ;
+		var name = (name) ;
+		var _html='<input type="hidden" name="UNID" value="'+unid+'">'+
+		 					'<input type="text" class="form-control" name="PM_TEMPLATE_NAME" value="'+name+'">';
+
+	$("#sendpmunid").html(_html);
+	}
+</script>
+<script src="{{ asset('/js/delete/deletepmlist.js') }}">
+</script>
+<script src="{{ asset('/js/delete/deletepm.js') }}">
+</script>
+
+
+<script>
+	function removeunidref(unid){
+		Swal.fire({
+			title: 'ต้องการลบจุดตรวจเช็คมั้ย?',
+			text: "หากทำการลบจะไม่สามารถกู้คืนกลับมาได้!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+					var unid = (id);
+					window.location.href = '/machine/pm/template/removeunidref/'+unid;
+			}
+		})
+	}
+</script>
+<script>
+	function removemachine(id,code){
+		Swal.fire({
+				title: 'คุณต้องการลบข้อมูลหรือไม่?',
+				text: 'หากลบข้อมูลแล้วจะไม่สามารถกู้คืนมาได้!',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes!'
+		}).then(function(result) {
+			if (result.isConfirmed) {
+				var unid = (id);
+				var mc   = (code);
+				window.location.href = '/machine/system/remove/'+unid+'/'+mc;
+			}
+		})
+
+	}
+
+</script>
 @stop
 {{-- ปิดส่วนjava --}}

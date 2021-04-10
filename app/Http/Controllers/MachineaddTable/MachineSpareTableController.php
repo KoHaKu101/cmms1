@@ -34,9 +34,9 @@ class MachineSpareTableController extends Controller
 
   public function Index(){
 
-    $dataset = MachineSpareTable::paginate(10);
 
-    return View('machine/add/sparepart/tablesparelist',compact('dataset'));
+
+    return View('machine/add/sparepart/tablesparelist');
   }
   public function Store(Request $request){
 

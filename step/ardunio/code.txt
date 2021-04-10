@@ -1,0 +1,9 @@
+Serial.begin(9600) = speed data(ความเร็วในการส่งข้อมูล)
+ใช้ใน **PINMODE** INPUT = การรับข้อมูลเข้า
+		OUTPUT = ส่งข้อมูลออก 
+INPUT ใช้กับ DIGITALREAD
+OUTPUT ใช้กับ DIGITALWRITE
+
+PRINTLN คือ การรับข้อมูลมาเป็นตัวอักษรแล้วจะเริ่มบรรทัดใหม่
+PRINT 	คือ การรับข้อมูลมาเป็นตัวอักษร
+

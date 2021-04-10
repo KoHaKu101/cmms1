@@ -8,8 +8,20 @@
             <thead>
               <tr>
                 <th class="bg-primary" colspan="6" >
-                  <h3 align="center" style="color:white;" class="mt-2">ประวัติการแจ้งซ่อม</h3>
+                  <h3 align="center" style="color:white;" class="mt-2">ประวัติการแจ้งซ่อม
+                  <button type="button" class="btn btn-secondary btn-sm  float-right mt--1"
+                  onclick="printhistory( '{{$dataset->UNID}}' )" id="button" style="width:120px">
+                    <span class="float-left">
+
+                      <i  style="font-size:17px"class="icon-printer mx-1 mt-1"></i>
+                      Print ประวัติ
+                    </span>
+                    </h3>
+                  </button>
                 </th>
+
+
+
               </tr>
               <tr>
                 <th style="width:60px">

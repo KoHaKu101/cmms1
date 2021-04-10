@@ -13,7 +13,7 @@
               </a>
             </td>
             <td >  {{ $row->MACHINE_LINE }}  </td>
-            <td >              {{ $row->MACHINE_NAME }}  </td>
+            <td style="width:400px;">              {{ $row->MACHINE_NAME }}  </td>
             <td style="width:100px;">
               <a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
                 <button type="button" class="btn btn-secondary btn-sm btn-block my-1" style="width:80px">
@@ -25,14 +25,14 @@
               </a>
             </td>
             <td style="width:120px;">
-              <a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
-                <button type="button" class="btn btn-secondary btn-sm btn-block my-1" style="width:80px">
+                <button type="button" class="btn btn-secondary btn-sm btn-block my-1"
+                onclick="printhistory( '{{$row->UNID}}' )" id="button" style="width:120px">
                   <span class="float-left">
+
                     <i  style="font-size:17px"class="icon-printer mx-1 mt-1"></i>
-                    Print
+                    Print ประวัติ
                   </span>
                 </button>
-              </a>
             </td>
             <td>
               <a href="{{ url('machine/repair/form/'.$row->MACHINE_CODE) }}">
@@ -44,22 +44,6 @@
                 </button>
               </a>
             </td>
-
-            {{-- <td style="white-space:nowrap">  	{{ $row->MACHINE_CHECK == '1 ' ? 'หยุดทำงาน'
-                                              : ($row->MACHINE_CHECK == '2' ? 'เครื่องทำงาน'
-                                              : ($row->MACHINE_CHECK == '3' ? 'เครื่องกำลังซ่อม'
-                                              :($row->MACHINE_CHECK == '4' ? 'เครื่องจำหน่าย' : 'สถานะไม่แน่ชัด' ))) }}		</td> --}}
-            {{-- <td style="white-space:nowrap">  						 {{ $row->MACHINE_RVE_DATE }}     </td> --}}
-            {{-- <td style="white-space:nowrap">  						 {{ $row->MACHINE_STATUS == '4' ? 'จำหน่าย' : "" }}     </td> --}}
-            {{-- <td style="width:100px;">
-
-                <button type="button" class="btn btn-block btn-danger btn-sm my-1 " id="button" style="width:150px">
-                  <i class="fab fa-btc fa-lg mx-1">	</i> จำหน่ายเครื่องจักร
-                  <input type="hidden" id="UNID"value="{{ $row->UNID }}">
-                  <input type="hidden" id="MACHINE_CODE"value="{{ $row->MACHINE_CODE }}">
-
-                </button>
-              </td> --}}
             </tr>
         @endforeach
         <tr>

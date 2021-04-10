@@ -21,21 +21,21 @@ class DashboardController extends Controller
   }
   public function Dashboard(){
     //dashboardสรุป
-    $dataset = Machine::where('MACHINE_CHECK','!=','1')->get()->count();
-    $dataprocess = Machine::where('MACHINE_CHECK','=','2')->get()->count();
-    $datawait = Machine::where('MACHINE_CHECK','=','4')->get()->count();
+    $dataset = Machine::where('MACHINE_CHECK','!=','1')->count();
+    $dataprocess = Machine::where('MACHINE_CHECK','=','2')->count();
+    $datawait = Machine::where('MACHINE_CHECK','=','4')->count();
 
     //dashboardเครื่องจักรLINE
-    $data_line1 = Machine::where('MACHINE_LINE','L1')->get()->count();
-    $data_line2 = Machine::where('MACHINE_LINE','L2')->get()->count();
-    $data_line3 = Machine::where('MACHINE_LINE','L3')->get()->count();
-    $data_line4 = Machine::where('MACHINE_LINE','L4')->get()->count();
-    $data_line5 = Machine::where('MACHINE_LINE','L5')->get()->count();
-    $data_line6 = Machine::where('MACHINE_LINE','L6')->get()->count();
+    $data_line1 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L1')->count();
+    $data_line2 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L2')->count();
+    $data_line3 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L3')->count();
+    $data_line4 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L4')->count();
+    $data_line5 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L5')->count();
+    $data_line6 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L6')->count();
     //แจ้งซ่อม
     $datarepairlist = MachineRepair::select('MACHINE_CODE','MACHINE_TYPE','MACHINE_DOCDATE','MACHINE_CAUSE')
                                     ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_DOCDATE','DESC')->take(9)->get();
-    $datarepair = MachineRepair::where('CLOSE_STATUS','=','9')->get()->count();
+    $datarepair = MachineRepair::where('CLOSE_STATUS','=','9')->count();
 
 
 
@@ -44,8 +44,8 @@ class DashboardController extends Controller
     ,'datawait','data_line1','data_line2','data_line3','data_line4','data_line5','data_line6'));
   }
   public function Notification(Request $request){
-    $data = MachineRepair::select('PMCS_REPAIR_MACHINE.UNID','PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINES.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
-                          ->leftJoin('PMCS_MACHINES','PMCS_MACHINES.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
+    $data = MachineRepair::select('PMCS_REPAIR_MACHINE.UNID','PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINE.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
+                          ->leftJoin('PMCS_MACHINE','PMCS_MACHINE.MACHINE_CODE','PMCS_REPAIR_MACHINE.MACHINE_CODE')
                           ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_TIME','DESC')->take(4)->get();
     // $datacount = MachineRepair::where('CLOSE_STATUS','9')->get()->count();
 
@@ -55,11 +55,10 @@ class DashboardController extends Controller
     $data = MachineRepair::where('CLOSE_STATUS','9')->take(4)->get()->count();
     return response()->json(['datacount' => $data]);
   }
-
   public function SystemcheckMonthly(Request $request){
     $systemcheck = 'PMCS_CMMS_MACHINE_SYSTEMCHECK';
     $systemtable = 'PMCS_CMMS_MACHINE_SYSTEMTABLE';
-    $machine = 'PMCS_MACHINES';
+    $machine = 'PMCS_MACHINE';
     $data = MachineSysTemCheck::select($systemcheck.'.MACHINE_UNID_REF',$systemtable.'.SYSTEM_NAME'
                                 ,$machine.'.MACHINE_LINE',$machine.'.MACHINE_CODE',$systemcheck.'.SYSTEM_MONTHSTORE')
                           ->leftJoin($systemtable,$systemtable.'.SYSTEM_CODE',$systemcheck.'.SYSTEM_CODE')

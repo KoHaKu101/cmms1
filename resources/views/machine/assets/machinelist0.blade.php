@@ -87,9 +87,12 @@
 														<th ></th>
                             <th scope="col">LINE</th>
                           	<th scope="col">Name</th>
+
+
 														<th scope="col">แผนการผลิต</th>
 														<th scope="col">ประวัติการซ่อม</th>
-														<th scope="col">แจ้งซ่อม</th>
+														<th>แจ้งซ่อม</th>
+
                         	</tr>
                       	</thead>
 
@@ -122,6 +125,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+
 	<script type="text/javascript" src="{{ asset('/js/serach/serachmachine.js') }}">
 
 	</script>
@@ -138,28 +142,16 @@
 		window.open('/machine/assets/machineall','Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
 	})
 	</script>
-	<script>
+
+	<script type="text/javascript">
 	// var button = document.getElementById('button');
-	var unid = $('#UNID').val(); console.log(unid);
-	var mc = $('#MACHINE_CODE').val();
-
-	$(document).on('click','#button', function(){
-	Swal.fire({
-	  title: 'จำหน่ายเครื่องจักร: ' +mc+ ' ?',
-	  text: "หากจำหน่ายแล้วไม่สามารถกลับคืนมาได้!",
-	  icon: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#3085d6',
-	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Yes!'
-	}).then((result) => {
-	  if (result.isConfirmed) {
-			window.location.href = "/machine/assets/delete/"+unid;
+		function printhistory(u){
+			console.log(u);
+			var unid = (u);
+			window.open('/machine/repairhistory/pdf/'+unid,'RepairHistory','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+		}
 
 
-	  }
-	})
-	});
 	</script>
 @stop
 {{-- ปิดส่วนjava --}}

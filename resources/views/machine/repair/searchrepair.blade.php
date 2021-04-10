@@ -7,6 +7,14 @@
         </span>
       </a>
     </td>
+    <td style="width:50px">
+      <button type="button"class="btn btn-primary btn-block btn-sm my-1 " onclick="pdfrepair('{{ $row->UNID }}')"
+      style="width:50px;height:30px">
+        <span class="">
+          <i  style="font-size:17px"class="icon-printer "></i>
+        </span>
+      </button>
+    </td>
     <td >  				{{ $row->MACHINE_CODE }}		     </td>
     <td >  				{{ $row->MACHINE_NAME }}		    </td>
     <td >  				{{ $row->MACHINE_LOCATION }}	    </td>
@@ -22,10 +30,11 @@
           </button>
         </td>
         <td style="width:90px">
-          <button type="button" class="btn btn-danger btn-block btn-sm my-1 " id='button' style="width:90px;height:30px">
+          <button type="button" class="btn btn-danger btn-block btn-sm my-1 " id='button' onclick="closework( '{{ $row->UNID }}' )"
+            style="width:90px;height:30px">
             <span class="btn-label">
               <i class="fas fa-clipboard-check mx-1"></i>ปิดเอกสาร
-              <input type="hidden" id="UNID"value="{{ $row->UNID }}">
+              {{-- <input type="hidden" id="UNID"value="{{ $row->UNID }}"> --}}
             </span>
           </button>
       @elseif ($row->CLOSE_STATUS === '1')

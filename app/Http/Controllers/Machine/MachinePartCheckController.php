@@ -38,7 +38,7 @@ class MachinePartCheckController extends Controller
   public function Index(){
 
     $data_set = Machine::paginate(10);
-    $data_line6 = DB::table('pmcs_machines')->where('MACHINE_LINE','L6')->get()->count();
+    $data_line6 = DB::table('PMCS_MACHINE')->where('MACHINE_LINE','L6')->get()->count();
     //dd($data_set);
     return View('machine/partcheck/partchecklist',compact('data_set','data_line6'));
   }

@@ -37,7 +37,7 @@ class MachineRepairController extends Controller
   }
   public function Index(){
 
-    $dataset = MachineRepair::orderBy('MACHINE_DOCDATE','DESC')->paginate(10);
+    $dataset = MachineRepair::orderby('CLOSE_STATUS','DESC')->orderBy('MACHINE_DOCDATE','DESC')->paginate(10);
     //dd($data_set);
     return View('machine/repair/repairlist',compact('dataset'));
   }
@@ -51,6 +51,8 @@ class MachineRepairController extends Controller
                  ->where('MACHINE_CODE', 'like', '%'.$query.'%')
                  ->orWhere('MACHINE_LOCATION', 'like', '%'.$query.'%')
                  ->orWhere('MACHINE_NAME', 'like', '%'.$query.'%')
+                 ->orderby('CLOSE_STATUS','DESC')
+                 ->orderBy('MACHINE_DOCDATE','DESC')
                  // ->orWhere('MACHINE_DOCNO', 'like', '%'.$query.'%')
                  // ->orWhere('MACHINE_DOCDATE', 'like', '%'.$query.'%')
 
@@ -92,7 +94,7 @@ class MachineRepairController extends Controller
 
       if(!empty($request->MACHINE_NOTE)){
         // $arraymachinerepair = array($request->MACHINE_REPAIR);
-        $MACHINE_NOTE = implode(",",$request->MACHINE_NOTE);
+        $MACHINE_NOTE = implode(" ",$request->MACHINE_NOTE);
 
       }elseif(empty($request->MACHINE_NOTE)) {
         $MACHINE_NOTE = NULL;
@@ -148,11 +150,9 @@ class MachineRepairController extends Controller
     }else {
       $validated = $request->validate([
         'MACHINE_NOTE'           => 'required|max:50',
-        'MACHINE_CAUSE'           => 'required|max:200'
         ],
         [
-        'MACHINE_NOTE.required'  => 'ไม่มีข้อมูล',
-        'MACHINE_CAUSE.required'  => 'ไม่มีข้อมูล'
+        'MACHINE_NOTE.required'  => 'ไม่มีข้อมูลอาการเสีย',
         ]);
     }
   }
@@ -232,6 +232,7 @@ class MachineRepairController extends Controller
             return Redirect()->route('repair.edit',[$UNID])->with('success','อัพเดทรายการ สำเร็จ');
           }
   public function Delete($UNID){
+    // dd($UNID);
             $CLOSE_STATUS = '1';
               $data_set = MachineRepair::where('UNID',$UNID)->update([
                       'CLOSE_STATUS'          => $CLOSE_STATUS,

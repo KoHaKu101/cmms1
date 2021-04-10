@@ -1,7 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-
+{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -23,166 +23,160 @@
 	{{-- ส่วนเนื้อหาและส่วนท้า --}}
 @section('contentandfooter')
 
-		<div class="content">
-			<div class="page-inner">
-				<!--ส่วนปุ่มด้านบน-->
+	  <div class="content">
+      <div class="page-inner">
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-					<div class="container">
+          <div class="container">
 						<div class="row">
-							<div class="col-md-1 mt-2">
-								<a href="{{ url('machine/machinesystemtable/list') }}">
-									<button class="btn btn-warning  btn-xs ">
-										<span class="fas fa-arrow-left fa-lg">Back </span>
-									</button>
+							<div class="col-md-12 gx-4">
+								<a href="{{url('machine/pm/template/list/'.$datapmtemplate->UNID)}}">
+										<button class="btn btn-warning  btn-xs ">
+											<span class="fas fa-arrow-left fa-lg">Back </span>
+										</button>
 								</a>
 							</div>
-							<div class="col-md-1 mt-2 ">
-								<form action="{{ url('machine/machinesystemtable/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
-									@csrf
-									<button class="btn btn-primary btn-xs" type="submit">
-										<span class="fas fa-save fa-lg">	Save	</span>
-									</button>
-							</div>
 						</div>
-					</div>
+          </div>
 				</div>
-				<!--ส่วนกรอกข้อมูล-->
 				<div class="py-12">
 	        <div class="container mt-2">
-						<div class="card">
-							<div class="card-header bg-primary">
-								<h4 class="ml-3 mt-2" style="color:white;" >ระบบ {{ $dataset->MACHINE_TYPE }} </h4>
-							</div>
-							<div class="card-body">
-								<div class="row">
-										<!-- ช่อง1-->
-										<div class="col-md-6 col-lg-2">
-											<div class="form-group has-error">
-												<label for="SYSTEM_CODE">code*</label>
-												<input type="text" class="form-control" id="SYSTEM_CODE" name="SYSTEM_CODE" value="{{$dataset->SYSTEM_CODE}}">
-											</div>
-										</div>
-										<!-- ช่อง2-->
-										<div class="col-md-6 col-lg-4">
-											<div class="form-group has-error">
-												<label for="SYSTEM_NAME">ระบบ*	</label>
-												<input type="text" class="form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" value="{{$dataset->MACHINE_TYPE}}">
-											</div>
-										</div>
-										<div class="col-md-6 col-lg-2">
-											<div class="form-group has-error">
-												<label for="SYSTEM_NAME">ระยะเวลา*	</label>
-												<div class="input-group ">
-													<input type="text" class="form-control" id="SYSTEM_MONTH" name="SYSTEM_MONTH" value="{{$dataset->SYSTEM_MONTH}}">
-													<div class="input-group-append">
-														<span class="input-group-text">เดือน</span>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card ">
+                	@if(session('success'))
+
+									@endif
+									<form action="{{ url('machine/pm/template/update/'.$datapmtemplatelist->UNID) }}" method="post" enctype="multipart/form-data">
+										@csrf
+										<div class="card-header bg-primary">
+
+											<h4 class="ml-3 mt-2" style="color:white;" >ประเภทรายการ : {{$datapmtemplate->PM_TEMPLATE_NAME}}, รายการ PM : {{$datapmtemplatelist->PM_TEMPLATELIST_NAME}}
+												<a href="{{ url('/machine/pm/template/add/'.$datapmtemplate->UNID) }}">
+												<button type="button" class="btn btn-warning btn-sm float-right " name="save" >
+													<i class="fas fa-save" style="color:white;font-size:15px"> New</i>
+												</button>
+												</a>
+										</h4>
+
+										 </div>
+										<div class="card-body">
+										 	<div class="row">
+												{{-- <div class="col-md-6 col-lg-3 has-error">
+												 	<label> Inspection Point</label>
+													<input type="hidden" class="form-control" name="PM_TEMPLATELIST_CHECK" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_CHECK }}">
+												 	<input type="text" class="form-control" name="PM_TEMPLATELIST_POINT" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_POINT }}">
+											 	</div> --}}
+											 	<div class="col-md-6 col-lg-3 has-error">
+												 	<label> Inspection Item</label>
+													<input type="hidden" class="form-control" name="PM_TEMPLATELIST_CHECK" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_CHECK }}">
+												 	<input type="text" class="form-control" name="PM_TEMPLATELIST_NAME" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_NAME }}">
+											 	</div>
+												<div class="col-md-6 col-lg-2 has-error">
+													<label> ระยะเวลา</label>
+													<div class="input-group">
+														<input type="text" class="form-control" name="PM_TEMPLATELIST_DAY" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_DAY / 30 }}">
+														<div class="input-group-append">
+
+															<span class="input-group-text">เดือน</span>
+														</div>
 													</div>
 												</div>
+
+
+												<div class="col-md-6 col-lg-2 has-error">
+													<label> สถานะ</label>
+													<div class="selectgroup w-100">
+															<label class="selectgroup-item">
+																<input type="radio" name="PM_TEMPLATELIST_STATUS" value="1" class="selectgroup-input" {{ $datapmtemplatelist->PM_TEMPLATELIST_STATUS == '1' ? 'checked' : ""}}>
+																<span class="selectgroup-button">เปิด</span>
+															</label>
+															<label class="selectgroup-item">
+																<input type="radio" name="PM_TEMPLATELIST_STATUS" value="2" class="selectgroup-input" {{ $datapmtemplatelist->PM_TEMPLATELIST_STATUS == '2' ? 'checked' : ""}}>
+																<span class="selectgroup-button">ปิด</span>
+															</label>
+														</div>
+												</div>
+										 	</div>
+											<div class="row">
+												<div class="col-md-6 col-lg-10">
 											</div>
-										</div>
-										<div class="col-md-6 col-lg-2">
-											<div class="form-check has-error">
-												<label for="SYSTEM_STATUS">สถานการเปิดใช้งาน</label><br>
-												<label class="form-radio-label">
-													<input class="form-radio-input" type="radio" name="SYSTEM_STATUS" {{ $dataset->SYSTEM_STATUS == "9" ? 'checked' : '' }} value="9" >
-													<span class="form-radio-sign">เปิด</span>
-												</label>
-												<label class="form-radio-label ml-3">
-													<input class="form-radio-input" type="radio" name="SYSTEM_STATUS" {{ $dataset->SYSTEM_STATUS == "1" ? 'checked' : '' }} value="1">
-													<span class="form-radio-sign">ปิด</span>
-												</label>
+											<div class="col-md-6 col-lg-1">
+												<button class="btn btn-primary btn-sm" >
+													<i class="fas fa-save" style="color:white;font-size:15px" name="save" value="save"> Save</i>
+												</button>
 											</div>
+
 										</div>
+										</div>
+									</form>
+											</div>
 								</div>
-
 							</div>
-						</div>
-						</form>
 							<div class="row">
-								<div class="col-md-6 col-lg-8 ">
+								<div class="col-md-8">
 									<div class="card">
-										<div class="card-header bg-primary">
-											<h4 class="ml-3 mt-2" style="color:white;" >จุดตรวจเช็ค</h4>
-										</div>
-										<div class="row">
-											<div id="result"class="card-body mt--3">
-												<div class="table-responsive mt--4">
-													<table class="table table-bordered mt-4">
-														<thead>
-															<tr>
-																<th>ลำดับ</th>
-																<th>รายการ</th>
-																<th> รายละเอียด </th>
-																<th>Action</th>
-															</tr>
-														</thead>
-														<tbody>
-															@foreach ($datapoint as $key => $dataitem)
-															<tr>
-																<td style="width:50px">{{$dataitem->SYSTEMPOINT_TABLE_ID}}</td>
-																<td style="width:300px"> {{ $dataitem->SYSTEMPOINT_TABLE_NAME }}</td>
-																<td style="width:200px">
-																	<a href="{{ url('machine/machinesystemtable/edit/'.$dataitem->UNID) }}">
-																		<button class="btn btn-primary btn-block btn-sm my-1 mx--2 ">
-																			<span class="btn-label float-left">
-																				<i class="fa fa-eye mx-1 "></i>
-																				รายการ
-																			</span>
+											<div class="card-header bg-primary">
+												<h4 class="ml-3 mt-2" style="color:white;" > Inspection Check</h4>
+											</div>
+												<div class="card-body mt--3">
+													<div class="table-responsive mt--4">
+														<table class="table table-bordered mt-4">
+															<thead>
+																<tr>
+																	<th scope="col">ลำดับ</th>
+																	<th scope="col">รายละเอียด</th>
+																	<th></th>
+																</tr>
+															</thead>
+															<tbody>
+															@foreach ($datapmtemplatedetail as $key => $dataitem)
+																<tr>
+																	<td>{{$key+1}}</td>
+																	<td>{{$dataitem->PM_DETAIL_NAME}}</td>
+																	<td style="width:40px">
+																		<button type="button" class="btn btn-primary btn-block btn-sm my-1 edit" onclick="editdetail('{{ $dataitem->UNID }}','{{ $dataitem->PM_DETAIL_NAME }}')">
+																			<i class="fas fa-edit fa-lg">	</i>
 																		</button>
-																	</a>
-																</td>
+																	</td>
+																	<td style="width:40px">
+																		<button type="button" class="btn btn-danger btn-block btn-sm my-1" onclick="deletedata('{{ $dataitem->UNID }}')" >
+																			<i class="fas fa-trash fa-lg">	</i>
+																		</button>
 
-																<td><a href="{{ url('machine/machinesystempointtable/delete/'.$dataitem->UNID) }}">
-																	<button type="button" class="btn btn-danger btn-block btn-sm my-1" style="width:40px">
-																		<i class="fas fa-trash fa-lg">	</i>
-																	</button>
-																</a></td>
-															</tr>
+																	</td>
+																</tr>
 															@endforeach
 
-														</tbody>
-													</table>
+															</tbody>
+														</table>
 												</div>
 											</div>
 										</div>
-								</div>
-							</div>
-						<div class="col-md-6 col-lg-4">
-							<div class="card">
-								<div class="card-header bg-primary">
-									<h4 class="ml-3 mt-2" style="color:white;" >เพิ่มจุดที่ต้องเช็ค</h4>
-								</div>
-								<div class="card-body">
-									<form action="{{ route('machinesystempointtable.store') }}" method="POST">
-										@csrf
-									<!-- ช่อง1-->
-										<div class="form-group has-error">
-											<label for="SYSTEMPOINT_TABLE_NAME">ลำดับ*</label>
-											<input type="text" class="form-control" id="SYSTEMPOINT_TABLE_ID" name="SYSTEMPOINT_TABLE_ID" >
-										</div>
-									<!-- ช่อง2-->
-										<div class="form-group has-error">
-											<label for="SYSTEMPOINT_TABLE_NAME">รายการ*	</label>
-											<input type="text" class="form-control" id="SYSTEMPOINT_TABLE_NAME" name="SYSTEMPOINT_TABLE_NAME" >
-											<input type="hidden" name="SYSTEMTABLE_UNID_REF" value="{{ $dataset->UNID }}">
-										</div>
-										<button type="submit" class="btn btn-primary ml-2 mt-4">
-											Save
-										</button>
-									</form>
-								</div>
-							</div>
-						</div>
+									</div>
+									<div class="col-md-4">
+									<div class="card">
+										<div class="card-header bg-primary">
+											<h4 class="ml-3 mt-2" style="color:white;" > เพิ่ม Inspection Check  </h4>
+										 </div>
+										<div class="card-body" id="PM_DETAIL_NAME">
+											<form action="{{ route('pmtemplatedetail.store') }}" method="POST">
+												@csrf
+												<div class="form-group has-error" >
+													<label for="SYSTEM_CODE">รายละเอียด</label>
+													<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" value="{{ $datapmtemplatelist->UNID }}">
+													<textarea class="form-control" name="PM_DETAIL_NAME" rows="2" required autofocus></textarea >
+													<button type="submit" class="btn btn-primary mt-3">Save</button>
+												</div>
 
+											</form>
+										</div>
+									</div>
+								</div>
+              </div>
 						</div>
-				</div>
+					</div>
+  			</div>
 			</div>
-
-	</div>
-</div>
-
-
-
 
 
 @stop
@@ -190,6 +184,69 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+<script >
+	function deletedata(pm){
+		var unid = (pm);
+		console.log(unid);
+			Swal.fire({
+				title: 'ต้องการลบจุดตรวจเช็คมั้ย?',
+				text: "หากทำการลบจะไม่สามารถกู้คืนกลับมาได้!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+				window.location.href = "/machine/pm/template/deletepmdetail/"+unid;
+				}
 
+			})
+	}
+</script>
+<script >
+$("#update").click(function(e) {
+e.preventDefault();
+var pm_templatelist_unid_ref = $("#PM_TEMPLATELIST_UNID_REF").val();
+var pm_detail_name = $("#PM_DETAIL_NAME").val();
+var dataString = 'pm_templatelist_unid_ref='+pm_templatelist_unid_ref+'&pm_detail_name='+pm_detail_name;
+$.ajax({
+	type:"POST",
+	data:dataString,
+	url:"machine/pm/template/storedetailupdate",
+	success:function(data) {
+		alert(data);
+	}
+});
+});
+</script>
+<script>
+	function editdetail(unid,text){
+		var unid = (unid) ;
+		var text = (text) ;
+		var url = '/machine/pm/template/storedetailupdate' ;
+		var _html='<form action="'+url+'" method="POST" enctype="multipart/form-data">'+
+							'@csrf'+
+							'<div class="form-group has-error" >'+
+							'<label for="SYSTEM_CODE">จุดตรวจเช็ค</label>'+
+							'<input type="hidden" name="UNID" value="'+unid+'">'+
+							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2">'+text+'</textarea required autofocus>'+
+							'<button type="submit" class="btn btn-primary mt-3" id="update">Update</button>'+
+							'</div>'+
+							'</form>';
+
+	$("#PM_DETAIL_NAME").html(_html);
+	}
+
+</script>
+<script>
+	function edit(unid){
+		var unid = (unid) ;
+		var _html='<input type="hidden" name="UNID" value="'+unid+'">';
+
+	$("#PM_DETAIL_NAME").html(_html);
+	}
+
+</script>
 @stop
 {{-- ปิดส่วนjava --}}
