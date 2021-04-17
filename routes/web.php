@@ -60,7 +60,7 @@ use App\Models\SettingMenu\Menusubitem;
 |
 */
 Route::get('/', function () {
-    return view('auth/login');
+    return redirect('/machine/dashboard/dashboard');
 })->middleware('auth');
 //PDF FILE
 Route::get('/machine/repairhistory/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineHistoryRepairPDFController@RepairHistory');

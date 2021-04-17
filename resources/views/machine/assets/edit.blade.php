@@ -75,8 +75,10 @@
 										<div class="col-md-6 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
-													<input type="text" class="form-control " id="MACHINE_CODE" name="MACHINE_CODE"  value="{{ $dataset->MACHINE_CODE }}">
+													<input type="text" class="form-control " id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}">
 													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $dataset->MACHINE_UNID }}">
+													
+													{{-- <input type="hidden"  wire:model="dataset"  value="{{ $dataset->MACHINE_CODE }}"> --}}
 											</div>
 
 											<div class="form-group">
@@ -268,7 +270,7 @@
 	    });
 	});
 	</script>
-<script>
+{{-- <script>
 		$(document).ready(function(){
 		$(document).on('click','#add',function(){
 		$(document).on('click', '.pagination a', function(event){
@@ -293,8 +295,8 @@
 
 
 	});
-	</script>
-	<script>
+	</script> --}}
+	{{-- <script>
 $(document).ready(function(){
 	$(document).on('click','#remove',function(){
 		$(document).on('click', '.pagination a', function(event){
@@ -318,6 +320,6 @@ $(document).ready(function(){
 		}
 		});
 		});
-	</script>
+	</script> --}}
 @stop
 {{-- ปิดส่วนjava --}}

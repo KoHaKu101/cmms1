@@ -117,10 +117,10 @@ class MachineSysTemTableController extends Controller
       ],
       [
       'PM_TEMPLATELIST_NAME.required'  => 'กรุณาใส่รายการ PM',
-      'PM_TEMPLATELIST_NAME.max'  => 'ชื่อยาวเกินไป',
-      'PM_TEMPLATELIST_DAY.integer' => 'กรุณาใส่จำนวนวันเป็นตัวเลขและไม่มีจุดทศนิยม',
-      'PM_TEMPLATELIST_DAY.min'   => 'ใส่จำนวนเดือนต่ำสุดได้ 1',
-      'PM_TEMPLATELIST_DAY.max' => 'ใส่จำนวนเดือนสูงสุดได้ 12'
+      'PM_TEMPLATELIST_NAME.max'       => 'ชื่อยาวเกินไป',
+      'PM_TEMPLATELIST_DAY.integer'    => 'กรุณาใส่จำนวนวันเป็นตัวเลขและไม่มีจุดทศนิยม',
+      'PM_TEMPLATELIST_DAY.min'        => 'ใส่จำนวนเดือนต่ำสุดได้ 1',
+      'PM_TEMPLATELIST_DAY.max'        => 'ใส่จำนวนเดือนสูงสุดได้ 12'
       ]);
     $data_set = MachinePmTemplateList::where('UNID',$UNID)->update([
         'PM_TEMPLATELIST_NAME'      => $request->PM_TEMPLATELIST_NAME,

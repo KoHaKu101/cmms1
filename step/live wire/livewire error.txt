@@ -1,0 +1,10 @@
+if error 'this page has expired due ....' or error code 419
+********************* fix ***************************
+go to :: app/http/middleware -> verifyCsrfToken.php
+
+insert :: 'livewire/*', in protected $except = [];
+exp =     protected $except = [
+      		'livewire/*',
+       		 //
+    	];
+******************************************************

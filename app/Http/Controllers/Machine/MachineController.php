@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Auth;
+
+
 //******************** model ***********************
 use App\Models\Machine\Machine;
 use App\Models\Machine\Protected;
@@ -33,7 +35,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 
 
-  
+
 class MachineController extends Controller
 {
   public function __construct(){
@@ -205,17 +207,13 @@ class MachineController extends Controller
     $masterimps = MasterIMPS::where('MACHINE_CODE',$dataset->MACHINE_CODE)->orderBy('CREATE_TIME','ASC')->get();
     $machinepmtemplate = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
     $machinepmtemplateremove = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
-
     //
-
     $masterimpsgroup    = MasterIMPSGroup::where('MACHINE_CODE',$dataset->MACHINE_CODE)->orderBy('PM_TEMPLATELIST_DAY','ASC')->get();
-
     // dd($machinepmtemplate);
-
     $machinecheckpmdetail = MachinePMCheckDetail::all();
+    // machinepmtemplate
 
-
-    return view('machine/assets/edit',compact('machinepmtemplateremove','machinecheckpmdetail','masterimps','machinepmtemplate','masterimpsgroup','dataset','machineupload','machineupload1'
+    return view('machine/assets/edit',compact('machinepmtemplateremove','machinecheckpmdetail','masterimps','masterimpsgroup','dataset','machineupload','machineupload1'
       ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
   public function Update(Request $request,$UNID){

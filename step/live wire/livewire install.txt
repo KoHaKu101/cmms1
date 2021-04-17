@@ -1,0 +1,39 @@
+1. composer require livewire/livewire
+2. include livewire in head and end body 
+*************exp*************
+<html>
+<head>
+    ...
+    @livewireStyles
+</head>
+<body>
+    ...
+    @livewireScripts
+</body>
+</html>
+*****************************
+3.php artisan livewire:publish --config
+4.php artisan livewire:publish --assets
+5.go to composer.json and go to line post-autoload-dump and add "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
+**************************** exp *********************
+before
+{
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ]
+    }
+}
+
+after
+{
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi",
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
+        ]
+    }
+}
+******************************************************

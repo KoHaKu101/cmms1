@@ -19,7 +19,7 @@
           <input type="hidden" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}">
           <div class="card" id="table_data">
 
-            @include('pagination/modalpm')
+            @livewire('filter',['machinecode' => $dataset->MACHINE_CODE ])
 
         </div>
 

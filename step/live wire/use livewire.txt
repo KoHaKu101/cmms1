@@ -1,0 +1,37 @@
+paginate or pagination
+
+*****************************************
+1.create file .blade.php for livewire paginate
+2.create livewire with 'php artisan make:livewire "name?" '
+3.go to livewire file and use Livewire\WithPagination;
+4.in line class use WithPagination;
+5.if paginate css error use protected $paginationTheme = 'bootstrap';
+6.create paginate
+return View('pagination/modalpm',['machinepmtemplate' => MachinePmTemplate::paginate(6),]);
+view (file has .blade.php);
+['machinepmtemplate'] = compact 
+MachinePmTemplate = model
+paginate = fuction
+
+exp.1
+
+namespace App\Http\Livewire;
+
+use Livewire\Component;
+use Livewire\WithPagination;
+use App\Models\MachineaddTable\MachinePmTemplate;
+
+class filter extends Component{
+
+  use WithPagination;
+
+  protected $paginationTheme = 'bootstrap';
+  public function render(){
+
+    return View('pagination/modalpm',['machinepmtemplate' => MachinePmTemplate::paginate(6),]);
+
+  }
+
+}
+
+*****************************************

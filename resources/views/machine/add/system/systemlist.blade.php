@@ -112,9 +112,6 @@
 												<div class="card" >
 													<div class="card-header bg-primary">
 														<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-cubes fa-lg mr-1"></i>	รายการเครื่องจักรที่ใช้งาน
-															{{-- <button  id="popup" type="button" class="btn btn-warning float-right btn-sm" data-toggle="modal" data-target="#Newtemplate">
-																<i class="fas fa-file" style="color:white;font-size:14px"> New</i>
-															</button> --}}
 														</h4>
 													</div>
 													<div class="card-body">
@@ -135,10 +132,6 @@
 																				<td>{{$datarow->MACHINE_CODE}}</td>
 																				<td>
 																					<div class="form-inline">
-																						{{-- <a href="{{ url('/machine/pm/templatelist/edit/'.$datarow->UNID) }}">
-																							<button class="btn btn-primary btn-link btn-sm " type="button	">
-																							<i class="fas fa-edit fa-2x"></i> </button>
-																						</a> --}}
 																						<button class="btn btn-danger btn-link btn-sm my-1" type="button	" onclick="removemachine('{{ $datarow->PM_TEMPLATE_UNID_REF}}','{{$datarow->MACHINE_CODE}}')">
 																							<i class="fas fa-trash" style="font-size:20px"> </i>
 																						</button>
@@ -173,17 +166,6 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-
-
-<script>
-	function dataunid(unid){
-		var unid = (unid) ;
-		var _html='<input type="hidden" name="PM_TEMPLATE_UNID_REF" value="'+unid+'">'+
-		 					'<input type="text" class="form-control" name="PM_TEMPLATELIST_NAME" placeholder="กรุณาใส่ชื่อ PM ที่จะตรวจเช็ค">';
-
-	$("#sendunid").html(_html);
-	}
-</script>
 
 <script>
 	function datapmachine(unid,name){

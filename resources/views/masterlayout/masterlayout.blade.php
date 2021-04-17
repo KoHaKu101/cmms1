@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/atlantis.min.css') }}">
 
   @yield('css')
-
+	@livewireStyles
 </head>
 
 <body >
@@ -86,7 +86,8 @@
 
 	<script type="text/javascript" src="{{ asset('assets/js/atlantis.min.js') }}"></script>
 		@include('sweetalert::alert')
-
+	{{-- <script type="text/javascript" src="{{ asset('/vendor/livewire/livewire.js') }}"></script> --}}
+		@livewireScripts	
 
 @yield('javascript')
 

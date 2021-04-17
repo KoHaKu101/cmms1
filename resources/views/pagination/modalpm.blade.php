@@ -12,6 +12,6 @@
     </div>
 
 </div>
- {!! $machinepmtemplate->links() !!}
+ {{$machinepmtemplate->links()}}
 
 </div>

@@ -42,7 +42,6 @@
 																</div>
 																<div class="span-mode "></div>
 															</div>
-
 															<div id="{{$datamasterimps->PM_TEMPLATE_NAME}}" class="collapse" aria-labelledby="headingOne">
 																<div class="card-body">
                                   <div class="table">
@@ -85,19 +84,9 @@
 															</div>
 														</div>
                           @endforeach
-
-
-
 												</div>
-
-
-
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<script>
-
-</script>

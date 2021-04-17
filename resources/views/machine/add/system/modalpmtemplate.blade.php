@@ -59,8 +59,7 @@
               ชือ ประเภทรายการ(template)
             </div>
           </div>
-          <div class="col-md-6 col-lg-12 has-error" id="sendtabid">
-          </div>
+
           <div class="row mt-4">
 
             <div class="col-md-6 col-lg-12 has-error" id="sendpmunid">
