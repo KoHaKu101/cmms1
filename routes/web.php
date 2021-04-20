@@ -62,11 +62,14 @@ use App\Models\SettingMenu\Menusubitem;
 Route::get('/', function () {
     return redirect('/machine/dashboard/dashboard');
 })->middleware('auth');
+//Logout
+Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
+
 //PDF FILE
 Route::get('/machine/repairhistory/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineHistoryRepairPDFController@RepairHistory');
-Route::get('/machine/repair/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineRepairPDFController@RepairPdf');
-Route::get('/machine/systemcheck/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineSystemCheckPDFController@SystemCheckPdf');
-Route::get('/machine/assets/machineall', 'App\Http\Controllers\PDF\MachinePDFController@MachinePdf');
+Route::get('/machine/repair/pdf/{UNID}',        'App\Http\Controllers\PDF\MachineRepairPDFController@RepairPdf');
+Route::get('/machine/systemcheck/pdf/{UNID}',   'App\Http\Controllers\PDF\MachineSystemCheckPDFController@SystemCheckPdf');
+Route::get('/machine/assets/machineall/{LINE?}', 'App\Http\Controllers\PDF\MachinePDFController@MachinePdf');
 
 
 Route::get('/machine/repair/getRequest', function(){
@@ -74,6 +77,7 @@ Route::get('/machine/repair/getRequest', function(){
     return 'getRequest has load';
   }
 });
+
 Route::get('/machine/repair/search',function(){
   if(Request::ajax()){
     return Response::json(Request::all());
@@ -87,29 +91,28 @@ Route::get('/machine/dashboard/dashboard',[DashboardController::class,'Dashboard
 Route::get('/machine',[DashboardController::class,'Dashboard']);
 Route::get('/machine/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
 Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard');
+
 //Notification
 Route::get('machine/repair/notificaiton' ,[DashboardController::class,'Notification']);
 Route::get('machine/repair/notificaitoncount' ,[DashboardController::class,'NotificationCount'])  ->name('repair.notificaitoncount');
-Route::get('machine/monthly/notificaiton' ,[DashboardController::class,'SystemcheckMonthly']);
-Route::get('machine/monthly/notificaitoncount' ,[DashboardController::class,'SystemcheckMonthlyCount'])  ->name('repair.systemcheckmonthlycount');
-//Logout
-Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
+// Route::get('machine/monthly/notificaiton' ,[DashboardController::class,'SystemcheckMonthly']);
+// Route::get('machine/monthly/notificaitoncount' ,[DashboardController::class,'SystemcheckMonthlyCount'])  ->name('repair.systemcheckmonthlycount');
+
 //Export and import
 Route::get('machine/export', [MachineExportController::class,'export']);
 // Route::get('users/import/show', [MachineImportController::class,'show']);
 // Route::post('users/import', [MachineImportController::class,'store']);
 
 //assets
-Route::get('machine/assets/machinelist'     ,[MachineController::class,'All'])  ->name('machine.list');
+Route::get('machine/assets/machinelist'           ,[MachineController::class,'All'])  ->name('machine.list');
   Route::get('machine/assets/machinelist/{LINE_CODE}'     ,[MachineController::class,'Allline'])  ->name('machine.listline');
-  Route::get('machine/assets/machinetype/{TYPE_CODE}'     ,[MachineController::class,'Alltype'])  ->name('machine.listtype');
-  Route::get('machine/assets/machine'     ,[MachineController::class,'Index'])  ->name('machine');
-  Route::get('machine/assets/searchmachine'     ,[MachineController::class,'Indexserach'])  ->name('machine.search');
+  Route::get('machine/assets/machine'            ,[MachineController::class,'Index'])  ->name('machine');
   Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
   Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
   Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
   Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
+
 //upload
 Route::post('machine/assets/storeupload'      ,[MachineUploadController::class,'StoreUpload']) ->name('machine.storeupload');
   Route::get('machine/upload/edit/{UNID}'     ,[MachineUploadController::class,'Edit'])   ->name('manual.edit');
@@ -132,16 +135,15 @@ Route::get('machine/syscheck/syschecklist'    ,[SysCheckController::class,'Index
 
   Route::post('machine/syscheck/update'  ,[SysCheckController::class,'Update']);
   // Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
-//syschecksub
+
   //ในedit machine
   Route::post('machine/system/check/storelistupdate'    ,[SysCheckController::class,'StoreListUpdate'])   ->name('syscheck.storelistupdate');
   Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');
   Route::post('machine/system/check/store'              ,[SysCheckController::class,'Store'])   ->name('syscheck.store');
   Route::get('machine/system/check/{UNID}/{UNIDPM}'     ,[SysCheckController::class,'Check'])   ->name('syscheck.check');
   Route::get('machine/system/edit/{UNID}/{UNIDPM}'      ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
-  Route::get('machine/system/remove/{UNID}/{MC}'           ,[SysCheckController::class,'DeletePMMachine'])   ->name('syscheck.remove');
-  Route::get('machine/system/check/paginate'              ,[SysCheckController::class,'Paginate']);
-  Route::get('machine/system/check/paginateremove'              ,[SysCheckController::class,'PaginateRemove']);
+  Route::get('machine/system/remove/{UNID}/{MC}'        ,[SysCheckController::class,'DeletePMMachine'])   ->name('syscheck.remove');
+  Route::post('machine/system/check/storedate'          ,[SysCheckController::class,'StoreDate']);
 //partcheck
 Route::get('machine/partcheck/partchecklist'   ,[MachinePartCheckController::class,'Index'])  ->name('partcheck.list');
   Route::get('machine/partcheck/add/{UNID}'    ,[MachinePartCheckController::class,'Editmain'])   ->name('partcheck.add');
@@ -157,11 +159,8 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
   Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 //repair
 Route::get('machine/repair/repairlist'            ,[MachineRepairController::class,'Index'])  ->name('repair.list');
-  Route::get('machine/repair/repairlistserach'    ,[MachineRepairController::class,'Indexserach'])  ->name('repair.listserach');
-  Route::get('machine/repair/search'              ,[MachineRepairController::class,'Search']) ;
   Route::get('machine/repair/form/{MACHINE_CODE}' ,[MachineRepairController::class,'Create']) ->name('repair.form');
   Route::get('machine/repair/repairsearch'        ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
-  Route::get('machine/repair/{EMP_NAME}'          ,[MachineRepairController::class,'Emp'])->name('get.repair');
   Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
   Route::get('machine/repair/edit/{UNID}'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);
@@ -216,26 +215,22 @@ Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController
   Route::post('machine/machinestatustable/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
   Route::get('machine/machinestatustable/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatustable.delete');
 //PM
-Route::get('machine/pm/template/list/{UNID?}'                 ,[MachineSysTemTableController::class,'Index'])                     ->name('pmtemplate.list');
-  Route::post('machine/pm/template/store'                       ,[MachineSysTemTableController::class,'StoreTemplate'])           ->name('pmtemplate.store');
-  Route::post('machine/pm/template/storelist'                   ,[MachineSysTemTableController::class,'StoreList'])               ->name('pmtemplate.storelist');
-  Route::get('machine/pm/template/add/{UNID}'                   ,[MachineSysTemTableController::class,'PmTemplateAdd'])           ->name('pmtemplate.add');
-  Route::get('machine/pm/templatelist/edit/{UNID}'              ,[MachineSysTemTableController::class,'PmTemplateListEdit'])      ->name('pmtemplate.edit');
-  Route::post('machine/pm/template/storedetail'                 ,[MachineSysTemTableController::class,'PmTemplateDetailStore'])   ->name('pmtemplatedetail.store');
-  Route::post('machine/pm/template/storedetailupdate'           ,[MachineSysTemTableController::class,'PmTemplateDetailUpdate'])  ->name('pmtemplatedetail.update');
-  Route::post('machine/pm/template/updatepmtemplate'            ,[MachineSysTemTableController::class,'UpdateTemplate'])          ->name('pmtemplate.update');
+Route::get('machine/pm/template/list/{UNID?}'                   ,[MachineSysTemTableController::class,'Index'])                     ->name('pmtemplate.list');
+  Route::post('machine/pm/template/store'                       ,[MachineSysTemTableController::class,'StoreTemplate'])             ->name('pmtemplate.store');
+  Route::post('machine/pm/template/storelist'                   ,[MachineSysTemTableController::class,'StoreList'])                 ->name('pmtemplate.storelist');
+  Route::get('machine/pm/template/add/{UNID}'                   ,[MachineSysTemTableController::class,'PmTemplateAdd'])             ->name('pmtemplate.add');
+  Route::get('machine/pm/templatelist/edit/{UNID}'              ,[MachineSysTemTableController::class,'PmTemplateListEdit'])        ->name('pmtemplate.edit');
+  Route::post('machine/pm/template/storedetail'                 ,[MachineSysTemTableController::class,'PmTemplateDetailStore'])     ->name('pmtemplatedetail.store');
+  Route::post('machine/pm/template/storedetailupdate'           ,[MachineSysTemTableController::class,'PmTemplateDetailUpdate'])    ->name('pmtemplatedetail.update');
+  Route::post('machine/pm/template/updatepmtemplate'            ,[MachineSysTemTableController::class,'UpdateTemplate'])            ->name('pmtemplate.update');
   Route::post('machine/pm/template/update/{UNID}'               ,[MachineSysTemTableController::class,'UpdatePMList']);
   Route::get('machine/pm/template/deletepmdetail/{UNID}'        ,[MachineSysTemTableController::class,'DeletePMDetail']);
-  Route::get('machine/pm/template/deletepmcheckbox/{UNID}'      ,[MachineSysTemTableController::class,'DeletePMList']);
-  Route::get('machine/pm/template/deletecheckbox/{UNID}'        ,[MachineSysTemTableController::class,'DeleteTemplate']);
-//systemsub
-  Route::get('machine/machinesystemsubtable/list'     ,[MachineSysTemSubTableController::class,'Index'])  ->name('machinesystemsubtable.list');
-  Route::post('machine/machinesystemsubtable/store'          ,[MachineSysTemSubTableController::class,'Store']) ->name('machinesystemsubtable.store');
-  Route::get('machine/machinesystemsubtable/edit/{UNID}'     ,[MachineSysTemSubTableController::class,'Edit'])   ->name('machinesystemsubtable.edit');
-  Route::post('machine/machinesystemsubtable/update/{UNID}'  ,[MachineSysTemSubTableController::class,'Update']);
-  Route::get('machine/machinesystemsubtable/delete/{UNID}'   ,[MachineSysTemSubTableController::class,'Delete']) ->name('machinesystemsubtable.delete');
+  Route::get('machine/pm/template/deletepmlist/{UNID}'          ,[MachineSysTemTableController::class,'DeletePMList']);
+  Route::get('machine/pm/template/deletepmlistall/{UNID}'       ,[MachineSysTemTableController::class,'DeletePMListAll']);
+  Route::get('machine/pm/template/deletepmtemplate/{UNID}'      ,[MachineSysTemTableController::class,'DeleteTemplate']);
+  Route::get('machine/pm/template/deletemachinepm/{MC}/{UNID}'  ,[MachineSysTemTableController::class,'DeleteMachinePm']);
 //Detailpointtable
-Route::post('machine/detailpoint/store'          ,[MachineDetailPointTableController::class,'Store']) ->name('detailpoint.store');
+Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableController::class,'Store']) ->name('detailpoint.store');
   Route::get('machine/detailpoint/show/{UNID}'     ,[MachineDetailPointTableController::class,'Edit'])   ->name('detailpoint.edit');
   Route::post('machine/detailpoint/update/{UNID}'  ,[MachineDetailPointTableController::class,'Update']);
   Route::get('machine/detailpoint/delete/{UNID}'   ,[MachineDetailPointTableController::class,'Delete']) ->name('detailpoint.delete');
@@ -246,7 +241,6 @@ Route::post('machine/detailpoint/store'          ,[MachineDetailPointTableContro
   Route::post('machine/config/save'                  ,[MailConfigController::class,'Save'])->name('machine.save');
   Route::post('machine/config/savealert'                  ,[MailConfigController::class,'SaveAlert'])->name('machine.savealert');
   Route::post('machine/config/update'                  ,[MailConfigController::class,'Update'])->name('machine.update');
-
 //MenuController
 Route::get('machine/setting/menu/home'              ,[MenuController::class,'Home'])   ->name('menu.home');
   Route::post('machine/setting/menu/add'              ,[MenuController::class,'AddMenu'])->name('menu.store');

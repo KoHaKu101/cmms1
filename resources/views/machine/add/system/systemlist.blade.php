@@ -96,7 +96,8 @@
 																							<button class="btn btn-primary btn-link btn-sm " type="button	">
 																							<i class="fas fa-edit fa-2x"></i> </button>
 																						</a>
-																						<button class="btn btn-danger btn-link btn-sm my-1" type="button	" onclick="deletecheckbox('{{ $dataitem->UNID }}')">
+																						<button class="btn btn-danger btn-link btn-sm my-1" type="button" onclick="deletecheckbox('{{ $dataitem->UNID }}','{{ $dataitem->PM_TEMPLATELIST_NAME }}')" >
+																							{{-- onclick="deletecheckbox('{{ $dataitem->UNID }}')" --}}
 																							<i class="fas fa-trash" style="font-size:20px"> </i>
 																						</button>
 																					</div>
@@ -132,7 +133,7 @@
 																				<td>{{$datarow->MACHINE_CODE}}</td>
 																				<td>
 																					<div class="form-inline">
-																						<button class="btn btn-danger btn-link btn-sm my-1" type="button	" onclick="removemachine('{{ $datarow->PM_TEMPLATE_UNID_REF}}','{{$datarow->MACHINE_CODE}}')">
+																						<button class="btn btn-danger btn-link btn-sm my-1" type="button" onclick="deletemachinepm('{{$datarow->MACHINE_CODE}}','{{ $dataitem->PM_TEMPLATE_UNID_REF }}')">
 																							<i class="fas fa-trash" style="font-size:20px"> </i>
 																						</button>
 																					</div>
@@ -168,59 +169,12 @@
 @section('javascript')
 
 <script>
-	function datapmachine(unid,name){
-		var unid = (unid) ;
-		var name = (name) ;
-		var _html='<input type="hidden" name="UNID" value="'+unid+'">'+
-		 					'<input type="text" class="form-control" name="PM_TEMPLATE_NAME" value="'+name+'">';
-
-	$("#sendpmunid").html(_html);
-	}
-</script>
-<script src="{{ asset('/js/delete/deletepmlist.js') }}">
-</script>
-<script src="{{ asset('/js/delete/deletepm.js') }}">
-</script>
-
-
-<script>
-	function removeunidref(unid){
-		Swal.fire({
-			title: 'ต้องการลบจุดตรวจเช็คมั้ย?',
-			text: "หากทำการลบจะไม่สามารถกู้คืนกลับมาได้!",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes!'
-		}).then((result) => {
-			if (result.isConfirmed) {
-					var unid = (id);
-					window.location.href = '/machine/pm/template/removeunidref/'+unid;
-			}
-		})
-	}
-</script>
-<script>
-	function removemachine(id,code){
-		Swal.fire({
-				title: 'คุณต้องการลบข้อมูลหรือไม่?',
-				text: 'หากลบข้อมูลแล้วจะไม่สามารถกู้คืนมาได้!',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes!'
-		}).then(function(result) {
-			if (result.isConfirmed) {
-				var unid = (id);
-				var mc   = (code);
-				window.location.href = '/machine/system/remove/'+unid+'/'+mc;
-			}
-		})
-
-	}
 
 </script>
+
+<script src="{{ asset('/js/addtable/systemlist.js') }}">
+
+</script>
+
 @stop
 {{-- ปิดส่วนjava --}}

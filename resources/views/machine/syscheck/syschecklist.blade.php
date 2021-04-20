@@ -76,58 +76,27 @@
 		                          	<th >ชื่อเครื่อง</th>
 		                          	<th >LINE</th>
 																<th >รายการ PM</th>
-																<th >รายการตรวจเช็ค</th>
-																<th style="width:160px" >สถานะ</th>
+
+																<th >สถานะ</th>
 																<th>	</th>
 		                        	</tr>
 		                      	</thead>
 		                      	<tbody>
-			 											<?php
-																foreach ($datamachine as $key => $dataset){
-																	foreach ($datapmtemplatelist->where('PM_TEMPLATE_UNID_REF',$dataset->PM_TEMPLATE_UNID_REF) as $key => $rowdata){
-						                        foreach ($machinecheckpm->where('PM_TEMPLATELIST_UNID_REF',$rowdata->UNID)->where('MACHINEPM_UNID_REF',$dataset->UNID)->sortBy('PM_TEMPLATELIST_DUE') as $key => $datamachinecheckpm) {
-																			//เงือนไขของเวลาในการเช็ค
-																			if($datamachinecheckpm->PM_TEMPLATELIST_LASTDUE !== NULL) {
-						                              $to = ($rowdata->PM_TEMPLATELIST_CHECK == '1')? \Carbon\Carbon::parse($datamachinecheckpm->PM_TEMPLATELIST_LASTDUE)->addmonth($rowdata->PM_TEMPLATELIST_DAY)->toDateString()
-						                                                                          	: \Carbon\Carbon::parse($datamachinecheckpm->PM_TEMPLATELIST_LASTDUE)->addday($rowdata->PM_TEMPLATELIST_DAY)->toDateString();
-						                          }elseif($datamachinecheckpm->PM_TEMPLATELIST_LASTDUE === NULL){
-						                            $to = \Carbon\Carbon::parse($rowdata->PM_TEMPLATELIST_DUE)->toDateString();
-						                          }
-						                          $now = \Carbon\Carbon::now()->toDateString();
-						                          $from = \Carbon\Carbon::parse($now);
-						                          $notify = \Carbon\Carbon::now()->addDay($rowdata->PM_TEMPLATELIST_NOTIFY)->toDateString();
-						                          $diff_in_days = $from->diffInDays($to , false);
-						                          $diff_in_daysdisplaye = $from->diffInDays($to);
-																			//สิ้นสุด
-																				//เงื่อนไข หากยังไม่ถึงเวลาเช็คจะไม่แสดง
-																				if ($to <= $notify ) {
-																					echo '<tr>';
-																					echo '<td width="13%">'.$dataset->MACHINE_CODE.'</td>';
-																					echo '<td >'.$dataset->MACHINE_NAME.'</td>';
-																					echo '<td >  '.$dataset->MACHINE_LINE.'   </td>';
-																					echo '<td > '.$rowdata->PM_TEMPLATELIST_NAME.'   </td>';
-																					echo '<td> '.$datapmtemplatedetail->where('PM_TEMPLATELIST_UNID_REF',$rowdata->UNID)->count().' </td>';
-																				}
-																				//สิ้นสุด
-																				//เงื่อนไขในการแสดงเวลา
-																				if ($to <= $notify ) {
-																		 			if ($diff_in_days == "0") {
-																			 			echo ' <td>	<button class="btn-danger btn-sm btn-block my-1 mx-2" style="width:160px">	<span style="font-size:13px;">ครบกำหนด</span></button> </td>';
-																			 			echo '<td>	<a href='.url("/machine/system/check/".$dataset->UNID."/".$rowdata->UNID).'>	<button class="btn btn-primary btn-sm my-2">ทำการตรวจเช็ค</button>	</a>	</td>';
-																		 			}elseif ($diff_in_days <= "-1") {
-																			 			echo '<td> <button class="btn-danger btn-sm btn-block my-1 mx-2" style="width:160px">	<span style="font-size:13px;width:50px">เกิดกำหนดการ '.$diff_in_daysdisplaye.' วัน </span> </button> </td>';
-																			 			echo '<td>	<a href='.url("/machine/system/check/".$dataset->UNID."/".$rowdata->UNID).'>	<button class="btn btn-primary btn-sm my-2">ทำการตรวจเช็ค</button>	</a>	</td>';
-																		 			}else {
-																			 			echo '<td> <button class="btn-warning btn-sm btn-block my-1 mx-2" style="width:160px">	<span style="font-size:12px;">ครับกำหนดใน '.$diff_in_daysdisplaye.' วัน </span> </button> </td>';
-							                         			echo '<td>	<a href='.url("/machine/system/check/".$dataset->UNID."/".$rowdata->UNID).'>	<button class="btn btn-primary btn-sm my-2">ทำการตรวจเช็ค</button>	</a>	</td>';
-																		 			}
-																 				}
-															 				}
-															 					//สิ้นสุด
-																 			echo "</tr>";
-																 	}
-															 	}
-						                        ?>
+															@foreach ($machine as $key => $dataset)
+																@foreach ($pmlist->where('MACHINE_CODE',$dataset->MACHINE_CODE)->where('PM_NEXT_DATE','<=',\Carbon\Carbon::now()->addDay($alert->AUTOMAIL)) as $datasubitem)
+																<tr>
+																	<td>{{ $dataset->MACHINE_CODE }}</td>
+																	<td>{{ $dataset->MACHINE_NAME}}</td>
+																	<td>{{ $dataset->MACHINE_LINE}}</td>
+																	<td>{{ $datasubitem->PM_TEMPLATELIST_NAME}}</td>
+																	<td> {{ \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE),false) > '0' ? 'อีก'.\Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE)).'วันถึงกำหนดการ'
+																					:'ถึงกำหนดการแล้ว'.\Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE)).'วัน' }}</td>
+																	<td><a href="{{ url('machine/system/check/'.$dataset->UNID.'/'.$datasubitem->UNID) }}" type="button" class="btn btn-primary btn-block btn-sm my-1">ตรวจสอบระบบ</a></td>
+																</tr>
+															@endforeach
+
+															@endforeach
+
 			                      	</tbody>
 		                    	</table>
 												</div>

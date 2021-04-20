@@ -53,55 +53,8 @@
 	        <div class="container mt-2">
 						<div class="row">
 							<div class="col-md-12">
-								<div class="card ">
-                	@if(session('success'))
-                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    										<span aria-hidden="true">&times;</span>
-  											</button>
-										</div>
-									@endif
-									<div class="card-header bg-primary form-inline ">
-											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
-												<div class="input-group ml-4">
-													<input type="text" name="serach" id="serach" class="form-control form-control-sm" placeholder="ค้นหา........." />
 
-													<div class="input-group-prepend">
-														<button type="submit" class="btn btn-search pr-1 btn-xs	">
-															<i class="fa fa-search search-icon"></i>
-														</button>
-													</div>
-												</div>
-									</div>
-									<div id="result"class="card-body">
-										<div class="table-responsive" id="dynamic_content">
-                      <table class="display table table-striped table-hover">
-                      	<thead class="thead-light">
-                        	<tr>
-                            <th scope="col">เลขที่เอกสาร </th>
-														<th></th>
-                          	<th scope="col">รหัสเครื่อง </th>
-                          	<th scope="col">ชื่อเครื่องจักร</th>
-														<th scope="col">Line</th>
-														<th scope="col">วันที่เอกสาร</th>
-														<th scope="col">สถานะเครื่องจักร</th>
-														<th scope="col">สถานะซ่อมแซ่ม</th>
-														<th scope="col" style="width:100px"></th>
-                        	</tr>
-                      	</thead>
-
-                      	<tbody >
-													@include('machine/repair/searchrepair')
-                      	</tbody>
-                    </table>
-
-									</div>
-										</div>
-								</div>
-								<input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-    						<input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
-    						<input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
+						@livewire('searchrepairmachine')
 
 								</div>
               </div>
@@ -117,17 +70,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-	<script type="text/javascript" src="{{ asset('/js/serach/serachrepair.js') }}">
 
-	</script>
-
-	<script type="text/javascript">
-	$.ajaxSetup({
-	headers: {
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	}
-	});
-	</script>
 <script>
 
  function closework(u){
@@ -145,7 +88,7 @@
 		}).then((result) => {
 			if (result.isConfirmed) {
 			window.location.href = "/machine/repair/delete/"+unid;
-			}	
+			}
 		})
 
 	}

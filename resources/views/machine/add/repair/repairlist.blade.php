@@ -43,19 +43,9 @@
 						<div class="row">
 							<div class="col-md-8">
 								<div class="card ">
-                	@if(session('success'))
-                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    										<span aria-hidden="true">&times;</span>
-  											</button>
-										</div>
-									@endif
-
 										<div class="card-header bg-primary">
 											<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> เพิ่มรายละเอียดการแจ้งซ่อม </h4>
 										 </div>
-
 									<div id="result"class="card-body mt--3">
 										<div class="table-responsive mt--4">
 											<table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
@@ -109,12 +99,12 @@
 												<div class="form-group has-error">
 													<label for="REPAIR_CODE">ลำดับรายการ</label>
 													<input type="text"  class="form-control" id="REPAIR_CODE" name="REPAIR_CODE" placeholder="ลำดับรายการ" required autofocus>
-												
+
 												</div>
 												<div class="form-group has-error">
 													<label for="REPAIR_NAME">ประเภทอาการ</label>
 													<input type="text"  class="form-control" id="REPAIR_NAME" name="REPAIR_NAME" placeholder="ประเภทอาการ" required autofocus>
-												
+
 												</div>
 												<div class="form-group">
 													<label for="REPAIR_NOTE">รายละเอียดเพิ่มเติม</label>
@@ -151,29 +141,6 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-{{-- <script>
-$(document).ready(function(){
-	var table = $('datatable').DataTable({
-			'processing' : true,
-			'serverSide' : true,
-			'ajax': "{{ route('machine.list') }}",
-			'column':[
-				{'data': 'MACHINE_LOCATION'},
-				{'data': 'MACHINE_NAME'},
-				{'data': 'MACHINE_CODE'}
-			],
-	});
-
-  $("#myInput").keyup (function() {
-		table.column($)
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script> --}}
-
 
 @stop
 {{-- ปิดส่วนjava --}}

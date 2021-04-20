@@ -499,19 +499,6 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-	<script>
-		$( "#edit" ).dblclick(function() {
-			// var unid = ('#UNID').val();
-			// console.log(unid);
-  	window.location.href = "/machine/pm/template/add/";
-		});
-	</script>
-	<script>
-		function pmtemplate(){
-			window.open('/machine/machinepmtemplate/','PmTemplate','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
-		}
-	</script>
-	<script src="{{asset('/js/dashboard/bootstrap-toggle.min.js')}}">
-	</script>
+
 @stop
 {{-- ปิดส่วนjava --}}

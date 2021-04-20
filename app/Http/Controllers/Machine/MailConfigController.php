@@ -45,14 +45,15 @@ class MailConfigController extends Controller
     $validated = $request->validate([
       'MAILHOST'        => 'required',
       'EMAILADDRESS'    => 'required|email',
-      'MAILPASSWORD'    => 'required',
+      'MAILPASSWORD'    => 'required|min:4|regex:/[0-9]/|regex:/[a-z]/',
       'MAILPORT'        => 'required|numeric',
       'MAILPROTOCOL'    => 'required',
       ],
       [
         'MAILHOST'         => 'กรุณากรอกช่อง MAILHOST',
         'EMAILADDRESS'     => 'กรุณากรอกช่อง EMAILADDRESS',
-        'MAILPASSWORD'     => 'กรุณากรอกช่อง MAILPASSWORD',
+        'MAILPASSWORD.min'     => 'กรุณาใส่รหัสผ่าน อย่างหน่อย 4 ตัว',
+        'MAILPASSWORD.regex'     => 'กรุณาใส่รหัสผ่าน อย่างหน่อย 4 ตัว ประกอบด้วยตัวอักษรและตัวเลข',
         'MAILPORT.numeric' => 'กรุณากรอกตามตัวอย่าง 25, 586 ,456',
         'MAILPROTOCOL'     => 'กรุณากรอกช่อง MAILPROTOCOL',
     ]);

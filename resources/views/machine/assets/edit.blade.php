@@ -2,6 +2,7 @@
 @section('tittle','homepage')
 @section('css')
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -77,7 +78,7 @@
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
 													<input type="text" class="form-control " id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}">
 													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $dataset->MACHINE_UNID }}">
-													
+
 													{{-- <input type="hidden"  wire:model="dataset"  value="{{ $dataset->MACHINE_CODE }}"> --}}
 											</div>
 
@@ -234,92 +235,7 @@
 {{-- ส่วนjava --}}
 @section('javascript')
 
-	<script type="text/javascript">
-	// var button = document.getElementById('button');
-		function printhistory(u){
-			console.log(u);
-			var unid = (u);
-			window.open('/machine/repairhistory/pdf/'+unid,'RepairHistory','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
-		}
-
-
-	</script>
-	<script>
-	$(document).on('click','.delete-confirm', function (event) {
-	    Swal.fire({
-	        title: 'คุณต้องการลบข้อมูลหรือไม่?',
-	        text: 'หากลบข้อมูลแล้วจะไม่สามารถกู้คืนมาได้!',
-	        icon: 'warning',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Yes!'
-	    }).then(function(result) {
-				if (result.isConfirmed) {
-					var id = [];
-					$('#MACHINE_CODE').each(function(){
-							var mc = $(this).val();
-							console.log(mc);
-							$('#PM_TEMPLATE_UNID_REF:checked').each(function(){
-									id.push($(this).val());
-									console.log(id);
-									window.location.href = '/machine/system/remove/'+id+'/'+mc;
-							});
-					});
-				}
-	    });
-	});
-	</script>
-{{-- <script>
-		$(document).ready(function(){
-		$(document).on('click','#add',function(){
-		$(document).on('click', '.pagination a', function(event){
-			event.preventDefault();
-			var page = $(this).attr('href').split('page=')[1];
-			console.log(page);
-			fetch_data(page);
-		});
-	});
-		function fetch_data(page)
-		{
-			$('#MACHINE_CODE').each(function(){
-					var mc = $(this).val();
-					console.log(mc);
-			$.ajax({
- 			url:'/machine/system/check/paginate/?mc='+mc+'&page='+page,
- 		success:function(data){
-		$('#table_data').html(data);}
-	});
-	})
-	}
-
-
-	});
-	</script> --}}
-	{{-- <script>
-$(document).ready(function(){
-	$(document).on('click','#remove',function(){
-		$(document).on('click', '.pagination a', function(event){
-
-			event.preventDefault();
-			var page2 = $(this).attr('href').split('page=')[1];
-			tableremove(page2);
-		});
-
-		function tableremove(page)
-		{
-			$('#MACHINE_CODE').each(function(){
-					var mc = $(this).val();
-					console.log(mc);
-			$.ajax({
-			url:'/machine/system/check/paginateremove/?mc='+mc+'&page='+page,
-		success:function(data){
-		$('#tableremove').html(data);}
-		});
-		})
-		}
-		});
-		});
-	</script> --}}
+	<script type="text/javascript" src="{{ asset('js/machine/editmachine.js') }}"></script>
+	 <script src="{{ asset('js/ajax/ajax-csrf.js') }}"></script>
 @stop
 {{-- ปิดส่วนjava --}}

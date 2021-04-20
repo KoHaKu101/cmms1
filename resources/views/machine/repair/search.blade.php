@@ -1,7 +1,6 @@
 @extends('masterlayout.masterlayout')
 @section('meta')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-{{-- <meta name="_token" content="{{ csrf_token() }}"> --}}
 @endsection
 @section('tittle','homepage')
 @section('css')
@@ -47,23 +46,7 @@
 				<!--ส่วนกรอกข้อมูล-->
 				<div class="py-12">
 	        <div class="container mt-2">
-						<div class="card">
-							<div class="card-header">
-							<div class="row justify-content-md-center">
-								<div class="col-md-6 col-lg-5 ">
-									<h3 class="ml-5">กรอกรหัสเครื่อง / แสกนQR Code</h3>
-
-									<input type="text" class="form-control" id="search" name="search" placeholder="กรอกรหัสเครื่อง / แสกนQR Code ที่นี้"></input>
-									{{-- <button type="submit" class="btn btn-primary btn-sm">search</button> --}}
-
-								</div>
-							</div>
-							</div>
-							<div class="card-body">
-								<div class="row" id='data'>
-								</div>
-							</div>
-					</div>
+						@livewire('searchnewrepair')
 				</div>
 				</div>
 			</div>
@@ -77,16 +60,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-	<script type="text/javascript" src="{{ asset('/js/serach/serachnewrepair.js') }}">
 
-	</script>
-	<script type="text/javascript">
-	$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
-	</script>
 
 @stop
 {{-- ปิดส่วนjava --}}

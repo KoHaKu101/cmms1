@@ -121,28 +121,6 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-{{-- <script>
-$(document).ready(function(){
-	var table = $('datatable').DataTable({
-			'processing' : true,
-			'serverSide' : true,
-			'ajax': "{{ route('machine.list') }}",
-			'column':[
-				{'data': 'MACHINE_LOCATION'},
-				{'data': 'MACHINE_NAME'},
-				{'data': 'MACHINE_CODE'}
-			],
-	});
-
-  $("#myInput").keyup (function() {
-		table.column($)
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script> --}}
 
 
 @stop

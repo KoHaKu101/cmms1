@@ -9,9 +9,14 @@ use Codedge\Fpdf\Fpdf\Fpdf;
 
 class PdfMachine extends Fpdf
 {
-  function Header()
+  function Header($LINE = NULL)
 {
-    $dataset = Machine::all();
+    if ($LINE != NULL) {
+      $dataset = Machine::where('MACHINE_LINE',$LINE)->first();
+    }else {
+      $dataset = Machine::all();
+    }
+
     $logo = "assets/img/logo13.jpg";
     // Logo
     $this->Cell(26,22,$this->Image($logo,12,11,22),1,0,'C',false);

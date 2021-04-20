@@ -21,27 +21,24 @@ class DashboardController extends Controller
   }
   public function Dashboard(){
     //dashboardสรุป
-    $dataset = Machine::where('MACHINE_CHECK','!=','1')->count();
-    $dataprocess = Machine::where('MACHINE_CHECK','=','2')->count();
-    $datawait = Machine::where('MACHINE_CHECK','=','4')->count();
+    $dataset = Machine::select('MACHINE_CHECK')->first();
+    // $dataprocess = Machine::select('MACHINE_CHECK')->where('MACHINE_CHECK','=','2')->count();
+    // $datawait = Machine::select('MACHINE_CHECK')->where('MACHINE_CHECK','=','1')->count();
+    $datarepair = MachineRepair::select('CLOSE_STATUS')->first();
+
 
     //dashboardเครื่องจักรLINE
-    $data_line1 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L1')->count();
-    $data_line2 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L2')->count();
-    $data_line3 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L3')->count();
-    $data_line4 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L4')->count();
-    $data_line5 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L5')->count();
-    $data_line6 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L6')->count();
+    $data_line = Machine::select('MACHINE_LINE')->first();
+    // $data_line2 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L2')->count();
+    // $data_line3 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L3')->count();
+    // $data_line4 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L4')->count();
+    // $data_line5 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L5')->count();
+    // $data_line6 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L6')->count();
     //แจ้งซ่อม
     $datarepairlist = MachineRepair::select('MACHINE_CODE','MACHINE_TYPE','MACHINE_DOCDATE','MACHINE_CAUSE')
                                     ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_DOCDATE','DESC')->take(9)->get();
-    $datarepair = MachineRepair::where('CLOSE_STATUS','=','9')->count();
-
-
-
     // dd($data_set);
-    return View('machine/dashboard/dashboard',compact('datarepair','datarepairlist','dataprocess','dataset'
-    ,'datawait','data_line1','data_line2','data_line3','data_line4','data_line5','data_line6'));
+    return View('machine/dashboard/dashboard',compact('datarepairlist','dataset','data_line','datarepair'));
   }
   public function Notification(Request $request){
     $data = MachineRepair::select('PMCS_REPAIR_MACHINE.UNID','PMCS_REPAIR_MACHINE.MACHINE_DOCDATE','PMCS_MACHINE.MACHINE_LINE','PMCS_REPAIR_MACHINE.MACHINE_CODE')

@@ -63,69 +63,53 @@
 	        <div class="container mt-2">
 						<div class="card">
 							<div class="card-header bg-primary">
-								<h4 class="ml-3 mt-2" style="color:white;" >แจ้งซ่อมเครื่องจักร </h4>
+								<h4 class="ml-3 mt-2" style="color:white;" >แจ้งซ่อมเครื่องจักร {{ $dataset->EMP_CODE }}</h4>
 							</div>
 
 							<div class="card-body">
 								<div class="row">
-										<!-- ช่อง1-->
-										<div class="col-md-6 col-lg-4">
-											<div class="form-group has-error">
-												<label for="MACHINE_DOCNO">เลขที่เอกสาร</label>
+									<div class="col-md-6 col-lg-4">
+										<div class="form-group has-error">
+											<label for="MACHINE_DOCNO">เลขที่เอกสาร</label>
 											<input type="text" class="form-control" id="MACHINE_DOCNO" name="MACHINE_DOCNO"value={{ $dataset->MACHINE_DOCNO }} readonly>
-											</div>
-											<div class="form-group has-error">
-												<label for="MACHINE_TYPE">ชื่อพนักงาน</label>
-												<select class="form-control" id="EMP_NAME" name="EMP_NAME">
-													<option>พนักงาน</option>
-													@foreach ($dataemp as $key => $row)
-														<option value="{{$row->EMP_NAME}}"
-															{{ $dataset->EMP_NAME == $row->EMP_NAME ? 'selected' : ''}}>{{ $row->EMP_NAME }}</option>
-													@endforeach
-
-
-											</select>
-											</div>
 										</div>
-										<!-- ช่อง2-->
-										<div class="col-md-6 col-lg-4">
-											<div class="form-group has-error">
-												<label for="MACHINE_DOCDATE">วันที่เอกสาร	</label>
-												<input type="text" class="form-control" id="MACHINE_DOCDATE" name="MACHINE_DOCDATE"
-												value="{{ $dataset->MACHINE_DOCDATE }}"readonly >
-											</div>
-											<div class="form-group has-error">
-												<label for="EMP_CODE">รหัสพนักงาน	</label>
-												<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" value="{{ $dataset->EMP_CODE }}" readonly>
-											</div>
-										</div>
-											{{ csrf_field() }}
-										<!-- ช่อง3-->
-										<div class="col-md-6 col-lg-4">
-											<div class="form-group has-error">
-												<label for="MACHINE_TIME">เวลาแจ้งซ่อม	</label>
+									</div>
+									<div class="col-md-6 col-lg-4">
+										<div class="form-group has-error">
+											<label for="MACHINE_TIME">เวลาแจ้งซ่อม	</label>
 											<input type="text" class="form-control" id="MACHINE_TIME" name="MACHINE_TIME" value={{ $dataset->MACHINE_TIME }} readonly>
-											</div>
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-4">
+										<div class="form-group has-error">
+											<label for="MACHINE_DOCDATE">วันที่เอกสาร	</label>
+											<input type="text" class="form-control" id="MACHINE_DOCDATE" name="MACHINE_DOCDATE" value="{{ $dataset->MACHINE_DOCDATE }}"readonly >
+										</div>
+									</div>
+								</div>
+								@livewire('autoinputnameedit',['search'=>$dataset->EMP_CODE])
+								<div class="row">
+										<div class="col-md-8 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">รหัสเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE}}" readonly >
+													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}" readonly >
 											</div>
 										</div>
-									</div>
-									<div class="row">
-											<div class="col-md-8 col-lg-4">
-												<div class="form-group has-error">
-													<label for="MACHINE_NAME">ชื่อเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME" value="{{ $dataset->MACHINE_NAME}}" readonly>
-												</div>
+										<div class="col-md-8 col-lg-4">
+											<div class="form-group has-error">
+												<label for="MACHINE_LOCATION">Line</label>
+												<input type="text" class="form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION" value="{{ $dataset->MACHINE_LOCATION }}" readonly>
 											</div>
-											<div class="col-md-8 col-lg-4">
-												<div class="form-group has-error">
-													<label for="MACHINE_LOCATION">Line</label>
-													<input type="text" class="form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION" value="{{ $dataset->MACHINE_LOCATION }}" readonly>
-												</div>
+										</div>
+										<div class="col-md-8 col-lg-4">
+											<div class="form-group has-error">
+												<label for="MACHINE_NAME">ชื่อเครื่อง</label>
+												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME"  value="{{ $dataset->MACHINE_NAME }}" readonly>
 											</div>
-									</div>
+										</div>
+								</div>
+
+
 								</div>
 								<div class="row">
 									<div class="col-md-12 mt-2">
@@ -232,7 +216,7 @@
 
 
 
-@include('masterlayout\tab\modal\scanqrcode')
+{{-- @include('masterlayout\tab\modal\scanqrcode') --}}
 
 
 

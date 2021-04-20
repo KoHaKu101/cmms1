@@ -43,9 +43,6 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="card ">
-                	@if(session('success'))
-
-									@endif
 									<form action="{{ url('machine/pm/template/update/'.$datapmtemplatelist->UNID) }}" method="post" enctype="multipart/form-data">
 										@csrf
 										<div class="card-header bg-primary">
@@ -61,11 +58,6 @@
 										 </div>
 										<div class="card-body">
 										 	<div class="row">
-												{{-- <div class="col-md-6 col-lg-3 has-error">
-												 	<label> Inspection Point</label>
-													<input type="hidden" class="form-control" name="PM_TEMPLATELIST_CHECK" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_CHECK }}">
-												 	<input type="text" class="form-control" name="PM_TEMPLATELIST_POINT" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_POINT }}">
-											 	</div> --}}
 											 	<div class="col-md-6 col-lg-3 has-error">
 												 	<label> Inspection Item</label>
 													<input type="hidden" class="form-control" name="PM_TEMPLATELIST_CHECK" value="{{ $datapmtemplatelist->PM_TEMPLATELIST_CHECK }}">
@@ -81,7 +73,6 @@
 														</div>
 													</div>
 												</div>
-
 
 												<div class="col-md-6 col-lg-2 has-error">
 													<label> สถานะ</label>
@@ -116,6 +107,7 @@
 								<div class="col-md-8">
 									<div class="card">
 											<div class="card-header bg-primary">
+												<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" id="PM_TEMPLATELIST_UNID_REF" value="{{ $datapmtemplatelist->UNID }}">
 												<h4 class="ml-3 mt-2" style="color:white;" > Inspection Check</h4>
 											</div>
 												<div class="card-body mt--3">
@@ -158,7 +150,7 @@
 										<div class="card-header bg-primary">
 											<h4 class="ml-3 mt-2" style="color:white;" > เพิ่ม Inspection Check  </h4>
 										 </div>
-										<div class="card-body" id="PM_DETAIL_NAME">
+										<div class="card-body PM_CANCEL" id="PM_DETAIL_NAME">
 											<form action="{{ route('pmtemplatedetail.store') }}" method="POST">
 												@csrf
 												<div class="form-group has-error" >
@@ -184,42 +176,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-<script >
-	function deletedata(pm){
-		var unid = (pm);
-		console.log(unid);
-			Swal.fire({
-				title: 'ต้องการลบจุดตรวจเช็คมั้ย?',
-				text: "หากทำการลบจะไม่สามารถกู้คืนกลับมาได้!",
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes!'
-			}).then((result) => {
-				if (result.isConfirmed) {
-				window.location.href = "/machine/pm/template/deletepmdetail/"+unid;
-				}
-
-			})
-	}
-</script>
-<script >
-$("#update").click(function(e) {
-e.preventDefault();
-var pm_templatelist_unid_ref = $("#PM_TEMPLATELIST_UNID_REF").val();
-var pm_detail_name = $("#PM_DETAIL_NAME").val();
-var dataString = 'pm_templatelist_unid_ref='+pm_templatelist_unid_ref+'&pm_detail_name='+pm_detail_name;
-$.ajax({
-	type:"POST",
-	data:dataString,
-	url:"machine/pm/template/storedetailupdate",
-	success:function(data) {
-		alert(data);
-	}
-});
-});
-</script>
+<script src="{{ asset('/js/addtable/systemedit.js') }}"></script>
 <script>
 	function editdetail(unid,text){
 		var unid = (unid) ;
@@ -231,22 +188,30 @@ $.ajax({
 							'<label for="SYSTEM_CODE">จุดตรวจเช็ค</label>'+
 							'<input type="hidden" name="UNID" value="'+unid+'">'+
 							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2">'+text+'</textarea required autofocus>'+
-							'<button type="submit" class="btn btn-primary mt-3" id="update">Update</button>'+
+							'<button type="submit" class="btn btn-primary mt-3" >Update</button>'+
+							'<button type="button" onclick="exiteditdetail()" class="btn btn-danger float-right mt-3">Cancel</button>'+
 							'</div>'+
 							'</form>';
 
 	$("#PM_DETAIL_NAME").html(_html);
-	}
+};
+	function exiteditdetail(){
+		var unid = $('#PM_TEMPLATELIST_UNID_REF').val() ;
+		var url 	=  '/machine/pm/template/storedetail';
+		var _html ='<form action="'+url+'" method="POST" enctype="multipart/form-data">'+
+							'@csrf'+
+							'<div class="form-group has-error" >'+
+							'<label for="PM_TEMPLATELIST_UNID_REF">จุดตรวจเช็ค</label>'+
+							'<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" value="'+unid+'">'+
+							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2"></textarea required autofocus>'+
+							'<button type="submit" class="btn btn-primary mt-3" id="Save">Save</button>'+
+							'</div>'+
+							'</form>';
+
+	$(".PM_CANCEL").html(_html);
+	};
 
 </script>
-<script>
-	function edit(unid){
-		var unid = (unid) ;
-		var _html='<input type="hidden" name="UNID" value="'+unid+'">';
 
-	$("#PM_DETAIL_NAME").html(_html);
-	}
-
-</script>
 @stop
 {{-- ปิดส่วนjava --}}

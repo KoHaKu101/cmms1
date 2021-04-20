@@ -43,14 +43,6 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="card ">
-                	@if(session('success'))
-                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    										<span aria-hidden="true">&times;</span>
-  											</button>
-										</div>
-									@endif
 									<div class="card-header bg-primary form-inline ">
 											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-book-open fa-lg mr-1"></i> คู่มือ </h4>
 												<div class="input-group ml-4">
@@ -62,7 +54,7 @@
 													</div>
 												</div>
 									</div>
-									
+
 									<div id="result"class="card-body">
 										<div class="table-responsive">
                       <table class="display table table-striped table-hover">

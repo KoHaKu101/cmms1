@@ -53,7 +53,7 @@
 							<div class="card-header bg-primary">
 								<h4 class="ml-3 mt-2" style="color:white;" >แก้ไขระบบรายการแจ้ง </h4>
 							</div>
-							
+
 							<div class="card-body">
 								<div class="row">
 										<!-- ช่อง1-->
@@ -101,13 +101,6 @@
 		</form>
 	</div>
 </div>
-
-
-
-@include('masterlayout\tab\modal\scanqrcode')
-
-
-
 
 
 @stop

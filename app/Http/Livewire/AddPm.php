@@ -7,7 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Machine\MasterIMPS;
 use App\Models\MachineaddTable\MachinePmTemplate;
 
-class filter extends Component{
+class addpm extends Component{
 
   use WithPagination;
 

@@ -95,14 +95,17 @@
 									                                 <img src="{{asset('storage/'.$dataitem->TYPE_ICON)}}" alt="img3">
 
 									                               </a> </div>
+																								 <style>
+																								 .cbp-item .btn {
+    																					 					width: 100%;
+																											}
+																								 </style>
 									                             <div class="cbp-caption-activeWrap">
 									                                 <div class="cbp-l-caption-alignCenter">
 									                                     <div class="cbp-l-caption-body">
-									                                         <div class="btn-group">
 																														 <a href="{{url('machine/machinetypetable/edit/'.$dataitem->UNID)}}" class=" btn" rel="nofollow" data-cbp-singlePage="projects">รายละเอียด</a>
-									                                           <a href="{{url('machine/assets/machinetype/'.$dataitem->TYPE_CODE)}}" class=" btn btn-sm btn-right" data-title="GoPro: HERO3+ Black Edition<br>by GoPro"> เครื่องจักร</a>
 
-									                                         </div>
+
 									                                     </div>
 									                                 </div>
 									                             </div>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+{{-- <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head> --}}
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Pragma" content="no-cache">
@@ -87,7 +89,7 @@
 	<script type="text/javascript" src="{{ asset('assets/js/atlantis.min.js') }}"></script>
 		@include('sweetalert::alert')
 	{{-- <script type="text/javascript" src="{{ asset('/vendor/livewire/livewire.js') }}"></script> --}}
-		@livewireScripts	
+		@livewireScripts
 
 @yield('javascript')
 

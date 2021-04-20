@@ -43,14 +43,6 @@
 						<div class="row">
 							<div class="col-md-8">
 								<div class="card ">
-                	@if(session('success'))
-                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    										<span aria-hidden="true">&times;</span>
-  											</button>
-										</div>
-									@endif
 									<div class="card-header bg-primary">
 										<h4 class="ml-3 mt-2" style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> เพิ่มสถานะเครื่องจักร </h4>
 									 </div>
@@ -68,7 +60,6 @@
 										</thead>
 										<tbody>
 											@foreach ($dataset as $key => $dataitem)
-
 											<tr>
 												<td>{{$dataitem->STATUS_CODE}}</td>
 												<td style="width:200px">
@@ -83,17 +74,13 @@
 												<td>{{ $dataitem->STATUS == "9" ? 'เปิด' : 'ปิด' }}</td>
 												<td><a href="{{ url('machine/machinestatustable/delete/'.$dataitem->UNID) }}">
 													<button type="button" class="btn btn-danger btn-block btn-sm my-1" style="width:40px">
-
 														<i class="fas fa-trash fa-lg">	</i>
-
 													</button>
 												</a></td>
 											</tr>
 											@endforeach
-
 										</tbody>
 									</table>
-
 									</div>
 										</div>
 								</div>
@@ -113,7 +100,7 @@
 												<div class="form-group has-error">
 													<label for="STATUS_NAME">สถานะ</label>
 													<input type="text"  class="form-control" id="STATUS_NAME" name="STATUS_NAME" placeholder="สถานะ" required autofocus>
-						
+
 												</div>
 												<div class="form-check has-error">
 													<label for="STATUS">เปิด/ปิด</label><br>
@@ -126,9 +113,6 @@
 														<span class="form-radio-sign">ปิด</span>
 													</label>
 												</div>
-
-
-
 												<button tpye="submit" class="btn btn-primary">Save</button>
 											</form>
 										</div>
@@ -147,28 +131,6 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-{{-- <script>
-$(document).ready(function(){
-	var table = $('datatable').DataTable({
-			'processing' : true,
-			'serverSide' : true,
-			'ajax': "{{ route('machine.list') }}",
-			'column':[
-				{'data': 'MACHINE_LOCATION'},
-				{'data': 'MACHINE_NAME'},
-				{'data': 'MACHINE_CODE'}
-			],
-	});
-
-  $("#myInput").keyup (function() {
-		table.column($)
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script> --}}
 
 
 @stop

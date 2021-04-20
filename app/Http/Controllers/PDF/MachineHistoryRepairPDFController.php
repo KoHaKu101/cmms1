@@ -16,10 +16,6 @@ use Auth;
 // class MachineSystemCheckPDFController extends Controller
 class MachineHistoryRepairPDFController extends Fpdf
 {
-
-
-
-
   public function RepairHistory($UNID)
     {
       $dataset = Machine::where('UNID',$UNID)->first();

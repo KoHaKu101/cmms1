@@ -41,52 +41,18 @@ class MachineRepairController extends Controller
     //dd($data_set);
     return View('machine/repair/repairlist',compact('dataset'));
   }
-  public function Indexserach(Request $request){
 
-    if($request->ajax())
-    {
-         $querydata = $request->get('query');
-         $query = str_replace(" ", "%", $querydata);
-         $dataset = DB::table('PMCS_REPAIR_MACHINE')
-                 ->where('MACHINE_CODE', 'like', '%'.$query.'%')
-                 ->orWhere('MACHINE_LOCATION', 'like', '%'.$query.'%')
-                 ->orWhere('MACHINE_NAME', 'like', '%'.$query.'%')
-                 ->orderby('CLOSE_STATUS','DESC')
-                 ->orderBy('MACHINE_DOCDATE','DESC')
-                 // ->orWhere('MACHINE_DOCNO', 'like', '%'.$query.'%')
-                 // ->orWhere('MACHINE_DOCDATE', 'like', '%'.$query.'%')
-
-                 // ->orderBy($sort_by, $sort_type)
-                 ->paginate(10);
-   return view('machine/repair/searchrepair', compact('dataset'))->render();
-    }
-    }
   public function PrepareSearch(){
 
     return View('machine/repair/search');
   }
-  public function Search(Request $request){
-      if($request->has('machine_code'))
-        {
-          $MACHINE_CODE=$request->machine_code;
-          $data = Machine::where('MACHINE_CODE','like','%'.$MACHINE_CODE.'%')->get();
-          return response()->json(['dataset'=>$data]);
-        }else {
-        return View('machine/repair/search');
-        }
-      }
+
   public function Create($MACHINE_CODE){
 
       $dataset = MachineRepairTable::where('REPAIR_STATUS','=','9')->get();
       $datamachine = Machine::where('MACHINE_CODE','=',$MACHINE_CODE)->first();
-      $dataemp = MachineEMP::where('MACHINE_CODE','=',$MACHINE_CODE)->get();
 
-    return View('machine/repair/form',compact('dataset','datamachine','dataemp'));
-  }
-  public function Emp($EMP_NAME){
-    $dataemp = MachineEMP::where('EMP_NAME','=',$EMP_NAME)->first();
-    $data = MachineEMP::where('EMP_CODE','=',$dataemp->EMP_CODE)->first();
-    return response()->json($data);
+    return View('machine/repair/form',compact('dataset','datamachine'));
   }
   public function Store(Request $request){
 
@@ -144,7 +110,6 @@ class MachineRepairController extends Controller
           'CREATE_BY'             => $request->EMP_NAME,
           'CREATE_TIME'           => Carbon::now(),
           'UNID'                  => $this->randUNID('PMCS_REPAIR_MACHINE'),
-
       ]);
       return redirect()->route('repair.list');
     }else {
@@ -157,26 +122,18 @@ class MachineRepairController extends Controller
     }
   }
   public function Edit($UNID) {
-
       $dataset = MachineRepair::where('UNID','=',$UNID)->first();
-
       $data = MachineRepair::select('MACHINE_NOTE','UNID')->where('UNID',$UNID)->first();
       $datanote = array( 'data' => explode(',',$data->MACHINE_NOTE),);
-      // $datanote = explode(',',$data->MACHINE_NOTE);
       $datarepair = MachineRepairTable::where('REPAIR_STATUS','=','9')->get();
       $datamachine = Machine::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->first();
-      $dataemp = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
 
-      // var_dump($dataset);
-    return view('machine/repair/edit',compact('data','datanote','dataset','datarepair','datamachine','dataemp',));
+    return view('machine/repair/edit',compact('data','datanote','dataset','datarepair','datamachine'));
 
   }
   public function Update(Request $request,$UNID){
 
-
-
       if(!empty($request->MACHINE_NOTE)){
-        // $arraymachinerepair = array($request->MACHINE_REPAIR);
         $MACHINE_NOTE = implode(",",$request->MACHINE_NOTE);
 
       }elseif(empty($request->MACHINE_NOTE)) {
@@ -232,7 +189,6 @@ class MachineRepairController extends Controller
             return Redirect()->route('repair.edit',[$UNID])->with('success','อัพเดทรายการ สำเร็จ');
           }
   public function Delete($UNID){
-    // dd($UNID);
             $CLOSE_STATUS = '1';
               $data_set = MachineRepair::where('UNID',$UNID)->update([
                       'CLOSE_STATUS'          => $CLOSE_STATUS,

@@ -14,6 +14,7 @@ use App\Models\Machine\MasterIMPS;
 
 use App\Models\Machine\MachinePMCheckDetailStore;
 use App\Models\Machine\MasterIMPSGroup;
+use App\Models\SettingMenu\MailSetup;
 
 use App\Models\MachineAddTable\MachinePmTemplateList;
 use App\Models\MachineAddTable\MachinePmTemplateDetail;
@@ -45,12 +46,10 @@ class SysCheckController extends Controller
     return $number;
   }
   public function Index(){
-    $datamachine    = Machine::orderBy('MACHINE_CODE',"ASC")->paginate(10);
-    $datapmtemplatelist = MachinePmTemplateList::orderBy('PM_TEMPLATELIST_DUE',"ASC")->paginate(10);
-    $datapmtemplatedetail  = MachinePmTemplateDetail::all();
-    $machinecheckpm        = MachinePMCheck::all();
-    $machinecheckpmdetail = MachinePMCheckDetail::all();
-    return view('/machine/syscheck/syschecklist',compact('machinecheckpmdetail','datamachine','datapmtemplatelist','datapmtemplatedetail','machinecheckpm'));
+    $machine = Machine::where('MACHINE_STATUS','!=','4')->get();
+    $pmlist  = MasterIMPSGroup::all();
+    $alert   = MailSetup::select('AUTOMAIL')->first();
+    return view('/machine/syscheck/syschecklist',compact('machine','pmlist','alert'));
 
   }
   public function StoreList(Request $request){
@@ -194,12 +193,12 @@ class SysCheckController extends Controller
       }
   }
   public function check($UNID,$UNIDPM){
-    $machinepm        = MachinePmTemplateList::where('UNID',$UNIDPM)->first();
+    $machinepm        = MasterIMPSGroup::where('UNID',$UNIDPM)->first();
     $machine          = Machine::where('UNID',$UNID)->first();
-    $machinepmdetail  = MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$UNIDPM)->get();
+    // $machinepmdetail  = MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$UNIDPM)->get();
 
 
-      return view("/machine/syscheck/syscheck",compact('machine','machinepm','machinepmdetail'));
+      return view("/machine/syscheck/syscheck",compact('machine','machinepm'));
 
   }
   public function Edit($UNID,$UNIDPM){
@@ -216,6 +215,8 @@ class SysCheckController extends Controller
     return View('/machine/syscheck/syscheckedit',compact('machinepmcheckdetailfirst','machinepmcheckdetail','machinepm','machine','machinepmdetail'));
 
   }
+
+  // edit machine
   public function DeletePMMachine($UNID,$MC) {
     // dd(  MachinePmTemplateList::whereIn('UNID',$expolde)->delete());
     if ($UNID >= 1){
@@ -231,19 +232,24 @@ class SysCheckController extends Controller
           return Redirect()->back()->with('warning','กรุณาเลือกข้อมูลที่จะทำการลบ');
 
         }
-      }
-  public function Paginate(Request $request) {
+  }
+
+  public function StoreDate(Request $request){
     if($request->ajax()){
-       $machinepmtemplate = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE','=',$request->mc))->orderBy('CREATE_TIME','ASC')->paginate(6);
-      // $data = DB::table('posts')->paginate(5);
-      return view('/pagination/modalpm',compact('machinepmtemplate'))->render();
-     }
-  }
-  public function PaginateRemove(Request $request) {
-      if($request->ajax()){
-           $machinepmtemplateremove = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$request->mc))->orderBy('CREATE_TIME','ASC')->paginate(6);
-          // $data = DB::table('posts')->paginate(5);
-          return view('/pagination/modalpmremove',compact('machinepmtemplateremove'));
+      $time = MasterIMPSGroup::select('PM_TEMPLATELIST_DAY')->where('UNID',$request->unid)->first();
+      $count = $time->PM_TEMPLATELIST_DAY / 30;
+
+      $countend = Carbon::parse($request->date)->addMonth($count)->format('Y-m-d');
+      MasterIMPSGroup::where('UNID',$request->unid)->update([
+        'PM_LAST_DATE' => $request->date,
+        'PM_NEXT_DATE' => $countend,
+      ]);
+      $data = MasterIMPSGroup::select('PM_NEXT_DATE')->where('UNID',$request->unid)->first();
+      return response()->json($data);
     }
+
   }
+
+
+
   }

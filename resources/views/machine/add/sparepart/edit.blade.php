@@ -105,14 +105,6 @@
 	</div>
 </div>
 
-
-
-@include('masterlayout\tab\modal\scanqrcode')
-
-
-
-
-
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}
 

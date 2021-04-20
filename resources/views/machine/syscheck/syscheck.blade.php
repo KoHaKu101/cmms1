@@ -30,7 +30,7 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
-								<a href="{{ url()->previous() }}">
+								<a href="{{ url('machine/syscheck/syschecklist') }}">
 								<button class="btn btn-warning  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
@@ -44,15 +44,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="card ">
-                	@if(session('success'))
-                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    										<span aria-hidden="true">&times;</span>
-  											</button>
-										</div>
-									@endif
-											</div>
+								</div>
 								</div>
 							</div>
 							<div class="row">
@@ -76,14 +68,14 @@
 															</div>
 															<div class="col-md-6 col-lg-3">
 																<div class="form-group form-inline input-group">
-																	<h4 class="ml-2 mt-2">ระยะเวลาตรวจเช็ค : {{ $machinepm->PM_TEMPLATELIST_DAY }}
-																	 <span>{{$machinepm->PM_TEMPLATELIST_CHECK == '1' ? 'เดือน' : 'วัน' }}</span> </h4>
+																	<h4 class="ml-2 mt-2">ระยะเวลาตรวจเช็ค : {{ $machinepm->PM_TEMPLATELIST_DAY / 30 }}
+																	 <span>เดือน</span> </h4>
 
 																</div>
 															</div>
 																<div class="col-md-6 col-lg-7 mt--2">
 																	<div class="form-group form-inline has-error">
-																		<h4 class="ml-2 mt-2">วันที่ตรวจเช็ค :
+																		<h4 class="ml-2 mt-2">วันที่ตรวจเช็คปัจจุบัน :
 																			<input type="date" class="form-control" name="MACHINE_CHECK_TIME" value="{{\Carbon\Carbon::now()->toDateString()}}">
 																		</h4>
 																	</div>
@@ -117,7 +109,7 @@
     														margin: 15px 0;
 														}
 														</style>
-														@foreach ($machinepmdetail as $number => $datamachinepmdetail)
+														{{-- @foreach ($machinepmdetail as $number => $datamachinepmdetail)
 																<div class="row my-3">
 																	<div class="col-md-6 col-lg-1"> {{ $number++ }}	</div>
 																	<div class="col-md-6 col-lg-11">{{$datamachinepmdetail->PM_DETAIL_NAME}}</div>
@@ -142,7 +134,7 @@
 
 																	</div>
 																	<div class="separator-solid my-1"></div>
-														@endforeach
+														@endforeach --}}
 														<div class="col-md-6 col-lg-6">
 															<div class="form-group">
 																<label>NOTE</label>

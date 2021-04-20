@@ -59,17 +59,11 @@
               ชือ ประเภทรายการ(template)
             </div>
           </div>
-
           <div class="row mt-4">
-
             <div class="col-md-6 col-lg-12 has-error" id="sendpmunid">
-
             </div>
-
           </div>
-
           </div>
-
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

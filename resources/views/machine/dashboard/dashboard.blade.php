@@ -50,7 +50,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องจักรทั้งหมด</p>
-											<h4 class="card-title">{{$dataset}}</h4>
+											<h4 class="card-title">{{$dataset->where('MACHINE_CHECK','!=','4')->count()}}</h4>
 										</div>
 									</div>
 								</div>
@@ -70,7 +70,7 @@
 										<div class="numbers">
 											<p class="card-category">เครื่องเปิดใช้งาน</p>
 
-											<h4 class="card-title">{{$dataprocess}}</h4>
+											<h4 class="card-title">{{$dataset->where('MACHINE_CHECK','=','2')->count()}}</h4>
 										</div>
 									</div>
 								</div>
@@ -89,7 +89,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องรอขึ้นงาน</p>
-											<h4 class="card-title">{{$datawait}}</h4>
+											<h4 class="card-title">{{$dataset->where('MACHINE_CHECK','=','1')->count()}}</h4>
 										</div>
 									</div>
 								</div>
@@ -108,7 +108,7 @@
 									<div class="col-7 col-stats">
 										<div class="numbers">
 											<p class="card-category">เครื่องแจ้งซ่อม</p>
-											<h4 class="card-title"> {{ $datarepair }}</h4>
+											<h4 class="card-title"> {{ $datarepair->where('CLOSE_STATUS','=','9')->count() }}</h4>
 										</div>
 									</div>
 								</div>
@@ -275,10 +275,10 @@
 	Circles.create({
 	  id:'circles-1',
 	  radius:45,
-	  value:{{$data_line1}},
+	  value:{{$data_line->where('MACHINE_LINE','L1')->count()}},
 	  maxValue:500,
 	  width:10,
-	  text: {{$data_line1}},
+	  text: {{$data_line->where('MACHINE_LINE','L1')->count()}},
 	  colors:['#585963', '#14BAFD'],
 	  duration:400,
 	  wrpClass:'circles-wrp',
@@ -289,10 +289,10 @@
 	Circles.create({
 	  id:'circles-2',
 	  radius:45,
-	  value:{{$data_line2}},
+	  value:{{$data_line->where('MACHINE_LINE','L2')->count()}},
 	  maxValue:500,
 	  width:10,
-	  text: {{$data_line2}},
+	  text: {{$data_line->where('MACHINE_LINE','L2')->count()}},
 	  colors:['#585963', '#FF944F'],
 	  duration:400,
 	  wrpClass:'circles-wrp',
@@ -303,10 +303,10 @@
 	Circles.create({
 	  id:'circles-3',
 	  radius:45,
-	  value:{{$data_line3}},
+	  value:{{$data_line->where('MACHINE_LINE','L3')->count()}},
 	  maxValue:500,
 	  width:10,
-	  text: {{$data_line3}},
+	  text: {{$data_line->where('MACHINE_LINE','L3')->count()}},
 	  colors:['#585963', '#BAFF4F'],
 	  duration:400,
 	  wrpClass:'circles-wrp',
@@ -317,10 +317,10 @@
 	Circles.create({
 	  id:'circles-4',
 	  radius:45,
-	  value:{{$data_line4}},
+	  value:{{$data_line->where('MACHINE_LINE','L4')->count()}},
 	  maxValue:500,
 	  width:10,
-	  text: {{$data_line4}},
+	  text: {{$data_line->where('MACHINE_LINE','L4')->count()}},
 	  colors:['#585963', '#FF4F4F'],
 	  duration:400,
 	  wrpClass:'circles-wrp',
@@ -331,10 +331,10 @@
 	Circles.create({
 	  id:'circles-5',
 	  radius:45,
-	  value:{{$data_line5}},
+	  value:{{$data_line->where('MACHINE_LINE','L5')->count()}},
 	  maxValue:500,
 	  width:10,
-	  text: {{$data_line5}},
+	  text: {{$data_line->where('MACHINE_LINE','L5')->count()}},
 	  colors:['#585963', '#FF4FCF'],
 	  duration:400,
 	  wrpClass:'circles-wrp',
@@ -345,10 +345,10 @@
 	Circles.create({
 	  id:'circles-6',
 	  radius:45,
-	  value:{{$data_line6}},
+	  value:{{$data_line->where('MACHINE_LINE','L6')->count()}},
 	  maxValue:500,
 	  width:10,
-	  text: {{$data_line6}},
+	  text: {{$data_line->where('MACHINE_LINE','L6')->count()}},
 	  colors:['#585963', '#4F62FF'],
 	  duration:400,
 	  wrpClass:'circles-wrp',

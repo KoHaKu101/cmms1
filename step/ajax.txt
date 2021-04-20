@@ -1,0 +1,56 @@
+การเลือก save ในforeace และแสดงผลทันที
+************************** Javascript Ajax **************************
+<script>
+	$(document).on('click','#savedate',function(event){
+		event.preventDefault();
+		var parentObj = $(this).closest('#datadate');
+		var unid = parentObj.find('#PM_LAST_DATE').attr('rel');
+		var date = parentObj.find('#PM_LAST_DATE').val();
+			$.ajax({
+				type:'POST',
+				url: '/machine/system/check/storedate',
+				datatype: 'json',
+				data: {
+					"_token": "{{ csrf_token() }}",
+					"unid" : unid,
+					"date" : date,
+				} ,
+				success:function(data){				
+						   parentObj.find('#PM_NEXT_DATE').val(data.PM_NEXT_DATE);
+				}
+			});
+		});
+	 </script>
+***********************************************************************************
+*********************************Foreach ******************************************
+                  @foreach ($masterimpsgroup as $key => $dataimpsgroup)
+
+                    <tr id="datadate">
+                        <td><center>{{ $key+1 }}</center></td>
+                        <td>{{ $dataimpsgroup->PM_TEMPLATELIST_NAME }}</td>
+                        <td>{{ $dataimpsgroup->PM_TEMPLATELIST_DAY / 30 }} เดือน</td>
+                        <td>
+                          <input type="date" class="form-control" id="PM_LAST_DATE" value="{{$dataimpsgroup->PM_LAST_DATE}}" name="PM_LAST_DATE" rel="{{ $dataimpsgroup->UNID }}" >
+                          </td>
+                        <td><button type="button" id="savedate" class="btn btn-primary btn-link btn-sm btn-block my-1"><i class="fas fa-save fa-2x"></i></button></td>
+                        <td >
+                          <input type="text" id="PM_NEXT_DATE" name="PM_NEXT_DATE" class="form-control" value="{{ $dataimpsgroup->PM_NEXT_DATE }}" rel="{{ $dataimpsgroup->UNID }}" readonly>
+                        {{-- onclick="savedate('{{ $dataimpsgroup->UNID }}')"  id="savedate"--}}
+                        </td>
+                    </tr>
+                  @endforeach
+***********************************************************************************
+********************************* Controller **************************************
+if($request->ajax()){
+      $time = MasterIMPSGroup::select('PM_TEMPLATELIST_DAY')->where('UNID',$request->unid)->first();
+      $count = $time->PM_TEMPLATELIST_DAY / 30;
+
+      $countend = Carbon::parse($request->date)->addMonth($count)->format('Y-m-d');
+      MasterIMPSGroup::where('UNID',$request->unid)->update([
+        'PM_LAST_DATE' => $request->date,
+        'PM_NEXT_DATE' => $countend,
+      ]);
+      $data = MasterIMPSGroup::select('PM_NEXT_DATE')->where('UNID',$request->unid)->first();
+      return response()->json($data);
+***********************************************************************************
+************************************************************************************************************************************************************************************************
