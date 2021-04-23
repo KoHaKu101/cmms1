@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-8 col-lg-1">
                   <button id="add" type="button" class="btn btn-primary btn-sm"
-                    data-toggle="modal" data-target="#PMMachine"> 
+                    data-toggle="modal" data-target="#PMMachine">
                     <span style="color:black;font-size:13px">เพิ่มระบบ</span>
                   </button>
                 </div>
@@ -33,7 +33,7 @@
 
           <div class="col-md-8 col-lg-12">
 
-            @livewire('showpmmachine',['MACHINE_CODE'=>$dataset->MACHINE_CODE])
+            @livewire('showpmmachine',['MACHINE_CODE'=>$dataset->MACHINE_CODE,'RANK'=>$dataset->MACHINE_RANK ])
 
         </div>
       </div>

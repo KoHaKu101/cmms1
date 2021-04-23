@@ -51,7 +51,7 @@ class MachineSysTemTableController extends Controller
       $datapmtemplatelist       = MachinePmTemplateList::where('PM_TEMPLATE_UNID_REF','=',$UNID)->get();
       $datapmtemplatefirst      = MachinePmTemplate::where('UNID',$UNID)->first();
       $datamachine         = MasterIMPS::where('PM_TEMPLATE_UNID_REF',$UNID)->get();
-      $countdetail = $datapmtemplatelist->count();
+      $countdetail = $datapmtemplatefirst->count();
     }
     return View('machine/add/system/systemlist',compact('datapmtemplate','datapmtemplatelist','countdetail','datapmtemplatefirst','datamachine'));
   }
@@ -78,6 +78,7 @@ class MachineSysTemTableController extends Controller
         'MODIFY_BY'              => Auth::user()->name,
         'MODIFY_TIME'            => Carbon::now(),
     ]);
+    MasterIMPS::where('PM_TEMPLATE_UNID_REF',$request->UNID)->update(['PM_TEMPLATE_NAME' => $request->PM_TEMPLATE_NAME]);
     return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
   }
   public function DeleteTemplate($UNID) {

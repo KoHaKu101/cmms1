@@ -60,6 +60,7 @@ class SysCheckController extends Controller
         'PM_TEMPLATE_UNID_REF'  => $request->PM_TEMPLATE_UNID_REF[$dataset],
         'MACHINE_CODE'          => $request->MACHINE_CODE,
         'PM_TEMPLATE_NAME'      => $datapmtemplate->PM_TEMPLATE_NAME,
+        'PM_LAST_DATE'          => Carbon::now(),
         'CREATE_BY'             => Auth::user()->name,
         'CREATE_TIME'           => Carbon::now(),
         );
@@ -76,6 +77,7 @@ class SysCheckController extends Controller
         'PM_TEMPLATELIST_NAME'      => $dataitem->PM_TEMPLATELIST_NAME,
         'PM_TEMPLATELIST_DAY'       => $dataitem->PM_TEMPLATELIST_DAY,
         'PM_TEMPLATELIST_IMPS'      => $dataitem->PM_TEMPLATELIST_POINT,
+        'PM_TEMPLATELIST_STATUS'    => '1',
         'CREATE_BY'                 => Auth::user()->name,
         'CREATE_TIME'               => Carbon::now(),
         );
@@ -105,100 +107,25 @@ class SysCheckController extends Controller
     ]);
     return redirect()->back()->with('success','เพิ่มรายการตรวจเช็คสำเร็จ');
   }
+
+
+
+
   public function Store(Request $request){
 
-    $validated = $request->validate([
-      'MACHINEPM_CHECK'           => 'required',
-      'MACHINE_USER_CHECK'        => 'required',
-      'MACHINE_CHECK_TIME'        => 'required',
-      'MACHINEPM_FAIL_NOTE'       => 'max:500',
-      'MACHINEPM_NOTE'            => 'max:500',
-      ],
-      [
-      'MACHINEPM_CHECK.required'     => 'กรุณากรอกข้อมูลให้ครบถ้วน',
-      'MACHINE_USER_CHECK.required'  => 'กรุณาใส่ชื่อผู้ตรวจ',
-      'MACHINE_CHECK_TIME.required'  => 'กรุณาใส่เวลาที่ทำการตรวจ',
-      'MACHINEPM_FAIL_NOTE.max'      => 'ไม่สามารถใส่ตัวอักษรได้เกิน 500 ',
-      'MACHINEPM_NOTE.max'      => 'ไม่สามารถใส่ตัวอักษรได้เกิน 500 ',
-    ]);
-      if (count($request->MACHINEPM_CHECK) > 0 ) {
-        if (MachinePMCheckDetail::where('MACHINE_UNID_REF',$request->UNID_MACHINE)->where('MACHINEPM_UNID_REF',$request->UNID_PMLIST) === NULL ) {
-          foreach ($request->MACHINEPM_CHECK as $dataset => $value) {
-            $data = array(
-              'UNID'                  => $this->randUNID('PMCS_CMMS_MACHINE_PM_DEAIL'),
-              'MACHINEPM_UNID_REF'    => $request->UNID_PMLIST,
-              'MACHINE_UNID_REF'      => $request->UNID_MACHINE,
-              'MACHINEPM_CHECK'       => $request->MACHINEPM_CHECK[$dataset+0],
-              'MACHINEPM_CHECK_TIME'  => $request->MACHINE_CHECK_TIME,
-              'MACHINEPM_NOTE'        => $request->MACHINEPM_NOTE,
-              'MACHINE_USER_CHECK'    => $request->MACHINE_USER_CHECK,
-              'CREATE_BY'             => Auth::user()->name,
-              'CREATE_TIME'           => Carbon::now(),
-              );
-            MachinePMCheckDetail::insert($data);
-          }
-      }elseif (MachinePMCheckDetail::where('MACHINE_UNID_REF',$request->UNID_MACHINE)->where('MACHINEPM_UNID_REF',$request->UNID_PMLIST) !== NULL ) {
-            MachinePMCheckDetail::where('MACHINE_UNID_REF',$request->UNID_MACHINE)->where('MACHINEPM_UNID_REF',$request->UNID_PMLIST)->delete();
-            foreach ($request->MACHINEPM_CHECK as $dataset => $value) {
-              $data = array(
-                'UNID'                  => $this->randUNID('PMCS_CMMS_MACHINE_PM_DEAIL'),
-                'MACHINEPM_UNID_REF'    => $request->UNID_PMLIST,
-                'MACHINE_UNID_REF'      => $request->UNID_MACHINE,
-                'MACHINEPM_CHECK'       => $request->MACHINEPM_CHECK[$dataset+0],
-                'MACHINEPM_CHECK_TIME'  => $request->MACHINE_CHECK_TIME,
-                'MACHINEPM_NOTE'        => $request->MACHINEPM_NOTE,
-                'MACHINE_USER_CHECK'    => $request->MACHINE_USER_CHECK,
-                'CREATE_BY'             => Auth::user()->name,
-                'CREATE_TIME'           => Carbon::now(),
-                );
-
-              MachinePMCheckDetail::insert($data);
-            }
-          }
-        MachinePMCheck::where('MACHINEPM_UNID_REF',$request->UNID_MACHINE)->where('PM_TEMPLATELIST_UNID_REF',$request->UNID_PMLIST)->update([
-          'PM_TEMPLATELIST_LASTDUE'     => $request->MACHINE_CHECK_TIME,
-          'MODIFY_BY'                   => Auth::user()->name,
-          'MODIFY_TIME'                 => Carbon::now(),
-        ]);
         return Redirect('machine/system/edit/'.$request->UNID_MACHINE.'/'.$request->UNID_PMLIST)->with('success','บันทึกสำเร็จ');
-      }
+
   }
   public function Update(Request $request){
-      if ($request->MACHINEPM_FIX > NULL ) {
-          foreach ($request->MACHINEPM_FIX as $dataset => $value) {
-            $data = array(
-              'MACHINEPM_CHECK'       => "PASS",
-              'MACHINEPM_FIX'         => $request->MACHINEPM_FIX[$dataset+0],
-              'MACHINEPM_FIX_NOTE'    => $request->MACHINEPM_FIX_NOTE[$dataset+0],
-              'MACHINEPM_FAIL_NOTE'   => $request->MACHINEPM_FAIL_NOTE[$dataset+0],
-              'MACHINEPM_NOTE'        => $request->MACHINEPM_NOTE,
-              'MODIFY_BY'             => Auth::user()->name,
-              'MODIFY_TIME'           => Carbon::now(),
-              );
-            MachinePMCheckDetail::where('UNID',$request->UNID_MACHINEPMCHECKDETAIL[$dataset+0])->update($data);
-          }
+
         return Redirect()->back()->with('success','บันทึกสำเร็จ');
       }
-      elseif ($request->MACHINEPM_FIX == NULL ) {
-          foreach ($request->MACHINEPM_FAIL_NOTE as $dataset => $value) {
-            $data = array(
-              'MACHINEPM_FAIL_NOTE'   => $request->MACHINEPM_FAIL_NOTE[$dataset+0],
-              'MACHINEPM_NOTE'        => $request->MACHINEPM_NOTE,
-              'MODIFY_BY'             => Auth::user()->name,
-              'MODIFY_TIME'           => Carbon::now(),
-              );
-            MachinePMCheckDetail::where('UNID',$request->UNID_MACHINEPMCHECKDETAIL[$dataset+0])->update($data);
-          }
-        return Redirect()->back()->with('success','บันทึกสำเร็จ');
-      }
-  }
+
   public function check($UNID,$UNIDPM){
     $machinepm        = MasterIMPSGroup::where('UNID',$UNIDPM)->first();
     $machine          = Machine::where('UNID',$UNID)->first();
-    // $machinepmdetail  = MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$UNIDPM)->get();
-
-
-      return view("/machine/syscheck/syscheck",compact('machine','machinepm'));
+    $detail           = MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$machinepm->PM_TEMPLATELIST_UNID_REF)->get();
+      return view("/machine/syscheck/syscheck",compact('machine','machinepm','detail'));
 
   }
   public function Edit($UNID,$UNIDPM){
@@ -236,15 +163,13 @@ class SysCheckController extends Controller
 
   public function StoreDate(Request $request){
     if($request->ajax()){
-      $time = MasterIMPSGroup::select('PM_TEMPLATELIST_DAY')->where('UNID',$request->unid)->first();
-      $count = $time->PM_TEMPLATELIST_DAY / 30;
-
-      $countend = Carbon::parse($request->date)->addMonth($count)->format('Y-m-d');
-      MasterIMPSGroup::where('UNID',$request->unid)->update([
+      // $time = MasterIMPS::select('PM_TEMPLATELIST_DAY')->where('UNID',$request->unid)->first();
+      // $count = $time->PM_TEMPLATELIST_DAY / 30;
+      // $countend = Carbon::parse($request->date)->addMonth($count)->format('Y-m-d');
+      MasterIMPS::where('UNID',$request->unid)->update([
         'PM_LAST_DATE' => $request->date,
-        'PM_NEXT_DATE' => $countend,
       ]);
-      $data = MasterIMPSGroup::select('PM_NEXT_DATE')->where('UNID',$request->unid)->first();
+      $data = MasterIMPS::select('PM_NEXT_DATE')->where('UNID',$request->unid)->first();
       return response()->json($data);
     }
 

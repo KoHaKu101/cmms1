@@ -169,7 +169,6 @@
 																				<span class="form-check-sign">{{ $dataitem->REPAIR_NAME }}</span>
 																			</label>
 																		</div>
-																		{{-- <?php var_dump(in_array($dataitem->REPAIR_NAME,$datanote['data'])); ?> --}}
 																	@endforeach
 
 																	</div>
@@ -226,34 +225,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-	<script>
-    $('#EMP_NAME').change(function() {
-        var id = $(this).val();
-        var url = '{{ route("get.repair", ":EMP_NAME") }}';
-        urllink = url.replace(':EMP_NAME', id);
 
-        $.ajax({
-            url: urllink,
-            type: 'get',
-            dataType: 'json',
-            success: function(response) {
-                if (response != null) {
-                    $('#EMP_CODE').val(response.EMP_CODE);
-										// console.log($('.epm'));
-									}
-            }
-						// console.log(success:);
-        });console.log(urllink);
-    });
-</script>
-
-	 <script type="text/javascript">
-	$.ajaxSetup({
-	  headers: {
-	    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	  }
-	});
-	</script>
 	<script>
 	var button = document.getElementById('button');
 	var unid = $('#UNID').val(); console.log(unid);

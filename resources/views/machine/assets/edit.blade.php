@@ -110,7 +110,7 @@
 												</select>
 						  				</div>
 											</div>
-											<div class="form-group has-error">
+											<div class="form-group has-error mt-1">
 												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
 												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE">
 													<option value>--แสดงทั้งหมด--</option>
@@ -134,6 +134,16 @@
 											<div class="form-group has-error">
 												<label for="PURCHASE_FORM">ซื้อจากบริษัท	</label>
 												<input type="text" class="form-control" id="PURCHASE_FORM" name="PURCHASE_FORM"  value="{{ $dataset->PURCHASE_FORM }}">
+											</div>
+											<div class="form-group has-error">
+												<label for="PURCHASE_FORM">Machine Rank	</label>
+												<select class="form-control" id="MACHINE_RANK" name="MACHINE_RANK" required>
+													<option value>กรุณาเลือก Rank</option>
+													<option value="3" {{ $dataset->MACHINE_RANK == "3" ? 'selected' : ''}} >A</option>
+													<option value="6" {{ $dataset->MACHINE_RANK == "6" ? 'selected' : ''}} >B</option>
+													<option value="12" {{ $dataset->MACHINE_RANK == "12" ? 'selected' : ''}} >C</option>
+
+												</select>
 											</div>
 
 										</div>

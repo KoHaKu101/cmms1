@@ -11,6 +11,7 @@ use App\Http\Controllers\SettingMenu\MenuController;
 use App\Http\Controllers\SettingMenu\MenuSubController;
 //************************* Controller *******************************
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\CalendarController;
 use App\Http\Controllers\Machine\MachineController;
 use App\Http\Controllers\Machine\PersonalController;
 use App\Http\Controllers\Machine\MachineRepairController;
@@ -91,13 +92,11 @@ Route::get('/machine/dashboard/dashboard',[DashboardController::class,'Dashboard
 Route::get('/machine',[DashboardController::class,'Dashboard']);
 Route::get('/machine/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard.dashboard');
 Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard');
-
+// calendar
+ Route::get('/machine/calendar',[CalendarController::class,'Index']);
 //Notification
 Route::get('machine/repair/notificaiton' ,[DashboardController::class,'Notification']);
 Route::get('machine/repair/notificaitoncount' ,[DashboardController::class,'NotificationCount'])  ->name('repair.notificaitoncount');
-// Route::get('machine/monthly/notificaiton' ,[DashboardController::class,'SystemcheckMonthly']);
-// Route::get('machine/monthly/notificaitoncount' ,[DashboardController::class,'SystemcheckMonthlyCount'])  ->name('repair.systemcheckmonthlycount');
-
 //Export and import
 Route::get('machine/export', [MachineExportController::class,'export']);
 // Route::get('users/import/show', [MachineImportController::class,'show']);

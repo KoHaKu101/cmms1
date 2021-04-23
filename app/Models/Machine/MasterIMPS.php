@@ -17,7 +17,7 @@ class MasterIMPS extends Model
   protected $keyType = 'string';
   public $table ='PMCS_CMMS_MASTER_IMPS';
 
-  protected $fillable = ['UNID','PM_TEMPLATE_UNID_REF','MACHINE_CODE','PM_TEMPLATE_NAME'
+  protected $fillable = ['UNID','PM_TEMPLATE_UNID_REF','MACHINE_CODE','PM_TEMPLATE_NAME','PM_LAST_DATE','PM_NEXT_DATE'
   ,'CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'
   ];
 }

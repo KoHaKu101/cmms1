@@ -30,7 +30,7 @@
           <div class="container">
 						<div class="row">
 							<div class="col-md-12 gx-4">
-								<a href="{{ url('machine/syscheck/syschecklist') }}">
+								<a href="{{ url()->previous() }}">
 								<button class="btn btn-warning  btn-xs ">
 									<span class="fas fa-arrow-left fa-lg">Back </span>
 								</button>
@@ -84,7 +84,6 @@
 																			<div class="form-group form-inline ml-2 mt--3">
 																				<h4>ชื่อผู้ทำการตรวจเช็ค </h4>
 																				<input type="text" class="form-control ml-2" name="MACHINE_USER_CHECK" required>
-
 																				<input type="hidden" class="form-control ml-2" name="UNID_PMLIST" value="{{ $machinepm->UNID }}">
 																				<input type="hidden" class="form-control ml-2" name="UNID_MACHINE" value="{{ $machine->UNID }}">
 
@@ -109,32 +108,51 @@
     														margin: 15px 0;
 														}
 														</style>
-														{{-- @foreach ($machinepmdetail as $number => $datamachinepmdetail)
+														@foreach ($detail as $number => $datamachinepmdetail)
 																<div class="row my-3">
 																	<div class="col-md-6 col-lg-1"> {{ $number++ }}	</div>
 																	<div class="col-md-6 col-lg-11">{{$datamachinepmdetail->PM_DETAIL_NAME}}</div>
 																</div>
-																	<div class="row my-3">
-																		<div class="col-md-6 col-lg-3 mt-2 ">
+																	<div class="row my-3" >
+																		<div class="col-md-6 col-lg-3 mt-2 has-error" id="findnumber">
 																			<div class="selectgroup selectgroup-success selectgroup-pills float-right">
 																				<label class="selectgroup-item">
-																					<input type="radio" name="MACHINEPM_CHECK[{{ $number+0 }}]" value="PASS" class="selectgroup-input" required>
+																					<input type="hidden" id="number" value="{{ $number+0 }}" rel="{{ $number+0 }}">
+																					<input type="radio" id="MACHINEPM_CHECK" name="MACHINEPM_CHECK[{{ $number+0 }}]" value="PASS" class="selectgroup-input Checkpass" required>
 																					<span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-check"></i></span>
 																				</label>
 																			</div>
 																		</div>
-																		<div class="col-md-6 col-lg-1 mt-2">
+																		<div id="formpass{{ $number+0 }}">
+																		</div>
+
+
+																		<div class="col-md-6 col-lg-1 mt-2 has-error" >
 																			<div class="selectgroup selectgroup-danger selectgroup-pills">
 																				<label class="selectgroup-item">
-																					<input type="radio" name="MACHINEPM_CHECK[{{ $number+0 }}]" value="NOTPASS" class="selectgroup-input">
+																					<input type="radio" id="MACHINEPM_CHECK[{{ $number+0 }}]" name="MACHINEPM_CHECK[{{ $number+0 }}]" value="NOTPASS" class="selectgroup-input Checknotpass">
 																					<span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-times"></i></span>
 																				</label>
 																			</div>
 																		</div>
 
 																	</div>
+																	<div class="row my-3">
+																		<div id="{{ $number+0 }}" data-parent="#accordionExample" class="collapse" aria-labelledby="headingOne">
+																			<div class="input-group">
+																				<input type="text" class="form-control">
+																				<div class="input-group-append">
+																						<select class="form-control form-control-sm">
+																							<option>เลือกหน่วย</option>
+																							<option>volt</option>
+																							<option>amp</option>
+																						</select>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
 																	<div class="separator-solid my-1"></div>
-														@endforeach --}}
+														@endforeach
 														<div class="col-md-6 col-lg-6">
 															<div class="form-group">
 																<label>NOTE</label>
@@ -167,8 +185,27 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-<script src="{{ asset('/js/back/machinepmbackurl.js') }}">
-
+<script>
+$(document).on('click','.Checkpass',function(){
+	var findnumber = $(this).closest('#findnumber');
+	var	findlinknumber = findnumber.find('#number').attr('rel');
+	var number   = findnumber.find('#number').val();
+	var formpass ='<div class="col-lg-1 accordion mt-2">'+
+								'<div class="card">'+
+								'<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#'+number+'" aria-expanded="false" aria-controls="collapseOne" role="button">'+
+								'<button type="button" class="btn btn-primary btn-sm btn-icon btn-round">'+
+								'<i class="fas fa-plus"></i>'+
+								'</button>'+
+								'</div>'+
+								'</div>'+
+								'</div>';
+	$('#formpass'+number).html(formpass);
+	// $('#MACHINEPM_CHECK').prop('checked');
+});
+$(document).on('click','.Checknotpass',function(event){
+	// event.preventDefault();
+ // alert('dd');
+});
 
 </script>
 

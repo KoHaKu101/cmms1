@@ -1,8 +1,11 @@
-$(document).on('click','#savedate',function(event){
+// เซฟวันที่และแสดงผล
+$(document).change('#savedate',function(event){
   event.preventDefault();
   var parentObj = $(this).closest('#datadate');
   var unid = parentObj.find('#PM_LAST_DATE').attr('rel');
   var date = parentObj.find('#PM_LAST_DATE').val();
+  alert(parentObj);
+
     $.ajax({
       type:'POST',
       url: '/machine/system/check/storedate',
@@ -14,12 +17,12 @@ $(document).on('click','#savedate',function(event){
       } ,
       success:function(data){
                    parentObj.find('#PM_NEXT_DATE').val(data.PM_NEXT_DATE);
-      console.log(unid);
 
       }
     });
   });
-  $(document).on('click','.delete-confirm', function (event) {
+//ยืนยันการลบ PM Template
+$(document).on('click','.delete-confirm', function (event) {
       Swal.fire({
           title: 'คุณต้องการลบข้อมูลหรือไม่?',
           text: 'หากลบข้อมูลแล้วจะไม่สามารถกู้คืนมาได้!',
@@ -43,7 +46,8 @@ $(document).on('click','#savedate',function(event){
         }
       });
   });
-  function printhistory(u){
+// ปริ้นประวัติการซ่อม
+function printhistory(u){
     console.log(u);
     var unid = (u);
     window.open('/machine/repairhistory/pdf/'+unid,'RepairHistory','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');

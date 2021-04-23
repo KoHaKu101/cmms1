@@ -3,7 +3,7 @@
     max-width: 80% !important;
 }
 </style>
-<!-- Modal upload -->
+<!-- PM insert -->
 <div class="modal fade" id="PMMachine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLalavel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content ">

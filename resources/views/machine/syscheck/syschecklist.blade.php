@@ -89,8 +89,8 @@
 																	<td>{{ $dataset->MACHINE_NAME}}</td>
 																	<td>{{ $dataset->MACHINE_LINE}}</td>
 																	<td>{{ $datasubitem->PM_TEMPLATELIST_NAME}}</td>
-																	<td> {{ \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE),false) > '0' ? 'อีก'.\Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE)).'วันถึงกำหนดการ'
-																					:'ถึงกำหนดการแล้ว'.\Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE)).'วัน' }}</td>
+																	<td> {{ \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE),false) > '0' ? 'อีก '.\Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE)).' วันถึงกำหนดการ'
+																					:'เกินกำหนดการแล้ว '.\Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($datasubitem->PM_NEXT_DATE)).' วัน' }}</td>
 																	<td><a href="{{ url('machine/system/check/'.$dataset->UNID.'/'.$datasubitem->UNID) }}" type="button" class="btn btn-primary btn-block btn-sm my-1">ตรวจสอบระบบ</a></td>
 																</tr>
 															@endforeach

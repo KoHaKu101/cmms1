@@ -18,6 +18,8 @@ class masterimps extends Migration
           $table->BigInteger('PM_TEMPLATE_UNID_REF')->nullable();
           $table->string('MACHINE_CODE',200)->nullable();
           $table->string('PM_TEMPLATE_NAME',200)->nullable();
+          $table->date('PM_LAST_DATE')->default(Carbon::now())->nullable();
+          $table->date('PM_NEXT_DATE')->nullable();
           $table->string('CREATE_BY',200)->nullable();
           $table->string('CREATE_TIME',50)->nullable();
           $table->string('MODIFY_BY',200)->nullable();

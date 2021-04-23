@@ -155,6 +155,7 @@ class MachineController extends Controller
           'UNID'                 => $this->randUNID('PMCS_MACHINE'),
           'SHIFT_TYPE'           => $request->SHIFT_TYPE,
           'ESP_MAC'              => $request->ESP_MAC,
+          'MAHCINE_RANK'         => $request->MACHINE_RANK,
       ]);
       $dataset = Machine::latest('UNID')->first();
       return Redirect()->route('machine.edit',['UNID'=> $dataset->UNID])->with('success','ลงทะเบียน สำเร็จ');
@@ -174,15 +175,10 @@ class MachineController extends Controller
     $machinerepair               = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                                 ->where('STATUS','=','9')
                                                 ->get();
-
     $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
     $machinepmtemplateremove     = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
-    //
-    // $masterimpsgroup             = "0";
-    // dd($machinepmtemplate);
     $machinecheckpmdetail        = MachinePMCheckDetail::all();
-    // machinepmtemplate,machinepmtemplateremove
-    //masterimps
+    // $machinepmtemplatadetail     = MachinePmTemplateDetail::all();
     return view('machine/assets/edit',compact('machinecheckpmdetail','dataset','machineupload','machineupload1'
       ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
@@ -259,6 +255,7 @@ class MachineController extends Controller
 
       'SHIFT_TYPE'           => $request->SHIFT_TYPE,
       'ESP_MAC'              => $request->ESP_MAC,
+      'MACHINE_RANK'         => $request->MACHINE_RANK,
     ]);
 
     return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
