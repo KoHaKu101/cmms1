@@ -242,6 +242,7 @@ Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableCont
   Route::get('machine/detailpoint/delete/{UNID}'   ,[MachineDetailPointTableController::class,'Delete']) ->name('detailpoint.delete');
   //***************************** Plan ****************************************
 Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Index']) ->name('plan.pm');
+Route::get('machine/pdf/plan/planpm'                  ,[MachineHistoryRepairPDFController::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
 
 
   //***************************** SETTING ****************************************

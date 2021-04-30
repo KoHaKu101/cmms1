@@ -23,11 +23,14 @@ use App\Models\MachineAddTable\MachinePmTemplate;
 use App\Exports\MachineExport;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
+// use Codedge\Fpdf\Fpdf\Fpdf;
+use Codedge\Fpdf\Fpdf\Fpdf;
 
 
 
 class PlanPmController extends Controller
 {
+    // protected $pdf;
   public function __construct(){
     $this->middleware('auth');
   }
@@ -55,20 +58,4 @@ class PlanPmController extends Controller
 
 }
 
-  public function Store(Request $request){
-
-        return Redirect('machine/system/edit/'.$request->UNID_MACHINE.'/'.$request->UNID_PMLIST)->with('success','บันทึกสำเร็จ');
-
-  }
-  public function Update(Request $request){
-
-        return Redirect()->back()->with('success','บันทึกสำเร็จ');
-      }
-  public function Edit($UNID,$UNIDPM){
-
-    return View('/machine/syscheck/syscheckedit',compact('machinepmcheckdetailfirst','machinepmcheckdetail','machinepm','machine','machinepmdetail'));
-
-  }
-
-
-  }
+ }

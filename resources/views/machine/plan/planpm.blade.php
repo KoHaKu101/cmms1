@@ -59,7 +59,7 @@
 <script>
 	$(document).on('click','#reportpm',function(){
 		alert('1');
-		window.open('/machine/repairhistory/pdf/','RepairHistory','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
+		window.open('/machine/pdf/plan/planpm','PdfPlanPm','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
 	});
 </script>
 

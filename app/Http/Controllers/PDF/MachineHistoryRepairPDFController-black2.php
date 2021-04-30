@@ -109,8 +109,8 @@ class MachineHistoryRepairPDFController extends Fpdf
       // Arial bold 15
       $this->pdf->SetFont('THSarabunNew','b',18);
       $this->pdf->Cell(79, 22, iconv('UTF-8', 'cp874', ''),1,0,'C');
-      $this->pdf->text(45, 18, iconv('UTF-8', 'cp874', 'Preventive Maintenance Plan '),1,'C');
-      $this->pdf->text(53, 28, iconv('UTF-8', 'cp874', 'Years : 2021 LINE : 1'),1,'C');
+      $this->pdf->text(40, 18, iconv('UTF-8', 'cp874', 'Preventive Maintenance Plan '),1,'C');
+      $this->pdf->text(55, 28, iconv('UTF-8', 'cp874', '2020 LINE : 1'),1,'C');
       $this->pdf->text(115,18, iconv('UTF-8', 'cp874', '_____________________________________'),1,'C');
       $this->pdf->SetFont('THSarabunNew','b',14);
       $this->pdf->text(118, 16, iconv('UTF-8', 'cp874', 'Approved '),1,'C');
@@ -137,43 +137,40 @@ class MachineHistoryRepairPDFController extends Fpdf
       $this->pdf->Cell($cel[0],$rHigeht,iconv('UTF-8','TIS-620','NO.'),1,0,'C');
       $this->pdf->Cell($cel[1],$rHigeht,iconv('UTF-8','TIS-620','Machine Name.'),1,0,'C');
       $this->pdf->Cell($cel[1],$rHigeht,iconv('UTF-8','TIS-620','Machine No'),1,0,'C');
-      $this->pdf->Cell($cel[1],$rHigeht,iconv('UTF-8','TIS-620','PQM-InDate'),1,0,'C');
-      $this->pdf->Cell($cel[4],$RowH,$this->normalize('Plan'),1,0,'C');
-      $this->pdf->SetFont('THSarabunNew','B',13);
-      $this->pdf->Cell(96,$RowH,$this->normalize('Years : 2021'),1,0,'C');
-      $this->pdf->SetFont('THSarabunNew','',10);
-      $this->pdf->Cell(19,$RowH, $this->normalize('Remark'),'LTR',1,'C');
-      $this->pdf->Cell(68,$RowH, $this->normalize(''),0,0,'C');
-      $this->pdf->Cell($cel[4],$RowH, $this->normalize('ACT'),0,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('JAN'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('FEB'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('MAR'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('APR'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('MAY'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('JUN'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('JUL'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('AUG'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('SEP'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('OCT'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('NOV'),1,0,'C');
-      $this->pdf->Cell($cel[9],$RowH, $this->normalize('DEC'),1,0,'C');
-      $this->pdf->Cell(19,$RowH, $this->normalize(''),'LBR',1,'C');
-
+      $this->pdf->Cell($cel[1],$rHigeht,iconv('UTF-8','TIS-620','Machine Type'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','Rank'),1,0,'C');
+      $this->pdf->Cell($cel[10],$rHigeht,iconv('UTF-8','TIS-620','Periods'),1,0,'C');
+      $this->pdf->Cell($cel[4],$rHigeht,iconv('UTF-8','TIS-620','TYPE'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','JAN'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','FEB'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','MAR'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','APR'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','MAY'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','JUN'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','JUL'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','AUG'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','SEP'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','OCT'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','NOV'),1,0,'C');
+      $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','DEC'),1,0,'C');
+      $this->pdf->Ln($rHigeht);
       $m = 0;
       for ($i=0; $i < 30 ; $i++) {
-        $this->pdf->Cell($cel[0],$RowH,iconv( 'UTF-8','TIS-620',$i+1),'LTR',0,'C');
+        $this->pdf->Cell($cel[0],$RowH,iconv( 'UTF-8','TIS-620',$i+1),'LR',0,'C');
 
         $this->pdf->SetFont('THSarabunNew','',10);
       //  $this->pdf->SetTextColor(0,0,0);
 
         $this->pdf->SetFillColor(192,192,192);
-        $this->pdf->Cell($cel[1],$RowH, $this->normalize('TAKAMAZ   - 0T'),'LTR',0,'L',);
-        $this->pdf->Cell($cel[1],$RowH, $this->normalize('MC-00'.$m++),'LTR',0,'L');
+        $this->pdf->Cell($cel[1],$RowH, $this->normalize('TAKAMAZ   - 0T'),'LR',0,'L',);
+        $this->pdf->Cell($cel[1],$RowH, $this->normalize('MC-00'.$m++),'LR',0,'L');
         $this->pdf->SetFont('THSarabunNew','',10);
         //$this->pdf->Cell($cel[3],10,iconv( 'UTF-8','TIS-620',$row->PERIOD_DATE_INTERVAL),1,0,'C');
 
-        $this->pdf->Cell($cel[1],$RowH, iconv( 'UTF-8','TIS-620','CNC-LATHE'),'LTR',0,'C');
+        $this->pdf->Cell($cel[1],$RowH, iconv( 'UTF-8','TIS-620','CNC-LATHE'),'LR',0,'C');
           $this->pdf->SetFont('THSarabunNew','',10);
+        $this->pdf->Cell($cel[8],$RowH, $this->normalize('A'),'LR',0,'C');
+        $this->pdf->Cell($cel[10],$RowH,iconv( 'UTF-8','TIS-620','3 เดือน'),'LR',0,'C');
         $this->pdf->Cell($cel[4],$RowH,$this->normalize('Plan'),1,0,'C');
 
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มกรา( jan )
@@ -187,8 +184,7 @@ class MachineHistoryRepairPDFController extends Fpdf
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // กันยา( SEP )
           $this->pdf->Cell($cel[8],$RowH, '02',1,0,'C',true);   // ตุลา( OCT )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // พฤศจิกา( NOV )
-          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // ธันวา( DEC )
-          $this->pdf->Cell(19,$RowH, '','LTR',1,'C');
+          $this->pdf->Cell($cel[8],$RowH, '',1,1,'C');          // ธันวา( DEC )
 
         // }
 
@@ -198,6 +194,8 @@ class MachineHistoryRepairPDFController extends Fpdf
       $this->pdf->Cell($cel[1],$RowH,'','LBR',0,'L');
 
       $this->pdf->Cell($cel[1],$RowH, '','LBR',0,'C');
+      $this->pdf->Cell($cel[8],$RowH,'','LBR',0,'C');
+      $this->pdf->Cell($cel[10],$RowH, '','LBR',0,'C');
       $this->pdf->Cell($cel[4],$RowH, $this->normalize('ACT'),1,0,'C');
 
 
@@ -213,9 +211,7 @@ class MachineHistoryRepairPDFController extends Fpdf
         $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
         $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
 
-        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
-        $this->pdf->Cell(19,$RowH, '','LBR',1,'C');
-
+        $this->pdf->Cell($cel[8],$RowH, '',1,1,'C');
       }
 
 
