@@ -16,12 +16,12 @@
       <div class="modal-body">
 				<form action="{{url('/machine/system/check/storelist')}}" method="POST" enctype="multipart/form-data" >
 					@csrf
-          <input type="hidden" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}">
+          <input type="hidden" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}" >
             @livewire('addpm',['machinecode' => $dataset->MACHINE_CODE ])
             </div>
 		        <div class="modal-footer">
-  	           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	              <input type="submit" class="btn btn-primary" value="Save changes"></input>
+  	           <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+	              <input type="submit" class="btn btn-primary" value="บันทึก"></input>
             </div>
 	      </form>
       </div>
@@ -52,8 +52,8 @@
 
             </div>
 		        <div class="modal-footer">
-  	           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	              <input type="button" class="btn btn-danger delete-confirm" value="Remove"></input>
+  	           <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+	              <input type="button" class="btn btn-danger delete-confirm" value="ลบ"></input>
             </div>
 	      </form>
       </div>

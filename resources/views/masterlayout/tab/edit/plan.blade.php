@@ -1,58 +1,40 @@
 <!-- แผนการปฎิบัติการ -->
-<div class="tab-pane" id="plan" >
+<div class="tab-pane" id="plan-1" >
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="jumbotron">
-        <div class="col-md-8 col-lg-12">
-          <div class="table">
-            <table class="table table-sm"  >
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="card-header bg-primary">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <h3 align="center" style="color:white;" class="mt-2">แผนการปฎิบัติการ</h3>
+              </div>
+            </div>
+          </div>
+      </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="table table-responsive">
+            <table class="table table-hover table-bordered" >
               <thead>
                 <tr>
-                  <th class="bg-primary" colspan="7" >
-                  <h3 align="center" style="color:white;" class="mt-2">แผนการปฎิบัติการ</h3>
-                  </th>
+                  <th>Line</th>
+                  <th>Machine Code</th>
+                  <th>Product Code</th>
+                  <th>Product Name</th>
+                  <th>Part Code</th>
+                  <th>Part Name</th>
+                  <th>Section Name</th>
                 </tr>
-                <tr>
-                  <th scope="col">
-                    Line
-                  </th>
-                  <th scope="col">
-                    Machine Code
-                  </th>
-                  <th scope="col">
-                    Product Code
-                  </th>
-                  <th scope="col">
-                    Product Name
-                  </th>
-                  <th scope="col">
-                    Part Code
-                  </th>
-                  <th scope="col">
-                    Part Name
-                  </th>
-                  <th scope="col">
-                    Section Name
-                  </th>
-                </tr>
-
               </thead>
               <tbody>
                 <tr>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>

@@ -1,7 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+{{-- <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 {{-- ส่วนหัว --}}
@@ -23,21 +23,23 @@
 
 	{{-- ส่วนเนื้อหาและส่วนท้า --}}
 @section('contentandfooter')
-
+<style>
+	.hide { display: none; }
+</style>
 		<div class="content">
 			<div class="page-inner">
 				<!--ส่วนปุ่มด้านบน-->
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-1 gx-4">
+							<div class="form-group gx-4">
 								<a href="{{ url('machine/assets/machinelist') }}">
 									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-2 gx-4">
+							<div class="form-group gx-4">
 								<form action="{{ url('machine/assets/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
@@ -86,6 +88,10 @@
 												<label for="MACHINE_STARTDATE">วันที่เริ่มใช้งาน	</label>
 												<input type="date" class="form-control" id="MACHINE_STARTDATE" name="MACHINE_STARTDATE" value="{{ $dataset->MACHINE_STARTDATE }}">
 											</div>
+											<div class="form-group" >
+												<label for="PM_LAST_DATE">ตรวจเช็คระบบ ล่าสุด	</label>
+												<input type="date" class="form-control changedateedit" id="PM_LAST_DATE" name="PM_LAST_DATE" value="{{ $machinepmtime == NULL ? "" : $machinepmtime->PM_LAST_DATE }}" rel="{{ $machinepmtime == NULL ? "" : $machinepmtime->UNID }}">
+											</div>
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-6 col-lg-6 has-error">
 													<lebel>สถานะ</lebel>
@@ -99,7 +105,7 @@
 													</select>
 
 												</div>
-												<div class="form-group col-6 has-error">
+												<div class="form-group col-md-6 col-lg-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
 													<select class="form-control form-control" id="MACHINE_LINE" name="MACHINE_LINE">
 													<option value>--แสดงทั้งหมด--</option>
@@ -122,14 +128,18 @@
 											</div>
 										</div>
 										<!-- ช่อง3-->
-										<div class="col-md-6 col-lg-4">
+										<div class="col-md-12 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_NAME">ชื่อเครื่องจักร</label>
 												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME"  value="{{ $dataset->MACHINE_NAME }}">
 											</div>
 											<div class="form-group has-error">
-												<label for="MACHINE_RVE_DATE">วันที่ Maintenance 	</label>
-												<input type="date" class="form-control" id="MACHINE_RVE_DATE" name="MACHINE_RVE_DATE"  value="{{ $dataset->MACHINE_RVE_DATE }}">
+												<label for="MACHINE_RVE_DATE">วันที่ ซ่อมแซม 	</label>
+												<input type="date" class="form-control" id="" name=""  value="{{ $dataset->MACHINE_RVE_DATE }}">
+											</div>
+											<div class="form-group has-error">
+												<label for="MACHINE_RVE_DATE">วันที่ เปลี่ยนอะไหล่ 	</label>
+												<input type="date" class="form-control" id="" name=""  value="">
 											</div>
 											<div class="form-group has-error">
 												<label for="PURCHASE_FORM">ซื้อจากบริษัท	</label>
@@ -137,11 +147,11 @@
 											</div>
 											<div class="form-group has-error">
 												<label for="PURCHASE_FORM">Machine Rank	</label>
-												<select class="form-control" id="MACHINE_RANK" name="MACHINE_RANK" required>
+												<select class="form-control" id="MACHINE_RANK_MONTH" name="MACHINE_RANK_MONTH" required>
 													<option value>กรุณาเลือก Rank</option>
-													<option value="3" {{ $dataset->MACHINE_RANK == "3" ? 'selected' : ''}} >A</option>
-													<option value="6" {{ $dataset->MACHINE_RANK == "6" ? 'selected' : ''}} >B</option>
-													<option value="12" {{ $dataset->MACHINE_RANK == "12" ? 'selected' : ''}} >C</option>
+													@foreach ($machinerank as $key => $datamachinerank)
+														<option value="{{$datamachinerank->MACHINE_RANK_MONTH}}" {{ $dataset->MACHINE_RANK_MONTH == $datamachinerank->MACHINE_RANK_MONTH ? 'selected' : ''}} >{{$datamachinerank->MACHINE_RANK_CODE}}</option>
+													@endforeach
 
 												</select>
 											</div>
@@ -150,34 +160,34 @@
 									</div>
 									<div class="row">
 										<div class="col-md-12 mt-2">
-											<div class="card-body">
+											<div class="card-body" id="tabLink">
 												@include('masterlayout.tab.styletab')
-												<ul class="nav nav-pills justify-content-center mt--4">
+												<ul class="nav nav-pills justify-content-center mt--4" >
 	  											<li>
-	    											<a id="home-tab" data-toggle="tab" href="#home" class="active" >ข้อมูลทั่วไป</a>
+	    											<a id="home" data-toggle="tab" href="#home" class="tabselect active" >ข้อมูลทั่วไป</a>
 	  											</li>
 	  											<li>
-	    											<a id="profile-tab" data-toggle="tab" href="#history" >ประวัติการแจ้งซ่อม</a>
+	    											<a id="history" data-toggle="tab" href="#history" class="tabselect"  >ประวัติการแจ้งซ่อม</a>
 	  											</li>
 	  											<li>
-	    											<a id="messages-tab" data-toggle="tab" href="#plan" >แผนการปฎิบัติการ</a>
+	    											<a id="plan" data-toggle="tab" href="#plan"  class="tabselect" >แผนการปฎิบัติการ</a>
 								  				</li>
 								  				<li>
-	    											<a id="settings-tab" data-toggle="tab" href="#personal">พนักงานประจำเครื่อง</a>
+	    											<a id="personal" data-toggle="tab" href="#personal" class="tabselect" >พนักงานประจำเครื่อง</a>
 	  											</li>
 													<li>
-	    											<a id="settings-tab" data-toggle="tab" href="#systemcheck">ตรวจสอบระบบ</a>
+	    											<a id="systemcheck" data-toggle="tab" href="#systemcheck" class="tabselect" >ตรวจสอบระบบ</a>
 	  											</li>
-													<li>
+													{{-- <li>
 	    											<a id="settings-tab" data-toggle="tab" href="#partchange">เปลี่ยนอะไหล่</a>
-	  											</li>
+	  											</li> --}}
 													<li>
-	    											<a id="settings-tab" data-toggle="tab" href="#uploadmanue">Upload</a>
+	    											<a id="uploadmanue" data-toggle="tab" href="#uploadmanue" class="tabselect" >Upload</a>
 	  											</li>
 	  										</ul>
 	  										<div class="tab-content clearfix">
 														<!-- ข้อมูลทั่วไป -->
-	  												@include('masterlayout.tab.homeedit')
+	  												@include('masterlayout.tab.edit.homeedit')
 														</form>
 														<!-- ประวัติการแจ้งซ่อม -->
 														@include('masterlayout.tab.edit.history')
@@ -197,30 +207,15 @@
 									</div>
 									<div class="card-footer">
 										<div class="row">
-											<div class="col-md-6 col-lg-1">
-												<small><b>สร้างโดย</b></small>
-											</div>
-											<div class="col-md-6 col-lg-1">
-												<small>{{ $dataset->CREATE_TIME }}</small>
-											</div>
-											<div class="col-md-6 col-lg-1">
-												<small><b>วันที่สร้าง</b></small>
-											</div>
-											<div class="col-md-6 col-lg-3">
-												<small>{{ $dataset->CREATE_BY }}</small>
-											</div>
-											<div class="col-md-6 col-lg-1">
-												<small><b>แก้ไขโดย</b></small>
-											</div>
-											<div class="col-md-6 col-lg-1">
-												<small>{{ $dataset->MODIFY_BY }}</small>
-											</div>
-											<div class="col-md-6 col-lg-1">
-												<small><b>วันที่แก้ไข</b></small>
-											</div>
-											<div class="col-md-6 col-lg-3">
-												<small>{{ $dataset->MODIFY_TIME }}</small>
-											</div>
+												<small><b>สร้างโดย : </b></small>&nbsp;
+												<small> {{ $dataset->CREATE_BY }}</small>&emsp;
+												<small><b>วันที่สร้าง : </b></small>&nbsp;
+												<small> {{ $dataset->CREATE_TIME }}</small>&emsp;
+												<small><b>แก้ไขโดย : </b></small>&nbsp;
+												<small> {{ $dataset->MODIFY_BY }}</small>&emsp;
+												<small><b>วันที่แก้ไข : </b></small>&nbsp;
+												<small> {{ $dataset->MODIFY_TIME }}</small>&emsp;
+
 										</div>
 									</div>
 								</div>
@@ -245,7 +240,7 @@
 {{-- ส่วนjava --}}
 @section('javascript')
 
-	<script type="text/javascript" src="{{ asset('js/machine/editmachine.js') }}"></script>
+	<script src="{{ asset('js/machine/editmachine.js') }}"></script>
 	 <script src="{{ asset('js/ajax/ajax-csrf.js') }}"></script>
 @stop
 {{-- ปิดส่วนjava --}}

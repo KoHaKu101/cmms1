@@ -163,17 +163,14 @@ class SysCheckController extends Controller
 
   public function StoreDate(Request $request){
     if($request->ajax()){
-      // $time = MasterIMPS::select('PM_TEMPLATELIST_DAY')->where('UNID',$request->unid)->first();
-      // $count = $time->PM_TEMPLATELIST_DAY / 30;
-      // $countend = Carbon::parse($request->date)->addMonth($count)->format('Y-m-d');
-      MasterIMPS::where('UNID',$request->unid)->update([
-        'PM_LAST_DATE' => $request->date,
-      ]);
-      $data = MasterIMPS::select('PM_NEXT_DATE')->where('UNID',$request->unid)->first();
-      return response()->json($data);
+        MasterIMPS::where('UNID',$request->unid)->update([
+          'PM_LAST_DATE' => $request->date,
+        ]);
+      return response()->json();
     }
 
   }
+
 
 
 

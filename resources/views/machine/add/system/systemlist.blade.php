@@ -123,6 +123,8 @@
 																		<tr>
 																			<th style="width:46.67px">##</th>
 																			<th scope="col">รหัสเครื่องจักร</th>
+																			<th scope="col">ชื่อเครื่องจักร</th>
+																			<th scope="col">LINE</th>
 																			<th style="width:46.67px">Action</th>
 																		</tr>
 																	</thead>
@@ -131,6 +133,8 @@
 																			<tr>
 																				<td class="text-center"> {{ $key+1 }}</td>
 																				<td>{{$datarow->MACHINE_CODE}}</td>
+																				<td>{{$datarow->MACHINE_NAME}}</td>
+																				<td>{{$datarow->MACHINE_LINE}}</td>
 																				<td>
 																					<div class="form-inline">
 																						<button class="btn btn-danger btn-link btn-sm my-1" type="button" onclick="deletemachinepm('{{$datarow->MACHINE_CODE}}','{{ $dataitem->PM_TEMPLATE_UNID_REF }}')">

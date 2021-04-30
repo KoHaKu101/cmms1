@@ -136,9 +136,12 @@ class MailConfigController extends Controller
             ]);
             return Redirect()->back()->with('success','บันทึกข้อมูลสำเร็จ');
           }elseif (MailSetup::count() == 1) {
-            MailSetup::where('UNID')->Update([
+
+            MailSetup::where('UNID',$request->UNID)->Update([
               'AUTOMAIL'        =>  $request->AUTOMAIL,
               'AUTOPLAN'        =>  $request->AUTOPLAN,
+              'MODIFY_BY'       => Auth::user()->name,
+              'MODIFY_TIME'     => Carbon::now(),
               ]);
               return Redirect()->back()->with('success','บันทึกข้อมูลสำเร็จ');
             }

@@ -1,22 +1,14 @@
-<div class="tab-pane active" id="home">
+<div class="tab-pane" id="home-1">
   <div class="row">
     <div class="col-sm-12">
       <div class="jumbotron">
-        <div class="col-md-8 col-lg-12">
-          <div class="table">
-          <table class="table table-sm"  >
-            <thead>
-              <tr>
-                <th class="bg-primary" colspan="6" >
-                  <h3 align="center" style="color:white;" class="mt-2">ข้อมูลทั่วไป</h3>
-                </th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+        <div class="col-md-12 col-lg-12">
+          <div class="card-header bg-primary">
+            <h3 align="center" style="color:white;" class="mt-2">ข้อมูลทั่วไป</h3>
+          </div>
       </div>
         <div class="row">
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_PARTNO">PartNo</label>
                 <input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" value="{{ $dataset->MACHINE_PARTNO }}">
@@ -30,7 +22,7 @@
               <input type="text" class="form-control" id="MACHINE_POWER" name="MACHINE_POWER" value="{{ $dataset->MACHINE_POWER }}">
             </div>
           </div>
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_MODEL">Model</label>
               <input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL"  value="{{ $dataset->MACHINE_MODEL }}">
@@ -44,7 +36,7 @@
               <input type="text" class="form-control" id="MACHINE_WEIGHT" name="MACHINE_WEIGHT"  value="{{ $dataset->MACHINE_WEIGHT }}">
             </div>
           </div>
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_SERIAL">Serial</label>
               <input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" value="{{ $dataset->MACHINE_SERIAL }}">
@@ -58,7 +50,7 @@
               <input type="text" class="form-control" id="MACHINE_TARGET" name="MACHINE_TARGET" value="{{ $dataset->MACHINE_TARGET }}">
             </div>
           </div>
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_MANU">บริษัทที่ผลิต	</label>
               <input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" value="{{ $dataset->MACHINE_MANU }}" >

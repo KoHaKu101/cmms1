@@ -1,8 +1,8 @@
 <div class="tab-pane active" id="home">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-12">
       <div class="jumbotron">
-        <div class="col-md-8 col-lg-12">
+        <div class="col-md-12">
           <div class="table">
           <table class="table table-sm"  >
             <thead>
@@ -16,7 +16,7 @@
         </div>
       </div>
         <div class="row">
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_PARTNO">PartNo</label>
                 <input type="text" class="form-control" id="MACHINE_PARTNO" name="MACHINE_PARTNO" placeholder="PartNo">
@@ -30,7 +30,7 @@
               <input type="text" class="form-control" id="MACHINE_POWER" name="MACHINE_POWER" placeholder="Power">
             </div>
           </div>
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_MODEL">Model</label>
               <input type="text" class="form-control" id="MACHINE_MODEL" name="MACHINE_MODEL" placeholder="Model">
@@ -44,7 +44,7 @@
               <input type="text" class="form-control" id="MACHINE_WEIGHT" name="MACHINE_WEIGHT" placeholder="Weight">
             </div>
           </div>
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_SERIAL">Serial</label>
               <input type="text" class="form-control" id="MACHINE_SERIAL" name="MACHINE_SERIAL" placeholder="Serial">
@@ -58,7 +58,7 @@
               <input type="text" class="form-control" id="MACHINE_TARGET" name="MACHINE_TARGET" placeholder="Target">
             </div>
           </div>
-          <div class="col-md-8 col-lg-3">
+          <div class="col-md-12 col-lg-3">
             <div class="form-group">
               <label for="MACHINE_MANU">บริษัทที่ผลิต	</label>
               <input type="text" class="form-control" id="MACHINE_MANU" name="MACHINE_MANU" placeholder="บริษัทที่ผลิต" >

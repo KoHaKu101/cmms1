@@ -15,43 +15,24 @@ class showpmmachine extends Component{
 
   // public $machinecode;
   public $MACHINE_CODE ;
-  public $PM_TEMPLATE_UNID_REF;
-  public $open = '0';
   public $RANK;
 
-  public function show($datamasterimps){
-
-    $this->open = '1';
-    $this->PM_TEMPLATE_UNID_REF = $datamasterimps;
-
-  }
-  public function save(){
-
-  }
   public function render(){
     if ($this->RANK != NULL) {
-       $update = MasterIMPS::select('PM_LAST_DATE')->where('MACHINE_CODE',$this->MACHINE_CODE)->first();
-       MasterIMPS::where('MACHINE_CODE',$this->MACHINE_CODE)->update(['PM_NEXT_DATE' => Carbon::parse($update->PM_LAST_DATE)->addMonth($this->RANK)]);
-       $date = MasterIMPS::where('MACHINE_CODE',$this->MACHINE_CODE)->first();
+      $rank = $this->RANK;
     }else {
-      $date = MasterIMPS::where('MACHINE_CODE',$this->MACHINE_CODE)->first();
+      $rank = NULL;
     }
 
-  if ($this->open == '1') {
-    $masterimpsgroup = MasterIMPSGroup::where('MACHINE_CODE',$this->MACHINE_CODE)
-                                      ->where('PM_TEMPLATE_UNID_REF',$this->PM_TEMPLATE_UNID_REF)
-                                      ->where('PM_TEMPLATELIST_STATUS','=','1')
-                                      ->orderBy('CREATE_TIME','ASC')->get();
-    $machinepmtemplatadetail = MachinePmTemplateDetail::all();
+    $masterimps =  MasterIMPS::where('MACHINE_CODE',$this->MACHINE_CODE)->orderBy('CREATE_TIME','ASC')->get();
+    $masterimpsfirst =  MasterIMPS::where('MACHINE_CODE',$this->MACHINE_CODE)->orderBy('CREATE_TIME','ASC')->first();
+    // dd($masterimpsfirst->PM_TEMPLATE_UNID_REF);
+    $masterimpsgroup = MasterIMPSGroup::all();
+    $pmlistdetail = MachinePmTemplateDetail::all();
 
-  }else {
-
-    $masterimpsgroup = NULL;
-    $machinepmtemplatadetail = NULL;
-  }
-    return view('livewire.detaileditpmmachine',['masterimps' => MasterIMPS::where('MACHINE_CODE',$this->MACHINE_CODE)->orderBy('CREATE_TIME','ASC')->get()
+    return view('livewire.detaileditpmmachine',['masterimps' => $masterimps
+                                              ,'rank' => $rank
                                               ,'masterimpsgroup' => $masterimpsgroup
-                                              ,'machinepmtemplatadetail' => $machinepmtemplatadetail
-                                              ,'date' => $date ]);
+                                              ,'pmlistdetail' => $pmlistdetail]);
   }
 }

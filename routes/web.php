@@ -24,9 +24,12 @@ use App\Http\Controllers\Machine\SysCheckSubController;
 use App\Http\Controllers\Machine\MachinePartCheckController;
 use App\Http\Controllers\Machine\PaySpareController;
 use App\Http\Controllers\Machine\MailConfigController;
+//************************* Plan *************************************
+use App\Http\Controllers\Plan\PlanPmController;
 
 
 //************************* add tabel *********************************
+use App\Http\Controllers\MachineaddTable\MachineRankTableController;
 use App\Http\Controllers\MachineaddTable\MachineTypeTableController;
 use App\Http\Controllers\MachineaddTable\MachineRepairTableController;
 use App\Http\Controllers\MachineaddTable\MachineSpareTableController;
@@ -103,8 +106,7 @@ Route::get('machine/export', [MachineExportController::class,'export']);
 // Route::post('users/import', [MachineImportController::class,'store']);
 
 //assets
-Route::get('machine/assets/machinelist'           ,[MachineController::class,'All'])  ->name('machine.list');
-  Route::get('machine/assets/machinelist/{LINE_CODE}'     ,[MachineController::class,'Allline'])  ->name('machine.listline');
+  Route::get('machine/assets/machinelist/{LINE_CODE?}'     ,[MachineController::class,'All'])  ->name('machine.list');
   Route::get('machine/assets/machine'            ,[MachineController::class,'Index'])  ->name('machine');
   Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
@@ -213,6 +215,11 @@ Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController
   Route::get('machine/machinestatustable/edit/{UNID}'     ,[MachineStatusTableController::class,'Edit'])   ->name('machinestatustable.edit');
   Route::post('machine/machinestatustable/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
   Route::get('machine/machinestatustable/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatustable.delete');
+//Rank
+  Route::get('machine/machinerank/list/{UNID?}'              ,[MachineRankTableController::class,'Index'])  ->name('machinerank.list');
+    Route::post('machine/machinerank/store'          ,[MachineRankTableController::class,'Store']) ->name('machinerank.store');
+    Route::post('machine/machinerank/update'  ,[MachineRankTableController::class,'Update']);
+    Route::get('machine/machinerank/delete/{UNID}'   ,[MachineRankTableController::class,'Delete']) ->name('machinerank.delete');
 //PM
 Route::get('machine/pm/template/list/{UNID?}'                   ,[MachineSysTemTableController::class,'Index'])                     ->name('pmtemplate.list');
   Route::post('machine/pm/template/store'                       ,[MachineSysTemTableController::class,'StoreTemplate'])             ->name('pmtemplate.store');
@@ -233,6 +240,9 @@ Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableCont
   Route::get('machine/detailpoint/show/{UNID}'     ,[MachineDetailPointTableController::class,'Edit'])   ->name('detailpoint.edit');
   Route::post('machine/detailpoint/update/{UNID}'  ,[MachineDetailPointTableController::class,'Update']);
   Route::get('machine/detailpoint/delete/{UNID}'   ,[MachineDetailPointTableController::class,'Delete']) ->name('detailpoint.delete');
+  //***************************** Plan ****************************************
+Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Index']) ->name('plan.pm');
+
 
   //***************************** SETTING ****************************************
 //config

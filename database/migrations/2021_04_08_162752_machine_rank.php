@@ -1,11 +1,10 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class  Mailalert extends Migration
+class machinerank extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +13,11 @@ class  Mailalert extends Migration
      */
     public function up()
     {
-      Schema::create('PMCS_CMMS_SETUP_MAIL_ALERT', function (Blueprint $table) {
+      Schema::create('PMCS_CMMS_MACHINE_RANK', function (Blueprint $table) {
         $table->BigInteger('UNID')->primary();
-        $table->string('EMAILADDRESS1',200)->nullable();
-        $table->string('EMAILADDRESS2',200)->nullable();
-        $table->string('EMAILADDRESS3',200)->nullable();
-        $table->string('EMAILADDRESS4',200)->nullable();
-        $table->string('EMAILADDRESS5',200)->nullable();
+        $table->string('MACHINE_RANK_CODE',50)->nullable();
+        $table->integer('MACHINE_RANK_MONTH')->nullable();
+        $table->integer('MACHINE_RANK_STATUS')->nullable();
 
         $table->string('CREATE_BY',200)->nullable();
         $table->string('CREATE_TIME',50)->nullable();
@@ -37,6 +34,6 @@ class  Mailalert extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('PMCS_CMMS_SETUP_MAIL_ALERT');
+        Schema::dropIfExists('PMCS_CMMS_MACHINE_RANK');
     }
 }

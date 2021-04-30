@@ -27,26 +27,24 @@
 			<div class="page-inner">
 				<!--ส่วนปุ่มด้านบน-->
 				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-          <div class="container">
+					<div class="container">
 						<div class="row">
-							<div class="col-md-1 gx-4">
-
+							<div class="form-group gx-4">
 								<a href="{{ route('machine.list') }}">
 									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>
 								</a>
 							</div>
-								<div class="col-md-2 gx-4">
+							<div class="form-group gx-4">
 								<form action="{{ route('machine.store') }}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
 										<span class="fas fa-save fa-lg">	save	</span>
 									</button>
-
 							</div>
 						</div>
-          </div>
+					</div>
 				</div>
 
 				<!--ส่วนกรอกข้อมูล-->
@@ -86,7 +84,7 @@
 														@endforeach
 													</select>
 												</div>
-												<div class="form-group col-6 has-error">
+												<div class="form-group col-md-6 has-error">
 													<lebel>ตำแหน่งเครื่อง</lebel>
 													<select class="form-control" id="MACHINE_LINE" name="MACHINE_LINE" required autofocus>
 														<option value> -แสดงทั้งหมด- </option>
@@ -97,7 +95,7 @@
 												</select>
 						  				</div>
 											</div>
-											<div class="form-group has-error">
+											<div class="form-group has-error ">
 												<label for="MACHINE_TYPE">ชนิดเครื่องจักร</label>
 												<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" required autofocus>
 													<option value>--แสดงทั้งหมด--</option>
@@ -108,7 +106,7 @@
 											</div>
 										</div>
 										<!-- ช่อง3-->
-										<div class="col-md-6 col-lg-4">
+										<div class="col-md-12 col-lg-4">
 											<div class="form-group has-error">
 												<label for="MACHINE_NAME">ชื่อเครื่องจักร</label>
 												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME" placeholder="ชื่อเครื่องจักร" required autofocus>

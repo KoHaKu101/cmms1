@@ -26,6 +26,8 @@ use App\Models\MachineaddTable\MachineTypeTable;
 use App\Models\MachineAddTable\MachineStatusTable;
 use App\Models\MachineAddTable\MachineSysTemTable;
 use App\Models\MachineaddTable\MachinePmTemplateList;
+use App\Models\MachineAddTable\MachineRankTable;
+
 
 
 //************** Package form github ***************
@@ -56,14 +58,11 @@ class MachineController extends Controller
   }
 
   public function Index(){
-    $dataset = MachineLine::all();
+    $dataset = MachineLine::where('LINE_NAME','like','%'.'Line'.'%')->get();
     return View('machine/assets/machinemenu',compact(['dataset']),['dataset' => $dataset]);
   }
-  public function All(){
-    $LINE_CODE = NULL;
-    return View('machine/assets/machinelist',compact('LINE_CODE'));
-  }
-  public function Allline($LINE_CODE) {
+
+  public function All($LINE_CODE = NULL) {
 
     $LINE_CODE = $LINE_CODE;
     return view('machine/assets/machinelist',compact('LINE_CODE'));
@@ -175,11 +174,13 @@ class MachineController extends Controller
     $machinerepair               = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                                 ->where('STATUS','=','9')
                                                 ->get();
+    $machinepmtime               = MasterIMPS::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
     $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
     $machinepmtemplateremove     = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
     $machinecheckpmdetail        = MachinePMCheckDetail::all();
+    $machinerank                 = MachineRankTable::where('MACHINE_RANK_STATUS','!=','1')->get();
     // $machinepmtemplatadetail     = MachinePmTemplateDetail::all();
-    return view('machine/assets/edit',compact('machinecheckpmdetail','dataset','machineupload','machineupload1'
+    return view('machine/assets/edit',compact('machinerank','machinecheckpmdetail','dataset','machineupload','machineupload1','machinepmtime'
       ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
   public function Update(Request $request,$UNID){
@@ -198,6 +199,7 @@ class MachineController extends Controller
       $last_img = $update;
       // dd($last_img);
     }
+    $rankcode = MachineRankTable::select('MACHINE_RANK_CODE')->where('MACHINE_RANK_MONTH',$request->MACHINE_RANK_MONTH)->first();
     $request->MACHINE_STATUS = $request->MACHINE_CHECK == "1" ? $request->MACHINE_STATUS = '1' : $request->MACHINE_STATUS = '9' ;
     $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
     $data_set = Machine::where('UNID',$UNID)->update([
@@ -255,7 +257,9 @@ class MachineController extends Controller
 
       'SHIFT_TYPE'           => $request->SHIFT_TYPE,
       'ESP_MAC'              => $request->ESP_MAC,
-      'MACHINE_RANK'         => $request->MACHINE_RANK,
+      'MACHINE_RANK_MONTH'   => $request->MACHINE_RANK_MONTH,
+      'MACHINE_RANK_CODE'    => $rankcode->MACHINE_RANK_CODE,
+
     ]);
 
     return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');

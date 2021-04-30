@@ -34,36 +34,36 @@
 										<form action="{{ url('machine/config/save') }}" method="POST" id="FRM_MAILSETUP" name="FRM_MAILSETUP" >
 											@csrf
 											@if(count($datamail) == 1 )
-												@foreach ($datamail as $key => $dattaset)
+												@foreach ($datamail as $key => $dataset)
 														<div class="form-group form-inline">
 															<label for="MAILHOST" class="col-md-3 col-form-label">Host Name</label>
 															<div class="col-md-9 p-0">
-																<input type="hidden" id="UNID" name="UNID" value="{{ $dattaset->UNID}}">
-																<input type="text" class="form-control form-control-sm input-full" id="MAILHOST" name="MAILHOST" placeholder="Enter Input" value="{{ $dattaset->MAILHOST}}" autocomplete="off">
+																<input type="hidden" id="UNID" name="UNID" value="{{ $dataset->UNID}}">
+																<input type="text" class="form-control form-control-sm input-full" id="MAILHOST" name="MAILHOST" placeholder="Enter Input" value="{{ $dataset->MAILHOST}}" autocomplete="off">
 															</div>
 														</div>
 														<div class="form-group form-inline">
 															<label for="MAILPORT" class="col-md-3 col-form-label">Port</label>
 															<div class="col-md-9 p-0">
-																<input type="text" class="form-control form-control-sm input-full" id="MAILPORT" name="MAILPORT" value="{{ $dattaset->MAILPORT }}" >
+																<input type="text" class="form-control form-control-sm input-full" id="MAILPORT" name="MAILPORT" value="{{ $dataset->MAILPORT }}" >
 															</div>
 														</div>
 														<div class="form-group form-inline">
 															<label for="EMAILADDRESS" class="col-md-3 col-form-label">Email Admin</label>
 															<div class="col-md-9 p-0">
-																<input type="email" class="form-control form-control-sm input-full" id="EMAILADDRESS" name="EMAILADDRESS" value="{{ $dattaset->EMAILADDRESS }}" >
+																<input type="email" class="form-control form-control-sm input-full" id="EMAILADDRESS" name="EMAILADDRESS" value="{{ $dataset->EMAILADDRESS }}" >
 															</div>
 														</div>
 														<div class="form-group form-inline">
 															<label for="MAILPASSWORD" class="col-md-3 col-form-label">Password</label>
 															<div class="col-md-9 p-0">
-																<input type="password" class="form-control form-control-sm input-full" id="MAILPASSWORD" name="MAILPASSWORD" value="{{ $dattaset->MAILPASSWORD }}" autocomplete="off">
+																<input type="password" class="form-control form-control-sm input-full" id="MAILPASSWORD" name="MAILPASSWORD" value="{{ $dataset->MAILPASSWORD }}" autocomplete="off">
 															</div>
 														</div>
 														<div class="form-group form-inline">
 															<label for="MAILPROTOCOL" class="col-md-3 col-form-label">Security Protocol</label>
 															<div class="col-md-9 p-0">
-																<input type="text" class="form-control form-control-sm input-full" id="MAILPROTOCOL" name="MAILPROTOCOL"value="{{ $dattaset->MAILPROTOCOL }}" >
+																<input type="text" class="form-control form-control-sm input-full" id="MAILPROTOCOL" name="MAILPROTOCOL"value="{{ $dataset->MAILPROTOCOL }}" >
 															</div>
 															</div>
 														<div class="form-group text-center">
@@ -215,7 +215,8 @@
 													<div class="form-group">
 															<label for="AUTOMAIL" class="col-md-3 col-form-label">Auto Mail Alert(day)</label>
 															<div class="col-md-9 p-0">
-																<input type="number" class="form-control form-control-sm input-full"  id="AUTOMAIL" name="AUTOMAIL" value="7" min="1" max="90">
+																<input type="hidden" id="UNID" name="UNID" value="{{$dataset->UNID}}">
+																<input type="number" class="form-control form-control-sm input-full"  id="AUTOMAIL" name="AUTOMAIL" value="{{ $dataset->AUTOMAIL != NULL ? $dataset->AUTOMAIL : "7" }}" min="1" max="90">
 															</div>
 														</div>
 												</div>
@@ -223,7 +224,7 @@
 													<div class="form-group">
 															<label for="AUTOPLAN" class="col-md-3 col-form-label">Auto Plan(day)</label>
 															<div class="col-md-9 p-0">
-																<input type="number" class="form-control form-control-sm input-full"  id="AUTOPLAN" name="AUTOPLAN" value="730" min="1" max="1000">
+																<input type="number" class="form-control form-control-sm input-full"  id="AUTOPLAN" name="AUTOPLAN" value="{{ $dataset->AUTOPLAN != NULL ? $dataset->AUTOPLAN : "730" }}" min="1" max="1000">
 															</div>
 														</div>
 												</div>

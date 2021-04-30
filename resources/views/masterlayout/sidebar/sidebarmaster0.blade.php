@@ -9,7 +9,7 @@
         use App\Models\SettingMenu\Menusubitem;
 
 
-        $Mainmenu=Mainmenu::all();
+        $Mainmenu=Mainmenu::orderBy('MENU_INDEX','ASC')->get();
 
          foreach( $Mainmenu as $value ) {
            $_Main = $value['MENU_NAME'];

@@ -5,19 +5,14 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Machine\MachineEMP;
+use App\Models\Machine\EMPAll;
 
 class autoinputname extends Component{
 
   public $search = "";
-
-  // // protected $queryString = ['search'];
-  // protected $queryString = ['search'];
-
+  public $emp;
   public function render(){
-
-    $emp = MachineEMP::where('EMP_CODE',$this->search)->first();
-
-    return view('livewire.empname',['emp' => $emp]);
-
-  }
+          $this->emp = EMPAll::where('EMP_CARD_NO',$this->search)->first();
+    return view('livewire.empname');
+}
 }

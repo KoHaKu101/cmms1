@@ -50,7 +50,8 @@ class MachineSysTemTableController extends Controller
     if($UNID){
       $datapmtemplatelist       = MachinePmTemplateList::where('PM_TEMPLATE_UNID_REF','=',$UNID)->get();
       $datapmtemplatefirst      = MachinePmTemplate::where('UNID',$UNID)->first();
-      $datamachine         = MasterIMPS::where('PM_TEMPLATE_UNID_REF',$UNID)->get();
+      $data                     = MasterIMPS::where('PM_TEMPLATE_UNID_REF',$UNID)->first();
+      $datamachine              = Machine::where('MACHINE_CODE',$data->MACHINE_CODE)->get();
       $countdetail = $datapmtemplatefirst->count();
     }
     return View('machine/add/system/systemlist',compact('datapmtemplate','datapmtemplatelist','countdetail','datapmtemplatefirst','datamachine'));
@@ -200,6 +201,7 @@ class MachineSysTemTableController extends Controller
       ]);
     MachinePmTemplateDetail::insert([
       'PM_DETAIL_NAME'         => $request->PM_DETAIL_NAME,
+      'PM_DETAIL_STD'           => $request->PM_DETAIL_STD,
       'PM_TEMPLATELIST_UNID_REF' => $request->PM_TEMPLATELIST_UNID_REF,
       'CREATE_BY'              => Auth::user()->name,
       'CREATE_TIME'            => Carbon::now(),
@@ -210,6 +212,7 @@ class MachineSysTemTableController extends Controller
   public function PmTemplateDetailUpdate(Request $request){
     MachinePmTemplateDetail::where('UNID',$request->UNID)->update([
       'PM_DETAIL_NAME'         => $request->PM_DETAIL_NAME,
+      'PM_DETAIL_STD'           => $request->PM_DETAIL_STD,
       'MODIFY_BY'              => Auth::user()->name,
       'MODIFY_TIME'            => Carbon::now(),
     ]);
@@ -217,7 +220,7 @@ class MachineSysTemTableController extends Controller
   }
   public function DeletePMDetail($UNID) {
     $dataset = MachinePmTemplateDetail::where('UNID','=',$UNID)->delete();
-    return Redirect()->back()->with('success','ลบสำเร็จ สำเร็จ');
+    return Redirect()->back()->with('success','ลบสำเร็จ');
   }
 
 

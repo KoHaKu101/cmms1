@@ -56,6 +56,15 @@ class MachineRepairController extends Controller
   }
   public function Store(Request $request){
 
+    $validated = $request->validate([
+      'EMP_CODE'            => 'required|integer|min:6|max:6',
+      ],
+      [
+      'EMP_CODE.required'   => 'กรุณราใส่รหัสพนักงาน',
+      'EMP_CODE.integer'    => 'กรุณราใส่รหัสพนักงานเป็นตัวเลขเท่านั้น',
+      'EMP_CODE.min'        => 'รหัสต้องไม่ต่ำกว่า 6 ตัวอักษร',
+      'EMP_CODE.max'        => 'รหัสต้องไม่มากกว่า 6 ตัวอักษร',
+      ]);
     if ($request->MACHINE_NOTE or $request->MACHINE_CAUSE > 0 ) {
 
       if(!empty($request->MACHINE_NOTE)){

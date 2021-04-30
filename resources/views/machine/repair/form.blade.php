@@ -30,24 +30,23 @@
 		<div class="content">
 			<div class="page-inner">
 				<!--ส่วนปุ่มด้านบน-->
-				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-1 ">
+							<div class="col-3 col-lg-1">
 								<a href="{{ url('machine/repair/repairsearch') }}">
 									<button class="btn btn-warning  btn-xs  ">
 										<span class="fas fa-arrow-left fa-lg	"> back </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-1 ml--3">
+							<div class="col-3 col-lg-1">
 								<a href="{{ url('machine/repair/repairlist') }}">
 									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg	"> กลับหน้าหลัก </span>
 									</button>
 								</a>
 							</div>
-							<div class="col-md-1 ml-5">
+							<div class="col-4 col-lg-1 ml-5">
 								<form action="{{url('machine/repair/store')}}" method="POST" enctype="multipart/form-data" id='messagerepair'>
 									@csrf
 									<button class="btn btn-primary btn-xs" type="submit">
@@ -56,7 +55,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
 				<!--ส่วนกรอกข้อมูล-->
 				<div class="py-12">
 	        <div class="container mt-2">
@@ -180,7 +178,7 @@
 																	<div class="col-md-8 col-lg-3 ">
 																		<div class="form-group">
 																			<label for="MACHINE_TYPE">สถานะ</label>
-																			<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" required autofocus>
+																			<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" required>
 																				<option value="">--แสดงทั้งหมด--</option>
 																				<option value="STOP">หยุดทำงาน</option>
 																				<option value="RUN">ทำงานปกติ</option>

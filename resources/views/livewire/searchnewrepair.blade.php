@@ -2,10 +2,10 @@
   <div class="card-header">
   <div class="row justify-content-md-center">
     <div class="col-md-6 col-lg-5 ">
-      <h3 class="ml-5">กรอกรหัสเครื่อง / แสกนQR Code</h3>
+      <h3 >กรอกรหัสเครื่อง / แสกนQR Code</h3>
 
-      <input type="text" class="form-control" id="search" wire:model="search" name="search" placeholder="กรอกรหัสเครื่อง / แสกนQR Code ที่นี้">
-      {{ $search }}
+      <input type="text" class="form-control" id="search" wire:model="search" name="search" placeholder="กรอกรหัสเครื่อง / แสกนQR Code ที่นี้" autofocus>
+
     </div>
   </div>
   </div>

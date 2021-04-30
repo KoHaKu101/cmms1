@@ -1,14 +1,19 @@
 <div class="card ">
 
   <div class="card-header bg-primary form-inline ">
-      <h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
-        <div class="input-group ml-4">
-          <input type="text" name="serach" wire:model="search" id="serach" class="form-control form-control-sm" placeholder="ค้นหา........." />
-
-          <div class="input-group-prepend">
-            <button type="submit" class="btn btn-search pr-1 btn-xs	">
-              <i class="fa fa-search search-icon"></i>
-            </button>
+        <div class="row ">
+          <div class="col-md-5">
+            <h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-toolbox fa-lg mr-1"></i> แจ้งซ่อม </h4>
+          </div>
+          <div class="col-md-7">
+              <div class="input-group mt-1">
+                <input wire:model="search" type="search" id="serach"  name="serach" class="form-control form-control-sm" placeholder="ค้นหา.........">
+                <div class="input-group-prepend">
+                  <button type="button" class="btn btn-search pr-1 btn-xs	">
+                    <i class="fa fa-search search-icon"></i>
+                  </button>
+                </div>
+              </div>
           </div>
         </div>
   </div>
@@ -62,11 +67,12 @@
                     </button>
                   </td>
                   <td style="width:90px">
-                    <button type="button" class="btn btn-danger btn-block btn-sm my-1 " id='button' onclick="closework( '{{ $row->UNID }}' )"
-                      style="width:90px;height:30px">
+                    <button  id="popup" type="button" class="btn btn-danger btn-block btn-sm my-1" data-toggle="modal" data-target="#CloseRepair"
+                    style="width:90px;height:30px">
+                    {{-- <button type="button" class="btn btn-danger btn-block btn-sm my-1 " id='button' onclick="closework( '{{ $row->UNID }}' )" --}}
+                      {{-- style="width:90px;height:30px"> --}}
                       <span class="btn-label">
                         <i class="fas fa-clipboard-check mx-1"></i>ปิดเอกสาร
-                        {{-- <input type="hidden" id="UNID"value="{{ $row->UNID }}"> --}}
                       </span>
                     </button>
                 @elseif ($row->CLOSE_STATUS === '1')

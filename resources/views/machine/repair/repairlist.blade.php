@@ -64,6 +64,7 @@
   			</div>
 			</div>
 		</div>
+		@include('machine.repair.repairclosemodal')
 
 @stop
 {{-- ปิดส่วนเนื้อหาและส่วนท้า --}}

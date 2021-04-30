@@ -117,7 +117,8 @@
 																<tr>
 																	<th scope="col">ลำดับ</th>
 																	<th scope="col">รายละเอียด</th>
-																	<th></th>
+																	<th>ค่า STD</th>
+																	<th colspan="2"></th>
 																</tr>
 															</thead>
 															<tbody>
@@ -125,8 +126,9 @@
 																<tr>
 																	<td>{{$key+1}}</td>
 																	<td>{{$dataitem->PM_DETAIL_NAME}}</td>
+																	<td>{{$dataitem->PM_DETAIL_STD}}</td>
 																	<td style="width:40px">
-																		<button type="button" class="btn btn-primary btn-block btn-sm my-1 edit" onclick="editdetail('{{ $dataitem->UNID }}','{{ $dataitem->PM_DETAIL_NAME }}')">
+																		<button type="button" class="btn btn-primary btn-block btn-sm my-1 edit" onclick="editdetail('{{ $dataitem->UNID }}','{{ $dataitem->PM_DETAIL_NAME }}','{{ $dataitem->PM_DETAIL_STD }}')">
 																			<i class="fas fa-edit fa-lg">	</i>
 																		</button>
 																	</td>
@@ -157,6 +159,8 @@
 													<label for="SYSTEM_CODE">รายละเอียด</label>
 													<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" value="{{ $datapmtemplatelist->UNID }}">
 													<textarea class="form-control" name="PM_DETAIL_NAME" rows="2" required autofocus></textarea >
+														<label for="SYSTEM_CODE">ค่า STD</label>
+														<input type="text" class="form-control" name="PM_DETAIL_STD">
 													<button type="submit" class="btn btn-primary mt-3">Save</button>
 												</div>
 
@@ -178,9 +182,10 @@
 @section('javascript')
 <script src="{{ asset('/js/addtable/systemedit.js') }}"></script>
 <script>
-	function editdetail(unid,text){
+	function editdetail(unid,text,std){
 		var unid = (unid) ;
 		var text = (text) ;
+		var std = (std);
 		var url = '/machine/pm/template/storedetailupdate' ;
 		var _html='<form action="'+url+'" method="POST" enctype="multipart/form-data">'+
 							'@csrf'+
@@ -188,6 +193,8 @@
 							'<label for="SYSTEM_CODE">จุดตรวจเช็ค</label>'+
 							'<input type="hidden" name="UNID" value="'+unid+'">'+
 							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2">'+text+'</textarea required autofocus>'+
+							'<label for="SYSTEM_CODE">ค่า STD</label>'+
+							'<input type="text" class="form-control" name="PM_DETAIL_STD" value="'+std+'">'+
 							'<button type="submit" class="btn btn-primary mt-3" >Update</button>'+
 							'<button type="button" onclick="exiteditdetail()" class="btn btn-danger float-right mt-3">Cancel</button>'+
 							'</div>'+
@@ -204,6 +211,8 @@
 							'<label for="PM_TEMPLATELIST_UNID_REF">จุดตรวจเช็ค</label>'+
 							'<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" value="'+unid+'">'+
 							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2"></textarea required autofocus>'+
+							'<label for="SYSTEM_CODE">ค่า STD</label>'+
+							'<input type="text" class="form-control" name="PM_DETAIL_STD" value="">'+
 							'<button type="submit" class="btn btn-primary mt-3" id="Save">Save</button>'+
 							'</div>'+
 							'</form>';

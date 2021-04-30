@@ -5,7 +5,7 @@ namespace App\Models\MachineAddTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MachinePmTemplateDetail extends Model
+class MachineRankTable extends Model
 {
 
     use HasFactory;
@@ -15,8 +15,8 @@ class MachinePmTemplateDetail extends Model
     public $incrementing = false;
     public $timestamps = false;
     protected $primaryKey = "UNID";
-    protected $keyType = 'BigInteger';
-    public $table ='PMCS_CMMS_PM_TEMPLATE_DETAIL';
+    protected $keyType = 'string';
+    public $table ='PMCS_CMMS_MACHINE_RANK';
 
-    protected $fillable = ['UNID','PM_TEMPLATELIST_UNID_REF','PM_DETAIL_NAME','PM_DETAIL_STD','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'];
+    protected $fillable = ['UNID','MACHINE_RANK_CODE','MACHINE_RANK_MONTH','MACHINE_RANK_STATUS','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'];
 }

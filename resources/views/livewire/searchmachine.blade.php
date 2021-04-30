@@ -1,14 +1,20 @@
 <div class="card ">
-  <div class="card-header bg-primary form-inline ">
-      <h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> เครื่องจักร </h4>
-        <div class="input-group ml-4">
-          <input wire:model="search" type="search" id="serach"  name="serach" class="form-control form-control-sm">
-          <div class="input-group-prepend">
-            <button type="button" class="btn btn-search pr-1 btn-xs	">
-              <i class="fa fa-search search-icon"></i>
-            </button>
+  <div class="card-header bg-primary  ">
+    <div class="row ">
+      <div class="col-md-2">
+        <h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> เครื่องจักร </h4>
+      </div>
+      <div class="col-md-3">
+          <div class="input-group mt-1">
+            <input wire:model="search" type="search" id="serach"  name="serach" class="form-control form-control-sm">
+            <div class="input-group-prepend">
+              <button type="button" class="btn btn-search pr-1 btn-xs	">
+                <i class="fa fa-search search-icon"></i>
+              </button>
+            </div>
           </div>
-        </div>
+      </div>
+    </div>
   </div>
   <div id="result"class="card-body">
     <div class="table-responsive">
