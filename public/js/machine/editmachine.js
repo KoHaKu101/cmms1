@@ -3,12 +3,9 @@ $('.pmlistdetail').addClass('hide');
   unidpmtemplate = $('#count').val();
 //รายละเอียด
   $(".detail").each(function(){
-
     $(this).click(function(){
       id = $(this).attr('id');
-
       console.log(unidpmtemplate);
-      // $('.pmlistdetailshow').addClass('hide');
       $('.pmlistdetail').addClass('hide');
       $("#"+id+"-1").removeClass("hide");
 ;
@@ -16,41 +13,58 @@ $('.pmlistdetail').addClass('hide');
     });
   });
 
-
-
-
-
 // เซฟวันที่และแสดงผล
 $(document).on('change','.changedate',function(){
-  var parentObjmain = $(this).closest('#datadate');
-  var unid = parentObjmain.find('#PM_LAST_DATE').attr('rel');
-  var date = parentObjmain.find('#PM_LAST_DATE').val();
+
+  var unid = $(this).data('dataunidpmlist');
+  var lastdate = $('#PM_LAST_DATE_'+unid).val();
   var rank = $('#MACHINE_RANK_MONTH').val();
-  var month = moment(date);
-  var nextdate = month.add(rank,'M').format("DD/MM/YYYY");
-  parentObjmain.find('#PM_NEXT_DATE').val(nextdate);
-  $('#PM_LAST_DATE').val(date);
+  if (rank) {
+    var nextdate = moment(lastdate).add(rank,'M').format("DD/MM/YYYY");
+    $('#PM_NEXT_DATE_'+unid).val(nextdate);
+  }else {
+    Swal.fire({
+        title: 'กรุณาระบุ Rank',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        timer: 2000,
+    });
+  }
   });
 $(document).on('click','#savedate',function(event){
   event.preventDefault();
-  var parentObj = $(this).closest('#datadate');
-  var unid = parentObj.find('#PM_LAST_DATE').attr('rel');
-  var date = parentObj.find('#PM_LAST_DATE').val();
-  var rank = $('#MACHINE_RANK_MONTH').val();
-
+  var pmmaster_template_unid         = $('.changedate').data('dataunidpmlist');
+  var pmmaster_template_lastdate     = $('#PM_LAST_DATE_'+pmmaster_template_unid).val();
+  var machine_rank_month                   = $('#MACHINE_RANK_MONTH').val();
+  var machine_unid                   = $('#MACHINE_UNID').val();
+  if (machine_rank_month) {
   $.ajax({
     type:'POST',
     url: '/machine/system/check/storedate',
     datatype: 'json',
     data: {
       "_token": "{{ csrf_token() }}",
-      "unid" : unid,
-      "date" : date,
-      "rank" : rank,
+      "machine_unid"                : machine_unid,
+      "pmmaster_template_unid"      : pmmaster_template_unid,
+      "pmmaster_template_lastdate"  : pmmaster_template_lastdate,
+      "machine_rank_month"          : machine_rank_month,
     } ,
     success:function(data){
+      Swal.fire({
+          title: 'บันทึกระยะเวลาสำเร็จ',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          timer: 2000,
+      });
     }
   });
+  }else {
+    Swal.fire({
+        title: 'กรุณาระบุ Rank',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+    });
+  }
 });
 //ยืนยันการลบ PM Template
 $(document).on('click','.delete-confirm', function (event) {
@@ -64,12 +78,12 @@ $(document).on('click','.delete-confirm', function (event) {
           confirmButtonText: 'Yes!'
       }).then(function(result) {
         if (result.isConfirmed) {
-          var id = [];
-          $('#MACHINE_CODE').each(function(){
-              var mc = $(this).val();
+          var pmmaster_template_unid = [];
+          $('#MACHINE_UNID').each(function(){
+              var machineunid = $(this).val();
               $('#PM_TEMPLATE_UNID_REF:checked').each(function(){
-                  id.push($(this).val());
-                  window.location.href = '/machine/system/remove/'+id+'/'+mc;
+                  pmmaster_template_unid.push($(this).val());
+                  window.location.href = '/machine/system/remove/'+pmmaster_template_unid+'/'+machineunid;
               });
           });
         }

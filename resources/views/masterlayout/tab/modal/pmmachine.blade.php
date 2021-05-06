@@ -17,6 +17,7 @@
 				<form action="{{url('/machine/system/check/storelist')}}" method="POST" enctype="multipart/form-data" >
 					@csrf
           <input type="hidden" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}" >
+
             @livewire('addpm',['machinecode' => $dataset->MACHINE_CODE ])
             </div>
 		        <div class="modal-footer">
@@ -47,7 +48,7 @@
       <div class="modal-body">
 				<form action="{{url('/machine/system/remove')}}" method="post" enctype="multipart/form-data" >
 					@csrf
-
+          {{-- <input type="text" id="MACHINE_UNID" name="MACHINE_UNID" value="{{ $dataset->UNID }}" > --}}
           @livewire('removepm',['machinecode' => $dataset->MACHINE_CODE ])
 
             </div>

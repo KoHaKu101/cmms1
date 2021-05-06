@@ -15,6 +15,7 @@ class masterimps extends Migration
     {
         Schema::create('PMCS_CMMS_MASTER_IMPS', function (Blueprint $table) {
           $table->BigInteger('UNID')->primary();
+          $table->BigInteger('MACHINE_UNID')->nullable();
           $table->BigInteger('PM_TEMPLATE_UNID_REF')->nullable();
           $table->string('MACHINE_CODE',200)->nullable();
           $table->string('PM_TEMPLATE_NAME',200)->nullable();

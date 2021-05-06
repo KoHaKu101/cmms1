@@ -4,7 +4,7 @@
   <div class="container-fluid">
 
     {{-- Repair Notifity --}}
-    
+
   </div>
 </nav>
 <!-- End Navbar -->

@@ -14,7 +14,7 @@ use Auth;
 
 
 // class MachineSystemCheckPDFController extends Controller
-class MachineHistoryRepairPDFController extends Fpdf
+class PlanMachinePDF extends Fpdf
 {
   public function RepairHistory($UNID)
     {
@@ -155,7 +155,7 @@ class MachineHistoryRepairPDFController extends Fpdf
       $this->pdf->Cell($cel[8],$rHigeht,iconv('UTF-8','TIS-620','DEC'),1,0,'C');
       $this->pdf->Ln($rHigeht);
       $m = 0;
-      for ($i=0; $i < 30 ; $i++) {
+      for ($i=0; $i < 10 ; $i++) {
         $this->pdf->Cell($cel[0],$RowH,iconv( 'UTF-8','TIS-620',$i+1),'LR',0,'C');
 
         $this->pdf->SetFont('THSarabunNew','',10);
@@ -172,17 +172,131 @@ class MachineHistoryRepairPDFController extends Fpdf
         $this->pdf->Cell($cel[8],$RowH, $this->normalize('A'),'LR',0,'C');
         $this->pdf->Cell($cel[10],$RowH,iconv( 'UTF-8','TIS-620','3 เดือน'),'LR',0,'C');
         $this->pdf->Cell($cel[4],$RowH,$this->normalize('Plan'),1,0,'C');
-
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มกรา( jan )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          //  กุมภา( FEB )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มีนา( MAR )
           $this->pdf->Cell($cel[8],$RowH, '02',1,0,'C',true);   // เมษา( APR )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // พฤษภา( MAY )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มิถุนา( JUN )
-          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // กรกฏา( JUL )
+          $this->pdf->Cell($cel[8],$RowH, '02',1,0,'C',true);             // กรกฏา( JUL )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // สิงหา( AUG )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // กันยา( SEP )
           $this->pdf->Cell($cel[8],$RowH, '02',1,0,'C',true);   // ตุลา( OCT )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // พฤศจิกา( NOV )
+          $this->pdf->Cell($cel[8],$RowH, '',1,1,'C');          // ธันวา( DEC )
+        // }
+
+      //  Action
+      $this->pdf->Cell($cel[0],$RowH,'','LBR',0,'C');
+      $this->pdf->Cell($cel[1],$RowH, '','LBR',0,'L');
+      $this->pdf->Cell($cel[1],$RowH,'','LBR',0,'L');
+
+      $this->pdf->Cell($cel[1],$RowH, '','LBR',0,'C');
+      $this->pdf->Cell($cel[8],$RowH,'','LBR',0,'C');
+      $this->pdf->Cell($cel[10],$RowH, '','LBR',0,'C');
+      $this->pdf->Cell($cel[4],$RowH, $this->normalize('ACT'),1,0,'C');
+
+
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+
+        $this->pdf->Cell($cel[8],$RowH, '',1,1,'C');
+      }
+      for ($i=0; $i < 10 ; $i++) {
+        $this->pdf->Cell($cel[0],$RowH,iconv( 'UTF-8','TIS-620',$i+10),'LR',0,'C');
+
+        $this->pdf->SetFont('THSarabunNew','',10);
+      //  $this->pdf->SetTextColor(0,0,0);
+
+        $this->pdf->SetFillColor(192,192,192);
+        $this->pdf->Cell($cel[1],$RowH, $this->normalize('TAKAMAZ   - 0T'),'LR',0,'L',);
+        $this->pdf->Cell($cel[1],$RowH, $this->normalize('MC-00'.$m++),'LR',0,'L');
+        $this->pdf->SetFont('THSarabunNew','',10);
+        //$this->pdf->Cell($cel[3],10,iconv( 'UTF-8','TIS-620',$row->PERIOD_DATE_INTERVAL),1,0,'C');
+
+        $this->pdf->Cell($cel[1],$RowH, iconv( 'UTF-8','TIS-620','AUTO DIRLL'),'LR',0,'C');
+          $this->pdf->SetFont('THSarabunNew','',10);
+        $this->pdf->Cell($cel[8],$RowH, $this->normalize('B'),'LR',0,'C');
+        $this->pdf->Cell($cel[10],$RowH,iconv( 'UTF-8','TIS-620','6 เดือน'),'LR',0,'C');
+        $this->pdf->Cell($cel[4],$RowH,$this->normalize('Plan'),1,0,'C');
+
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มกรา( jan )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          //  กุมภา( FEB )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มีนา( MAR )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // เมษา( APR )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // พฤษภา( MAY )
+          $this->pdf->Cell($cel[8],$RowH, '20',1,0,'C',true);   // มิถุนา( JUN )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // กรกฏา( JUL )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // สิงหา( AUG )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // กันยา( SEP )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // ตุลา( OCT )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // พฤศจิกา( NOV )
+          $this->pdf->Cell($cel[8],$RowH, '20',1,1,'C',true);           // ธันวา( DEC )
+
+        // }
+
+      //  Action
+      $this->pdf->Cell($cel[0],$RowH,'','LBR',0,'C');
+      $this->pdf->Cell($cel[1],$RowH, '','LBR',0,'L');
+      $this->pdf->Cell($cel[1],$RowH,'','LBR',0,'L');
+
+      $this->pdf->Cell($cel[1],$RowH, '','LBR',0,'C');
+      $this->pdf->Cell($cel[8],$RowH,'','LBR',0,'C');
+      $this->pdf->Cell($cel[10],$RowH, '','LBR',0,'C');
+      $this->pdf->Cell($cel[4],$RowH, $this->normalize('ACT'),1,0,'C');
+
+
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+        $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');
+
+        $this->pdf->Cell($cel[8],$RowH, '',1,1,'C');
+      }
+      for ($i=0; $i < 5 ; $i++) {
+        $this->pdf->Cell($cel[0],$RowH,iconv( 'UTF-8','TIS-620',$i+20),'LR',0,'C');
+
+        $this->pdf->SetFont('THSarabunNew','',10);
+      //  $this->pdf->SetTextColor(0,0,0);
+
+        $this->pdf->SetFillColor(192,192,192);
+        $this->pdf->Cell($cel[1],$RowH, $this->normalize('TAKAMAZ   - 0T'),'LR',0,'L',);
+        $this->pdf->Cell($cel[1],$RowH, $this->normalize('MC-00'.$m++),'LR',0,'L');
+        $this->pdf->SetFont('THSarabunNew','',10);
+        //$this->pdf->Cell($cel[3],10,iconv( 'UTF-8','TIS-620',$row->PERIOD_DATE_INTERVAL),1,0,'C');
+
+        $this->pdf->Cell($cel[1],$RowH, iconv( 'UTF-8','TIS-620','MILLING'),'LR',0,'C');
+          $this->pdf->SetFont('THSarabunNew','',10);
+        $this->pdf->Cell($cel[8],$RowH, $this->normalize('C'),'LR',0,'C');
+        $this->pdf->Cell($cel[10],$RowH,iconv( 'UTF-8','TIS-620','12 เดือน'),'LR',0,'C');
+        $this->pdf->Cell($cel[4],$RowH,$this->normalize('Plan'),1,0,'C');
+
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มกรา( jan )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          //  กุมภา( FEB )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มีนา( MAR )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');   // เมษา( APR )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // พฤษภา( MAY )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // มิถุนา( JUN )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // กรกฏา( JUL )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // สิงหา( AUG )
+          $this->pdf->Cell($cel[8],$RowH, '15',1,0,'C',true);          // กันยา( SEP )
+          $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');   // ตุลา( OCT )
           $this->pdf->Cell($cel[8],$RowH, '',1,0,'C');          // พฤศจิกา( NOV )
           $this->pdf->Cell($cel[8],$RowH, '',1,1,'C');          // ธันวา( DEC )
 

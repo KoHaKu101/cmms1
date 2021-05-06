@@ -1,7 +1,7 @@
 <div class="card ">
   <div class="card-header bg-primary  ">
     <div class="row ">
-      <div class="col-md-2">
+      <div class="col-md-3 col-lg-2">
         <h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-wrench fa-lg mr-1"></i> เครื่องจักร </h4>
       </div>
       <div class="col-md-3">

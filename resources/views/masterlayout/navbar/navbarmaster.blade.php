@@ -56,7 +56,7 @@
             </div>
           </li>
           <li>
-            <a class="see-all" href="{{route('syscheck.list')}}">See all notifications<i class="fa fa-angle-right"></i> </a>
+            <a class="see-all">See all notifications<i class="fa fa-angle-right"></i> </a>
           </li>
         </ul>
       </li>

@@ -1,7 +1,6 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-{{-- <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 {{-- ส่วนหัว --}}
@@ -79,7 +78,7 @@
 											<div class="form-group has-error">
 												<label for="MACHINE_CODE">รหัสเครื่องจักร</label>
 													<input type="text" class="form-control " id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}">
-													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $dataset->MACHINE_UNID }}">
+													<input type="hidden"  id="MACHINE_UNID" name="MACHINE_UNID"  value="{{ $dataset->UNID }}">
 
 													{{-- <input type="hidden"  wire:model="dataset"  value="{{ $dataset->MACHINE_CODE }}"> --}}
 											</div>
@@ -90,7 +89,7 @@
 											</div>
 											<div class="form-group" >
 												<label for="PM_LAST_DATE">ตรวจเช็คระบบ ล่าสุด	</label>
-												<input type="date" class="form-control changedateedit" id="PM_LAST_DATE" name="PM_LAST_DATE" value="{{ $machinepmtime == NULL ? "" : $machinepmtime->PM_LAST_DATE }}" rel="{{ $machinepmtime == NULL ? "" : $machinepmtime->UNID }}">
+												<input type="date" class="form-control changedateedit" id="PM_LAST_DATE" name="PM_LAST_DATE" value="{{ $machinepmtime == NULL ? "" : $machinepmtime->PM_LAST_DATE }}" rel="{{ $machinepmtime == NULL ? "" : $machinepmtime->UNID }}" readonly>
 											</div>
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-6 col-lg-6 has-error">
@@ -135,11 +134,11 @@
 											</div>
 											<div class="form-group has-error">
 												<label for="MACHINE_RVE_DATE">วันที่ ซ่อมแซม 	</label>
-												<input type="date" class="form-control" id="" name=""  value="{{ $dataset->MACHINE_RVE_DATE }}">
+												<input type="date" class="form-control" id="" name=""  value="{{ $dataset->MACHINE_RVE_DATE }}"readonly>
 											</div>
-											<div class="form-group has-error">
+											<div class="form-group">
 												<label for="MACHINE_RVE_DATE">วันที่ เปลี่ยนอะไหล่ 	</label>
-												<input type="date" class="form-control" id="" name=""  value="">
+												<input type="date" class="form-control" id="" name=""  value="" readonly>
 											</div>
 											<div class="form-group has-error">
 												<label for="PURCHASE_FORM">ซื้อจากบริษัท	</label>
@@ -239,7 +238,7 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-
+	<script src="{{ asset('assets/fullcalendar/moment.js') }}"></script>
 	<script src="{{ asset('js/machine/editmachine.js') }}"></script>
 	 <script src="{{ asset('js/ajax/ajax-csrf.js') }}"></script>
 @stop

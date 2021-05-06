@@ -30,6 +30,7 @@ class masterimpsgroup extends Migration
           $table->string('PM_TEMPLATELIST_IMPS',200)->nullable();
           $table->date('PM_LAST_DATE')->default(Carbon::now())->nullable();
           $table->date('PM_NEXT_DATE')->nullable();
+          $table->BigInteger('MACHINE_UNID')->nullable();
 
           $table->string('CREATE_BY',200)->nullable();
           $table->string('CREATE_TIME',50)->nullable();

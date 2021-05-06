@@ -11,13 +11,15 @@ use Auth;
 use App\Models\Machine\Machine;
 use App\Models\Machine\MachinePMCheck;
 use App\Models\Machine\MasterIMPS;
-
+use App\Models\Machine\PMPlan;
 use App\Models\Machine\MachinePMCheckDetailStore;
+
 use App\Models\SettingMenu\MailSetup;
 
 use App\Models\MachineAddTable\MachinePmTemplateList;
 use App\Models\MachineAddTable\MachinePmTemplateDetail;
 use App\Models\MachineAddTable\MachinePmTemplate;
+
 
 //************** Package form github ***************
 use App\Exports\MachineExport;
@@ -48,14 +50,14 @@ class PlanPmController extends Controller
     return $number;
   }
   public function Index(){
+
     $plan     = MailSetup::select('autoplan')->first();
     $planyear = Carbon::now()->diffInYears(Carbon::now()->addDay($plan->autoplan));
     $year     = -1;
-
-
-
     return view('/machine/plan/planpm',compact('year','planyear'));
-
 }
+  public function StorePlan(){
+
+  }
 
  }

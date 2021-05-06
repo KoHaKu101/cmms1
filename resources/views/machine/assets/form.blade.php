@@ -119,6 +119,16 @@
 												<label for="PURCHASE_FORM">ซื้อจากบริษัท	</label>
 												<input type="text" class="form-control" id="PURCHASE_FORM" name="PURCHASE_FORM" placeholder="ซื้อจากบริษัท" required autofocus>
 											</div>
+											<div class="form-group has-error">
+												<label for="PURCHASE_FORM">Machine Rank	</label>
+												<select class="form-control" id="MACHINE_RANK_MONTH" name="MACHINE_RANK_MONTH" required>
+													<option value>กรุณาเลือก Rank</option>
+													@foreach ($machinerank as $key => $datamachinerank)
+														<option value="{{$datamachinerank->MACHINE_RANK_MONTH}}" >{{$datamachinerank->MACHINE_RANK_CODE}}</option>
+													@endforeach
+
+												</select>
+											</div>
 
 										</div>
 									</div>

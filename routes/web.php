@@ -26,6 +26,7 @@ use App\Http\Controllers\Machine\PaySpareController;
 use App\Http\Controllers\Machine\MailConfigController;
 //************************* Plan *************************************
 use App\Http\Controllers\Plan\PlanPmController;
+use App\Http\Controllers\Plan\MachinePlanController;
 
 
 //************************* add tabel *********************************
@@ -69,18 +70,14 @@ Route::get('/', function () {
 //Logout
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
 
+//user Page
+Route::get('/machine/user/homepage',[MachineController::class,'UserHomePage'])->name('user.homepage');
 //PDF FILE
 Route::get('/machine/repairhistory/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineHistoryRepairPDFController@RepairHistory');
 Route::get('/machine/repair/pdf/{UNID}',        'App\Http\Controllers\PDF\MachineRepairPDFController@RepairPdf');
 Route::get('/machine/systemcheck/pdf/{UNID}',   'App\Http\Controllers\PDF\MachineSystemCheckPDFController@SystemCheckPdf');
 Route::get('/machine/assets/machineall/{LINE?}', 'App\Http\Controllers\PDF\MachinePDFController@MachinePdf');
 
-
-Route::get('/machine/repair/getRequest', function(){
-  if(Request::ajax()){
-    return 'getRequest has load';
-  }
-});
 
 Route::get('/machine/repair/search',function(){
   if(Request::ajax()){
@@ -129,20 +126,13 @@ Route::get('machine/manual/manuallist'      ,[MachineManualController::class,'In
   Route::post('machine/manual/update/{UNID}'  ,[MachineManualController::class,'Update']);
   Route::get('machine/manual/delete/{UNID}'   ,[MachineManualController::class,'Delete']) ->name('manual.delete');
 //syscheck
-Route::get('machine/syscheck/syschecklist'    ,[SysCheckController::class,'Index'])  ->name('syscheck.list');
-  // Route::get('machine/syscheck/syschecklist:/{LINE_CODE}'    ,[SysCheckController::class,'Indexline'])  ->name('syscheck.listline');
-  // Route::post('machine/syscheck/store'          ,[SysCheckController::class,'Store'])  ->name('syscheck.store');
-  // Route::get('machine/syscheck/edit/{UNID}'     ,[SysCheckController::class,'Edit'])   ->name('edit.show');
+Route::get('machine/pm/planlist/'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
+Route::post('machine/pm/planlist/search'                  ,[MachinePlanController::class,'SearchPMplanlist']);
 
-  Route::post('machine/syscheck/update'  ,[SysCheckController::class,'Update']);
-  // Route::get('machine/syscheck/delete/{UNID}'   ,[SysCheckController::class,'Delete']) ->name('syscheck.delete');
+
 
   //ในedit machine
-  Route::post('machine/system/check/storelistupdate'    ,[SysCheckController::class,'StoreListUpdate'])   ->name('syscheck.storelistupdate');
   Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');
-  Route::post('machine/system/check/store'              ,[SysCheckController::class,'Store'])   ->name('syscheck.store');
-  Route::get('machine/system/check/{UNID}/{UNIDPM}'     ,[SysCheckController::class,'Check'])   ->name('syscheck.check');
-  Route::get('machine/system/edit/{UNID}/{UNIDPM}'      ,[SysCheckController::class,'Edit'])   ->name('syscheck.edit');
   Route::get('machine/system/remove/{UNID}/{MC}'        ,[SysCheckController::class,'DeletePMMachine'])   ->name('syscheck.remove');
   Route::post('machine/system/check/storedate'          ,[SysCheckController::class,'StoreDate']);
 //partcheck
@@ -242,7 +232,7 @@ Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableCont
   Route::get('machine/detailpoint/delete/{UNID}'   ,[MachineDetailPointTableController::class,'Delete']) ->name('detailpoint.delete');
   //***************************** Plan ****************************************
 Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Index']) ->name('plan.pm');
-Route::get('machine/pdf/plan/planpm'                  ,[MachineHistoryRepairPDFController::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
+Route::get('machine/pdf/plan/planpm'                  ,[PlanMachinePDF::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
 
 
   //***************************** SETTING ****************************************
