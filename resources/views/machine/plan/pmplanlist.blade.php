@@ -80,7 +80,6 @@
 												</div>
 											</div>
 										</form>
-											<div id="result"class="card-body">
 												@livewire('pmlist',['MACHINE_CODE'=>$MACHINE_CODE,'MACHINE_LINE'=>$MACHINE_LINE,'PLAN_YEAR'=>$PLAN_YEAR])
 												{{-- <div class="row">
 													@foreach ($machinepmplan as $number => $dataset)
@@ -106,7 +105,6 @@
 													@endforeach
 													{{ $machinepmplan->links() }}
 													</div> --}}
-												</div>
 										</div>
 								</div>
               </div>

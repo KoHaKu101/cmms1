@@ -36,46 +36,21 @@ class MachinePlanController extends Controller
   public function PMPlanList(Request $request){
     // dd($request);
     $PLAN_YEAR = $request->PLAN_YEAR != NULL ? $request->PLAN_YEAR : date('Y');
-    if ($request->MACHINE_CODE or $request->MACHINE_LINE ) {
-
-      $MACHINE_CODE = $request->MACHINE_CODE;
-      $MACHINE_LINE = $request->MACHINE_LINE;
-
+    $MACHINE_CODE = $request->MACHINE_CODE;
+    $MACHINE_LINE = $request->MACHINE_LINE;
+    if ($MACHINE_CODE or $MACHINE_LINE ) {
       $MACHINE_CODE = $MACHINE_CODE != NULL ? '%'.$MACHINE_CODE.'%' : '%';
       $MACHINE_LINE = $MACHINE_LINE != NULL ? '%'.$MACHINE_LINE.'%' : '%';
-
-
-        $machinepmplan = MachinePlanPm::select('*')->selectraw("
-        CASE
-        WHEN DATEDIFF(DAY, PLAN_DATE,GETDATE() ) > 30 THEN 'icon-danger'
-    		WHEN DATEDIFF(DAY, PLAN_DATE,GETDATE() ) > 7 THEN 'icon-warning'
-    		ELSE 'icon-success'
-    		END AS classtext")->where('PLAN_YEAR',$PLAN_YEAR)
-                          ->where('MACHINE_CODE','like',$MACHINE_CODE)
-                          ->where('MACHINE_LINE','like',$MACHINE_LINE)
-                          ->orderby('PLAN_DATE','ASC')
-                          ->orderBy('MACHINE_CODE','ASC')
-                          ->get();
-
       $MACHINE_CODE = str_replace('%','',$MACHINE_CODE);
       $MACHINE_LINE = str_replace('%','',$MACHINE_LINE);
     }else {
-      $machinepmplan = MachinePlanPm::select('*')->selectraw("
-      CASE
-      WHEN DATEDIFF(DAY, PLAN_DATE,GETDATE() ) > 30 THEN 'icon-danger'
-      WHEN DATEDIFF(DAY, PLAN_DATE,GETDATE() ) > 7 THEN 'icon-warning'
-      ELSE 'icon-success'
-      END AS classtext")->where('PLAN_YEAR',$PLAN_YEAR)
-                        ->orderby('PLAN_DATE','ASC')
-                        ->orderBy('MACHINE_CODE','ASC')
-                        ->get();
       $MACHINE_CODE = "";
       $MACHINE_LINE = "";
 
     }
     $machineline = MachineLine::select('LINE_NAME','LINE_CODE')->where('LINE_NAME','like','%'.'Line'.'%')->get();
 
-    return view('machine.plan.pmplanlist',compact('machineline','machinepmplan','MACHINE_CODE','MACHINE_LINE','PLAN_YEAR'));
+    return view('machine.plan.pmplanlist',compact('machineline','MACHINE_CODE','MACHINE_LINE','PLAN_YEAR'));
 
   }
 
