@@ -36,8 +36,8 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card ">
-										<form action="{{ url('machine/pm/planlist') }}" id="FRM_PLANLIST" name="FRM_PLANLSIT"	>
-											@method('post')
+										<form action="{{ url('machine/pm/planlist') }}" method="post" id="FRM_PLANLIST" name="FRM_PLANLSIT"	>
+											{{-- @method('post') --}}
 											@csrf
 											<div class="card-header bg-primary  ">
 												<div class="row">
@@ -81,7 +81,8 @@
 											</div>
 										</form>
 											<div id="result"class="card-body">
-												<div class="row">
+												@livewire('pmlist',['MACHINE_CODE'=>$MACHINE_CODE,'MACHINE_LINE'=>$MACHINE_LINE,'PLAN_YEAR'=>$PLAN_YEAR])
+												{{-- <div class="row">
 													@foreach ($machinepmplan as $number => $dataset)
 														<div class="col-sm-6 col-md-3">
 																	<div class="card card-stats card-round">
@@ -104,7 +105,7 @@
 																</div>
 													@endforeach
 													{{ $machinepmplan->links() }}
-													</div>
+													</div> --}}
 												</div>
 										</div>
 								</div>

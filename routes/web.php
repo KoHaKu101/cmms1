@@ -226,6 +226,7 @@ Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Ind
 Route::get('machine/pdf/plan/planpm'                  ,[PlanMachinePDF::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
 
 Route::get('machine/pm/planlist/{line?}'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
+Route::post('machine/pm/planlist/{line?}'                  ,[MachinePlanController::class,'PMPlanList']);
   // Route::get('machine/pm/planlist/search/{machineline?}'                  ,[MachinePlanController::class,'SearchPMplanlist']);
 //ในedit machine
   Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');

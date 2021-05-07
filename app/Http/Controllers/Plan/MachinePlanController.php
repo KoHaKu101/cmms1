@@ -55,7 +55,7 @@ class MachinePlanController extends Controller
                           ->where('MACHINE_LINE','like',$MACHINE_LINE)
                           ->orderby('PLAN_DATE','ASC')
                           ->orderBy('MACHINE_CODE','ASC')
-                          ->paginate(20);
+                          ->get();
 
       $MACHINE_CODE = str_replace('%','',$MACHINE_CODE);
       $MACHINE_LINE = str_replace('%','',$MACHINE_LINE);
@@ -68,7 +68,7 @@ class MachinePlanController extends Controller
       END AS classtext")->where('PLAN_YEAR',$PLAN_YEAR)
                         ->orderby('PLAN_DATE','ASC')
                         ->orderBy('MACHINE_CODE','ASC')
-                        ->paginate(20);
+                        ->get();
       $MACHINE_CODE = "";
       $MACHINE_LINE = "";
 
@@ -76,73 +76,9 @@ class MachinePlanController extends Controller
     $machineline = MachineLine::select('LINE_NAME','LINE_CODE')->where('LINE_NAME','like','%'.'Line'.'%')->get();
 
     return view('machine.plan.pmplanlist',compact('machineline','machinepmplan','MACHINE_CODE','MACHINE_LINE','PLAN_YEAR'));
+
   }
-  // public function SearchPMplanlist(Request $request,$MACHINE_LINE_SELECT = NULL){
-  //   $machineline = MachineLine::select('LINE_NAME','LINE_CODE')->where('LINE_NAME','like','%'.'Line'.'%')->get();
-  //   $PM_YEAR = $request->PLAN_YEAR;
-  //   if ($request->searchmachine_code) {
-  //     if ($request->ajax()) {
-  //       if ($MACHINE_LINE_SELECT) {
-  //         $machinepmplan = MachinePlanPm::where('PLAN_YEAR',$PM_YEAR)
-  //                                       ->where('MACHINE_CODE','like','%'.$request->searchmachine_code.'%')
-  //                                       ->where('MACHINE_LINE',$MACHINE_LINE_SELECT)
-  //                                       ->orderby('PLAN_DATE','ASC')
-  //                                       ->orderBy('MACHINE_CODE','ASC')
-  //                                       ->get();
-  //
-  //         $searchmachine_code = $request->searchmachine_code;
-  //         return Response()->json(['machinepmplan'=>$machinepmplan]);
-  //     }else {
-  //       $machinepmplan = MachinePlanPm::where('PLAN_YEAR',$PM_YEAR)
-  //                                     ->where('MACHINE_CODE','like','%'.$request->searchmachine_code.'%')
-  //                                     ->orderby('PLAN_DATE','ASC')
-  //                                     ->orderBy('MACHINE_CODE','ASC')
-  //                                     ->get();
-  //
-  //       $searchmachine_code = $request->searchmachine_code;
-  //       return Response()->json(['machinepmplan'=>$machinepmplan]);
-  //     }
-  //     }else {
-  //       $machinepmplan = MachinePlanPm::where('PLAN_YEAR',$PM_YEAR)
-  //                                     ->where('MACHINE_CODE','like','%'.$request->searchmachine_code.'%')
-  //                                     ->orderby('PLAN_DATE','ASC')
-  //                                     ->orderBy('MACHINE_CODE','ASC')
-  //                                     ->paginate(20);
-  //      $searchmachine_code = $request->searchmachine_code;
-  //     }
-  //   }else {
-  //
-  //     if ($request->ajax()) {
-  //
-  //       if ($MACHINE_LINE_SELECT) {
-  //
-  //         $machinepmplan = MachinePlanPm::where('PLAN_YEAR',$PM_YEAR)
-  //                                       ->where('MACHINE_LINE',$MACHINE_LINE_SELECT)
-  //                                       ->orderby('PLAN_DATE','ASC')
-  //                                       ->orderBy('MACHINE_CODE','ASC')
-  //                                       ->get();
-  //         $searchmachine_code = "";
-  //         return Response()->json(['machinepmplan'=>$machinepmplan]);
-  //     }else {
-  //
-  //       $machinepmplan = MachinePlanPm::where('PLAN_YEAR',$PM_YEAR)
-  //                                     ->orderby('PLAN_DATE','ASC')
-  //                                     ->orderBy('MACHINE_CODE','ASC')
-  //                                     ->get();
-  //       $searchmachine_code = "";
-  //       return Response()->json(['machinepmplan'=>$machinepmplan]);
-  //     }
-  //   }else {
-  //     $machinepmplan = MachinePlanPm::where('PLAN_YEAR',$PM_YEAR)
-  //                                   ->orderby('PLAN_DATE','ASC')
-  //                                   ->orderBy('MACHINE_CODE','ASC')
-  //                                   ->paginate(20);
-  //
-  //     $searchmachine_code = "";
-  //   }
-  // }
-  //   return view('machine.plan.pmplanlist',compact('machineline','machinepmplan','searchmachine_code','PM_YEAR'));
-  // }
+
 
   public function CreatePlan($pm_lastdate,$machine_unid,$masterimpsunid){
     $UNID =  $this->randUNID('PMCS_MACHINE_PLAN_PM');
