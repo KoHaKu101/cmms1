@@ -65,7 +65,7 @@ use App\Models\SettingMenu\Menusubitem;
 |
 */
 Route::get('/', function () {
-    return redirect('/machine/dashboard/dashboard');
+    return redirect('/machine/user/homepage');
 })->middleware('auth');
 //Logout
 Route::get('/user/logout/',[MenuController::class,'Logout'])->name('user.logout');
@@ -125,16 +125,7 @@ Route::get('machine/manual/manuallist'      ,[MachineManualController::class,'In
   Route::get('machine/manual/show/{UNID}'     ,[MachineManualController::class,'Show'])   ->name('manual.Show');
   Route::post('machine/manual/update/{UNID}'  ,[MachineManualController::class,'Update']);
   Route::get('machine/manual/delete/{UNID}'   ,[MachineManualController::class,'Delete']) ->name('manual.delete');
-//syscheck
-Route::get('machine/pm/planlist/'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
-Route::post('machine/pm/planlist/search'                  ,[MachinePlanController::class,'SearchPMplanlist']);
 
-
-
-  //ในedit machine
-  Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');
-  Route::get('machine/system/remove/{UNID}/{MC}'        ,[SysCheckController::class,'DeletePMMachine'])   ->name('syscheck.remove');
-  Route::post('machine/system/check/storedate'          ,[SysCheckController::class,'StoreDate']);
 //partcheck
 Route::get('machine/partcheck/partchecklist'   ,[MachinePartCheckController::class,'Index'])  ->name('partcheck.list');
   Route::get('machine/partcheck/add/{UNID}'    ,[MachinePartCheckController::class,'Editmain'])   ->name('partcheck.add');
@@ -234,6 +225,12 @@ Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableCont
 Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Index']) ->name('plan.pm');
 Route::get('machine/pdf/plan/planpm'                  ,[PlanMachinePDF::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
 
+Route::get('machine/pm/planlist/{line?}'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
+  // Route::get('machine/pm/planlist/search/{machineline?}'                  ,[MachinePlanController::class,'SearchPMplanlist']);
+//ในedit machine
+  Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');
+  Route::get('machine/system/remove/{UNID}/{MC}'        ,[SysCheckController::class,'DeletePMMachine'])   ->name('syscheck.remove');
+  Route::post('machine/system/check/storedate'          ,[SysCheckController::class,'StoreDate']);
 
   //***************************** SETTING ****************************************
 //config

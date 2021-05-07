@@ -1,0 +1,9 @@
+<script>
+	$( document ).ready(function() {
+
+	$(".selectgroup-button").click(function(){
+					$('.bg-white').removeClass('bg-warning');
+					$(this).addClass("bg-warning");
+				});
+});
+</script>
