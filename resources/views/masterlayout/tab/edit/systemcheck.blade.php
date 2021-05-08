@@ -10,7 +10,6 @@
                 <h3 align="center" style="color:white;" class="mt-2">ตรวจสอบระบบ</h3>
               </div>
               <div class="col-6 col-sm-7 col-md-5 col-lg-3">
-
                   <button id="add" type="button" class="btn btn-primary btn-sm mt-2 mx-2"
                     data-toggle="modal" data-target="#PMMachine">
                     <span style="color:black;font-size:13px">เพิ่มระบบ</span>
@@ -19,7 +18,6 @@
                     data-toggle="modal" data-target="#PMMachineRemove">
                     <span style="color:black;font-size:13px">ลบระบบ</span>
                   </button>
-
               </div>
             </div>
           </div>
@@ -88,8 +86,6 @@
                             </table>
                           </div>
                           <div class="table col-md-6 col-lg-6" >
-
-
                             @foreach ($masterimpsgroup->where('PM_TEMPLATE_UNID_REF',$datamasterimps->PM_TEMPLATE_UNID_REF)->where('MACHINE_CODE',$dataset->MACHINE_CODE) as $datamasterimpsgroupsub)
                             <table class="table table-sm table-bordered pmlistdetail" id="{{ $datamasterimpsgroupsub->PM_TEMPLATELIST_UNID_REF}}-1">
                                 <thead>

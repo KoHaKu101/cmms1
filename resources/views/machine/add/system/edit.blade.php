@@ -111,28 +111,36 @@
 												<h4 class="ml-3 mt-2" style="color:white;" > Inspection Check</h4>
 											</div>
 												<div class="card-body mt--3">
+													<style>
+													.table-responsive {
+    												display: table;
+														}
+													</style>
 													<div class="table-responsive mt--4">
-														<table class="table table-bordered mt-4">
+														<table class="table table-hover table-bordered mt-4">
 															<thead>
 																<tr>
-																	<th scope="col">ลำดับ</th>
-																	<th scope="col">รายละเอียด</th>
+																	<th >ลำดับ</th>
+																	<th >รายละเอียด</th>
 																	<th>ค่า STD</th>
+																	<th>ประเภทการกรอกข้อมูล</th>
 																	<th colspan="2"></th>
 																</tr>
 															</thead>
 															<tbody>
 															@foreach ($datapmtemplatedetail as $key => $dataitem)
 																<tr>
-																	<td>{{$key+1}}</td>
+																	<th scope="row">{{$key+1}}</th>
 																	<td>{{$dataitem->PM_DETAIL_NAME}}</td>
 																	<td>{{$dataitem->PM_DETAIL_STD}}</td>
-																	<td style="width:40px">
-																		<button type="button" class="btn btn-primary btn-block btn-sm my-1 edit" onclick="editdetail('{{ $dataitem->UNID }}','{{ $dataitem->PM_DETAIL_NAME }}','{{ $dataitem->PM_DETAIL_STD }}')">
+																	<td>{{$dataitem->PM_TYPE}}</td>
+																	<td >
+																		<button type="button" class="btn btn-primary btn-block btn-sm my-1 edit"
+																		onclick="editdetail('{{ $dataitem->UNID }}','{{ $dataitem->PM_DETAIL_NAME }}','{{ $dataitem->PM_DETAIL_STD }}','{{ $dataitem->PM_TYPE_INPUT }}')">
 																			<i class="fas fa-edit fa-lg">	</i>
 																		</button>
 																	</td>
-																	<td style="width:40px">
+																	<td >
 																		<button type="button" class="btn btn-danger btn-block btn-sm my-1" onclick="deletedata('{{ $dataitem->UNID }}')" >
 																			<i class="fas fa-trash fa-lg">	</i>
 																		</button>
@@ -160,7 +168,16 @@
 													<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" value="{{ $datapmtemplatelist->UNID }}">
 													<textarea class="form-control" name="PM_DETAIL_NAME" rows="2" required autofocus></textarea >
 														<label for="SYSTEM_CODE">ค่า STD</label>
-														<input type="text" class="form-control" name="PM_DETAIL_STD">
+														<input type="text" class="form-control" name="PM_DETAIL_STD" required>
+
+												<label for="smallSelect">ประเภทการกรอกข้อมูล</label>
+													<select class="form-control form-control-sm" id="PM_TYPE_INPUT" name="PM_TYPE_INPUT"required>
+														<option value="">กรุณาเลือกประเภทการกรอก</option>
+														{{-- <option value="text">กรอกข้อมูล</option> --}}
+														<option value="number">กรอกค่าตัวเลข</option>
+														<option value="radio">เลือก ผ่าน ไม่ผ่าน</option>
+													</select>
+
 													<button type="submit" class="btn btn-primary mt-3">Save</button>
 												</div>
 
@@ -182,10 +199,14 @@
 @section('javascript')
 <script src="{{ asset('/js/addtable/systemedit.js') }}"></script>
 <script>
-	function editdetail(unid,text,std){
+	function editdetail(unid,text,std,type){
 		var unid = (unid) ;
 		var text = (text) ;
 		var std = (std);
+		var type = (type);
+		var number = (type == "number") ? "selected" : "";
+		var radio = (type == "radio") ? "selected" : "";
+
 		var url = '/machine/pm/template/storedetailupdate' ;
 		var _html='<form action="'+url+'" method="POST" enctype="multipart/form-data">'+
 							'@csrf'+
@@ -195,6 +216,13 @@
 							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2">'+text+'</textarea required autofocus>'+
 							'<label for="SYSTEM_CODE">ค่า STD</label>'+
 							'<input type="text" class="form-control" name="PM_DETAIL_STD" value="'+std+'">'+
+							'<label for="smallSelect">ประเภทการกรอกข้อมูล</label>'+
+							'<select class="form-control form-control-sm" id="PM_TYPE_INPUT" name="PM_TYPE_INPUT"required>'+
+							'<option value="" >กรุณาเลือกประเภทการกรอก</option>'+
+							{{-- '<option value="text">กรอกข้อมูล</option>' --}}
+							'<option value="number" '+number+'>กรอกค่าตัวเลข</option>'+
+							'<option value="radio" '+radio+'>เลือก ผ่าน ไม่ผ่าน</option>'+
+							'</select>'+
 							'<button type="submit" class="btn btn-primary mt-3" >Update</button>'+
 							'<button type="button" onclick="exiteditdetail()" class="btn btn-danger float-right mt-3">Cancel</button>'+
 							'</div>'+
@@ -213,6 +241,11 @@
 							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2"></textarea required autofocus>'+
 							'<label for="SYSTEM_CODE">ค่า STD</label>'+
 							'<input type="text" class="form-control" name="PM_DETAIL_STD" value="">'+
+							'<option value="" >กรุณาเลือกประเภทการกรอก</option>'+
+							{{-- '<option value="text">กรอกข้อมูล</option>' --}}
+							'<option value="number" >กรอกค่าตัวเลข</option>'+
+							'<option value="radio" >เลือก ผ่าน ไม่ผ่าน</option>'+
+							'</select>'+
 							'<button type="submit" class="btn btn-primary mt-3" id="Save">Save</button>'+
 							'</div>'+
 							'</form>';

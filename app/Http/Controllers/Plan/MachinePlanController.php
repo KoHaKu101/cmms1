@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machine;
 use App\Models\Machine\MachinePlanPm;
+use App\Models\Machine\MasterIMPSGroup;
+use App\Models\MachineAddTable\MachinePmTemplateDetail;
 use App\Models\MachineAddTable\MachinePmTemplate;
 use App\Models\Machine\MachineLine;
-use App\Models\Machine\MachineRepair;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
@@ -34,7 +35,6 @@ class MachinePlanController extends Controller
     return $number;
   }
   public function PMPlanList(Request $request){
-    // dd($request);
     $PLAN_YEAR = $request->PLAN_YEAR != NULL ? $request->PLAN_YEAR : date('Y');
     $MACHINE_CODE = $request->MACHINE_CODE;
     $MACHINE_LINE = $request->MACHINE_LINE;
@@ -86,6 +86,15 @@ class MachinePlanController extends Controller
       'MODIFY_TIME'     => Carbon::now(),
     ]);
 
+  }
+  public function PMPlanCheckForm($UNID){
+    $PM_PLAN = MachinePlanPm::where('UNID','=',$UNID)->get();
+    $PM_LIST = MasterIMPSGroup::where('MACHINE_UNID','=',$PM_PLAN[0]->MACHINE_UNID)->where('PM_TEMPLATE_UNID_REF',$PM_PLAN[0]->PM_MASTER_UNID)->get();
+    $PM_DETAIL = MachinePmTemplateDetail::all();
+   return view('machine.plan.pmplancheck',compact('PM_PLAN','PM_LIST','PM_DETAIL'));
+  }
+  public function PMPlanListSave(Request $request){
+    dd($request);
   }
 
 

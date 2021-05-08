@@ -17,6 +17,8 @@ class PmDetailTable extends Migration
           $table->BigInteger('UNID')->primary();
           $table->BigInteger('PM_TEMPLATELIST_UNID_REF',false,false)->nullable();
           $table->string('PM_DETAIL_NAME',200)->nullable();
+          $table->string('PM_DETAIL_STD',50)->nullable();
+          $table->string('PM_TYPE_INPUT',50)->nullable();
 
           $table->string('CREATE_BY',200)->nullable();
           $table->string('CREATE_TIME',50)->nullable();

@@ -52,64 +52,77 @@ class SysCheckController extends Controller
   //อยู่ใน machine edit
   public function StoreList(Request $request){
     $machine = Machine::select('MACHINE_RANK_MONTH','MACHINE_RANK_CODE','UNID')->where('MACHINE_CODE',$request->MACHINE_CODE)->first();
+
     if ($machine->MACHINE_RANK_CODE) {
       foreach ($request->PM_TEMPLATE_UNID_REF as $dataset => $value) {
-        $datapmtemplate = MachinePmTemplate::select('PM_TEMPLATE_NAME')
-                                            ->where('UNID',$request->PM_TEMPLATE_UNID_REF[$dataset])
-                                            ->first();
         $masterimpsunid = $request->PM_TEMPLATE_UNID_REF[$dataset];
-        $datamasterimps = array(
-          'UNID'                  => $this->randUNID('PMCS_CMMS_MASTER_IMPS'),
-          'MACHINE_UNID'          => $machine->UNID,
-          'PM_TEMPLATE_UNID_REF'  => $masterimpsunid,
-          'MACHINE_CODE'          => $request->MACHINE_CODE,
-          'PM_TEMPLATE_NAME'      => $datapmtemplate->PM_TEMPLATE_NAME,
-          'PM_LAST_DATE'          => Carbon::now(),
-          'CREATE_BY'             => Auth::user()->name,
-          'CREATE_TIME'           => Carbon::now(),
-          );
-        $saveresult =  MasterIMPS::insert($datamasterimps);
-        if ($saveresult) {
-          $totalloop          = 0;
-          $totalmonth         = MailSetup::select('AUTOPLAN')->first();
-          $preiodmonth        = $machine->MACHINE_RANK_MONTH;
-          // $pm_getlastdate     = MasterIMPS::select('PM_LAST_DATE')
-          //                               ->where('MACHINE_UNID',$machine->UNID)
-          //                               ->where('PM_TEMPLATE_UNID_REF',$masterimpsunid)
-          //                               ->first();
-          $pm_lastdate        = Carbon::now();
-          $machine_unid       = $machine->UNID;
-          for ($i = 0; $i < $totalmonth->AUTOPLAN ; $i++) {
-              if (($i%$preiodmonth == 0)) {
-                $totalloop++;
-                $pm_lastdate    = Carbon::parse($pm_lastdate)->addMonth($preiodmonth);
-                $pm_plandate    = $pm_lastdate;
-                if ($machine_unid != "" && $masterimpsunid != "") {
-                  $saveplanpm   = new MachinePlanController;
-                  $saveplanpm->CreatePlan($pm_plandate,$machine_unid,$masterimpsunid);
+        $datapmtemplate = MachinePmTemplate::select('PM_TEMPLATE_NAME')
+                                            ->where('UNID',$masterimpsunid)
+                                            ->first();
+        $rowcount = MasterIMPS::where('MACHINE_UNID','=',$machine->UNID)->where('PM_TEMPLATE_UNID_REF','=',$masterimpsunid)->count();
+        if ($rowcount == 0) {
+      DB::beginTransaction();
+        try {
+          $datamasterimps = array(
+            'UNID'                  => $this->randUNID('PMCS_CMMS_MASTER_IMPS'),
+            'MACHINE_UNID'          => $machine->UNID,
+            'PM_TEMPLATE_UNID_REF'  => $masterimpsunid,
+            'MACHINE_CODE'          => $request->MACHINE_CODE,
+            'PM_TEMPLATE_NAME'      => $datapmtemplate->PM_TEMPLATE_NAME,
+            'PM_LAST_DATE'          => Carbon::now(),
+            'CREATE_BY'             => Auth::user()->name,
+            'CREATE_TIME'           => Carbon::now(),
+            );
+          $saveresult =  MasterIMPS::insert($datamasterimps);
+          if ($saveresult) {
+            $machinepmtemplatelist = MachinePmTemplateList::where('PM_TEMPLATE_UNID_REF',$masterimpsunid)->get();
+            foreach ($machinepmtemplatelist as $key => $datapmtemplatelist) {
+              $datamasterimpsgroup = array(
+                'UNID'                      => $this->randUNID('PMCS_CMMS_MASTER_IMPS_GP'),
+                'MACHINE_UNID'              => $machine->UNID,
+                'PM_TEMPLATELIST_UNID_REF'  => $datapmtemplatelist->UNID,
+                'MACHINE_CODE'              => $request->MACHINE_CODE,
+                'PM_TEMPLATE_UNID_REF'      => $datapmtemplatelist->PM_TEMPLATE_UNID_REF,
+                'PM_TEMPLATELIST_NAME'      => $datapmtemplatelist->PM_TEMPLATELIST_NAME,
+                'PM_TEMPLATELIST_DAY'       => $datapmtemplatelist->PM_TEMPLATELIST_DAY,
+                'PM_TEMPLATELIST_IMPS'      => $datapmtemplatelist->PM_TEMPLATELIST_POINT,
+                'PM_TEMPLATELIST_STATUS'    => '1',
+                'CREATE_BY'                 => Auth::user()->name,
+                'CREATE_TIME'               => Carbon::now(),
+                );
+              MasterIMPSGroup::insert($datamasterimpsgroup);
+          }
+
+          if ($saveresult) {
+            $totalloop          = 0;
+            $totalmonth         = MailSetup::select('AUTOPLAN')->first();
+            $preiodmonth        = $machine->MACHINE_RANK_MONTH;
+            $pm_lastdate        = Carbon::now();
+            $machine_unid       = $machine->UNID;
+            for ($i = 0; $i < $totalmonth->AUTOPLAN ; $i++) {
+                if (($i%$preiodmonth == 0)) {
+                  $totalloop++;
+                  $pm_lastdate    = Carbon::parse($pm_lastdate)->addMonth($preiodmonth);
+                  $pm_plandate    = $pm_lastdate;
+                  if ($machine_unid != "" && $masterimpsunid != "") {
+                    $saveplanpm   = new MachinePlanController;
+                    $saveplanpm->CreatePlan($pm_plandate,$machine_unid,$masterimpsunid);
+                  }
                 }
-              }
+            }
+          }
+
+          }
+          DB::commit();
+          } catch (Exception $e) {
+              DB::rollback();
+              Alert::error('เกิดข้อผิดพลาด', 'ระบบไม่สามารถบันทึกข้อมูลได้');
+              return redirect()->back();
           }
         }
       }
-      $machinepmtemplatelist = MachinePmTemplateList::whereIn('PM_TEMPLATE_UNID_REF',$request->PM_TEMPLATE_UNID_REF)->get();
-      foreach ($machinepmtemplatelist as $key => $datapmtemplatelist) {
-        $datamasterimpsgroup = array(
-          'UNID'                      => $this->randUNID('PMCS_CMMS_MASTER_IMPS_GP'),
-          'MACHINE_UNID'              => $machine->UNID,
-          'PM_TEMPLATELIST_UNID_REF'  => $datapmtemplatelist->UNID,
-          'MACHINE_CODE'              => $request->MACHINE_CODE,
-          'PM_TEMPLATE_UNID_REF'      => $datapmtemplatelist->PM_TEMPLATE_UNID_REF,
-          'PM_TEMPLATELIST_NAME'      => $datapmtemplatelist->PM_TEMPLATELIST_NAME,
-          'PM_TEMPLATELIST_DAY'       => $datapmtemplatelist->PM_TEMPLATELIST_DAY,
-          'PM_TEMPLATELIST_IMPS'      => $datapmtemplatelist->PM_TEMPLATELIST_POINT,
-          'PM_TEMPLATELIST_STATUS'    => '1',
-          'CREATE_BY'                 => Auth::user()->name,
-          'CREATE_TIME'               => Carbon::now(),
-          );
-        MasterIMPSGroup::insert($datamasterimpsgroup);
-      }
       return redirect()->back()->with('success','เพิ่มรายการตรวจเช็คสำเร็จ');
+
     }else {
       return redirect()->back()->with('warning','กรุณาระบุ Rank');
     }

@@ -18,5 +18,5 @@ class MachinePmTemplateDetail extends Model
     protected $keyType = 'BigInteger';
     public $table ='PMCS_CMMS_PM_TEMPLATE_DETAIL';
 
-    protected $fillable = ['UNID','PM_TEMPLATELIST_UNID_REF','PM_DETAIL_NAME','PM_DETAIL_STD','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'];
+    protected $fillable = ['UNID','PM_TEMPLATELIST_UNID_REF','PM_DETAIL_NAME','PM_DETAIL_STD','PM_TYPE_INPUT','CREATE_BY','CREATE_TIME','MODIFY_BY','MODIFY_TIME'];
 }

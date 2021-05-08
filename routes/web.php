@@ -225,8 +225,10 @@ Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableCont
 Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Index']) ->name('plan.pm');
 Route::get('machine/pdf/plan/planpm'                  ,[PlanMachinePDF::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
 
-Route::get('machine/pm/planlist/{line?}'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
-Route::post('machine/pm/planlist/{line?}'                  ,[MachinePlanController::class,'PMPlanList']);
+Route::get('machine/pm/planlist'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
+Route::post('machine/pm/planlist'                  ,[MachinePlanController::class,'PMPlanList']);
+Route::get('machine/pm/plancheck/{UNID}'                   ,[MachinePlanController::class,'PMPlanCheckForm']);
+Route::post('machine/pm/planlist/save'                  ,[MachinePlanController::class,'PMPlanListSave']) ->name('pm.planlistsave');
   // Route::get('machine/pm/planlist/search/{machineline?}'                  ,[MachinePlanController::class,'SearchPMplanlist']);
 //ในedit machine
   Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');

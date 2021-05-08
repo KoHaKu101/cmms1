@@ -2,6 +2,19 @@
 @section('tittle','homepage')
 @section('css')
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+.selectgroup-input:checked+.selectgroup-button {
+	border-color: #8898ad;
+	z-index: 1;
+	color: #ffffff;
+	background: orange;
+	}
+	.selectgroup-button {
+		border: 1px solid rgb(21 114 232);
+		background: white;
+		color: rgb(72 171 247);
+	}
+</style>
 
 @endsection
 {{-- ส่วนหัว --}}
@@ -52,16 +65,17 @@
 														@endfor
 													</select>
 												</div>
+
 												<div class="form-group">
 													<div class="selectgroup w-100 ">
 														<label class="selectgroup-item colorinput mr-1">
-															<input type="radio" id="MACHINE_LINE" name="MACHINE_LINE" value="" class="selectgroup-input" {{ isset($MACHINE_LINE) ? '' : "checked" }} >
-															<span class="selectgroup-button selectgroup-button-icon bg-white {{ $MACHINE_LINE != ""  ? '' : "bg-warning" }} text-info" >All</span>
+															<input type="radio" id="MACHINE_LINE" name="MACHINE_LINE" value="" class="selectgroup-input" {{ $MACHINE_CODE != "" ? '' : "checked" }} >
+															<span class="selectgroup-button selectgroup-button-icon " >All</span>
 														</label>
 														@foreach ($machineline as $index => $dataline)
 															<label class="selectgroup-item mr-1">
 																<input type="radio" id="MACHINE_LINE" name="MACHINE_LINE" value="{{$dataline->LINE_CODE}}"  class="selectgroup-input" {{ $MACHINE_LINE == $dataline->LINE_CODE ? 'checked' : "" }}>
-																<span class="selectgroup-button  bg-white {{ $MACHINE_LINE == $dataline->LINE_CODE ? 'bg-warning' : "" }} text-info" >{{$dataline->LINE_CODE}}</span>
+																<span class="selectgroup-button" >{{$dataline->LINE_CODE}}</span>
 															</label>
 														@endforeach
 													</div>
@@ -122,10 +136,6 @@
 <script>
 	$( document ).ready(function() {
 
-	$(".selectgroup-button").click(function(){
-					$('.bg-white').removeClass('bg-warning');
-					$(this).addClass("bg-warning");
-				});
 	 $("input[type='radio']").click(function(e){
 		 event.preventDefault();
 		 $("button[type='submit']").trigger("click");

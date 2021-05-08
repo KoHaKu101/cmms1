@@ -148,7 +148,11 @@ class MachineSysTemTableController extends Controller
   public function PmTemplateListEdit($UNID){
     $datapmtemplatelist = MachinePmTemplateList::where('UNID',$UNID)->first();
     $datapmtemplate     = MachinePmTemplate::where('UNID',$datapmtemplatelist->PM_TEMPLATE_UNID_REF)->first();
-    $datapmtemplatedetail = MachinePmTemplateDetail::where('PM_TEMPLATELIST_UNID_REF',$UNID)->get();
+    $datapmtemplatedetail = MachinePmTemplateDetail::select('*')->selectraw("Case When PM_TYPE_INPUT = 'number' then 'ข้อมูลตัวเลข'
+	  When PM_TYPE_INPUT = 'text' then 'ข้อมูลเป็นตัวอักษร'
+	  When PM_TYPE_INPUT = 'radio' then 'ข้อมูลเป็น ผ่าน ไม่ผ่าน'
+	  ELSE 'ไม่พบข้อมูล' END AS PM_TYPE")->where('PM_TEMPLATELIST_UNID_REF',$UNID)->get();
+
     return View('machine/add/system/edit',compact('datapmtemplatelist','datapmtemplatedetail','datapmtemplate'));
   }
   public function UpdatePMList(Request $request,$UNID) {
@@ -202,6 +206,7 @@ class MachineSysTemTableController extends Controller
     MachinePmTemplateDetail::insert([
       'PM_DETAIL_NAME'         => $request->PM_DETAIL_NAME,
       'PM_DETAIL_STD'           => $request->PM_DETAIL_STD,
+      'PM_TYPE_INPUT'           => $request->PM_TYPE_INPUT,
       'PM_TEMPLATELIST_UNID_REF' => $request->PM_TEMPLATELIST_UNID_REF,
       'CREATE_BY'              => Auth::user()->name,
       'CREATE_TIME'            => Carbon::now(),
@@ -213,6 +218,7 @@ class MachineSysTemTableController extends Controller
     MachinePmTemplateDetail::where('UNID',$request->UNID)->update([
       'PM_DETAIL_NAME'         => $request->PM_DETAIL_NAME,
       'PM_DETAIL_STD'           => $request->PM_DETAIL_STD,
+      'PM_TYPE_INPUT'           => $request->PM_TYPE_INPUT,
       'MODIFY_BY'              => Auth::user()->name,
       'MODIFY_TIME'            => Carbon::now(),
     ]);
