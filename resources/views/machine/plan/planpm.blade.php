@@ -32,15 +32,17 @@
 					<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 						<div class="col-md-8 ml-auto mr-auto">
 							<div class="form-group form-inline">
+							<form action="#" id="" name="" method="">
 								<label>แผน PM ล่วงหน้า</label>
 								<select class="form-control mx-2">
 									<option> โปรดระบุระยะเวลา </option>
+									@for ($i=date('Y'); $i < date('Y')+3; $i++)
+										<option> {{$i+0}} </option>
+									@endfor
 
-									@while ($year <= $planyear)
-										<option> {{\Carbon\Carbon::now()->addYears($year++)->format('Y')}} </option>
-									@endwhile
 								</select>
 								<button type="button" class="btn btn-primary btn-sm " id="reportpm" name="reportpm"><i class="icon-printer" style="font-size:16px"> Report </i></button>
+							</form>
 							</div>
 						</div>
 					</div>

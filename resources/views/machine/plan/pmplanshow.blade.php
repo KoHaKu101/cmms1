@@ -68,22 +68,18 @@
 					<div class="py-12">
 	        	<div class="container mt-2">
 							<a href="{{ route('pm.planlist') }}" class="btn btn-warning btn-sm my-2"><i class="fas fa-arrow-left"></i></a>
-							<a href="{{ route('pm.pdfform',$PM_PLANSHOW->UNID) }}" class="btn btn-warning btn-sm float-right my-2"><i class="fas fa-print fa-lg"> print</i></a>
-							{{-- <a href="{{ route('pm.planlist') }}" class="btn btn-warning btn-sm my-2"><i class="fas fa-arrow-left"></i></a> --}}
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card ">
 
-									@if (session('pmplanresult'))
 										@php
 										$resultinput = array();
 										$result = array();
-										foreach (session('pmplanresult') as $key => $value){
+										foreach ($PMPLANRESULT as $key => $value){
 											 $resultinput[$value->PM_MASTER_DETAIL_UNID] = $value->PM_MASTER_DETAIL_INPUT;
 											 $result[$value->PM_MASTER_DETAIL_UNID] = $value->PM_MASTER_DETAIL_RESULT;
 										}
 										@endphp
-									@endif
 										<form action="{{ route('pm.planlistsave')}}" method="post" id="FRM_PLANCHECK" name="FRM_PLANCHECK">
 											@csrf
 											<input type='hidden' class="form-control" id="PM_PLAN_UNID" name="PM_PLAN_UNID" value="{{$PM_PLANSHOW->UNID}}">
@@ -110,13 +106,10 @@
 													</div>
 													<div class="col-md-2">
 														<label>วันที่ทำการตรวจเช็ค</label>
-													@if (isset(session('pmplanresult')[0]['CHECK_DATE']) )
+
 															<input type="text" class="form-control form-control-sm my-1" id="CHECK_DATE" name="CHECK_DATE"
-															value='{{ session('pmplanresult')[0]['CHECK_DATE'] }}' readonly>
-													@else
-														<input type="date" class="form-control form-control-sm my-1" id="CHECK_DATE" name="CHECK_DATE"
-														value='{{date('Y-m-d')}}'>
-													@endif
+															value='{{$PMPLANRESULT_FIRST->CHECK_DATE}}' readonly>
+
 													</div>
 												</div>
 											</div>
@@ -179,12 +172,12 @@
 
 																			<label>ผลตรวจ</label>
 																			@if ($datasubitem->PM_TYPE_INPUT == 'number')
-																				<input class="{{ isset($resultinput[$datasubitem->UNID]) ? "form-control-plaintext" : "form-control" }} form-control-sm my-1 bg-secondary  text-white" placeholder="input" type="{{ isset($resultinput[$datasubitem->UNID]) ? "text" : "$datasubitem->PM_TYPE_INPUT" }}" id="INPUT_[{{$datasubitem->UNID}}]"
+																				<input class="form-control-sm my-1 form-control-plaintext bg-secondary text-white" placeholder="input" type="text" id="INPUT_[{{$datasubitem->UNID}}]"
 																				name="INPUT_[{{$datasubitem->UNID}}]"
-																				value="{{ isset($resultinput[$datasubitem->UNID]) ? $resultinput[$datasubitem->UNID] : "" }}"
-																				style="width:100px;" {{ isset($resultinput[$datasubitem->UNID])  ? "readonly" : "required"  }}  step="any">
+																				value="{{ $resultinput[$datasubitem->UNID] }}"
+																				style="width:100px;" readonly step="any">
 																			@elseif ($datasubitem->PM_TYPE_INPUT == 'radio')
-																				@if (isset($resultinput[$datasubitem->UNID]) && $resultinput[$datasubitem->UNID] == 1)
+																				@if ($resultinput[$datasubitem->UNID] == 1)
 																				<div>
 																					<label class="selectgroup-item">
 																						<input type="{{$datasubitem->PM_TYPE_INPUT}}" id="INPUT_[{{$datasubitem->UNID}}]" name="INPUT_[{{$datasubitem->UNID}}]" value="1" class="selectgroup-input selectgroup-input-check" checked disabled>
@@ -195,7 +188,7 @@
 																						<span class="selectgroup-button selectgroup-button-times selectgroup-button-icon my-1 "><i class="fa fa-times"></i></span>
 																					</label>
 																				</div>
-																				@elseif (isset($resultinput[$datasubitem->UNID]) && $resultinput[$datasubitem->UNID] == 0)
+																				@elseif ($resultinput[$datasubitem->UNID] == 0)
 																					<div>
 																					<label class="selectgroup-item">
 																						<input type="{{$datasubitem->PM_TYPE_INPUT}}" id="INPUT_[{{$datasubitem->UNID}}]" name="INPUT_[{{$datasubitem->UNID}}]" value="1" class="selectgroup-input selectgroup-input-check"  disabled >
@@ -220,25 +213,21 @@
 																				@endif
 
 																			@else
-																				<input class="{{ isset($resultinput[$datasubitem->UNID]) ? "form-control-plaintext" : "form-control" }} form-control-sm bg-secondary text-white my-1" type="text" id="INPUT_[{{$datasubitem->UNID}}] "
+																				<input class="form-control form-control-sm my-1" type="text" id="INPUT_[{{$datasubitem->UNID}}] "
 																				name="INPUT_[{{$datasubitem->UNID}}]"
-																				value="{{ isset($resultinput[$datasubitem->UNID]) ? $resultinput[$datasubitem->UNID] : "" }}"
-																				style="width:100px;" {{ isset($resultinput[$datasubitem->UNID]) ? "readonly" : "required"  }}>
+																				value="{{ $resultinput[$datasubitem->UNID] }}"
+																				style="width:100px;" readonly>
 																			@endif
 																		</li>
 																	</div>
 																	<div class="col-4 col-sm-2 col-md-2 col-lg-2">
 																		<li class="nav-item ">
 																			<label>ประเมิน</label>
-																			@if (isset($resultinput[$datasubitem->UNID]))
+
 																				<button type="button" class="btn btn-icon btn-round {{$result[$datasubitem->UNID] == 'PASS' ?'btn-success' : 'btn-danger'}} btn-sm my-1 mx-2" disabled>
 																					<i class="{{$result[$datasubitem->UNID] == 'PASS' ?'fa fa-check' : 'fa fa-times'}}"></i>
 																				</button>
-																			@else
-																					<button type="button" class="btn btn-icon btn-round btn-default btn-sm my-1 mx-2" disabled>
-																						<i class="fas fa-question"></i>
-																					</button>
-																			@endif
+
 																		</div>
 																	</li>
 																	</ul>
@@ -255,10 +244,8 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-
-											<label for="PM_MASTERPLPAN_REMARK">ข้อเสนอแนะ</label>
+											<label for="comment">ข้อเสนอแนะ</label>
 											<textarea class="form-control" id="PM_MASTERPLPAN_REMARK" name="PM_MASTERPLPAN_REMARK" rows="3">
-												{{isset(session('pmplanresult')[0]['PM_MASTERPLPAN_REMARK']) ? session('pmplanresult')[0]['PM_MASTERPLPAN_REMARK'] : ''}}
 											</textarea>
 										</div>
 											</div>
@@ -269,8 +256,8 @@
 													<label for="inlineinput" class="col-md-3 col-form-label">ผู้ทำการตรวจเช็ค</label>
 													<div class="col-md-9 p-0">
 														<input type="text" class="form-control input-full" id="PM_USER_CHECK" name="PM_USER_CHECK"
-														 placeholder="กรุณาใส่ชื่อ" value="{{isset(session('pmplanresult')[0]['PM_USER_CHECK']) ? session('pmplanresult')[0]['PM_USER_CHECK'] : ''}}"
-														 style="width:100px;" {{ isset(session('pmplanresult')[0]['PM_USER_CHECK']) ? "readonly" : "required"  }}>
+														 placeholder="กรุณาใส่ชื่อ" value="{{$PMPLANRESULT_FIRST->PM_USER_CHECK}}"
+														 style="width:100px;" readonly >
 													</div>
 												</div>
 
@@ -313,14 +300,21 @@
 							<div class="card-body">
 								<div class="row image-gallery">
 									@if (isset($PLAN_UPLOAD_IMG))
+
 										@foreach ($PLAN_UPLOAD_IMG as $INDEXIMG => $IMG)
 											<a href="{{asset('../../image/planresult/'.$IMG->UNID_REF.'/'.$IMG->FILE_NAME.'')}}"
 												class="col-6 col-md-2 my-1 mx--4 hv-100" id="{{$IMG->UNID}}" data-imgunid="{{$IMG->UNID}}">
 													<img src="{{asset('../../image/planresult/'.$IMG->UNID_REF.'/'.$IMG->FILE_NAME.'')}}"
 													 style="width: 290px;height: 100;left: 0px; top: 0px;" class="img-fluid">
 											</a>
+
   									@endforeach
 							    @endif
+
+
+
+
+
 								</div>
 							</div>
 					</div>

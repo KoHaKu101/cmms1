@@ -16,6 +16,7 @@ class PmListTable extends Migration
         Schema::create('PMCS_CMMS_PM_TEMPLATE_LIST', function (Blueprint $table) {
           $table->BigInteger('UNID')->primary();
           $table->BigInteger('PM_TEMPLATE_UNID_REF',false,false)->nullable();
+          $table->integer('PM_TEMPLATELIST_INDEX')->default(0);
           $table->string('PM_TEMPLATELIST_NAME',200)->nullable();
           $table->string('PM_TEMPLATELIST_CHECK',200)->nullable();
           $table->string('PM_TEMPLATELIST_POINT',200)->nullable();

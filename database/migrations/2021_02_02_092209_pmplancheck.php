@@ -13,26 +13,28 @@ class pmplancheck extends Migration
      */
     public function up()
     {
-        Schema::create('PMCS_CMMS_MACHINE_PM_CHECK', function (Blueprint $table) {
+        Schema::create('PMCS_CMMS_PM_RESULT', function (Blueprint $table) {
           $table->BigInteger('UNID')->primary();
           $table->BigInteger('PM_PLAN_UNID')->nullable();
 
 
           $table->date('PLAN_DATE')->nullable();
           $table->BigInteger('MACHINE_PLAN_UNID')->nullable();
-          $table->string('MACHINE_CODE')->nullable();
-          $table->string('MACHINE_LINE')->nullable();
-          $table->string('MACHINE_NAME')->nullable();
+          $table->string('MACHINE_CODE',50)->nullable();
+          $table->string('MACHINE_LINE',40)->nullable();
+          $table->string('MACHINE_NAME',500)->nullable();
           $table->BigInteger('PM_MASTER_UNID')->nullable();
-          $table->string('PM_MASTER_NAME')->nullable();
-          $table->string('PM_MASTER_DETAIL_NAME')->nullable();
+          $table->string('PM_MASTER_NAME',200)->nullable();
+          $table->string('PM_MASTER_DETAIL_NAME',200)->nullable();
           $table->BigInteger('PM_MASTER_DETAIL_UNID')->nullable();
-          $table->string('PM_MASTER_DETAIL_INPUT')->nullable();
-          $table->string('PM_MASTER_DETAIL_RESULT')->nullable();
+          $table->string('PM_MASTER_DETAIL_INPUT',50)->nullable();
+          $table->string('PM_MASTER_DETAIL_RESULT',50)->nullable();
           $table->string('PM_MASTER_STATUS')->nullable();
           $table->string('PM_MASTERPLPAN_REMARK')->nullable();
           $table->string('PM_USER_CHECK')->nullable();
           $table->date('CHECK_DATE')->nullable();
+          $table->string('PM_MASTER_DETAIL_VALUE_STD')->nullable();
+
 
 
           $table->string('CREATE_BY',200)->nullable();
@@ -50,6 +52,6 @@ class pmplancheck extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('PMCS_CMMS_MACHINE_PM_CHECK');
+        Schema::dropIfExists('PMCS_CMMS_PM_RESULT');
     }
 }

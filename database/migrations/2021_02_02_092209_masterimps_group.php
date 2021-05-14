@@ -22,6 +22,8 @@ class masterimpsgroup extends Migration
     {
         Schema::create('PMCS_CMMS_MASTER_IMPS_GP', function (Blueprint $table) {
           $table->BigInteger('UNID')->primary();
+          $table->integer('PM_TEMPLATELIST_INDEX')->default(0);
+
           $table->BigInteger('PM_TEMPLATELIST_UNID_REF')->nullable();
           $table->BigInteger('PM_TEMPLATE_UNID_REF')->nullable();
           $table->string('MACHINE_CODE',50)->nullable();

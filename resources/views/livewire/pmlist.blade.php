@@ -3,7 +3,12 @@
       @foreach ($machinepmplan as $number => $dataset)
         <div class="col-sm-6 col-md-3">
               <div class="card card-stats card-round">
-                <a href="{{ url('machine/pm/plancheck/'.$dataset->UNID) }}" style="text-decoration:none">
+                @if ($dataset->PLAN_STATUS != 'COMPLETE')
+                  <a href="{{ url('machine/pm/plancheck/'.$dataset->UNID) }}" style="text-decoration:none">
+                @else
+                  <a href="{{ url('machine/pm/planshow/'.$dataset->UNID) }}" style="text-decoration:none">
+                @endif
+
                   <div class="card-body ">
                     <div class="card-title bg-primary text-white text-center ">PM : {{ $dataset->PM_MASTER_NAME }}</div>
                     <div class="row align-items-center my-1">

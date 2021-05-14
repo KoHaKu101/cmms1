@@ -46,6 +46,7 @@ use App\Http\Controllers\PDF\MachineRepairPDFController;
 use App\Http\Controllers\PDF\UploadPdfController;
 use App\Http\Controllers\PDF\MachineSystemCheckPDFController;
 use App\Http\Controllers\PDF\MachineHistoryRepairPDFController;
+use App\Http\Controllers\Plan\MachinePlanPmFormPDF;
 //Model
 use App\Models\Machine\Machine;
 use App\Models\SettingMenu\Mainmenu;
@@ -222,13 +223,17 @@ Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableCont
   Route::post('machine/detailpoint/update/{UNID}'  ,[MachineDetailPointTableController::class,'Update']);
   Route::get('machine/detailpoint/delete/{UNID}'   ,[MachineDetailPointTableController::class,'Delete']) ->name('detailpoint.delete');
   //***************************** Plan ****************************************
-Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Index']) ->name('plan.pm');
+Route::get('machine/plan/planpm'                  ,[MachinePlanController::class,'PMPlanPDF']) ->name('plan.pm');
 Route::get('machine/pdf/plan/planpm'                  ,[PlanMachinePDF::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
 
 Route::get('machine/pm/planlist'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
 Route::post('machine/pm/planlist'                  ,[MachinePlanController::class,'PMPlanList']);
-Route::get('machine/pm/plancheck/{UNID}'                   ,[MachinePlanController::class,'PMPlanCheckForm']);
-Route::post('machine/pm/planlist/save'                  ,[MachinePlanController::class,'PMPlanListSave']) ->name('pm.planlistsave');
+Route::get('machine/pm/plancheck/{UNID}'                 ,[MachinePlanController::class,'PMPlanCheckForm']) ->name('pm.plancheck');
+Route::get('machine/pm/planshow/{UNID}'                  ,[MachinePlanController::class,'PMPlanShow']) ->name('pm.planshow');
+Route::post('machine/pm/planlist/save'                   ,[MachinePlanController::class,'PMPlanListSave']) ->name('pm.planlistsave');
+Route::post('machine/pm/planlist/upload'                 ,[MachinePlanController::class,'PMPlanListUpload']) ->name('pm.planlistupload');
+Route::post('machine/pm/planlist/deleteimg'              ,[MachinePlanController::class,'DeleteImg']) ->name('pm.deleteimg');
+Route::get('machine/pm/planlist/print/{UNID}'                  ,[MachinePlanPmFormPDF::class,'PDFForm']) ->name('pm.pdfform');
   // Route::get('machine/pm/planlist/search/{machineline?}'                  ,[MachinePlanController::class,'SearchPMplanlist']);
 //ในedit machine
   Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');

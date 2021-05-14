@@ -39,6 +39,7 @@ class pmlist extends Component{
         END AS classtext")->where('PLAN_YEAR',$PLAN_YEAR)
                           ->where('MACHINE_CODE','like',$MACHINE_CODE)
                           ->where('MACHINE_LINE','like',$MACHINE_LINE)
+                          ->orderBy('PLAN_STATUS','DESC')
                           ->orderby('PLAN_DATE','ASC')
                           ->orderBy('MACHINE_CODE','ASC')
                           ->paginate(20);
@@ -52,6 +53,7 @@ class pmlist extends Component{
       WHEN DATEDIFF(DAY, PLAN_DATE,GETDATE() ) > 7 THEN 'icon-warning'
       ELSE 'icon-success'
       END AS classtext")->where('PLAN_YEAR',$PLAN_YEAR)
+                        ->orderBy('PLAN_STATUS','DESC')
                         ->orderby('PLAN_DATE','ASC')
                         ->orderBy('MACHINE_CODE','ASC')
                         ->paginate(20);

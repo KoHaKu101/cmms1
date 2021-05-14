@@ -33,7 +33,7 @@
 	@livewireStyles
 </head>
 
-<body >
+<body>
 	<div class="wrapper sidebar_minimize">
 		@if ($errors->count() > 0)
 			<div id="Errorsystem" style="display:none;" class="alert alert-danger">

@@ -170,6 +170,8 @@ return [
 
          RealRashid\SweetAlert\SweetAlertServiceProvider::class,
          LaravelDaily\Invoices\InvoiceServiceProvider::class,
+         Intervention\Image\ImageServiceProvider::class,
+
 
 
 
@@ -239,6 +241,7 @@ return [
         'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
 
     ],

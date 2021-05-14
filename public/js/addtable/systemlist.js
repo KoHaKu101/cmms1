@@ -17,8 +17,9 @@ function deletecheckboxpm(id){
 };
 //***********************************************************************************
 //************************************* DeleteMachine UseTemplate *******************
-function deletemachinepm(mccode,id){
+function deletemachinepm(mccode,machine_unid,id){
 	var machinecode = mccode ;
+
 	Swal.fire({
 				title: 'ต้องการลบรายการเครื่องจักร'+machinecode+'มั้ย',
 				text: "หากทำการลบจะไม่สามารถกู้คืนกลับมาได้!",
@@ -31,7 +32,8 @@ function deletemachinepm(mccode,id){
 				if (result.isConfirmed) {
 						var mc = (mccode);
 						var unid = (id);
-						window.location.href = '/machine/pm/template/deletemachinepm/'+mc+'/'+unid;
+						var machine_unid = (machine_unid);
+						window.location.href = '/machine/pm/template/deletemachinepm/'+machine_unid+'/'+unid;
 				}
 			})
 };

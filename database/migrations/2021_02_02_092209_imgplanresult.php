@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PmDetailTable extends Migration
+class imgplanresult extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class PmDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('PMCS_CMMS_PM_TEMPLATE_DETAIL', function (Blueprint $table) {
+        Schema::create('PMCS_CMMS_UPLOAD_IMG', function (Blueprint $table) {
           $table->BigInteger('UNID')->primary();
-          $table->integer('PM_DETAIL_INDEX')->default(0);
-          $table->BigInteger('PM_TEMPLATELIST_UNID_REF',false,false)->nullable();
-          $table->string('PM_DETAIL_NAME',200)->nullable();
-          $table->string('PM_DETAIL_STD',50)->nullable();
-          $table->string('PM_TYPE_INPUT',50)->nullable();
-
+          $table->BigInteger('UNID_REF')->nullable();
+          $table->string('FILE_NAME',200)->nullable();
+          $table->string('FILE_EXT',200)->nullable();
 
           $table->string('CREATE_BY',200)->nullable();
           $table->string('CREATE_TIME',50)->nullable();
@@ -37,6 +34,6 @@ class PmDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('PMCS_CMMS_PM_TEMPLATE_DETAIL');
+        Schema::dropIfExists('PMCS_CMMS_UPLOAD_IMG');
     }
 }

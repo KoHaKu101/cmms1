@@ -79,6 +79,7 @@ class SysCheckController extends Controller
             foreach ($machinepmtemplatelist as $key => $datapmtemplatelist) {
               $datamasterimpsgroup = array(
                 'UNID'                      => $this->randUNID('PMCS_CMMS_MASTER_IMPS_GP'),
+                'PM_TEMPLATELIST_INDEX'     => $datapmtemplatelist->PM_TEMPLATELIST_INDEX,
                 'MACHINE_UNID'              => $machine->UNID,
                 'PM_TEMPLATELIST_UNID_REF'  => $datapmtemplatelist->UNID,
                 'MACHINE_CODE'              => $request->MACHINE_CODE,

@@ -19,7 +19,6 @@ use App\Models\Machine\MachineEMP;
 use App\Models\Machine\MachineRepair;
 use App\Models\Machine\MasterIMPS;
 use App\Models\Machine\MasterIMPSGroup;
-use App\Models\Machine\MachinePMCheckDetail;
 
 use App\Models\MachineaddTable\MachinePmTemplate;
 use App\Models\MachineaddTable\MachinePmTemplateDetail;
@@ -162,13 +161,16 @@ class MachineController extends Controller
     $machinepmtime               = MasterIMPS::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
     $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
     $machinepmtemplateremove     = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
-    $machinecheckpmdetail        = MachinePMCheckDetail::all();
     $machinerank                 = MachineRankTable::where('MACHINE_RANK_STATUS','!=','1')->get();
 
     $masterimps                  =  MasterIMPS::where('MACHINE_UNID',$dataset->UNID)->orderBy('CREATE_TIME','ASC')->get();
-    $masterimpsgroup             =  MasterIMPSGroup::all();
-    $pmlistdetail                =  MachinePmTemplateDetail::all();
-    return view('machine/assets/edit',compact('masterimps','masterimpsgroup','pmlistdetail','machinerank','machinecheckpmdetail','dataset','machineupload','machineupload1','machinepmtime'
+
+    $masterimpsgroup             =  MasterIMPSGroup::orderBy('PM_TEMPLATELIST_INDEX','ASC')->get();
+    $pmlistdetail                =  MachinePmTemplateDetail::orderBy('PM_DETAIL_INDEX','ASC')->get();
+
+
+
+    return view('machine/assets/edit',compact('masterimps','masterimpsgroup','pmlistdetail','machinerank','dataset','machineupload','machineupload1','machinepmtime'
       ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
   }
   public function Update(Request $request,$UNID){
