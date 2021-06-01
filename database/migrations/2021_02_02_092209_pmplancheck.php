@@ -33,9 +33,16 @@ class pmplancheck extends Migration
           $table->string('PM_MASTERPLPAN_REMARK')->nullable();
           $table->string('PM_USER_CHECK')->nullable();
           $table->date('CHECK_DATE')->nullable();
-          $table->string('PM_MASTER_DETAIL_VALUE_STD')->nullable();
-
-
+          $table->string('PM_MASTER_DETAIL_VALUE_STD',50)->nullable();
+          $table->float('PM_MASTER_DETAIL_VALUE_STD_MIN')->nullable();
+          $table->float('PM_MASTER_DETAIL_VALUE_STD_MAX')->nullable();
+          $table->integer('PM_MASTER_DETAIL_INDEX')->nullable();
+          $table->string('PM_MASTER_DETAIL_TYPE_INPUT',50)->nullable();
+          $table->BigInteger('PM_MASTER_LIST_UNID')->nullable();
+          $table->string('PM_MASTER_LIST_NAME',50)->nullable();
+          $table->integer('PM_MASTER_LIST_INDEX')->nullable();
+          $table->string('PM_STATUS_STD_MAX',50)->nullable();
+          $table->string('PM_STATUS_STD_MIN',50)->nullable();
 
           $table->string('CREATE_BY',200)->nullable();
           $table->string('CREATE_TIME',50)->nullable();

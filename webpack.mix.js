@@ -28,5 +28,8 @@ if (mix.inProduction()) {
 
    mix.js('node_modules/bootstrap4-toggle/js/bootstrap4-toggle.min.js','public/assets/js')
       .css('node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css','public/assets/css');
+
   mix.js('node_modules/echarts/dist/echarts.min.js','public/assets/js')
     .js('node_modules/echarts/dist/echarts.common.min.js','public/assets/js');
+ // mix.js('vendor/select2/select2/dist/js/select2.js','public/assets/js')
+ // .css('vendor/select2/select2/dist/css/select2.min.css','public/assets/css');

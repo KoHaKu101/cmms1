@@ -9,7 +9,8 @@ use App\Http\Middleware\VerifyCsrfToken;
 use Carbon\Carbon;
 use Auth;
 //******************** model ***********************
-use App\Models\MachineAddTable\MachineRepairTable;
+use App\Models\MachineAddTable\SelectMainRepair;
+use App\Models\MachineAddTable\SelectSubRepair;
 use App\Models\Machine\Machine;
 use App\Models\Machine\MachineEMP;
 use App\Models\Machine\MachineRepair;
@@ -49,10 +50,11 @@ class MachineRepairController extends Controller
 
   public function Create($MACHINE_CODE){
 
-      $dataset = MachineRepairTable::where('REPAIR_STATUS','=','9')->get();
+      $dataset = SelectMainRepair::where('STATUS','=','9')->get();
+      $data_emp = MachineEMP::select('EMP_CODE','EMP_NAME')->selectraw('dbo.decode_utf8(EMP_NAME) as EMP_NAME')->where('EMP_STATUS','=','0')->where('MACHINE_CODE','=',$MACHINE_CODE)->get();
       $datamachine = Machine::where('MACHINE_CODE','=',$MACHINE_CODE)->first();
 
-    return View('machine/repair/form',compact('dataset','datamachine'));
+    return View('machine/repair/formreq',compact('dataset','datamachine','data_emp'));
   }
   public function Store(Request $request){
 
@@ -208,4 +210,30 @@ class MachineRepairController extends Controller
               return Redirect()->back()-> with('success','ปิดเอกสารเสำเร็จ ');
           }
 
+  public function SearchEMPCode(Request $request){
+
+    $EMP_CODE = $request->EMP_CODE;
+      if($EMP_CODE == ''){
+         $data_emp = MachineEMP::orderby('EMP_CODE')->where('EMP_STATUS','=','0')->limit(5)->get();
+      }else{
+        $EMP_CODE = $request->EMP_CODE['term'];
+         $data_emp = MachineEMP::orderby('EMP_CODE')->where('EMP_STATUS','=','0')->where('EMP_CODE','like','%'.$EMP_CODE.'%')->paginate(5);
+      }
+
+      $response = array();
+      foreach($data_emp as $row_emp){
+         $response[] = array(
+              "id"=>$row_emp->EMP_CODE,
+              "text"=>$row_emp->EMP_CODE
+         );
+      }
+
+      return response()->json($response);
+  }
+
+  public function SelectEmp(Request $request){
+    $EMP_CODE = $request->EMP_CODE;
+    dd($EMP_CODE);
+
+  }
 }

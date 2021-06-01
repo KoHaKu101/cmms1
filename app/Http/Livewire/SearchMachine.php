@@ -19,12 +19,14 @@ class searchmachine extends Component{
 
   public function render(){
     if ($this->MACHINE_LINE != NULL) {
-      $machine = Machine::where('MACHINE_CODE','like', '%'.$this->search.'%')
+      $machine = Machine::select('*')->selectRaw('dbo.decode_utf8(MACHINE_NAME) as MACHINE_NAME_V2')
+                        ->where('MACHINE_CODE','like', '%'.$this->search.'%')
                         ->where('MACHINE_LINE',$this->MACHINE_LINE)
                         ->where('MACHINE_STATUS','!=','4')
                         ->orderBy('MACHINE_CODE','ASC')->paginate(10);
     }else {
-      $machine = Machine::where('MACHINE_CODE','like', '%'.$this->search.'%')
+      $machine = Machine::select('*')->selectRaw('dbo.decode_utf8(MACHINE_NAME) as MACHINE_NAME_V2')
+                        ->where('MACHINE_CODE','like', '%'.$this->search.'%')
                         ->where('MACHINE_LINE','like', '%'.$this->MACHINE_LINE.'%')
                         ->where('MACHINE_STATUS','!=','4')
                         ->orderBy('MACHINE_CODE','ASC')->paginate(10);

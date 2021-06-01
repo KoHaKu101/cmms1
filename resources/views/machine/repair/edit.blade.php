@@ -1,7 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','แจ้งซ่อม')
 @section('meta')
-{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+	<link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.min.css')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
@@ -87,7 +87,23 @@
 										</div>
 									</div>
 								</div>
-								@livewire('autoinputnameedit',['search'=>$dataset->EMP_CODE])
+								<div class="row">
+								<div class="col-md-6 col-lg-4">
+								  <div class="form-group has-error">
+								    <label for="EMP_NAME">รหัสพนักงาน</label>
+										<select name="EMP_CODE" id="EMP_CODE" class="form-control" data-live-search="true" title="Select Category">
+										</select>
+								  </div>
+								</div>
+
+								<div class="col-md-6 col-lg-4">
+								  <div class="form-group has-error">
+								    <label for="EMP_NAME">ชื่อพนักงาน	</label>
+								    <input type="text"  class="form-control" id="EMP_NAME" name="EMP_NAME"
+								    value="" readonly>
+								  </div>
+								</div>
+								</div>
 								<div class="row">
 										<div class="col-md-8 col-lg-4">
 											<div class="form-group has-error">
@@ -226,7 +242,39 @@
 {{-- ส่วนjava --}}
 @section('javascript')
 
-	<script>
+	<script src="{{ asset('assets/js/bootstrap-select.min.js') }}">
+	$(document).ready(function(){
+
+  $('#EMP_CODE').selectpicker();
+  load_data('EMP_NAME');
+  function load_data(emp_code = '')
+  {
+		var url = '/machine/repair/form/searchempname';
+		var data = {EMP_CODE:emp_code};
+    $.ajax({
+      url:url,
+      method:"GET",
+      data:data,
+      dataType:"json",
+      success:function(data)
+      {
+        var html = '';
+        for(var count = 0; count < data.length; count++)
+        {
+          html += '<option value="'+data[count].id+'">'+data[count].name+'</option>';
+        }
+          $('#EMP_CODE').html(html);
+          $('#EMP_CODE').selectpicker('refresh');
+      }
+    });
+  }
+
+  $(document).on('change', '#EMP_CODE', function(){
+    var emp_code = $('#EMP_CODE').val();
+    load_data('EMP_NAME', emp_code);
+  });
+
+});
 	var button = document.getElementById('button');
 	var unid = $('#UNID').val(); console.log(unid);
 	button.addEventListener('click', function(){

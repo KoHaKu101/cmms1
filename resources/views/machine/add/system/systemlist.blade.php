@@ -1,7 +1,6 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
 
 @endsection
 {{-- ส่วนหัว --}}
@@ -180,7 +179,7 @@
 
 </script>
 
-<script src="{{ asset('/js/addtable/systemlist.js') }}">
+<script src="{{ asset('assets/js/useinproject/addtable/systemlist.js') }}">
 
 </script>
 

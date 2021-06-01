@@ -19,7 +19,10 @@ class MachineHistoryRepairPDFController extends Fpdf
   public function RepairHistory($UNID)
     {
       $dataset = Machine::where('UNID',$UNID)->first();
-      $machinerepair = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
+      $machinerepair = MachineRepair::select('*')->selectraw('dbo.decode_utf8(MACHINE_NOTE) as MACHINE_NOTE
+                                                   ,dbo.decode_utf8(MACHINE_CAUSE) as MACHINE_CAUSE
+                                                   ')
+                                      ->where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                       ->where('MACHINE_DOCNO','like','%'.'RE'.'%')
                                       ->get();
       $count = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
@@ -81,5 +84,5 @@ class MachineHistoryRepairPDFController extends Fpdf
      exit;
 
   }
-  
+
 }

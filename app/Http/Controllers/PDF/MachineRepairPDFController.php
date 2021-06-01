@@ -30,6 +30,10 @@ class MachineRepairPDFController extends Controller
       $repair  = "PMCS_REPAIR_MACHINE";
       $dataset = MachineRepair::select($machine.'.MACHINE_CODE',$machine.'.MACHINE_NAME',$machine.'.MACHINE_LINE',$repair.'.MACHINE_DOCNO'
       ,$repair.'.MACHINE_DOCDATE',$repair.'.MACHINE_TIME',$repair.'.MACHINE_NOTE',$repair.'.MACHINE_CAUSE')
+                              ->selectraw('dbo.decode_utf8(PMCS_REPAIR_MACHINE.MACHINE_NOTE) as MACHINE_NOTE
+                                           ,dbo.decode_utf8(PMCS_REPAIR_MACHINE.MACHINE_CAUSE) as MACHINE_CAUSE
+                                           ,dbo.decode_utf8(PMCS_MACHINE.MACHINE_NAME) as MACHINE_NAME
+                                           ')
                                 ->leftJoin($machine,$machine.'.MACHINE_CODE',$repair.'.MACHINE_CODE')
                                 ->where('PMCS_REPAIR_MACHINE.UNID',$UNID)->first();
 

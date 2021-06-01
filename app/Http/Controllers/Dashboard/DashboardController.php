@@ -22,20 +22,13 @@ class DashboardController extends Controller
   public function Dashboard(){
     //dashboardสรุป
     $dataset = Machine::select('MACHINE_CHECK')->first();
-    // $dataprocess = Machine::select('MACHINE_CHECK')->where('MACHINE_CHECK','=','2')->count();
-    // $datawait = Machine::select('MACHINE_CHECK')->where('MACHINE_CHECK','=','1')->count();
     $datarepair = MachineRepair::select('CLOSE_STATUS')->first();
 
 
     //dashboardเครื่องจักรLINE
     $data_line = Machine::select('MACHINE_LINE')->first();
-    // $data_line2 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L2')->count();
-    // $data_line3 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L3')->count();
-    // $data_line4 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L4')->count();
-    // $data_line5 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L5')->count();
-    // $data_line6 = Machine::select('MACHINE_LINE')->where('MACHINE_LINE','L6')->count();
     //แจ้งซ่อม
-    $datarepairlist = MachineRepair::select('MACHINE_CODE','MACHINE_TYPE','MACHINE_DOCDATE','MACHINE_CAUSE')
+    $datarepairlist = MachineRepair::select('MACHINE_CODE','MACHINE_TYPE','MACHINE_DOCDATE')->selectraw('dbo.decode_utf8(MACHINE_CAUSE) as MACHINE_CAUSE')
                                     ->where('CLOSE_STATUS','=','9')->orderBy('MACHINE_DOCDATE','DESC')->take(9)->get();
     // dd($data_set);
     return View('machine/dashboard/dashboard',compact('datarepairlist','dataset','data_line','datarepair'));

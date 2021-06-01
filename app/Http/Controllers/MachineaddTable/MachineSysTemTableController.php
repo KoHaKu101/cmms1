@@ -139,8 +139,8 @@ class MachineSysTemTableController extends Controller
       $count = 1;
       $rowcount = MachinePmTemplateList::selectraw('max(PM_TEMPLATELIST_INDEX)count')->where('PM_TEMPLATE_UNID_REF',$request->PM_TEMPLATE_UNID_REF)->first();
 
-      if ($rowcount->count > 0 ) {
-        $count = $rowcount->count+1;
+      if ($rowcount->count() > 0 ) {
+        $count = $rowcount->count()+1;
       }
 
     MachinePmTemplateList::insert([
@@ -237,21 +237,24 @@ class MachineSysTemTableController extends Controller
       ]);
     $count = 1;
     $rowcount = MachinePmTemplateDetail::selectraw('max(PM_DETAIL_INDEX)count')->where('PM_TEMPLATELIST_UNID_REF',$request->PM_TEMPLATELIST_UNID_REF)->first();
-    if ($rowcount->count > 0) {
-      $count = $rowcount->count+1;
+    if ($rowcount->count() > 0) {
+      $count = $rowcount->count()+1;
     }
     $PM_DETAIL_STD_MAX = $request->PM_DETAIL_STD_MAX != NULL ? $request->PM_DETAIL_STD_MAX : 0;
     $PM_DETAIL_STD_MIN = $request->PM_DETAIL_STD_MIN != NULL ? $request->PM_DETAIL_STD_MIN : 0;
-
+    $PM_DETAIL_STATUS_MAX = $request->PM_DETAIL_STATUS_MAX == 'true' ? 'true' : 'false' ;
+    $PM_DETAIL_STATUS_MIN = $request->PM_DETAIL_STATUS_MIN == 'true' ? 'true' : 'false' ;
     MachinePmTemplateDetail::insert([
       'PM_DETAIL_NAME'           => $request->PM_DETAIL_NAME,
       'PM_DETAIL_STD'            => $request->PM_DETAIL_STD,
       'PM_TYPE_INPUT'            => $request->PM_TYPE_INPUT,
       'PM_TEMPLATELIST_UNID_REF' => $request->PM_TEMPLATELIST_UNID_REF,
       'PM_DETAIL_INDEX'          => $count,
-      'PM_DETAIL_STD_MIN'        => $PM_DETAIL_STD_MAX,
-      'PM_DETAIL_STD_MAX'        => $PM_DETAIL_STD_MIN,
+      'PM_DETAIL_STD_MIN'        => $PM_DETAIL_STD_MIN,
+      'PM_DETAIL_STD_MAX'        => $PM_DETAIL_STD_MAX,
       'PM_DETAIL_UNIT'           => $request->PM_DETAIL_UNIT,
+      'PM_DETAIL_STATUS_MAX'     => $PM_DETAIL_STATUS_MAX,
+      'PM_DETAIL_STATUS_MIN'     => $PM_DETAIL_STATUS_MIN,
       'CREATE_BY'                => Auth::user()->name,
       'CREATE_TIME'              => Carbon::now(),
       'UNID'                     => $this->randUNID('PMCS_CMMS_PM_TEMPLATE_DETAIL'),
@@ -259,16 +262,19 @@ class MachineSysTemTableController extends Controller
     return Redirect()->back()->with('success','เพิ่มระบบ สำเร็จ');
   }
   public function PmTemplateDetailUpdate(Request $request){
-
     $PM_DETAIL_STD_MAX = $request->PM_DETAIL_STD_MAX != NULL ? $request->PM_DETAIL_STD_MAX : 0;
     $PM_DETAIL_STD_MIN = $request->PM_DETAIL_STD_MIN != NULL ? $request->PM_DETAIL_STD_MIN : 0;
-    MachinePmTemplateDetail::where('UNID',$request->PMTEMPLATEDETAIL_UNID)->update([
+    $PM_DETAIL_STATUS_MAX = $request->PM_DETAIL_STATUS_MAX == 'true' ? 'true' : 'false' ;
+    $PM_DETAIL_STATUS_MIN = $request->PM_DETAIL_STATUS_MIN == 'true' ? 'true' : 'false' ;
+    MachinePmTemplateDetail::where('UNID',$request->DETAIL_UNID)->update([
       'PM_DETAIL_NAME'         => $request->PM_DETAIL_NAME,
       'PM_DETAIL_STD'          => $request->PM_DETAIL_STD,
       'PM_TYPE_INPUT'          => $request->PM_TYPE_INPUT,
       'PM_DETAIL_UNIT'         => $request->PM_DETAIL_UNIT,
       'PM_DETAIL_STD_MIN'      => $PM_DETAIL_STD_MIN,
       'PM_DETAIL_STD_MAX'      => $PM_DETAIL_STD_MAX,
+      'PM_DETAIL_STATUS_MAX'     => $PM_DETAIL_STATUS_MAX,
+      'PM_DETAIL_STATUS_MIN'     => $PM_DETAIL_STATUS_MIN,
       'MODIFY_BY'              => Auth::user()->name,
       'MODIFY_TIME'            => Carbon::now(),
     ]);

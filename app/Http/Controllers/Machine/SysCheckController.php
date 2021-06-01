@@ -9,23 +9,17 @@ use Carbon\Carbon;
 use Auth;
 //******************** model ***********************
 use App\Models\Machine\Machine;
-use App\Models\Machine\MachinePMCheck;
 use App\Models\Machine\MasterIMPS;
 use App\Models\Machine\MachinePlanPm;
-
-use App\Models\Machine\MachinePMCheckDetailStore;
 use App\Models\Machine\MasterIMPSGroup;
 use App\Models\SettingMenu\MailSetup;
 
 use App\Models\MachineAddTable\MachinePmTemplateList;
-use App\Models\MachineAddTable\MachinePmTemplateDetail;
 use App\Models\MachineAddTable\MachinePmTemplate;
 //***************** Controller ************************
 use App\Http\Controllers\Plan\MachinePlanController;
 
 //************** Package form github ***************
-use App\Exports\MachineExport;
-use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -155,27 +149,29 @@ class SysCheckController extends Controller
         $updateresult = MasterIMPS::select('PM_LAST_DATE')->where('PM_TEMPLATE_UNID_REF',$request->pmmaster_template_unid)
                                     ->where('MACHINE_UNID',$request->machine_unid)
                                     ->update(['PM_LAST_DATE' => $request->pmmaster_template_lastdate]);
-        // if ($updateresult == 1) {
-        //   $datamasterimps     = MasterIMPS::select('PM_LAST_DATE')->where('PM_TEMPLATE_UNID_REF',$request->pmmaster_template_unid)
-        //                                   ->where('MACHINE_UNID',$request->machine_unid)->first();
-        //   $totalloop          = 0;
-        //   $totalmonth         = MailSetup::select('AUTOPLAN')->first();
-        //   $preiodmonth        = $request->machine_rank_month;
-        //   $pm_lastdate        = $datamasterimps->PM_LAST_DATE;
-        //   $machine_unid       = $request->machine_unid;
-        //
-        //   for ($i = 0; $i < $totalmonth->AUTOPLAN ; $i++) {
-        //       if (($i%$preiodmonth == 0)) {
-        //         $totalloop++;
-        //         $pm_lastdate    = Carbon::parse($pm_lastdate)->addMonth($preiodmonth);
-        //         $pm_plandate    = $pm_lastdate;
-        //         if ($machine_unid != "" && $request->pmmaster_template_unid != "") {
-        //           $saveplanpm   = new MachinePlanController;
-        //           $saveplanpm->EditDatePlan($pm_plandate,$machine_unid,$request->pmmaster_template_unid);
-        //         }
-        //       }
-        //   }
-        // }
+        if ($updateresult == 1) {
+          $datamasterimps     = MasterIMPS::select('PM_LAST_DATE')->where('PM_TEMPLATE_UNID_REF',$request->pmmaster_template_unid)
+                                          ->where('MACHINE_UNID',$request->machine_unid)->first();
+          $totalloop          = 0;
+          $totalmonth         = MailSetup::select('AUTOPLAN')->first();
+          $preiodmonth        = $request->machine_rank_month;
+          $pm_lastdate        = $datamasterimps->PM_LAST_DATE;
+          $machine_unid       = $request->machine_unid;
+          MachinePlanPm::Where('MACHINE_UNID','=',$machine_unid)
+                      ->where('PM_MASTER_UNID','=',$request->pmmaster_template_unid)
+                      ->where('PLAN_DATE','>',Carbon::now())->delete();
+          for ($i = 0; $i < $totalmonth->AUTOPLAN ; $i++) {
+              if (($i%$preiodmonth == 0)) {
+                $totalloop++;
+                $pm_lastdate    = Carbon::parse($pm_lastdate)->addMonth($preiodmonth);
+                $pm_plandate    = $pm_lastdate;
+                if ($machine_unid != "" && $request->pmmaster_template_unid != "") {
+                  $saveplanpm   = new MachinePlanController;
+                  $saveplanpm->updateDatePlan($pm_plandate,$machine_unid,$request->pmmaster_template_unid);
+                }
+              }
+          }
+        }
 
 
       return response()->json();
