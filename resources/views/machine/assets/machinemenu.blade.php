@@ -93,15 +93,7 @@
 
               </div>
               <!-- /portfolio Grid-->
-              <!--portfolio loadMore-->
-              <div id="js-loadMore-juicy-projects" class="cbp-l-loadMore-button">
-                  <a href="loadMorePortfolio.html" class="cbp-l-loadMore-link hvr-underline-from-center text-uppercase" rel="nofollow">
-                      <span class="cbp-l-loadMore-defaultText">load more</span>
-                      <span class="cbp-l-loadMore-loadingText">loading...</span>
-                      <span class="cbp-l-loadMore-noMoreLoading">not load more</span>
-                  </a>
-              </div>
-              <!-- /portfolio loadMore-->
+
           </div>
         </div>
       </div>

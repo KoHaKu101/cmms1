@@ -82,3 +82,13 @@ function Footer()
   }
 }
 // เป็นส่วนที่ไว้ตั้งค่าส่วนหัวและท้าย หรือ ส่วนที่จะไม่มีการรับข้อมูลมาหรือเกิดการเปลี่ยนแปลง
+
+*********************************** pass parameter***************************************
+in model 
+private $UNID;
+  function Header($title = NULL){
+    if ($title){
+       $this->UNID = $title ;
+     }
+in controller
+     $this->pdf->header($UNID);

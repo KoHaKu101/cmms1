@@ -4,28 +4,32 @@
       <div class="card-header bg-primary text-white" id="headingOne" >
         <div class="col-md-12" id="datadate">
           <div class="row">
-            <div class="col-md-3" id="clickshowpmlist" data-toggle="collapse" data-target="#{{$datamasterimps->PM_TEMPLATE_UNID_REF}}" aria-expanded="false" aria-controls="collapseOne" role="button" >
+            <div class="col-md-3 col-lg-3" id="clickshowpmlist" data-toggle="collapse" data-target="#{{$datamasterimps->PM_TEMPLATE_UNID_REF}}"
+              aria-expanded="false" aria-controls="collapseOne" role="button" >
               <div class="fas fa-bookmark my-3" > Type: {{$datamasterimps->PM_TEMPLATE_NAME}}</div>
             </div>
-            <div class="col-md-4 form-inline" >
+            <div class="col-md-6 col-lg-4 form-inline" >
               ตรวจเช็คล่าสุด
-                <input type="date" style="width:150px" class="form-control form-control-sm ml-1 changedate" id="PM_LAST_DATE"  name="PM_LAST_DATE" value="{{ $datamasterimps->PM_LAST_DATE != NULL ? \Carbon\Carbon::parse($datamasterimps->PM_LAST_DATE)->toDateString() : '' }}" rel="{{ $datamasterimps->UNID }}">
+                <input type="date" style="width:150px" class="form-control form-control-sm ml-1 changedate" data-dataunidpmlist="{{$datamasterimps->PM_TEMPLATE_UNID_REF}}"
+                id="PM_LAST_DATE_{{$datamasterimps->PM_TEMPLATE_UNID_REF}}"  name="PM_LAST_DATE"
+                 value="{{ $dataset->rank != NULL ? \Carbon\Carbon::parse($datamasterimps->PM_LAST_DATE)->toDateString() : '' }}">
+                 <button type="button" class="btn btn-success btn-sm mx-1" id="savedate" ><i class="fas fa-save fa-lg" style="color:white"></i></button>
+
             </div>
 
-            <div class="col-md-4 form-inline" >
-              <button type="button" class="btn btn-success btn-sm btn-link mx-1" id="savedate" ><i class="fas fa-save fa-lg" style="color:white"></i></button>
-
+            <div class="col-md-6 col-lg-3 form-inline" >
                ครั้งถัดไป
-                <input type="text" class="form-control form-control-sm ml-1" id="PM_NEXT_DATE" style="width:150px" value="{{ $datamasterimps->PM_LAST_DATE != NULL ? \Carbon\Carbon::parse($datamasterimps->PM_LAST_DATE)->addMonth($rank)->format('d/m/Y') : '' }}" name="PM_NEXT_DATE" rel="{{ $datamasterimps->UNID }}" readonly>
+                <input type="text" class="form-control form-control-sm ml-1" id="PM_NEXT_DATE_{{$datamasterimps->PM_TEMPLATE_UNID_REF}}" name="PM_NEXT_DATE" style="width:150px"
+                value="{{ $dataset->rank != NULL ? \Carbon\Carbon::parse($datamasterimps->PM_LAST_DATE)->addMonth($rank)->format('d/m/Y') : '' }}" readonly>
             </div>
-            <div class="col-md-1 mt-2 text-center" id="clickshowpmlist" data-toggle="collapse" data-target="#{{$datamasterimps->PM_TEMPLATE_UNID_REF}}" aria-expanded="false" aria-controls="collapseOne" role="button">
+            <div class="col-md-2 col-lg-2 mt-2 text-center" id="clickshowpmlist" data-toggle="collapse" data-target="#{{$datamasterimps->PM_TEMPLATE_UNID_REF}}" aria-expanded="false" aria-controls="collapseOne" role="button">
               <i class="fas fa-caret-down "></i>
-              <input type="hidden" id="dataunidpmlist" name="" value="{{$datamasterimps->PM_TEMPLATE_UNID_REF}}">
+              <input type="hidden" id="dataunidpmlist" name="dataunidpmlist" value="{{$datamasterimps->PM_TEMPLATE_UNID_REF}}">
             </div>
           </div>
         </div>
       </div>
-      <div id="{{$datamasterimps->PM_TEMPLATE_UNID_REF}}" data-parent="#accordionExample" class="collapse" aria-labelledby="headingOne" wire:ignore.self>
+      <div id="{{$datamasterimps->PM_TEMPLATE_UNID_REF}}" data-parent="#accordionExample" class="collapse {{$data+1 == 1 ? 'show' : ''}}" aria-labelledby="headingOne" wire:ignore.self>
         <div class="card-body">
           <div class="col-md-12 col-lg-12">
             <div class="row">
@@ -55,16 +59,7 @@
                 </table>
               </div>
               <div class="table col-md-6 col-lg-6" >
-                {{-- <input type="hidden" id="count" value="{{ $data+1 }}">
-                <table class="table table-sm table-bordered pmlistdetailshow{{ $data+1 }}">
-                    <thead>
-                      <tr>
-                        <th colspan="2">รายละเอียด</th>
-                      </tr>
-                    </thead>
-                    <tbody >
-                    </tbody>
-                  </table> --}}
+
 
                 @foreach ($masterimpsgroup->where('PM_TEMPLATE_UNID_REF',$datamasterimps->PM_TEMPLATE_UNID_REF)->where('MACHINE_CODE',$MACHINE_CODE) as $datamasterimpsgroupsub)
                 <table class="table table-sm table-bordered pmlistdetail" id="{{ $datamasterimpsgroupsub->PM_TEMPLATELIST_UNID_REF}}-1">

@@ -1,7 +1,6 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
 
 @endsection
 {{-- ส่วนหัว --}}
@@ -85,6 +84,7 @@
 																		</tr>
 																	</thead>
 																	<tbody>
+
 																		@foreach ($datapmtemplatelist as $key => $dataitem)
 																			<tr>
 																				<td class="text-center"> {{ $key+1 }}</td>
@@ -129,21 +129,24 @@
 																		</tr>
 																	</thead>
 																	<tbody>
-																		@foreach ($datamachine as $key => $datarow)
-																			<tr>
-																				<td class="text-center"> {{ $key+1 }}</td>
-																				<td>{{$datarow->MACHINE_CODE}}</td>
-																				<td>{{$datarow->MACHINE_NAME}}</td>
-																				<td>{{$datarow->MACHINE_LINE}}</td>
-																				<td>
-																					<div class="form-inline">
-																						<button class="btn btn-danger btn-link btn-sm my-1" type="button" onclick="deletemachinepm('{{$datarow->MACHINE_CODE}}','{{ $dataitem->PM_TEMPLATE_UNID_REF }}')">
-																							<i class="fas fa-trash" style="font-size:20px"> </i>
-																						</button>
-																					</div>
-																				</td>
-																			</tr>
-																		@endforeach
+																		@if ($datamachine)
+																			@foreach ($datamachine as $key => $datarow)
+																				<tr>
+																					<td class="text-center"> {{ $key+1 }}</td>
+																					<td>{{$datarow->MACHINE_CODE}}</td>
+																					<td>{{$datarow->MACHINE_NAME}}</td>
+																					<td>{{$datarow->MACHINE_LINE}}</td>
+																					<td>
+																						<div class="form-inline">
+																							<button class="btn btn-danger btn-link btn-sm my-1" type="button"
+																							 onclick="deletemachinepm('{{ $datarow->MACHINE_CODE }}','{{$datarow->MACHINE_UNID}}','{{ $dataitem->PM_TEMPLATE_UNID_REF }}')">
+																								<i class="fas fa-trash" style="font-size:20px"> </i>
+																							</button>
+																						</div>
+																					</td>
+																				</tr>
+																			@endforeach
+																		@endif
 																	</tbody>
 																</table>
 															</div>
@@ -176,7 +179,7 @@
 
 </script>
 
-<script src="{{ asset('/js/addtable/systemlist.js') }}">
+<script src="{{ asset('assets/js/useinproject/addtable/systemlist.js') }}">
 
 </script>
 

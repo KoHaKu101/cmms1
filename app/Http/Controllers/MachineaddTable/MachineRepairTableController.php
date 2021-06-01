@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 //******************** model ***********************
-use App\Models\MachineAddTable\MachineRepairTable;
+use App\Models\MachineAddTable\SelectMainRepair;
+use App\Models\MachineAddTable\SelectSubRepair;
+use App\Models\MachineAddTable\MachineStatusTable;
 use App\Models\Machine\Protected;
 //******************** github **********************
 use RealRashid\SweetAlert\Facades\Alert;
@@ -35,59 +37,120 @@ class MachineRepairTableController extends Controller
     return $number;
   }
 
-  public function Index(){
+  public function Index($UNID = NULL){
 
-    $dataset = MachineRepairTable::paginate(10);
+    $CHECK_UNID = isset($UNID) ? $UNID : '%';
+    $DATA_SELECTMAINREPAIR = SelectMainRepair::paginate(10);
+    $MACHINESTATUS               = MachineStatusTable::where('STATUS','=','9')->get();
+    $SELECTMAINREPAIR_FIRST = '';
+    if ($CHECK_UNID != '%' ) {
+      $SELECTMAINREPAIR_FIRST = SelectMainRepair::where('UNID','=',$CHECK_UNID)->first();
+    }
 
-    return View('machine/add/repair/repairlist',compact('dataset'));
+    $DATA_SELECTSUBREPAIR = SelectSubRepair::where('REPAIR_MAINSELECT_UNID','like',$CHECK_UNID)->paginate(10);
+    $OPEN = isset($UNID) ? 1 : 0;
+    return View('machine/add/repair/repairlist',compact('DATA_SELECTMAINREPAIR','DATA_SELECTSUBREPAIR','MACHINESTATUS'
+    ,'OPEN','SELECTMAINREPAIR_FIRST'));
   }
 
-  public function Store(Request $request){
-
-    $validated = $request->validate([
-      'REPAIR_CODE'           => 'required|unique:PMCS_CMMS_REPAIR_CHECKBOX|max:50',
-      'REPAIR_NAME'           => 'required|unique:PMCS_CMMS_REPAIR_CHECKBOX|max:200',
-      ],
-      [
-      'REPAIR_CODE.required'  => 'กรุณราใส่รหัส',
-      'REPAIR_CODE.unique'    => 'มีรหัสแล้ว',
-      'REPAIR_NAME.required'  => 'กรุณาใส่ชื่อรายการซ่อม',
-      'REPAIR_NAME.unique'    => 'มีรายการซ่อมชนิดนี้แล้ว'
-      ]);
-    MachineRepairTable::insert([
-      'REPAIR_CODE'     => $request->REPAIR_CODE,
-      'REPAIR_NAME'     => $request->REPAIR_NAME,
-      'REPAIR_NOTE'     => $request->REPAIR_NOTE,
-      'REPAIR_STATUS'   => $request->REPAIR_STATUS,
-      'CREATE_BY'       => Auth::user()->name,
-      'CREATE_TIME'     => Carbon::now(),
-      'UNID'            => $this->randUNID('PMCS_CMMS_REPAIR_CHECKBOX'),
+  public function Save(Request $request){
+    $STATUS = isset($request->STATUS) ? $request->STATUS : 1;
+    $REMARK = isset($request->REMARK) ? $request->REMARK : '';
+    $count = 1;
+    $rowcount = SelectMainRepair::selectraw('max(REPAIR_MAINSELECT_INDEX)count')->first();
+    if ($rowcount->count() > 0 ) {
+      $count = $rowcount->count()+1;
+    }
+   SelectMainRepair::insert([
+      'UNID'=>  $this->randUNID('PMCS_CMMS_SELECT_MAIN_REPAIR')
+      ,'REPAIR_MAINSELECT_NAME'=> $request->REPAIR_MAINSELECT_NAME
+      ,'REPAIR_MAINSELECT_INDEX'=> $count
+      ,'REMARK'=> $REMARK
+      ,'STATUS'=> $STATUS
+      ,'CREATE_BY'=> Auth::user()->name
+      ,'CREATE_TIME'=> Carbon::now()
+      ,'MODIFY_BY'=> Auth::user()->name
+      ,'MODIFY_TIME'=> Carbon::now()
     ]);
-    $dataset = MachineRepairTable::paginate(10);
-    return Redirect()->route('machinerepairtable.list',compact('dataset'))->with('success','บันทึก สำเร็จ');
+    alert()->success('success','บันทึกสำเร็จ')->autoClose($milliseconds = 1000);
+    return Redirect()->back();
   }
 
-  public function Edit($UNID) {
-    $dataset = MachineRepairTable::where('UNID','=',$UNID)->first();
-    return view('machine/add/repair/edit',compact('dataset'));
-}
-public function Update(Request $request,$UNID) {
+  public function Update(Request $request) {
+    $UNID = $request->REPAIR_MAINSELECT_UNID;
+    $STATUS = isset($request->STATUS) ? $request->STATUS : 1;
+    $REMARK = isset($request->REMARK) ? $request->REMARK : '';
 
-    $dataset = MachineRepairTable::where('UNID',$UNID)->update([
-    'REPAIR_CODE'     => $request->REPAIR_CODE,
-    'REPAIR_NAME'     => $request->REPAIR_NAME,
-    'REPAIR_NOTE'     => $request->REPAIR_NOTE,
-    'REPAIR_STATUS'   => $request->REPAIR_STATUS,
-    'MODIFY_BY'       => Auth::user()->name,
-    'MODIFY_TIME'     => Carbon::now(),
-  ]);
+      SelectMainRepair::where('UNID',$UNID)->update([
+         'REPAIR_MAINSELECT_NAME'=> $request->REPAIR_MAINSELECT_NAME
+        ,'REMARK'=> $REMARK
+        ,'STATUS'=> $STATUS
+        ,'MODIFY_BY'=> Auth::user()->name
+        ,'MODIFY_TIME'=> Carbon::now()
+    ]);
+      SelectSubRepair::where('REPAIR_MAINSELECT_UNID','=',$UNID)->update([
+        'STATUS'=> $STATUS
+      ]);
+    return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
+  }
 
-  return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
+  public function Delete(Request $request) {
 
-}  public function Delete($UNID) {
+    $UNID = $request->UNID;
+    $row_count = SelectSubRepair::where('REPAIR_MAINSELECT_UNID','=',$UNID)->count();
+    if ($row_count > 0) {
+      alert()->error('ไม่สามารถลบได้ มีข้อมูลที่ใช้งานอยู่');
+      return Response()->json(['res'=>false,'title'=> 'ไม่สามารถลบได้ มีข้อมูลที่ใช้งานอยู่','icon'=>'error']);
+    }
+      SelectMainRepair::where('UNID','=',$UNID)->delete();
+    return Response()->json(['res'=>true,'title'=> 'ลบสำเร็จ สำเร็จ','icon'=>'success']);
+  }
 
-    $dataset = MachineRepairTable::where('UNID','=',$UNID)->delete();
+  public function SubSave(Request $request){
+    $STATUS = isset($request->STATUS) ? $request->STATUS : 1;
+    $REMARK = isset($request->REMARK) ? $request->REMARK : '';
+    $count = 1;
+    $MAINSELECT_UNIDREF = $request->REPAIR_MAINSELECT_UNIDREF;
+    $rowcount = SelectSubRepair::selectraw('max(REPAIR_SUBSELECT_INDEX)count')->first();
+    if ($rowcount->count() > 0 ) {
+      $count = $rowcount->count()+1;
+    }
+   SelectSubRepair::insert([
+      'UNID'=>$this->randUNID('PMCS_CMMS_SELECT_SUB_REPAIR')
+      ,'REPAIR_MAINSELECT_UNID'=> $MAINSELECT_UNIDREF
+      ,'REPAIR_SUBSELECT_NAME'=> $request->REPAIR_SUBSELECT_NAME
+      ,'REPAIR_SUBSELECT_INDEX'=> $count
+      ,'REMARK'=> $REMARK
+      ,'STATUS'=> $STATUS
+      ,'STATUS_MACHINE'=> $request->STATUS_MACHINE
+      ,'CREATE_BY'=> Auth::user()->name
+      ,'CREATE_TIME'=> Carbon::now()
+      ,'MODIFY_BY'=> Auth::user()->name
+      ,'MODIFY_TIME'=> Carbon::now()
+    ]);
+    return Redirect()->back()->with('success','บันทึกสำเร็จ');
+  }
 
-    return Redirect()->back()->with('success','ลบสำเร็จ สำเร็จ');
-}
+  public function SubUpdate(Request $request) {
+
+    $UNID = $request->REPAIR_SUBSELECT_UNIDREF;
+    $STATUS = isset($request->STATUS) ? $request->STATUS : 1;
+
+      SelectSubRepair::where('UNID',$UNID)->update([
+        'REPAIR_SUBSELECT_NAME'=> $request->REPAIR_SUBSELECT_NAME
+        ,'STATUS'=> $STATUS
+        ,'STATUS_MACHINE'=> $request->STATUS_MACHINE
+        ,'MODIFY_BY'=> Auth::user()->name
+        ,'MODIFY_TIME'=> Carbon::now()
+    ]);
+
+    return Redirect()->back()->with('success','อัพเดทรายการสำเร็จ');
+  }
+  
+  public function SubDelete(Request $request) {
+
+    $UNID = $request->UNID;
+      SelectSubRepair::where('UNID','=',$UNID)->delete();
+    return Response()->json(['res'=>true,'title'=> 'ลบสำเร็จ สำเร็จ','icon'=>'success']);
+  }
 }

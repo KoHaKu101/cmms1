@@ -1,8 +1,7 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-{{-- <link rel="stylesheet" href="{{ asset('assets/icofont/icofont.min.css') }}"> --}}
-<script type="text/javascript" src="{{asset('/assets/js/echarts.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/assets/js/useinproject/echarts.min.js')}}"></script>
 
 @endsection
 {{-- ส่วนหัว --}}
@@ -266,10 +265,10 @@
 <script src="{{asset('/assets/js/plugin/chart.js/chart.min.js')}}"></script>
 <script src="{{asset('/assets/js/plugin/chart-circle/circles.min.js')}}"></script>
 	{{-- แจ้งซ่อมแต่ล่ะLine--}}
-<script type="text/javascript" src="{{ asset('/js/dashboard/repair.js') }}">
+<script type="text/javascript" src="{{ asset('assets/js/useinproject/dashboard/repair.js') }}">
 	</script>
 	{{-- ค่าใช้จ่าย--}}
-<script type="text/javascript" src="{{ asset('/js/dashboard/repairpay.js') }}">
+<script type="text/javascript" src="{{ asset('assets/js/useinproject/dashboard/repairpay.js') }}">
 	</script>
 <script type="text/javascript" >
 	Circles.create({

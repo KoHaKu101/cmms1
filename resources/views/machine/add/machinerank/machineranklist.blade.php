@@ -1,7 +1,6 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
 
 @endsection
 {{-- ส่วนหัว --}}

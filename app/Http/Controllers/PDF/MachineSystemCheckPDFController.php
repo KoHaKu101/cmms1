@@ -13,6 +13,7 @@ use Auth;
 
 
 
+
 // class MachineSystemCheckPDFController extends Controller
 class MachineSystemCheckPDFController extends Fpdf
 {
@@ -47,12 +48,7 @@ class MachineSystemCheckPDFController extends Fpdf
       $pdf->Text(23.6,48,iconv('UTF-8', 'cp874','สถานที่ติดตั้ง :'));
       $pdf->Text(25,53,iconv('UTF-8', 'cp874','อาการที่เสีย :'));
      //data
-     // $pdf->Text(45,43,   $dataset->MACHINE_CODE  );//หมายเลขเครื่องจักร
-     //  $pdf->Text(120,43, $dataset->MACHINE_NAME );//ชื่อเครื่องจักร
-     //  $pdf->Text(45,48,  $dataset->MACHINE_LINE );//สถานที่ติดตั้ง
-     //  $pdf->SetY(49.2);
-     //  $pdf->SetX(44.5);
-     //  $pdf->MultiCell(132,5, $dataset->MACHINE_CAUSE ,0,0,"",false);//อาการที่เสีย
+
      //line 1
      $pdf->SetFont('THSarabunNew','B',13);
       $pdf->Text(45,43,'________________________________');//หมายเลขเครื่องจักร

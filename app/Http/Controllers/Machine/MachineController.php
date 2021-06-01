@@ -19,9 +19,10 @@ use App\Models\Machine\MachineEMP;
 use App\Models\Machine\MachineRepair;
 use App\Models\Machine\MasterIMPS;
 use App\Models\Machine\MasterIMPSGroup;
-use App\Models\Machine\MachinePMCheckDetail;
+use App\Models\Machine\MachineSparePart;
 
 use App\Models\MachineaddTable\MachinePmTemplate;
+use App\Models\MachineaddTable\MachinePmTemplateDetail;
 use App\Models\MachineaddTable\MachineTypeTable;
 use App\Models\MachineAddTable\MachineStatusTable;
 use App\Models\MachineAddTable\MachineSysTemTable;
@@ -69,10 +70,11 @@ class MachineController extends Controller
   }
 
   public function Create(){
-    $machineline = MachineLine::where('LINE_STATUS','=','9')->get();
+    $machineline = MachineLine::select('LINE_CODE','LINE_NAME')->where('LINE_STATUS','=','9')->get();
     $machinetype = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
     $machinestatus = MachineStatusTable::where('STATUS','=','9')->get();
-    return View('machine/assets/form',compact('machineline','machinetype','machinestatus'));
+    $machinerank   = MachineRankTable::where('MACHINE_RANK_STATUS','!=','1')->get();
+    return View('machine/assets/form',compact('machineline','machinetype','machinestatus','machinerank'));
   }
   public function Store(Request $request){
     $validated = $request->validate([
@@ -97,43 +99,32 @@ class MachineController extends Controller
       } else {
         $last_img = "";
       }
+      $machine_type_status = MachineLine::select('LINE_TYPE')->where('LINE_CODE',$request->MACHINE_LINE)->first();
       $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
       $request->MACHINE_STATUS = '9';
+      $rankcode = MachineRankTable::select('MACHINE_RANK_CODE')->where('MACHINE_RANK_MONTH',$request->MACHINE_RANK_MONTH)->first();
       Machine::insert([
           'MACHINE_CODE'         => $MACHINE_CODE,
           'MACHINE_NAME'         => $request->MACHINE_NAME,
           'MACHINE_CHECK'        => $request->MACHINE_CHECK,
           'MACHINE_MANU'         => $request->MACHINE_MANU,
           'MACHINE_TYPE'         => $request->MACHINE_TYPE,
-          'MACHINE_TYPE_STATUS'  => $request->MACHINE_TYPE_STATUS,
+          'MACHINE_TYPE_STATUS'  => $machine_type_status->LINE_TYPE,
           'MACHINE_STARTDATE'    => $request->MACHINE_STARTDATE,
           'MACHINE_RVE_DATE'     => $request->MACHINE_RVE_DATE,
           'MACHINE_ICON'         => $last_img,
           'MACHINE_PRICE'        => $request->MACHINE_PRICE,
           'MACHINE_LINE'         => $request->MACHINE_LINE,
-          'GROUP_NAME'           => $request->GROUP_NAME,
           'MACHINE_MA_COST'      => $request->MACHINE_MA_COST,
-          'MACHINE_TOTAL_FEED'   => $request->MACHINE_TOTAL_FEED,
-          'MACHINE_TOTAL_STOP'   => $request->MACHINE_TOTAL_STOP,
           'MACHINE_SPEED_UNIT'   => $request->MACHINE_SPEED_UNIT,
-          'MACHINE_LOCATION'     => $request->MACHINE_LOCATION,
-          'MACHINE_GROUP'        => $request->MACHINE_GROUP,
           'MACHINE_PARTNO'       => $request->MACHINE_PARTNO,
           'MACHINE_MODEL'        => $request->MACHINE_MODEL,
           'MACHINE_SERIAL'       => $request->MACHINE_SERIAL,
-          'MACHINE_FACTORY'      => $request->MACHINE_FACTORY,
-          'COMPANY_PAY'          => $request->COMPANY_PAY,
-          'COMPANY_SETUP'        => $request->COMPANY_SETUP,
-          'MACHINE_CAPACITY'     => $request->MACHINE_CAPACITY,
           'MACHINE_SPEED'        => $request->MACHINE_SPEED,
           'MACHINE_MTBF'         => $request->MACHINE_MTBF,
-          'MACHINE_MTTF'         => $request->MACHINE_MTTF,
-          'MACHINE_MTTR'         => $request->MACHINE_MTTR,
-          'MACHINE_EFFICIENCY'   => $request->MACHINE_EFFICIENCY,
           'MACHINE_POWER'        => $request->MACHINE_POWER,
           'MACHINE_WEIGHT'       => $request->MACHINE_WEIGHT,
           'MACHINE_TARGET'       => $request->MACHINE_TARGET,
-          'MACHINE_NOTE'         => $request->MACHINE_NOTE,
           'MACHINE_STATUS'       => $request->MACHINE_STATUS,
           'MACHINE_POSTED'       => $request->MACHINE_POSTED,
           'PCDS_MACHINE_CODE'    => $request->PCDS_MACHINE_CODE,
@@ -144,27 +135,24 @@ class MachineController extends Controller
           'SUPPLIER_CODE'        => $request->SUPPLIER_CODE,
           'SUPPLIER_NAME'        => $request->SUPPLIER_NAME,
           'PURCHASE_FORM'        => $request->PURCHASE_FORM,
-          'EMP_CODE'             => $request->EMP_CODE,
-          'EMP_NAME'             => $request->EMP_NAME,
-          'POS_REF_UNID'         => $request->POS_REF_UNID,
+          'PLAN_LAST_DATE'       => '',
+          'REPAIR_LAST_DATE'       => '',
+          'SPAR_PART_DATE'       => '',
           'CREATE_BY'            => Auth::user()->name,
           'CREATE_TIME'          => Carbon::now(),
-          // 'MODIFY_BY'            => Auth::user()->name,
-          // 'MODIFY_TIME'          => Carbon::now(),
           'UNID'                 => $this->randUNID('PMCS_MACHINE'),
-          'SHIFT_TYPE'           => $request->SHIFT_TYPE,
-          'ESP_MAC'              => $request->ESP_MAC,
-          'MAHCINE_RANK'         => $request->MACHINE_RANK,
+          'MACHINE_RANK_MONTH'   => $request->MACHINE_RANK_MONTH,
+          'MACHINE_RANK_CODE'    => $rankcode->MACHINE_RANK_CODE,
       ]);
       $dataset = Machine::latest('UNID')->first();
       return Redirect()->route('machine.edit',['UNID'=> $dataset->UNID])->with('success','ลงทะเบียน สำเร็จ');
   }
   public function Edit($UNID) {
     //ใช้
-    $dataset                     = Machine::where('UNID',$UNID)->first();
+    $dataset                     = Machine::select('*')->selectraw('dbo.decode_utf8(MACHINE_NAME) as MACHINE_NAME
+                                                                    ,dbo.decode_utf8(PURCHASE_FORM) as PURCHASE_FORM')
+                                                       ->where('UNID',$UNID)->first();
     $machineupload               = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload1              = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload2              = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
     $machinetype                 = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
     $machinestatus               = MachineStatusTable::where('STATUS','=','9')->get();
     $machineemp                  = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
@@ -174,14 +162,26 @@ class MachineController extends Controller
     $machinerepair               = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                                 ->where('STATUS','=','9')
                                                 ->get();
-    $machinepmtime               = MasterIMPS::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
-    $machinepmtemplateremove     = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
-    $machinecheckpmdetail        = MachinePMCheckDetail::all();
-    $machinerank                 = MachineRankTable::where('MACHINE_RANK_STATUS','!=','1')->get();
-    // $machinepmtemplatadetail     = MachinePmTemplateDetail::all();
-    return view('machine/assets/edit',compact('machinerank','machinecheckpmdetail','dataset','machineupload','machineupload1','machinepmtime'
-      ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
+
+
+    $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')
+                                                    ->where('MACHINE_CODE',$dataset->MACHINE_CODE))
+                                                    ->orderBy('CREATE_TIME','ASC')->paginate(6);
+    $machinepmtemplateremove     = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')
+                                                    ->where('MACHINE_CODE',$dataset->MACHINE_CODE))
+                                                    ->orderBy('CREATE_TIME','ASC')->paginate(6);
+    $machinerank                 = MachineRankTable::select('MACHINE_RANK_MONTH','MACHINE_RANK_CODE')
+                                                    ->where('MACHINE_RANK_STATUS','!=','1')->get();
+
+    $masterimps                  =  MasterIMPS::where('MACHINE_UNID',$UNID)->orderBy('CREATE_TIME','ASC')->get();
+
+    $masterimpsgroup             =  MasterIMPSGroup::orderBy('PM_TEMPLATELIST_INDEX','ASC')->get();
+    $pmlistdetail                =  MachinePmTemplateDetail::orderBy('PM_DETAIL_INDEX','ASC')->get();
+    $machinesparepart            =  MachineSparePart::where('MACHINE_UNID','=',$UNID)->where('STATUS','=','9')->get();
+
+
+    return view('machine/assets/edit',compact('masterimps','masterimpsgroup','pmlistdetail','machinerank'
+    ,'dataset','machineupload','machinetype','machineline','machinestatus','machineemp','machinerepair','machinesparepart'));
   }
   public function Update(Request $request,$UNID){
     $update = $request->MACHINE_UPDATE;
@@ -199,44 +199,34 @@ class MachineController extends Controller
       $last_img = $update;
       // dd($last_img);
     }
+    $machine_type_status = MachineLine::select('LINE_TYPE')->where('LINE_CODE',$request->MACHINE_LINE)->first();
+
     $rankcode = MachineRankTable::select('MACHINE_RANK_CODE')->where('MACHINE_RANK_MONTH',$request->MACHINE_RANK_MONTH)->first();
     $request->MACHINE_STATUS = $request->MACHINE_CHECK == "1" ? $request->MACHINE_STATUS = '1' : $request->MACHINE_STATUS = '9' ;
     $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
     $data_set = Machine::where('UNID',$UNID)->update([
+
       'MACHINE_CODE'         => $MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,
       'MACHINE_CHECK'        => $request->MACHINE_CHECK,
       'MACHINE_MANU'         => $request->MACHINE_MANU,
       'MACHINE_TYPE'         => $request->MACHINE_TYPE,
-      'MACHINE_TYPE_STATUS'  => $request->MACHINE_TYPE_STATUS,
+      'MACHINE_TYPE_STATUS'  => $machine_type_status->LINE_TYPE,
       'MACHINE_STARTDATE'    => $request->MACHINE_STARTDATE,
       'MACHINE_RVE_DATE'     => $request->MACHINE_RVE_DATE,
       'MACHINE_ICON'         => $last_img,
       'MACHINE_PRICE'        => $request->MACHINE_PRICE,
       'MACHINE_LINE'         => $request->MACHINE_LINE,
-      'GROUP_NAME'           => $request->GROUP_NAME,
       'MACHINE_MA_COST'      => $request->MACHINE_MA_COST,
-      'MACHINE_TOTAL_FEED'   => $request->MACHINE_TOTAL_FEED,
-      'MACHINE_TOTAL_STOP'   => $request->MACHINE_TOTAL_STOP,
       'MACHINE_SPEED_UNIT'   => $request->MACHINE_SPEED_UNIT,
-      'MACHINE_LOCATION'     => $request->MACHINE_LOCATION,
-      'MACHINE_GROUP'        => $request->MACHINE_GROUP,
       'MACHINE_PARTNO'       => $request->MACHINE_PARTNO,
       'MACHINE_MODEL'        => $request->MACHINE_MODEL,
       'MACHINE_SERIAL'       => $request->MACHINE_SERIAL,
-      'MACHINE_FACTORY'      => $request->MACHINE_FACTORY,
-      'COMPANY_PAY'          => $request->COMPANY_PAY,
-      'COMPANY_SETUP'        => $request->COMPANY_SETUP,
-      'MACHINE_CAPACITY'     => $request->MACHINE_CAPACITY,
       'MACHINE_SPEED'        => $request->MACHINE_SPEED,
       'MACHINE_MTBF'         => $request->MACHINE_MTBF,
-      'MACHINE_MTTF'         => $request->MACHINE_MTTF,
-      'MACHINE_MTTR'         => $request->MACHINE_MTTR,
-      'MACHINE_EFFICIENCY'   => $request->MACHINE_EFFICIENCY,
       'MACHINE_POWER'        => $request->MACHINE_POWER,
       'MACHINE_WEIGHT'       => $request->MACHINE_WEIGHT,
       'MACHINE_TARGET'       => $request->MACHINE_TARGET,
-      'MACHINE_NOTE'         => $request->MACHINE_NOTE,
       'MACHINE_STATUS'       => $request->MACHINE_STATUS,
       'MACHINE_POSTED'       => $request->MACHINE_POSTED,
       'PCDS_MACHINE_CODE'    => $request->PCDS_MACHINE_CODE,
@@ -247,18 +237,11 @@ class MachineController extends Controller
       'SUPPLIER_CODE'        => $request->SUPPLIER_CODE,
       'SUPPLIER_NAME'        => $request->SUPPLIER_NAME,
       'PURCHASE_FORM'        => $request->PURCHASE_FORM,
-      'EMP_CODE'             => $request->EMP_CODE,
-      'EMP_NAME'             => $request->EMP_NAME,
-      'POS_REF_UNID'         => $request->POS_REF_UNID,
-      // 'CREATE_BY'            => Auth::user()->name,
-      // 'CREATE_TIME'          => Carbon::now(),
+      'MACHINE_RANK_MONTH'   => $request->MACHINE_RANK_MONTH,
+      'MACHINE_RANK_CODE'    => $rankcode->MACHINE_RANK_CODE,
       'MODIFY_BY'            => Auth::user()->name,
       'MODIFY_TIME'          => Carbon::now(),
 
-      'SHIFT_TYPE'           => $request->SHIFT_TYPE,
-      'ESP_MAC'              => $request->ESP_MAC,
-      'MACHINE_RANK_MONTH'   => $request->MACHINE_RANK_MONTH,
-      'MACHINE_RANK_CODE'    => $rankcode->MACHINE_RANK_CODE,
 
     ]);
 
@@ -282,7 +265,9 @@ class MachineController extends Controller
 
   }
 
-
+  public function UserHomePage(){
+    return View('machine.userpage.userhomepage');
+  }
 
 
 }
