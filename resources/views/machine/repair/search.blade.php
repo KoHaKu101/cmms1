@@ -34,7 +34,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-1">
-								<a href="{{ url('machine/repair/repairlist') }}">
+								<a href="{{ url()->previous() }}">
 									<button class="btn btn-warning  btn-xs ">
 										<span class="fas fa-arrow-left fa-lg">Back </span>
 									</button>

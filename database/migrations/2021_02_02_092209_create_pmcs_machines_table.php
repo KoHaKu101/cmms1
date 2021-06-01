@@ -83,8 +83,6 @@ class CreatePmcsMachinesTable extends Migration
           $table->BigInteger('UNID')->nullable();
           $table->integer('SHIFT_TYPE')->nullable();
           $table->string('ESP_MAC',50)->nullable();
-          $table->integer('MACHINE_RANK_MONTH')->nullable();
-          $table->string('MACHINE_RANK_CODE',50)->nullable();
 
         });
     }

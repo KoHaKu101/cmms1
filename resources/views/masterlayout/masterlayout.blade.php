@@ -7,7 +7,7 @@
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ; charset=iso8859">
 	@yield('meta')
-	<title>@yield('tittle')</title>
+	<title>{{config('app.name')}}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,10 +30,12 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/atlantis.min.css') }}">
 
   @yield('css')
+
 	@livewireStyles
 </head>
 
-<body >
+<body>
+
 	<div class="wrapper sidebar_minimize">
 		@if ($errors->count() > 0)
 			<div id="Errorsystem" style="display:none;" class="alert alert-danger">
@@ -51,6 +53,7 @@
     @yield('sidebar')
 
     <div class="main-panel">
+
     @yield('contentandfooter')
 
     </div>
@@ -78,17 +81,13 @@
 	<script type="text/javascript" src="{{ asset('/assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
 	<script type="text/javascript" src="{{ asset('/assets/js/plugin/sweetalert/sweetalert2.js') }}"></script>
-{{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
 
-	<script type="text/javascript" src="{{ asset('/js/dashboard/notifity.js') }}"></script>
-		{{-- <script type="text/javascript" src="{{ asset('/js/dashboard/systemcheck_monthly.js') }}"></script> --}}
+	<script type="text/javascript" src="{{ asset('assets/js/useinproject/dashboard/notifity.js') }}"></script>
 	@include('/errorsweetalert/errormessed')
-	{{-- <script type="text/javascript" src="{{ asset('/js/errorsweetalert/errormessed.js') }}"></script> --}}
 
 
 	<script type="text/javascript" src="{{ asset('assets/js/atlantis.min.js') }}"></script>
 		@include('sweetalert::alert')
-	{{-- <script type="text/javascript" src="{{ asset('/vendor/livewire/livewire.js') }}"></script> --}}
 		@livewireScripts
 
 @yield('javascript')

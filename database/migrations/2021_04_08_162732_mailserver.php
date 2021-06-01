@@ -22,6 +22,8 @@ class Mailserver extends Migration
         $table->string('MAILPROTOCOL',50)->nullable();
         $table->integer('AUTOMAIL')->default(7)->nullable();
         $table->integer('AUTOPLAN')->default(730)->nullable();
+        $table->integer('PLAN_CHECK')->default(0)->nullable();
+
 
         $table->string('CREATE_BY',200)->nullable();
         $table->string('CREATE_TIME',50)->nullable();

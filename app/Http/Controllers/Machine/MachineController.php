@@ -19,7 +19,7 @@ use App\Models\Machine\MachineEMP;
 use App\Models\Machine\MachineRepair;
 use App\Models\Machine\MasterIMPS;
 use App\Models\Machine\MasterIMPSGroup;
-use App\Models\Machine\MachinePMCheckDetail;
+use App\Models\Machine\MachineSparePart;
 
 use App\Models\MachineaddTable\MachinePmTemplate;
 use App\Models\MachineaddTable\MachinePmTemplateDetail;
@@ -135,6 +135,9 @@ class MachineController extends Controller
           'SUPPLIER_CODE'        => $request->SUPPLIER_CODE,
           'SUPPLIER_NAME'        => $request->SUPPLIER_NAME,
           'PURCHASE_FORM'        => $request->PURCHASE_FORM,
+          'PLAN_LAST_DATE'       => '',
+          'REPAIR_LAST_DATE'       => '',
+          'SPAR_PART_DATE'       => '',
           'CREATE_BY'            => Auth::user()->name,
           'CREATE_TIME'          => Carbon::now(),
           'UNID'                 => $this->randUNID('PMCS_MACHINE'),
@@ -146,10 +149,10 @@ class MachineController extends Controller
   }
   public function Edit($UNID) {
     //ใช้
-    $dataset                     = Machine::where('UNID',$UNID)->first();
+    $dataset                     = Machine::select('*')->selectraw('dbo.decode_utf8(MACHINE_NAME) as MACHINE_NAME
+                                                                    ,dbo.decode_utf8(PURCHASE_FORM) as PURCHASE_FORM')
+                                                       ->where('UNID',$UNID)->first();
     $machineupload               = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload1              = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->get();
-    $machineupload2              = MachineUpload::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
     $machinetype                 = MachineTypeTable::where('TYPE_STATUS','=','9')->get();
     $machinestatus               = MachineStatusTable::where('STATUS','=','9')->get();
     $machineemp                  = MachineEMP::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)->get();
@@ -159,17 +162,26 @@ class MachineController extends Controller
     $machinerepair               = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                                 ->where('STATUS','=','9')
                                                 ->get();
-    $machinepmtime               = MasterIMPS::where('MACHINE_CODE',$dataset->MACHINE_CODE)->first();
-    $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
-    $machinepmtemplateremove     = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')->where('MACHINE_CODE',$dataset->MACHINE_CODE))->orderBy('CREATE_TIME','ASC')->paginate(6);
-    $machinecheckpmdetail        = MachinePMCheckDetail::all();
-    $machinerank                 = MachineRankTable::where('MACHINE_RANK_STATUS','!=','1')->get();
 
-    $masterimps                  =  MasterIMPS::where('MACHINE_UNID',$dataset->UNID)->orderBy('CREATE_TIME','ASC')->get();
-    $masterimpsgroup             =  MasterIMPSGroup::all();
-    $pmlistdetail                =  MachinePmTemplateDetail::all();
-    return view('machine/assets/edit',compact('masterimps','masterimpsgroup','pmlistdetail','machinerank','machinecheckpmdetail','dataset','machineupload','machineupload1','machinepmtime'
-      ,'machineupload2','machinetype','machineline','machinestatus','machineemp','machinerepair'));
+
+    $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')
+                                                    ->where('MACHINE_CODE',$dataset->MACHINE_CODE))
+                                                    ->orderBy('CREATE_TIME','ASC')->paginate(6);
+    $machinepmtemplateremove     = MachinePmTemplate::whereIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')
+                                                    ->where('MACHINE_CODE',$dataset->MACHINE_CODE))
+                                                    ->orderBy('CREATE_TIME','ASC')->paginate(6);
+    $machinerank                 = MachineRankTable::select('MACHINE_RANK_MONTH','MACHINE_RANK_CODE')
+                                                    ->where('MACHINE_RANK_STATUS','!=','1')->get();
+
+    $masterimps                  =  MasterIMPS::where('MACHINE_UNID',$UNID)->orderBy('CREATE_TIME','ASC')->get();
+
+    $masterimpsgroup             =  MasterIMPSGroup::orderBy('PM_TEMPLATELIST_INDEX','ASC')->get();
+    $pmlistdetail                =  MachinePmTemplateDetail::orderBy('PM_DETAIL_INDEX','ASC')->get();
+    $machinesparepart            =  MachineSparePart::where('MACHINE_UNID','=',$UNID)->where('STATUS','=','9')->get();
+
+
+    return view('machine/assets/edit',compact('masterimps','masterimpsgroup','pmlistdetail','machinerank'
+    ,'dataset','machineupload','machinetype','machineline','machinestatus','machineemp','machinerepair','machinesparepart'));
   }
   public function Update(Request $request,$UNID){
     $update = $request->MACHINE_UPDATE;

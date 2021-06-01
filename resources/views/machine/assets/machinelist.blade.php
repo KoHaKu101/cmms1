@@ -83,7 +83,7 @@
 {{-- ส่วนjava --}}
 @section('javascript')
 
-	<script src="{{ asset('js/machine/machineprintlist.js') }}">
+	<script src="{{ asset('assets/js/useinproject/machine/machineprintlist.js') }}">
 
 	</script>
 

@@ -50,7 +50,7 @@
                 </a>
               </td>
               <td >  {{ $row->MACHINE_LINE }}  </td>
-              <td style="width:400px;">              {{ $row->MACHINE_NAME }}  </td>
+              <td style="width:400px;">              {{ $row->MACHINE_NAME_V2 }}  </td>
               <td style="width:100px;">
                 <a href="{{ url('machine/assets/edit/'.$row->UNID) }}">
                   <button type="button" class="btn btn-secondary btn-sm btn-block my-1" style="width:80px">
@@ -83,17 +83,13 @@
               </td>
               </tr>
           @endforeach
-          <tr>
-            <td colspan="5" align="center">
-                {{ $machine->links() }}
-            </td>
-          </tr>
+
           {{-- @include('machine/assets/machinesearch') --}}
         </tbody>
+
     </table>
-    <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-    <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
-    <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
+    {{ $machine->links() }}
+
   </div>
 
     </div>

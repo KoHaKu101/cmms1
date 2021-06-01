@@ -1,0 +1,7 @@
+$('#myModal').on('hidden.bs.modal', function (e) {
+  $('#FRM_SAVEMAIN')[0].reset();
+});
+เมื่อปิดจะรีเว็ตฟอร์ม
+
+  $('#FRM_SAVEMAIN').attr('action', url);
+เปลี่ยน form

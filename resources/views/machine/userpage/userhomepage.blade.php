@@ -49,7 +49,7 @@
 										<div class="card-header bg-primary text-white">
 											<h4 class="my-2">Preventive Maintenance</h4>
 										</div>
-										<a href="{{ route('syscheck.list') }}">
+										<a href="{{ route('pm.planlist') }}">
 											<div class="card-body">
 												<img src="{{ asset('image/user/ss.png') }}" class="ml-4"style="width:150px;height:150px">
 											</div>

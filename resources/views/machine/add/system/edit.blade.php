@@ -1,7 +1,6 @@
 @extends('masterlayout.masterlayout')
 @section('tittle','homepage')
 @section('css')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/bulma.min.css')}}"> --}}
 @endsection
 {{-- ส่วนหัว --}}
 @section('Logoandnavbar')
@@ -111,28 +110,49 @@
 												<h4 class="ml-3 mt-2" style="color:white;" > Inspection Check</h4>
 											</div>
 												<div class="card-body mt--3">
+													<style>
+													.table-responsive {
+    												display: table;
+														}
+													</style>
 													<div class="table-responsive mt--4">
-														<table class="table table-bordered mt-4">
+														<table class="table table-hover table-bordered mt-4">
 															<thead>
 																<tr>
-																	<th scope="col">ลำดับ</th>
-																	<th scope="col">รายละเอียด</th>
+																	<th >ลำดับ</th>
+																	<th >รายละเอียด</th>
 																	<th>ค่า STD</th>
+																	<th>Unit</th>
+																	<th>ข้อมูล</th>
 																	<th colspan="2"></th>
 																</tr>
 															</thead>
 															<tbody>
 															@foreach ($datapmtemplatedetail as $key => $dataitem)
 																<tr>
-																	<td>{{$key+1}}</td>
+																	@php
+																	$STD = $dataitem->PM_DETAIL_STD;
+																	$UNIT = $dataitem->PM_DETAIL_UNIT;
+																		if (strtoupper($dataitem->PM_TYPE_INPUT) == 'RADIO') {
+																			$STD = 'ผ่าน';
+																			$UNIT = '-';
+																		}
+
+																	@endphp
+																	<th scope="row">{{$key+1}}</th>
 																	<td>{{$dataitem->PM_DETAIL_NAME}}</td>
-																	<td>{{$dataitem->PM_DETAIL_STD}}</td>
-																	<td style="width:40px">
-																		<button type="button" class="btn btn-primary btn-block btn-sm my-1 edit" onclick="editdetail('{{ $dataitem->UNID }}','{{ $dataitem->PM_DETAIL_NAME }}','{{ $dataitem->PM_DETAIL_STD }}')">
+																	<td>{{ $STD }}</td>
+																	<td>{{ $UNIT }}</td>
+																	<td>{{$dataitem->PM_TYPE}}</td>
+																	<td >
+																		<button type="button" class="btn btn-primary btn-block btn-sm my-1 edit"
+																		onclick="editdetail('{{ $dataitem->UNID }}','{{ $dataitem->PM_DETAIL_NAME }}'
+																		,'{{ $dataitem->PM_DETAIL_STD }}','{{ $dataitem->PM_TYPE_INPUT }}','{{ $dataitem->PM_DETAIL_UNIT }}'
+																		,'{{ (double)$dataitem->PM_DETAIL_STD_MAX }}','{{ (double)$dataitem->PM_DETAIL_STD_MIN }}','{{ $dataitem->PM_DETAIL_STATUS_MAX }}','{{ $dataitem->PM_DETAIL_STATUS_MIN }}')">
 																			<i class="fas fa-edit fa-lg">	</i>
 																		</button>
 																	</td>
-																	<td style="width:40px">
+																	<td >
 																		<button type="button" class="btn btn-danger btn-block btn-sm my-1" onclick="deletedata('{{ $dataitem->UNID }}')" >
 																			<i class="fas fa-trash fa-lg">	</i>
 																		</button>
@@ -152,16 +172,68 @@
 										<div class="card-header bg-primary">
 											<h4 class="ml-3 mt-2" style="color:white;" > เพิ่ม Inspection Check  </h4>
 										 </div>
-										<div class="card-body PM_CANCEL" id="PM_DETAIL_NAME">
-											<form action="{{ route('pmtemplatedetail.store') }}" method="POST">
+										<div class="card-body PM_CANCEL" >
+											<form action="{{ route('pmtemplatedetail.store') }}" method="POST" id="FRM_SAVE" name="FRM_SAVE">
 												@csrf
-												<div class="form-group has-error" >
-													<label for="SYSTEM_CODE">รายละเอียด</label>
-													<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" value="{{ $datapmtemplatelist->UNID }}">
-													<textarea class="form-control" name="PM_DETAIL_NAME" rows="2" required autofocus></textarea >
-														<label for="SYSTEM_CODE">ค่า STD</label>
-														<input type="text" class="form-control" name="PM_DETAIL_STD">
+												<div class="form-group">
+													<div class="row has-error">
+														<label for="SYSTEM_CODE">รายละเอียด</label>
+														<input type="hidden" id="DETAIL_UNID" name="DETAIL_UNID" value="1">
+														<input type="hidden" id="PM_TEMPLATELIST_UNID_REF" name="PM_TEMPLATELIST_UNID_REF" value="{{ $datapmtemplatelist->UNID }}">
+														<textarea class="form-control " id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2" required autofocus></textarea >
+													</div>
+														<div class="row">
+															<div class="col-md-6 has-error">
+																<label for="PM_DETAIL_STD">ค่า STD</label>
+																	<input type="number" class="form-control" id="PM_DETAIL_STD" name="PM_DETAIL_STD" step="any" required>
+															</div>
+															<div class="col-md-6">
+																<label for="PM_DETAIL_UNIT">หน่วย</label>
+																<input type="text" class="form-control" id="PM_DETAIL_UNIT" name="PM_DETAIL_UNIT" >
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group form-inline">
+																	<div class="form-check">
+																		<label class="form-check-label">
+																			<input class="form-check-input" type="checkbox" id="PM_DETAIL_STATUS_MAX" name="PM_DETAIL_STATUS_MAX" value="true" onchange="statusmax()">
+																			<span class="form-check-sign">ค่า MAX</span>
+																		</label>
+																	</div>
+																	<div class="col-md-6 p-0">
+																		<input type="number" class="form-control" id="PM_DETAIL_STD_MAX" name="PM_DETAIL_STD_MAX" step="any" disabled>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group form-inline">
+																	<div class="form-check">
+																		<label class="form-check-label">
+																			<input class="form-check-input" type="checkbox" id="PM_DETAIL_STATUS_MIN" name="PM_DETAIL_STATUS_MIN" value="true" onchange="statusmin()">
+																			<span class="form-check-sign">ค่า MIN</span>
+																		</label>
+																	</div>
+																	<div class="col-md-6 p-0">
+																		<input type="number" class="form-control" id="PM_DETAIL_STD_MIN" name="PM_DETAIL_STD_MIN" step="any" disabled>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+											<div class="form-group" id="DETAIL">
+												<label for="smallSelect" class="my-1">ข้อมูล</label>
+													<select class="form-control form-control-sm" id="PM_TYPE_INPUT" name="PM_TYPE_INPUT" onchange="changetype()"required>
+														<option value="">กรุณาเลือกประเภทการกรอก</option>
+														<option value="number">กรอกค่าตัวเลข</option>
+														<option value="radio">เลือก ผ่าน ไม่ผ่าน</option>
+													</select>
+												</div>
 													<button type="submit" class="btn btn-primary mt-3">Save</button>
+													<button type="button" id="CANCEL_EDIT" name="CANCEL_EDIT" onclick="exiteditdetail()"
+													class="btn btn-danger float-right mt-3" hidden="true">Cancel</button>
 												</div>
 
 											</form>
@@ -180,47 +252,9 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-<script src="{{ asset('/js/addtable/systemedit.js') }}"></script>
-<script>
-	function editdetail(unid,text,std){
-		var unid = (unid) ;
-		var text = (text) ;
-		var std = (std);
-		var url = '/machine/pm/template/storedetailupdate' ;
-		var _html='<form action="'+url+'" method="POST" enctype="multipart/form-data">'+
-							'@csrf'+
-							'<div class="form-group has-error" >'+
-							'<label for="SYSTEM_CODE">จุดตรวจเช็ค</label>'+
-							'<input type="hidden" name="UNID" value="'+unid+'">'+
-							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2">'+text+'</textarea required autofocus>'+
-							'<label for="SYSTEM_CODE">ค่า STD</label>'+
-							'<input type="text" class="form-control" name="PM_DETAIL_STD" value="'+std+'">'+
-							'<button type="submit" class="btn btn-primary mt-3" >Update</button>'+
-							'<button type="button" onclick="exiteditdetail()" class="btn btn-danger float-right mt-3">Cancel</button>'+
-							'</div>'+
-							'</form>';
 
-	$("#PM_DETAIL_NAME").html(_html);
-};
-	function exiteditdetail(){
-		var unid = $('#PM_TEMPLATELIST_UNID_REF').val() ;
-		var url 	=  '/machine/pm/template/storedetail';
-		var _html ='<form action="'+url+'" method="POST" enctype="multipart/form-data">'+
-							'@csrf'+
-							'<div class="form-group has-error" >'+
-							'<label for="PM_TEMPLATELIST_UNID_REF">จุดตรวจเช็ค</label>'+
-							'<input type="hidden" name="PM_TEMPLATELIST_UNID_REF" value="'+unid+'">'+
-							'<textarea class="form-control" id="PM_DETAIL_NAME" name="PM_DETAIL_NAME" rows="2"></textarea required autofocus>'+
-							'<label for="SYSTEM_CODE">ค่า STD</label>'+
-							'<input type="text" class="form-control" name="PM_DETAIL_STD" value="">'+
-							'<button type="submit" class="btn btn-primary mt-3" id="Save">Save</button>'+
-							'</div>'+
-							'</form>';
+<script src="{{ asset('assets/js/useinproject/addtable/systemedit.js') }}"></script>
 
-	$(".PM_CANCEL").html(_html);
-	};
-
-</script>
 
 @stop
 {{-- ปิดส่วนjava --}}

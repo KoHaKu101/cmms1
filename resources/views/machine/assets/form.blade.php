@@ -136,7 +136,7 @@
 								<div class="row">
 									<div class="col-md-12 mt-2">
 										<div class="card-body">
-											@include('masterlayout.tab.styletab')
+											@include('machine.assets.tab.styletab')
 
 											<ul class="nav nav-pills justify-content-center mt--4">
   											<li>
@@ -154,13 +154,13 @@
   										</ul>
   										<div class="tab-content clearfix">
 												<!-- ข้อมูลทั่วไป -->
-												@include('masterlayout.tab.home')
+												@include('machine.assets.tab.home')
 												<!-- ประวัติการแจ้งซ่อม -->
-												@include('masterlayout.tab.history')
+												@include('machine.assets.tab.history')
 												<!-- แผนการปฎิบัติการ -->
-  											@include('masterlayout.tab.plan')
+  											@include('machine.assets.tab.plan')
 												<!-- พนักงานประจำเครื่อง -->
-												@include('masterlayout.tab.personal')
+												@include('machine.assets.tab.personal')
 
 									</div>
 								</div>

@@ -12,13 +12,16 @@ class searchrepairmachine extends Component{
 
   protected $paginationTheme = 'bootstrap';
 
-  public $search = "";
+  public $search;
 
   protected $queryString = ['search'];
 
-  public function render(){
-      $dataset = MachineRepair::orwhere('MACHINE_CODE','like', '%'.$this->search.'%')
-                              ->orwhere('MACHINE_DOCNO','like', '%'.$this->search.'%')
+  public function render(){ 
+      $SEARCH = isset($this->search) ? '%'.$this->search.'%' : '%';
+
+      $dataset = MachineRepair::where(function ($query) use ($SEARCH) {
+                $query->where('MACHINE_CODE', 'like', $SEARCH)
+                    ->orWhere('MACHINE_DOCNO', 'like', $SEARCH);})
                               ->orderby('CLOSE_STATUS','DESC')
                               ->orderBy('MACHINE_DOCDATE','DESC')
                               ->paginate(10);

@@ -31,6 +31,7 @@ class pmplan extends Migration
           $table->string('PM_MASTER_NAME',200)->nullable();
           $table->BigInteger('PM_MASTER_UNID')->nullable();
           $table->string('PLAN_STATUS',50)->nullable();
+          $table->date('COMPLETE_DATE')->nullable();
           $table->string('PLAN_RE_MARK',200)->nullable();
           $table->string('CREATE_BY',200)->nullable();
           $table->string('CREATE_TIME',50)->nullable();

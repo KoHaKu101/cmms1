@@ -15,37 +15,36 @@ use App\Http\Controllers\Dashboard\CalendarController;
 use App\Http\Controllers\Machine\MachineController;
 use App\Http\Controllers\Machine\PersonalController;
 use App\Http\Controllers\Machine\MachineRepairController;
-use App\Http\Controllers\Machine\MachineSparePartController;
-use App\Http\Controllers\Machine\StockController;
 use App\Http\Controllers\Machine\MachineUploadController;
 use App\Http\Controllers\Machine\MachineManualController;
 use App\Http\Controllers\Machine\SysCheckController;
-use App\Http\Controllers\Machine\SysCheckSubController;
-use App\Http\Controllers\Machine\MachinePartCheckController;
-use App\Http\Controllers\Machine\PaySpareController;
 use App\Http\Controllers\Machine\MailConfigController;
+use App\Http\Controllers\Machine\DailyCheckController;
+use App\Http\Controllers\Machine\MachineSparePartController;
 //************************* Plan *************************************
-use App\Http\Controllers\Plan\PlanPmController;
 use App\Http\Controllers\Plan\MachinePlanController;
-
+use App\Http\Controllers\Plan\Report\PlanYearMachinePm;
+use App\Http\Controllers\Plan\Report\PlanMonthMachinePm;
+use App\Http\Controllers\Plan\Report\FormPMMachine;
+use App\Http\Controllers\Plan\ReportSparePartController;
 
 //************************* add tabel *********************************
 use App\Http\Controllers\MachineaddTable\MachineRankTableController;
 use App\Http\Controllers\MachineaddTable\MachineTypeTableController;
 use App\Http\Controllers\MachineaddTable\MachineRepairTableController;
-use App\Http\Controllers\MachineaddTable\MachineSpareTableController;
 use App\Http\Controllers\MachineaddTable\MachineStatusTableController;
 use App\Http\Controllers\MachineaddTable\MachineSysTemTableController;
-use App\Http\Controllers\MachineaddTable\MachineSysTemSubTableController;
-use App\Http\Controllers\MachineaddTable\MachineDetailPointTableController;
+use App\Http\Controllers\MachineaddTable\SparPartController;
 //************************* Search *********************************
 use App\Http\Controllers\Search\RepairSearchController;
 
 //****************************** PDF **********************************
+use App\Http\Controllers\PDF\MachinePDFController;
 use App\Http\Controllers\PDF\MachineRepairPDFController;
 use App\Http\Controllers\PDF\UploadPdfController;
 use App\Http\Controllers\PDF\MachineSystemCheckPDFController;
 use App\Http\Controllers\PDF\MachineHistoryRepairPDFController;
+
 //Model
 use App\Models\Machine\Machine;
 use App\Models\SettingMenu\Mainmenu;
@@ -76,7 +75,7 @@ Route::get('/machine/user/homepage',[MachineController::class,'UserHomePage'])->
 Route::get('/machine/repairhistory/pdf/{UNID}', 'App\Http\Controllers\PDF\MachineHistoryRepairPDFController@RepairHistory');
 Route::get('/machine/repair/pdf/{UNID}',        'App\Http\Controllers\PDF\MachineRepairPDFController@RepairPdf');
 Route::get('/machine/systemcheck/pdf/{UNID}',   'App\Http\Controllers\PDF\MachineSystemCheckPDFController@SystemCheckPdf');
-Route::get('/machine/assets/machineall/{LINE?}', 'App\Http\Controllers\PDF\MachinePDFController@MachinePdf');
+Route::get('/machine/assets/machineall/{LINE?}', [MachinePDFController::class,'MachinePDF']);
 
 
 Route::get('/machine/repair/search',function(){
@@ -99,18 +98,15 @@ Route::get('machine/repair/notificaiton' ,[DashboardController::class,'Notificat
 Route::get('machine/repair/notificaitoncount' ,[DashboardController::class,'NotificationCount'])  ->name('repair.notificaitoncount');
 //Export and import
 Route::get('machine/export', [MachineExportController::class,'export']);
-// Route::get('users/import/show', [MachineImportController::class,'show']);
-// Route::post('users/import', [MachineImportController::class,'store']);
 
 //assets
-  Route::get('machine/assets/machinelist/{LINE_CODE?}'     ,[MachineController::class,'All'])  ->name('machine.list');
+Route::get('machine/assets/machinelist/{LINE_CODE?}'     ,[MachineController::class,'All'])  ->name('machine.list');
   Route::get('machine/assets/machine'            ,[MachineController::class,'Index'])  ->name('machine');
   Route::get('machine/assets/form'            ,[MachineController::class,'Create']) ->name('machine.form');
   Route::post('machine/assets/store'          ,[MachineController::class,'Store'])  ->name('machine.store');
   Route::get('machine/assets/edit/{UNID}'     ,[MachineController::class,'Edit'])   ->name('machine.edit');
   Route::post('machine/assets/update/{UNID}'  ,[MachineController::class,'Update']);
   Route::get('machine/assets/delete/{UNID}'   ,[MachineController::class,'Delete']) ->name('machine.delete');
-
 //upload
 Route::post('machine/assets/storeupload'      ,[MachineUploadController::class,'StoreUpload']) ->name('machine.storeupload');
   Route::get('machine/upload/edit/{UNID}'     ,[MachineUploadController::class,'Edit'])   ->name('manual.edit');
@@ -126,12 +122,6 @@ Route::get('machine/manual/manuallist'      ,[MachineManualController::class,'In
   Route::post('machine/manual/update/{UNID}'  ,[MachineManualController::class,'Update']);
   Route::get('machine/manual/delete/{UNID}'   ,[MachineManualController::class,'Delete']) ->name('manual.delete');
 
-//partcheck
-Route::get('machine/partcheck/partchecklist'   ,[MachinePartCheckController::class,'Index'])  ->name('partcheck.list');
-  Route::get('machine/partcheck/add/{UNID}'    ,[MachinePartCheckController::class,'Editmain'])   ->name('partcheck.add');
-  Route::get('machine/partcheck/edit/{UNID}'     ,[MachinePartCheckController::class,'Edit'])   ->name('partcheck.edit');
-  Route::post('machine/partcheck/update/{UNID}'  ,[MachinePartCheckController::class,'Update']);
-  Route::get('machine/partcheck/delete/{UNID}'   ,[MachinePartCheckController::class,'Delete']) ->name('partcheck.delete');
 //personal
 Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'])  ->name('personal.list');
   Route::get('machine/personal/form'            ,[PersonalController::class,'Create']) ->name('personal.form');
@@ -140,35 +130,21 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
   Route::post('machine/personal/update/{UNID}'  ,[PersonalController::class,'Update']);
   Route::get('machine/personal/delete/{UNID}'   ,[PersonalController::class,'Delete']) ->name('personal.delete');
 //repair
-Route::get('machine/repair/repairlist'            ,[MachineRepairController::class,'Index'])  ->name('repair.list');
-  Route::get('machine/repair/form/{MACHINE_CODE}' ,[MachineRepairController::class,'Create']) ->name('repair.form');
-  Route::get('machine/repair/repairsearch'        ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
-  Route::post('machine/repair/store'          ,[MachineRepairController::class,'Store'])  ->name('repair.store');
-  Route::get('machine/repair/edit/{UNID}'     ,[MachineRepairController::class,'Edit'])   ->name('repair.edit');
-  Route::post('machine/repair/update/{UNID}'  ,[MachineRepairController::class,'Update']);
-  Route::get('machine/repair/delete/{UNID}'   ,[MachineRepairController::class,'Delete']) ->name('repair.delete');
-//sparepart
-Route::get('machine/sparepart/sparepartlist'   ,[MachineSparePartController::class,'Index'])  ->name('sparepart.list');
-  Route::get('machine/sparepart/form'            ,[MachineSparePartController::class,'Create']) ->name('sparepart.form');
-  Route::post('machine/sparepart/store'          ,[MachineSparePartController::class,'Store'])  ->name('sparepart.store');
-  Route::get('machine/sparepart/edit/'            ,[MachineSparePartController::class,'Edit'])   ->name('sparepart.edit');
-  Route::post('machine/sparepart/update/{UNID}'  ,[MachineSparePartController::class,'Update']);
-  Route::get('machine/sparepart/delete/{UNID}'   ,[MachineSparePartController::class,'Delete']) ->name('sparepart.delete');
-//stock
-Route::get('machine/stock/stocklist'      ,[StockController::class,'Index'])  ->name('stock.list');
-  Route::get('machine/stock/form'            ,[StockController::class,'Create']) ->name('stock.form');
-  Route::post('machine/stock/store'          ,[StockController::class,'Store'])  ->name('stock.store');
-  Route::get('machine/stock/edit'            ,[StockController::class,'Edit'])   ->name('stock.edit');
-  Route::post('machine/stock/update/{UNID}'  ,[StockController::class,'Update']);
-  Route::get('machine/stock/delete/{UNID}'   ,[StockController::class,'Delete']) ->name('stock.delete');
-//pay
-Route::get('machine/pay/paylist'      ,[PaySpareController::class,'Index'])  ->name('pay.list');
-  Route::get('machine/pay/form'            ,[PaySpareController::class,'Create']) ->name('pay.form');
-  Route::post('machine/pay/store'          ,[PaySpareController::class,'Store'])  ->name('pay.store');
-  Route::get('machine/pay/edit'            ,[PaySpareController::class,'Edit'])   ->name('pay.edit');
-  Route::post('machine/pay/update/{UNID}'  ,[PaySpareController::class,'Update']);
-Route::get('machine/pay/delete/{UNID}'   ,[PaySpareController::class,'Delete']) ->name('pay.delete');
+Route::get('machine/repair/repairlist'             ,[MachineRepairController::class,'Index'])        ->name('repair.list');
+  Route::get('machine/repair/form/{MACHINE_CODE}'  ,[MachineRepairController::class,'Create'])       ->name('repair.form');
+  Route::get('machine/repair/repairsearch'         ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
+  Route::post('machine/repair/store'               ,[MachineRepairController::class,'Store'])        ->name('repair.store');
+  Route::get('machine/repair/edit/{UNID}'          ,[MachineRepairController::class,'Edit'])         ->name('repair.edit');
+  Route::post('machine/repair/update/{UNID}'       ,[MachineRepairController::class,'Update']);
+  Route::get('machine/repair/delete/{UNID}'        ,[MachineRepairController::class,'Delete'])       ->name('repair.delete');
+  Route::post('machine/repair/form/searchempcode'   ,[MachineRepairController::class,'SearchEMPCode'])->name('repair.searchempcode');
+  Route::post('machine/repair/select/selectemp'  ,[MachineRepairController::class,'SelectEmp'])       ->name('repair.selectemp');
 
+//daily checksheet
+Route::get('machine/daily/list'                     ,[DailyCheckController::class,'DailyList'])  ->name('daily.list');
+Route::post('machine/daily/list'                    ,[DailyCheckController::class,'DailyList']);
+Route::post('machine/daily/uploadimg'               ,[DailyCheckController::class,'CheckSheetUpload']) ->name('daily.upload');
+Route::get('machine/daily/deleteimg/{UNID?}'               ,[DailyCheckController::class,'DeleteImg']) ->name('daily.delete');
 //***************************** tabledata ****************************************
 //machinetypetable
 Route::get('machine/machinetypetable/list'      ,[MachineTypeTableController::class,'Index'])  ->name('machinetypetable.list');
@@ -178,17 +154,14 @@ Route::get('machine/machinetypetable/list'      ,[MachineTypeTableController::cl
   Route::post('machine/machinetypetable/update/{UNID}'  ,[MachineTypeTableController::class,'Update']);
   Route::get('machine/machinetypetable/delete/{UNID}'   ,[MachineTypeTableController::class,'Delete']) ->name('machinetypetable.delete');
 //repair
-Route::get('machine/machinerepairtable/list'        ,[MachineRepairTableController::class,'Index'])  ->name('machinerepairtable.list');
-  Route::post('machine/machinerepairtable/store'          ,[MachineRepairTableController::class,'Store']) ->name('machinerepairtable.store');
-  Route::get('machine/machinerepairtable/edit/{UNID}'     ,[MachineRepairTableController::class,'Edit'])   ->name('machinerepairtable.edit');
-  Route::post('machine/machinerepairtable/update/{UNID}'  ,[MachineRepairTableController::class,'Update']);
-  Route::get('machine/machinerepairtable/delete/{UNID}'   ,[MachineRepairTableController::class,'Delete']) ->name('machinerepairtable.delete');
-//sparepart
-Route::get('machine/machinespareparttable/list'     ,[MachineSpareTableController::class,'Index'])  ->name('machinespareparttable.list');
-  Route::post('machine/machinespareparttable/store'          ,[MachineSpareTableController::class,'Store']) ->name('machinespareparttable.store');
-  Route::get('machine/machinespareparttable/edit/{UNID}'     ,[MachineSpareTableController::class,'Edit'])   ->name('machinespareparttable.edit');
-  Route::post('machine/machinespareparttable/update/{UNID}'  ,[MachineSpareTableController::class,'Update']);
-  Route::get('machine/machinespareparttable/delete/{UNID}'   ,[MachineSpareTableController::class,'Delete']) ->name('machinespareparttable.delete');
+Route::get('machine/repairtemplate/list/{UNID?}'        ,[MachineRepairTableController::class,'Index'])  ->name('repairtemplate.list');
+  Route::post('machine/repairtemplate/save'          ,[MachineRepairTableController::class,'Save']) ->name('repairtemplate.save');
+  Route::post('machine/repairtemplate/update'          ,[MachineRepairTableController::class,'Update']) ->name('repairtemplate.update');
+  Route::post('machine/repairtemplate/delete'          ,[MachineRepairTableController::class,'Delete']) ->name('repairtemplate.delete');
+  Route::post('machine/repairtemplate/subsave'          ,[MachineRepairTableController::class,'SubSave']) ->name('repairtemplate.subsave');
+  Route::post('machine/repairtemplate/subupdate'          ,[MachineRepairTableController::class,'SubUpdate']) ->name('repairtemplate.subupdate');
+  Route::post('machine/repairtemplate/subdelete'          ,[MachineRepairTableController::class,'SubDelete']) ->name('repairtemplate.subdelete');
+
 //status
 Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController::class,'Index'])  ->name('machinestatustable.list');
   Route::post('machine/machinestatustable/store'            ,[MachineStatusTableController::class,'Store']) ->name('machinestatustable.store');
@@ -216,18 +189,46 @@ Route::get('machine/pm/template/list/{UNID?}'                   ,[MachineSysTemT
   Route::get('machine/pm/template/deletepmlistall/{UNID}'       ,[MachineSysTemTableController::class,'DeletePMListAll']);
   Route::get('machine/pm/template/deletepmtemplate/{UNID}'      ,[MachineSysTemTableController::class,'DeleteTemplate']);
   Route::get('machine/pm/template/deletemachinepm/{MC}/{UNID}'  ,[MachineSysTemTableController::class,'DeleteMachinePm']);
-//Detailpointtable
-Route::post('machine/detailpoint/store'            ,[MachineDetailPointTableController::class,'Store']) ->name('detailpoint.store');
-  Route::get('machine/detailpoint/show/{UNID}'     ,[MachineDetailPointTableController::class,'Edit'])   ->name('detailpoint.edit');
-  Route::post('machine/detailpoint/update/{UNID}'  ,[MachineDetailPointTableController::class,'Update']);
-  Route::get('machine/detailpoint/delete/{UNID}'   ,[MachineDetailPointTableController::class,'Delete']) ->name('detailpoint.delete');
-  //***************************** Plan ****************************************
-Route::get('machine/plan/planpm'                  ,[PlanPmController::class,'Index']) ->name('plan.pm');
-Route::get('machine/pdf/plan/planpm'                  ,[PlanMachinePDF::class,'PdfPlanPm']) ->name('plan.pdfplanpm');
+//sparepart
+Route::get('machine/spart/list/{UNID?}'                      ,[SparPartController::class,'List']) ->name('SparPart.List');
+  Route::post('machine/spart/save'                     ,[SparPartController::class,'Save']) ->name('SparPart.Save');
+  Route::post('machine/spart/update'                   ,[SparPartController::class,'Update']) ->name('SparPart.Update');
+  Route::get('machine/spart/delete'                   ,[SparPartController::class,'Delete']) ->name('SparPart.Delete');
+  Route::get('machine/spart/savemachine'                   ,[SparPartController::class,'SaveMachine']) ->name('SparPart.SaveMachine');
+  Route::get('machine/spart/deletemachine/{MACHINE_UNID?}/{SPAREPART_UNID?}' ,[SparPartController::class,'DeleteMachine']) ->name('SparPart.DeleteMachine');
+  Route::get('machine/spart/machine/{UNID?}'                   ,[SparPartController::class,'GetMachineList']) ->name('SparPart.GetMachineList');
+//sparepart report
+Route::get('machine/spart/report'                            ,[ReportSparePartController::class,'Index']) ->name('SparPart.Report.Index');
+  Route::post('machine/spart/report/planmonth'                 ,[ReportSparePartController::class,'Index']) ->name('SparPart.Report.planmonth');
+  Route::get('machine/spart/report/planmonth/print'                 ,[ReportSparePartController::class,'PlanMonthPrint']) ->name('SparPart.Report.planmonthprint');
+  Route::get('machine/spart/report/planmonth/form'                 ,[ReportSparePartController::class,'Form']) ->name('SparPart.Report.Form');
+  Route::get('machine/spart/report/planmonth/save'                 ,[ReportSparePartController::class,'Save']) ->name('SparPart.Report.Save');
+  Route::get('machine/spart/reportplanmonth/change'                 ,[ReportSparePartController::class,'PlanChange']) ->name('SparPart.Report.PlanChange');
 
-Route::get('machine/pm/planlist/{line?}'                   ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
-Route::post('machine/pm/planlist/{line?}'                  ,[MachinePlanController::class,'PMPlanList']);
-  // Route::get('machine/pm/planlist/search/{machineline?}'                  ,[MachinePlanController::class,'SearchPMplanlist']);
+Route::get('machine/spart/report/planmonth/formimg'                 ,[ReportSparePartController::class,'FormImg']) ->name('SparPart.Report.FormImg');
+Route::post('machine/spart/planmonth/saveimg'                 ,[ReportSparePartController::class,'SaveImg']) ->name('SparPart.Report.SaveImg');
+Route::post('machine/spart/planmonth/deleteimg'                 ,[ReportSparePartController::class,'DeleteImg']) ->name('SparPart.Report.DeleteImg');
+//machine sparepart
+Route::get('machine/machinespart/getlistsparepart/{UNID}' ,[MachineSparePartController::class,'GetListSparepart']) ->name('MachineSparPart.GetListSparepart');
+Route::get('machine/machinespart/save'                    ,[MachineSparePartController::class,'Save']) ->name('MachineSparPart.Save');
+Route::post('machine/machinespart/update'                   ,[MachineSparePartController::class,'Update']) ->name('MachineSparPart.Update');
+Route::get('machine/machinespart/delete'                   ,[MachineSparePartController::class,'Delete']) ->name('MachineSparPart.Delete');
+Route::get('machine/machinespart/statusopen'                    ,[MachineSparePartController::class,'StatusOpen']) ->name('MachineSparPart.StatusOpen');
+  //***************************** PlanPm ****************************************
+Route::get('machine/plan/planpm'                             ,[MachinePlanController::class,'PMPlanPrint']) ->name('plan.pm');
+Route::post('machine/plan/planpmpdf'                         ,[MachinePlanController::class,'PdfPlanPm']) ->name('plan.pmpdf');
+Route::get('machine/pdf/plan/planpm/{YEAR}'                  ,[PlanYearMachinePm::class,'PlanYearPDF']) ->name('plan.yearpdf');
+Route::get('machine/pdf/plan/planpmmonth/{YEAR}/{MONTH?}'    ,[PlanMonthMachinePm::class,'PlanMonthPDF']) ->name('plan.monthpdf');
+Route::get('machine/pm/planlist'                             ,[MachinePlanController::class,'PMPlanList'])  ->name('pm.planlist');
+Route::post('machine/pm/planlist'                            ,[MachinePlanController::class,'PMPlanList']);
+Route::get('machine/pm/plancheck/{UNID}'                     ,[MachinePlanController::class,'PMPlanCheckForm']) ->name('pm.plancheck');
+Route::get('machine/pm/planedit/{UNID}'                      ,[MachinePlanController::class,'PMPlanEditForm']) ->name('pm.planedit');
+Route::post('machine/pm/planlist/save'                       ,[MachinePlanController::class,'PMPlanListSave']) ->name('pm.planlistsave');
+Route::post('machine/pm/planedit/update'                     ,[MachinePlanController::class,'PMPlanListUpdate']) ->name('pm.planlistupdate');
+Route::post('machine/pm/planlist/upload'                     ,[MachinePlanController::class,'PMPlanListUpload']) ->name('pm.planlistupload');
+Route::post('machine/pm/planlist/deleteimg'                  ,[MachinePlanController::class,'DeleteImg']) ->name('pm.deleteimg');
+Route::get('machine/pm/planlist/print/{UNID}'                ,[FormPMMachine::class,'PDFForm']) ->name('pm.pdfform');
+
 //ในedit machine
   Route::post('machine/system/check/storelist'          ,[SysCheckController::class,'StoreList'])   ->name('syscheck.storelist');
   Route::get('machine/system/remove/{UNID}/{MC}'        ,[SysCheckController::class,'DeletePMMachine'])   ->name('syscheck.remove');
