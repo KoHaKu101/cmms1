@@ -51,29 +51,26 @@ class MachineStatusTableController extends Controller
       'STATUS_NAME.required'  => 'กรุณาใส่สถานะเครื่องจักร',
       'STATUS_NAME.unique'    => 'มีสถานะเครื่องจักรนี้แล้ว'
       ]);
+    $STATUS = isset($request->STATUS) ? '9' : '1' ;
     MachineStatusTable::insert([
       'STATUS_CODE'     => $request->STATUS_CODE,
       'STATUS_NAME'     => $request->STATUS_NAME,
-      'STATUS'          => $request->STATUS,
+      'STATUS'          => $STATUS,
       'CREATE_BY'       => Auth::user()->name,
       'CREATE_TIME'     => Carbon::now(),
+      'MODIFY_BY'         => Auth::user()->name,
+      'MODIFY_TIME'       => Carbon::now(),
       'UNID'            => $this->randUNID('PMCS_CMMS_MACHINE_STATUS'),
     ]);
-    $dataset = MachineStatusTable::paginate(10);
-    return Redirect()->route('machinestatustable.list',compact('dataset'))->with('success','ลงทะเบียน สำเร็จ');
+    return Redirect()->back()->with('success','ลงทะเบียน สำเร็จ');
   }
-  public function Edit($UNID) {
-    // dd($UNID);
-    $dataset = MachineStatusTable::where('UNID','=',$UNID)->first();
-    return view('machine/add/machinestatus/edit',compact('dataset'));
-}
-public function Update(Request $request,$UNID) {
 
+public function Update(Request $request,$UNID) {
+  $STATUS = isset($request->STATUS) ? '9' : '1' ;
   $data_set = MachineStatusTable::where('UNID',$UNID)->update([
     'STATUS_CODE'     => $request->STATUS_CODE,
     'STATUS_NAME'     => $request->STATUS_NAME,
-    'STATUS'          => $request->STATUS,
-
+    'STATUS'          => $STATUS,
     'MODIFY_BY'         => Auth::user()->name,
     'MODIFY_TIME'       => Carbon::now(),
 

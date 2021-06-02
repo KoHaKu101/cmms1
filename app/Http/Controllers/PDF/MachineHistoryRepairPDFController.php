@@ -5,7 +5,7 @@ namespace App\Http\Controllers\PDF;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Machine\Machine;
-use App\Models\Machine\MachineRepair;
+use App\Models\Machine\MachineRepairREQ;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -19,13 +19,10 @@ class MachineHistoryRepairPDFController extends Fpdf
   public function RepairHistory($UNID)
     {
       $dataset = Machine::where('UNID',$UNID)->first();
-      $machinerepair = MachineRepair::select('*')->selectraw('dbo.decode_utf8(MACHINE_NOTE) as MACHINE_NOTE
-                                                   ,dbo.decode_utf8(MACHINE_CAUSE) as MACHINE_CAUSE
-                                                   ')
-                                      ->where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
+      $machinerepair = MachineRepairREQ::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                       ->where('MACHINE_DOCNO','like','%'.'RE'.'%')
                                       ->get();
-      $count = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
+      $count = MachineRepairREQ::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
                                       ->get()->count();
      //add font
      $pdf = new FPDF();

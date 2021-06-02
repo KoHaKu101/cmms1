@@ -171,15 +171,7 @@
 					</div>
   			</div>
 			</div>
-			<div class="container">
-	<div class="row">
-		<div class="col-md-12" style="text-align: center;margin-bottom: 20px;">
-			<div id="reader" style="display: inline-block; position: relative; padding: 0px; border: 1px solid silver;"><div style="text-align: left; margin: 0px; padding: 5px; font-size: 20px; border-bottom: 1px solid rgba(192, 192, 192, 0.18);"><span><a href="https://github.com/mebjas/html5-qrcode">Code Scanner</a></span><span id="reader__status_span" style="float: right; padding: 5px 7px; font-size: 14px; background: rgb(238, 238, 255); border: 1px solid rgba(0, 0, 0, 0); color: rgb(17, 17, 17);">Idle</span><div id="reader__header_message" style="display: block; font-size: 14px; padding: 2px 10px; margin-top: 4px; border-top: 1px solid rgb(246, 246, 246); background: rgba(203, 36, 49, 0.14); color: rgb(203, 36, 49);">NotFoundError : Requested device not found</div></div><div id="reader__scan_region" style="width: 100%; min-height: 100px; text-align: center;"><br><img width="64" src="https://raw.githubusercontent.com/mebjas/html5-qrcode/master/assets/camera-scan.gif" style="opacity: 0.3;"></div><div id="reader__dashboard" style="width: 100%;"><div id="reader__dashboard_section" style="width: 100%; padding: 10px; text-align: left;"><div><div id="reader__dashboard_section_csr" style="display: block;"><div style="text-align: center;"><button>Request Camera Permissions</button></div></div><div id="reader__dashboard_section_fsr" style="text-align: center; display: none;"><input id="reader__filescan_input" accept="image/*" type="file" disabled="" style="width: 200px;"><span>&nbsp; Select Image</span></div></div><div style="text-align: center;"><a id="reader__dashboard_section_swaplink" href="#scan-using-file" style="text-decoration: underline;">Scan using camera directly</a></div></div></div></div>
-			<div class="empty"></div>
-			<div id="scanned-result"></div>
-		</div>
-	</div>
-</div>
+
 </div>
 
 @stop
@@ -189,13 +181,7 @@
 @section('javascript')
 	<script src="{{ asset('assets/js/ajax/ajax-csrf.js') }}"></script>
 		<script src="{{asset('assets/js/useinproject/html5-qrcode.min.js')}}">
-		function onScanSuccess(qrCodeMessage) {
-			// handle on success condition with the decoded message
-		}
 
-		var html5QrcodeScanner = new Html5QrcodeScanner(
-			"reader", { fps: 10, qrbox: 250 });
-		html5QrcodeScanner.render(onScanSuccess);
 		</script>
 <script>
 	$( document ).ready(function() {

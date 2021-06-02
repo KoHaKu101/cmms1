@@ -56,14 +56,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="card ">
-                	@if(session('success'))
-                  	<div class="alert alert-success alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    												<span aria-hidden="true">&times;</span>
-  												</button>
-										</div>
-									@endif
+
 									<div class="card-header bg-primary form-inline ">
 											<h4 class="ml-3 mt-2 " style="color:white;" ><i class="fas fa-cog fa-lg mr-1"></i> พนักงานซ่อมบำรุง </h4>
 												<div class="input-group ml-4">
@@ -80,12 +73,15 @@
 									<div class="container mt-4">
 										<div class="row">
 											@foreach ($dataset as $key => $dataitem)
+												@php
+												$EMP_ICON = $dataitem->EMP_ICON != '' ?	'image/emp/'.$dataitem->EMP_ICON : 'assets/img/no_image1200_900.png';
+												@endphp
 												<div class="col-md-6 col-lg-4">
 													<div class="card card-post card-round">
-														<img class="card-img-top" src="/assets/img/blogpost.jpg" alt="Card image cap">
+														<img class="card-img-top" src="{{ asset($EMP_ICON) }}" alt="Card image cap">
 														<div class="card-body">
 															<div class="separator-solid"></div>
-																<h3 class="card-title">{{ $dataitem->EMP_NAME }}</h3>
+																<h3 class="card-title">{{ $dataitem->EMP_NAME2 }}</h3>
 																<h5 >รหัสพนักงาน {{ $dataitem->EMP_CODE }}</h5>
 																<h5 >ตำแหน่งงาน </h5>
 																<h5 >ประจำ {{ $dataitem->EMP_GROUP }} </h5>
@@ -94,7 +90,9 @@
 																		<i class="fas fa-edit fa-lg">แก้ไขข้อมูล</i>
 																	</span>
 																</a>
-																<a href="{{ url('machine/personal/delete/'.$dataitem->UNID) }}" class="ml-3 float-right">
+																<a style="cursor:pointer"
+																data-unid="{{ $dataitem->UNID }}"	onclick="deletepersonal(this)"
+																	 class="ml-3 float-right">
 																	<span style="color: Tomato;">
 																		<i class="fas fa-trash fa-lg ml-2">	Delete</i>
 																	</span>
@@ -106,6 +104,7 @@
 												</div>
 											@endforeach
 										</div>
+										{{ $dataset->links() }}
 									</div>
 								</div>
 							</div>
@@ -121,7 +120,24 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
-
+<script>
+function deletepersonal(thisdata){
+var unid = $(thisdata).data('unid');
+var url = '/machine/personal/delete/'+unid;
+Swal.fire({
+		title: 'ต้องการลบบุคคลนี้มั้ย?',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'ใช่!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			window.location.href = url;
+		}
+	});
+}
+</script>
 
 @stop
 {{-- ปิดส่วนjava --}}

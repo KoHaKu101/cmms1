@@ -1,10 +1,11 @@
 @extends('masterlayout.masterlayout')
-@section('tittle','แจ้งซ่อม')
 @section('meta')
-	<link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.min.css')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
+@section('tittle','แจ้งซ่อม')
 @section('css')
+		<link href="{{asset('assets/css/select2.min.css')}}" rel="stylesheet">
+		<link href="{{ asset('assets/css/_wizard.scss') }}" >
 
 @endsection
 {{-- ส่วนหัว --}}
@@ -26,212 +27,258 @@
 
 	{{-- ส่วนเนื้อหาและส่วนท้า --}}
 @section('contentandfooter')
+	<style>
+	.select2 select2-container select2-container--default select2-container--above select2-container--open{
+		width: 200px
+	}
+	/* .btn-flame {
+    background: #f5bdca!important;
+    border-color: #ff0000!important;
+} */
+	</style>
+	<div class="content">
+<div class="page-inner">
+	<div class="py-12">
+			<div class="container">
 
-		<div class="content">
-			<div class="page-inner">
-				<!--ส่วนปุ่มด้านบน-->
-				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-1">
-								<a href="{{ url('machine/repair/repairlist') }}">
-									<button class="btn btn-warning  btn-xs ">
-										<span class="fas fa-arrow-left fa-lg">Back </span>
-									</button>
-								</a>
-							</div>
-							<div class="col-md-1 ">
-								<form action="{{ url('machine/repair/update/'.$dataset->UNID) }}" method="POST" enctype="multipart/form-data">
-									@csrf
-									<button class="btn btn-primary btn-xs" type="submit">
-										<span class="fas fa-save fa-lg">	save	</span>
-									</button>
-							</div>
+				<div class="page-inner">
 
-							<div class="col-md-10 ">
-
-									<button class="btn btn-secondary btn-xs float-right" type="button" id="button">
-										<span class="fas fa-print fa-lg">	print	</span>
-									</button>
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--ส่วนกรอกข้อมูล-->
-				<div class="py-12">
-	        <div class="container mt-2">
 						<div class="card">
-							<div class="card-header bg-primary">
-								<h4 class="ml-3 mt-2" style="color:white;" >แจ้งซ่อมเครื่องจักร {{ $dataset->EMP_CODE }}</h4>
+							<div class="col-md-12">
+								<div class="card-header text-center bg-primary ">
+									<h3 class="card-title text-white"><b>แจ้งซ่อม เครื่อง</b> {{$datamachine->MACHINE_CODE}}</h3>
+								</div>
 							</div>
-
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-6 col-lg-4">
-										<div class="form-group has-error">
-											<label for="MACHINE_DOCNO">เลขที่เอกสาร</label>
-											<input type="text" class="form-control" id="MACHINE_DOCNO" name="MACHINE_DOCNO"value={{ $dataset->MACHINE_DOCNO }} readonly>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-8 ml-auto mr-auto" id="tabactive">
+											<ul class=" nav nav-pills nav-primary">
+												<li class="step">
+													<a class="nav-link repair" href="#repair" aria-expanded="true" id="step1" data-toggle="tab">
+														<i class="fa fa-user mr-0"></i> แจ้งอาการ
+													</a>
+												</li>
+												<li class="step">
+													<a class="nav-link repairdetail" href="#repairdetail" id="step2" data-toggle="tab">
+														<i class="fa fa-file mr-2"></i> รายละเอียด
+													</a>
+												</li>
+												<li class="step">
+													<a class="nav-link empname" href="#empname" id="step3" data-toggle="tab">
+														<i class="fa fa-file mr-2"></i> พนักงาน
+													</a>
+												</li>
+												<li class="step">
+													<a class="nav-link priority" href="#priority" id="step4" data-toggle="tab">
+														<i class="fa fa-file mr-2"></i> ความเร่งด่วน
+													</a>
+												</li>
+												<li class="step">
+													<a class="nav-link active summary" href="#summary" id="step5" data-toggle="tab">
+														<i class="fa fa-map-signs mr-2"></i> สรุป
+													</a>
+												</li>
+											</ul>
 										</div>
 									</div>
-									<div class="col-md-6 col-lg-4">
-										<div class="form-group has-error">
-											<label for="MACHINE_TIME">เวลาแจ้งซ่อม	</label>
-											<input type="text" class="form-control" id="MACHINE_TIME" name="MACHINE_TIME" value={{ $dataset->MACHINE_TIME }} readonly>
-										</div>
-									</div>
-									<div class="col-md-6 col-lg-4">
-										<div class="form-group has-error">
-											<label for="MACHINE_DOCDATE">วันที่เอกสาร	</label>
-											<input type="text" class="form-control" id="MACHINE_DOCDATE" name="MACHINE_DOCDATE" value="{{ $dataset->MACHINE_DOCDATE }}"readonly >
-										</div>
-									</div>
-								</div>
-								<div class="row">
-								<div class="col-md-6 col-lg-4">
-								  <div class="form-group has-error">
-								    <label for="EMP_NAME">รหัสพนักงาน</label>
-										<select name="EMP_CODE" id="EMP_CODE" class="form-control" data-live-search="true" title="Select Category">
-										</select>
-								  </div>
-								</div>
-
-								<div class="col-md-6 col-lg-4">
-								  <div class="form-group has-error">
-								    <label for="EMP_NAME">ชื่อพนักงาน	</label>
-								    <input type="text"  class="form-control" id="EMP_NAME" name="EMP_NAME"
-								    value="" readonly>
-								  </div>
-								</div>
-								</div>
-								<div class="row">
-										<div class="col-md-8 col-lg-4">
-											<div class="form-group has-error">
-												<label for="MACHINE_CODE">รหัสเครื่อง</label>
-													<input type="text" class="form-control" id="MACHINE_CODE" name="MACHINE_CODE" value="{{ $dataset->MACHINE_CODE }}" readonly >
-											</div>
-										</div>
-										<div class="col-md-8 col-lg-4">
-											<div class="form-group has-error">
-												<label for="MACHINE_LOCATION">Line</label>
-												<input type="text" class="form-control" id="MACHINE_LOCATION" name="MACHINE_LOCATION" value="{{ $dataset->MACHINE_LOCATION }}" readonly>
-											</div>
-										</div>
-										<div class="col-md-8 col-lg-4">
-											<div class="form-group has-error">
-												<label for="MACHINE_NAME">ชื่อเครื่อง</label>
-												<input type="text" class="form-control" id="MACHINE_NAME" name="MACHINE_NAME"  value="{{ $dataset->MACHINE_NAME }}" readonly>
-											</div>
-										</div>
-								</div>
-
-
-								</div>
-								<div class="row">
-									<div class="col-md-12 mt-2">
-										<div class="card-body">
-											<style>
-												.nav-pills {
-    											border-bottom: 0px solid #ddd;
-												}
-												.nav-pills li a {
-    											background: #1f4e79;
-    											color: #fff;
-    											display: block;
-    											line-height: 2em;
-    											padding: 7px 15px;
-    											border-radius: 0;
-    											font-size: 13px;
-    											border: none;
-    											margin: 30px 2px 0;
-												}
-											</style>
-											<ul class="nav nav-pills justify-content-left mt--4">
-  											<li>
-    											<a id="home-tab" data-toggle="tab" href="#home" class="active" >รายละเอียดการแจ้งซ่อม</a>
-  											</li>
-
-  										</ul>
-  										<div class="tab-content clearfix">
-												<!-- ข้อมูลทั่วไป -->
-  											<div class="tab-pane active" id="home">
-    											<div class="row">
-      											<div class="col-sm-12">
-        											<div class="jumbotron">
-																<div class="col-md-8 col-lg-12">
-																	<div class="table">
-																	<table class="table table-sm"  >
-																		<thead>
-																			<tr>
-																				<th class="bg-primary" colspan="6" >
-																					<h4 align="center" style="color:white;" class="mt-2">รายละเอียดการแจ้งซ่อม</h4>
-																				</th>
-																			</tr>
-																		</thead>
-																	</table>
-																</div>
-															</div>
-
-																<div class="row">
-
-																	<div class="col-md-8 col-lg-3 ml-2">
-
-																		@foreach($datarepair as $dataitem)
-																		<div class="form-check">
-																			<label  class="form-check-label">
-																				<input class="form-check-input" type="checkbox" id="MACHINE_NOTE[]" name="MACHINE_NOTE[]"
-
-																				value="{{ $dataitem->REPAIR_NAME }}" @if (in_array($dataitem->REPAIR_NAME,$datanote['data'])) checked @else "" @endif>
-																				<span class="form-check-sign">{{ $dataitem->REPAIR_NAME }}</span>
-																			</label>
-																		</div>
-																	@endforeach
-
-																	</div>
-
-																	<div class="col-md-8 col-lg-3 ml-2">
-																		<div class="form-group">
-    																	<label for="MACHINE_CAUSE">Example textarea</label>
-    																	<textarea class="form-control" id="MACHINE_CAUSE" name="MACHINE_CAUSE" rows="4">{{ $dataset->MACHINE_CAUSE }}
-																			 </textarea>
-  																	</div>
-																	</div>
-
-																		<div class="col-md-8 col-lg-3 ">
-																			<div class="form-group">
-																				<label for="MACHINE_SERIAL">สถานะ</label>
-																				<select class="form-control form-control" id="MACHINE_TYPE" name="MACHINE_TYPE" >
-																					<option >--แสดงทั้งหมด--</option>
-																					<option value="STOP"{{$dataset->MACHINE_TYPE == 'STOP' ? 'selected' : ''}}>หยุดทำงาน</option>
-																					<option value="RUN"{{$dataset->MACHINE_TYPE == 'RUN' ? 'selected' : ''}}>ทำงานปกติ</option>
-
-																				</select>
+									<div class="tab-content my-4">
+										<div class="tab-pane  " id="repair">
+											<div class="row">
+												@foreach ($dataset as $index => $row)
+														<div class="col-sm-6 col-md-3">
+															<a  onclick="selectrepair(this)"  data-unid="{{ $row->UNID }}"
+																style="cursor:pointer">
+															<div class="card card-stats card-primary card-round">
+																<div class="card-body">
+																	<div class="row">
+																		<div class="col-5">
+																			<div class="icon-big text-center">
+																				<i class="fas fa-briefcase"></i>
 																			</div>
 																		</div>
-
-																		<input type="hidden" id="UNID" value="{{ $dataset->UNID }}">
+																		<div class="col-7 col-stats">
+																			<div class="numbers">
+																				<p class="card-category">{{$row->REPAIR_MAINSELECT_NAME}}</p>
+																			</div>
+																		</div>
 																	</div>
 																</div>
-        											</div>
-      											</div>
-    											</div>
-  											</div>
+															</div>
+														</a >
+														</div>
+												@endforeach
+											</div>
+											<div class="card-action text-center">
 
+												<button type="button" class="btn btn-primary mx-1 my-1"
+												onclick="nextstep(this)"
+												data-step="step2">Next <i class="fas fa-arrow-alt-circle-right ml-1"></i></button>
+											</div>
+										</div>
+										<div class="tab-pane" id="repairdetail">
+											<div class="row">
+												@foreach ($data_selectsubrepair as $key => $data_row)
+													<div class="col-sm-6 col-md-3">
+										        <a  onclick="selectrepairdetail(this)"  data-unid="{{$data_row->UNID}}" data-name="{{$data_row->REPAIR_SUBSELECT_NAME}}"style="cursor:pointer">
+										        <div class="card card-stats card-primary card-round">
+										          <div class="card-body">
+										            <div class="row">
+										              <div class="col-5">
+										                <div class="icon-big text-center">
+										                  <i class="fas fa-wrench"></i>
+										                </div>
+										              </div>
+										              <div class="col-7 col-stats">
+										                <div class="numbers">
+										                  <p class="card-category">{{$data_row->REPAIR_SUBSELECT_NAME}}</p>
+										                </div>
+										              </div>
+										            </div>
+										          </div>
+										        </div>
+										      </a >
+										      </div>
+												@endforeach
+
+											</div>
+											<div class="card-action text-center">
+												<button type="button" class="btn btn-warning mx-1 my-1"
+												onclick="previousstep(this)"
+												data-step="step1"><i class="fas fa-arrow-alt-circle-left mr-1"></i>Previous</button>
+												<button type="button" class="btn btn-primary mx-1 my-1"
+												onclick="nextstep(this)"
+												data-step="step3">Next <i class="fas fa-arrow-alt-circle-right ml-1"></i></button>
+											</div>
+										</div>
+										<div class="tab-pane " id="empname">
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="form-group text-center">
+															<div class="col-md-12 has-error ml-auto mr-auto my-2">
+																	@foreach ($data_emp as $key => $row)
+																		<button type="button" class="btn btn-info mx-1 my-1 text-left" style="width:200px"
+																		onclick="selectemp(this)"
+																		data-empcode="{{ $row->EMP_CODE }}"
+																		data-empname="{{ $row->EMP_NAME }}"
+																		>
+																			{{ 'รหัส '.$row->EMP_CODE.' : ชื่อ '.$row->EMP_NAME }}</button>
+																	@endforeach
+															</div>
+													</div>
+													<div class="card-action text-center">
+														<button type="button" class="btn btn-warning mx-1 my-1"
+														onclick="previousstep(this)"
+														data-step="step2"><i class="fas fa-arrow-alt-circle-left mr-1"></i>Previous</button>
+														<button type="button" class="btn btn-primary mx-1 my-1"
+														onclick="nextstep(this)"
+														data-step="step4">Next <i class="fas fa-arrow-alt-circle-right ml-1"></i></button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane " id="priority">
+											<div class="col-md-6 ml-auto mr-auto">
+												<div class="row">
+													<div class="col-sm-6 col-md-6">
+														<a  onclick="selectpriority(this)"  data-priority="1" style="cursor:pointer">
+														<div class="card card-stats card-primary card-round">
+															<div class="card-body">
+																<div class="row">
+																	<div class="col-5">
+																		<div class="icon-big text-center">
+																			<i class="flaticon-users"></i>
+																		</div>
+																	</div>
+																	<div class="col-7 col-stats">
+																		<div class="numbers">
+																			<p class="card-category" style="font-size:20px">ไม่เร่งด่วน</p>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</a >
+													</div>
+													<div class="col-sm-6 col-md-6">
+														<a  onclick="selectpriority(this)"  data-priority="9" style="cursor:pointer">
+														<div class="card card-stats card-danger card-round">
+															<div class="card-body ">
+																<div class="row">
+																	<div class="col-5">
+																		<div class="icon-big text-center">
+																			<i class="fab fa-hotjar fa-lg" ></i>
+																		</div>
+																	</div>
+																	<div class="col-7 col-stats">
+																		<div class="numbers">
+																			<p class="card-category" style="font-size:20px">เร่งด่วน</p>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</a >
+													</div>
+												</div>
+											</div>
+											<div class="card-action text-center">
+												<button type="button" class="btn btn-warning mx-1 my-1"
+												onclick="previousstep(this)"
+												data-step="step3">
+												<i class="fas fa-arrow-alt-circle-left mr-1"></i>Previous</button>
+												<button type="button" class="btn btn-primary mx-1 my-1"
+												onclick="nextstep(this)"
+												data-step="step5">Next <i class="fas fa-arrow-alt-circle-right ml-1"></i></button>
+											</div>
+										</div>
+										<div class="tab-pane active" id="summary">
+											<form action="{{ route('repair.store',$datamachine->UNID) }}" method="post" id="FRM_SENDREPORT" name="FRM_SENDREPORT">
+												@csrf
+												<div class="row">
+													<div class="col-md-6 ml-auto mr-auto">
+															<table class="table table-bordered table-bordered-bd-info">
+																<tbody>
+																	<tr>
+																		<td width="80px" style="background:#aab7c1;color:black;"><h5 class="my-1"> MC-NO </h5></td>
+																		<td> {{$datamachine->MACHINE_CODE}} LINE:{{$datamachine->MACHINE_LINE}}</td>
+																	</tr>
+																	<tr>
+																		<td style="background:#aab7c1;color:black;"><h5 class="my-1">พนักงาน</h5>  </td>
+																		<td id="summaryemp">{{ $data_repairreq->EMP_CODE.' '.$data_repairreq->EMP_NAME}} </td>
+																	</tr>
+																	<tr>
+																		<td style="background:#aab7c1;color:black;"><h5 class="my-1">อาการ</h5>  </td>
+																		<td id="summaryrepair">{{ $data_repairreq->REPAIR_SUBSELECT_NAME}} </td>
+																	</tr>
+																	<tr>
+																		<td style="background:#aab7c1;color:black;"><h5 class="my-1">ระดับ</h5>  </td>
+																		<td id="summarypriority">{{ $data_repairreq->PRIORITY == '1' ? 'ไม่เร่งด่วน' : 'เร่งด่วน' }} </td>
+																	</tr>
+																</tbody>
+															</table>
+													</div>
+												</div>
+												<div class="card-action text-center">
+													<button type="button" class="btn btn-warning mx-1 my-1"
+													onclick="previousstep(this)"
+													data-step="step4">
+														<i class="fas fa-arrow-alt-circle-left mr-1"></i>Previous</button>
+													<button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Save</button>
+												</div>
+											</form>
+										</div>
 									</div>
 								</div>
-							</div>
-					</div>
-				</div>
+						</div>
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+</div>
 </div>
 
 
 
 
-{{-- @include('masterlayout\tab\modal\scanqrcode') --}}
 
 
 
@@ -241,45 +288,103 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+	<script src="{{ asset('assets/js/ajax/ajax-csrf.js') }}"></script>
+	<script>
+	$(".tabactive").each(function(){
+		$(this).click(function(){
+			id = $(this).attr('id');
+			url = window.location.href;
+			$(".nav-link").removeClass("active");
+			$(this).addClass("active show");
+			$('.tab-pane').removeClass("active");
+			$("#"+id).addClass("active");
 
-	<script src="{{ asset('assets/js/bootstrap-select.min.js') }}">
-	$(document).ready(function(){
+		});
+	});
+	function setcookie(value,name){
+		var urlcookie = "{{ route('cookie.set') }}";
+		var data = {"_token": "{{ csrf_token() }}",VALUE : value,NAME : name}
+		$.ajax({
+			type:'GET',
+			url: urlcookie,
+			datatype: 'json',
+			data: data ,
+			success:function(res){
+					}
+				});
+	}
+		function selectrepair(thisdata){
+			var unid = $(thisdata).data('unid');
+			$('#step2').removeAttr('data-toggle');
+			$('#step3').removeAttr('data-toggle');
+			$('#step4').removeAttr('data-toggle');
+			$('#step5').removeAttr('data-toggle');
+			event.preventDefault();
+			var url = "{{route('repair.selectrepairdetail')}}";
+			var data = {"_token": "{{ csrf_token() }}",UNID : unid};
+			var name = 'selectmainrepair';
+			if (unid) {
+				$.ajax({
+					type:'POST',
+					url: url,
+					datatype: 'json',
+					data: data ,
+					success:function(data){
+						setcookie(unid,name);
+						$('#repairdetail').html(data.html);
+						$('#step2').attr('data-toggle','tab');
+						$('#step2').click();
+							}
+						});
+			}
 
-  $('#EMP_CODE').selectpicker();
-  load_data('EMP_NAME');
-  function load_data(emp_code = '')
-  {
-		var url = '/machine/repair/form/searchempname';
-		var data = {EMP_CODE:emp_code};
-    $.ajax({
-      url:url,
-      method:"GET",
-      data:data,
-      dataType:"json",
-      success:function(data)
-      {
-        var html = '';
-        for(var count = 0; count < data.length; count++)
-        {
-          html += '<option value="'+data[count].id+'">'+data[count].name+'</option>';
-        }
-          $('#EMP_CODE').html(html);
-          $('#EMP_CODE').selectpicker('refresh');
-      }
-    });
-  }
+		}
+		function selectrepairdetail(thisdata){
+			$('#step3').removeAttr('data-toggle');
+			$('#step4').removeAttr('data-toggle');
+			$('#step5').removeAttr('data-toggle');
+			var unid = $(thisdata).data('unid');
+			var empname = $(thisdata).data('name');
+			var name = 'selectsubrepair';
+			setcookie(unid,name);
+			$('#summaryrepair').html(empname);
+			$('#step3').attr('data-toggle','tab');
+			$('#step3').click();
+		}
+		function selectemp(thisdata){
+			$('#step4').removeAttr('data-toggle');
+			$('#step5').removeAttr('data-toggle');
+	    var emp_code = $(thisdata).data('empcode');
+			var emp_name = $(thisdata).data('empname');
+			var name = 'empcode';
+			setcookie(emp_code,name);
 
-  $(document).on('change', '#EMP_CODE', function(){
-    var emp_code = $('#EMP_CODE').val();
-    load_data('EMP_NAME', emp_code);
-  });
+			$('#summaryemp').html(emp_code+' '+emp_name);
+			$('#step4').attr('data-toggle','tab');
+			$('#step4').click();
+		}
+		function selectpriority(thisdata){
+			$('#step5').removeAttr('data-toggle');
+	    var priority = $(thisdata).data('priority');
+			var checkpriority = priority == '9' ? 'เร่งด่วน' : 'ไม่เร่งด่วน';
+			var name = 'priority';
+			setcookie(priority,name);
+			$('#summarypriority').html(checkpriority);
+			$('#step5').attr('data-toggle','tab');
+			$('#step5').click();
 
-});
-	var button = document.getElementById('button');
-	var unid = $('#UNID').val(); console.log(unid);
-	button.addEventListener('click', function(){
-		window.open('/machine/repair/pdf/'+unid,'Repairprint','width=1000,height=1000,resizable=yes,top=100,left=100,menubar=yes,toolbar=yes,scroll=yes');
-	})
+		}
+		function previousstep(thisdata){
+			var step = $(thisdata).data('step');
+			$('#'+step).click();
+		}
+		function nextstep(thisdata){
+			var step = $(thisdata).data('step');
+			$('#'+step).click();
+		}
+
 	</script>
+
+
 @stop
 {{-- ปิดส่วนjava --}}

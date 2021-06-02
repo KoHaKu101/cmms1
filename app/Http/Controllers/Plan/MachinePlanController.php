@@ -343,35 +343,42 @@ class MachinePlanController extends Controller
 
         }
   public function PMPlanListUpload(Request $request){
-      $image = $request->file('FILE_NAME');
       $plan_unid = $request->IMG_PLAN_UNID;
-      $new_name = rand() . '.' . $image->getClientOriginalExtension();
-      $img_ext = $image->getClientOriginalExtension();
-      $image_resize = Image::make($image->getRealPath());
-      $img_widht  = Image::make($image)->width();
-      $img_height = Image::make($image)->height();
-      $new_widht = 800;
-      $new_height = 800;
-      //หากภาพ V 3840 มากกว่า H 2160 ทำการ resize
-      if ($img_widht > $img_height ) {
-        if ($img_widht > $new_widht) {
-        $image_resize->resize(550,400);
-        }
-      }
-    //หากภาพ H 3840 มากกว่า V 2160 ทำการ Rotate ก่อน จากนั้น resize
-      if ($img_widht < $img_height ) {
-        if ($img_height > $new_height ) {
-          $image_resize->rotate(-90);
-         $image_resize->resize(550,400);
-        }
-      }
 
-      $path = public_path('image/planresult/'.$plan_unid);
-        if(!File::isDirectory($path)){
-        File::makeDirectory($path, 0777, true, true);
+        $image = $request->file('FILE_NAME');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $img_ext = $image->getClientOriginalExtension();
+        $width = 800;
+        $height = 800;
+        $image = file_get_contents($image);
+        $img_master  = imagecreatefromstring($image);
+        $img_widht   = ImagesX($img_master);
+        $img_height  = ImagesY($img_master);
+        $img_create  = $img_master;
+        if ($img_widht < $img_height ) {
+          $img_master = imagerotate($img_master,90,0,true);
+          $img_widht = ImagesX($img_master);
+          $img_height = ImagesY($img_master);
+          $img_create  = $img_master;
         }
-        $dataimgshow = false;
-      if ($image_resize->save($path.'/'.$new_name)) {
+        if ($img_widht > $width) {
+          $img_create  = ImageCreateTrueColor($width, $height);
+          ImageCopyResampled($img_create, $img_master, 0, 0, 0, 0, $width+1, $height+1, $img_widht, $img_height);
+        }
+        $path = public_path('image/planresult/'.$plan_unid);
+          if(!File::isDirectory($path)){
+          File::makeDirectory($path, 0777, true, true);
+          }
+
+          if (strtoupper($img_ext) == 'JPEG' || strtoupper($img_ext) == 'JPG') {
+            $checkimg_saved = imagejpeg($img_create,$path.'/'.$new_name);
+          }elseif (strtoupper($img_ext) == 'PNG') {
+            $checkimg_saved = imagepng($img_create,$path.'/'.$new_name);
+          }
+          ImageDestroy($img_master);
+          ImageDestroy($img_create);
+
+      if ($checkimg_saved) {
         $saveimg = new UploadImgController;
         $dataimgshow = $saveimg->SaveImg($plan_unid,$new_name,$img_ext);
         alert()->success('บันทึกภาพสำเร็จ');
@@ -381,7 +388,6 @@ class MachinePlanController extends Controller
       if ($PMPLANRESULT > 0) {
         return redirect('machine/pm/plancheck/'.$plan_unid)->with('autofocus','BTN_UPLOAD');
       }
-
       return redirect()->back()->with('autofocus','BTN_UPLOAD');
 
 
@@ -394,7 +400,6 @@ class MachinePlanController extends Controller
       $filename = $deletestep->FILE_NAME;
       $data  = array();
     if ($plan_unid != '') {
-
        $deteletimg = Uploadimg::where('UNID','=',$imgunid)->delete();
        if ($deteletimg) {
          $pathfile = public_path('image/planresult/'.$plan_unid.'/'.$filename);
@@ -407,10 +412,6 @@ class MachinePlanController extends Controller
       $data['result'] = false;
       $data['imgunid'] = '';
     }
-
-
-
-
     return response()->json($data);
 
   }

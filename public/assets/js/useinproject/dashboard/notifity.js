@@ -14,7 +14,7 @@ $(document).ready(function(){
                 '<div class="notif-icon notif-danger"> <i class="fa fa-wrench"></i> </div>'+
                 '<div class="notif-content">'+
                 '<span class="block" >Line :'+datarepair.MACHINE_LINE+' MC: '+datarepair.MACHINE_CODE+ '</span>' +
-                  '<span class="time">'+datarepair.MACHINE_DOCDATE+'</span>'+
+                  '<span class="time">'+datarepair.DOC_DATE+'</span>'+
                 '</div>'+
               '</a>';
           });
