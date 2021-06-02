@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
+use File;
 //******************** model ***********************
 use App\Models\MachineAddTable\MachineTypeTable;
 use App\Models\Machine\Protected;
@@ -47,7 +48,7 @@ class MachineTypeTableController extends Controller
   }
 
   public function Store(Request $request){
-
+    $UNID = $this->randUNID('PMCS_MACHINE_TYPE');
     $validated = $request->validate([
       'TYPE_CODE'           => 'required|unique:PMCS_MACHINE_TYPE|max:50',
       'TYPE_NAME'           => 'required|unique:PMCS_MACHINE_TYPE|max:200',
@@ -61,12 +62,10 @@ class MachineTypeTableController extends Controller
 
       if ($request->hasFile('TYPE_ICON')) {
         if ($request->file('TYPE_ICON')->isValid()) {
-            $TYPE_ICON = $request->file('TYPE_ICON');
-            $img_name = uniqid()."_".strtolower($TYPE_ICON->getClientOriginalName());
-            // $name_gen = uniqid().basename($TYPE_ICON->getClientOriginalName());
-            // $img_ext = strtolower($TYPE_ICON->getClientOriginalExtension());
-            // $img_name = $name_gen.'.'.$img_ext;
-            $last_img = $request->file('TYPE_ICON')->storeAs('img/typemachine',$img_name,'public');
+            $image = $request->file('TYPE_ICON');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $this->saveimg($image,$new_name);
+            $last_img = $new_name;
         }
     } else {
         $last_img = "";
@@ -80,7 +79,7 @@ class MachineTypeTableController extends Controller
       'TYPE_STATUS'     => $request->TYPE_STATUS,
       'CREATE_BY'       => Auth::user()->name,
       'CREATE_TIME'     => Carbon::now(),
-      'UNID'            => $this->randUNID('PMCS_MACHINE_TYPE'),
+      'UNID'            => $UNID
     ]);
     $dataset = MachineTypeTable::paginate(10);
     return Redirect()->route('machinetypetable.list',compact('dataset'))->with('success','ลงทะเบียน สำเร็จ');
@@ -90,18 +89,23 @@ class MachineTypeTableController extends Controller
     return view('machine/add/typemachine/edit',compact('dataset'));
 }
 public function Update(Request $request,$UNID) {
+  $DATA_MACHINE_TYPE = MachineTypeTable::where('UNID','=',$UNID)->first();
+  $last_img = $DATA_MACHINE_TYPE->last_img;
   $imgupdate = $request->imgupdate;
   if ($request->hasFile('TYPE_ICON')) {
     if ($request->file('TYPE_ICON')->isValid()) {
-        $TYPE_ICON = $request->file('TYPE_ICON');
-        $img_name = uniqid()."_".strtolower($TYPE_ICON->getClientOriginalName());
-        $last_img = $request->file('TYPE_ICON')->storeAs('img/typemachine',$img_name,'public');
+      $pathfile = public_path('image/machinetype/'.$last_img);
+      File::delete($pathfile);
+      $image = $request->file('TYPE_ICON');
+      $new_name = rand() . '.' . $image->getClientOriginalExtension();
+      $this->saveimg($image,$new_name);
 
+      $last_img = $new_name;
     }
 } else {
     $last_img = $imgupdate;
 }
-  $data_set = MachineTypeTable::where('UNID',$UNID)->update([
+  MachineTypeTable::where('UNID',$UNID)->update([
     'TYPE_CODE'       => $request->TYPE_CODE,
     'TYPE_NAME'       => $request->TYPE_NAME,
     'TYPE_NOTE'       => $request->TYPE_NOTE,
@@ -122,5 +126,38 @@ public function Update(Request $request,$UNID) {
 
     return Redirect()->back()->with('success','ลบสำเร็จ สำเร็จ');
 }
+  function saveimg($image = NUll,$new_name = NULL){
 
+
+    $img_ext = $image->getClientOriginalExtension();
+    $width = 1200;
+    $height = 900;
+    $image = file_get_contents($image);
+    $img_master  = imagecreatefromstring($image);
+    $img_widht   = ImagesX($img_master);
+    $img_height  = ImagesY($img_master);
+    $img_create  = $img_master;
+    if ($img_widht < $img_height ) {
+      $img_master = imagerotate($img_master,90,0,true);
+      $img_widht = ImagesX($img_master);
+      $img_height = ImagesY($img_master);
+      $img_create  = $img_master;
+    }
+    if ($img_widht > $width) {
+      $img_create  = ImageCreateTrueColor($width, $height);
+      ImageCopyResampled($img_create, $img_master, 0, 0, 0, 0, $width+1, $height+1, $img_widht, $img_height);
+    }
+    $path = public_path('image/machinetype/');
+      if(!File::isDirectory($path)){
+      File::makeDirectory($path, 0777, true, true);
+      }
+
+      if (strtoupper($img_ext) == 'JPEG' || strtoupper($img_ext) == 'JPG') {
+        $checkimg_saved = imagejpeg($img_create,$path.'/'.$new_name);
+      }elseif (strtoupper($img_ext) == 'PNG') {
+        $checkimg_saved = imagepng($img_create,$path.'/'.$new_name);
+      }
+      ImageDestroy($img_master);
+      ImageDestroy($img_create);
+  }
 }

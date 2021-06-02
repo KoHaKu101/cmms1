@@ -171,7 +171,6 @@ function imgform(thisdata){
   var url = '/machine/spart/report/planmonth/formimg'
   var data = { SPAREPART_PLAN_UNID:plan_sparepartunid,
                BTN_STATUS: btn_status}
-               console.log(machine_code);
   $.ajax({
     type: "GET",
     url: url,

@@ -21,7 +21,6 @@ use App\Models\SettingMenu\MailSetup;
 //***************** Controller ************************
 use App\Http\Controllers\MachineAddTable\SparPartController;
 use App\Http\Controllers\Plan\headerandfooter\PlanMonthHeaderFooter as planmonthheaderfooter;
-use Intervention\Image\ImageManagerStatic as Image;
 class ReportSparePartController extends Controller
 {
   protected $pdf;
@@ -230,29 +229,26 @@ class ReportSparePartController extends Controller
 
     $PLAN_UNID = $request->IMG_SPAREPART_UNID;
     $DATA_SPAREPART_PLAN = SparePartPlan::where('UNID','=',$PLAN_UNID)->first();
+
     $image = $request->file('IMG_SPAREPART_FILE_NAME');
-
     $new_name = rand() . '.' . $image->getClientOriginalExtension();
-
     $img_ext = $image->getClientOriginalExtension();
-    $image_resize = Image::make($image->getRealPath());
-    $img_widht  = Image::make($image)->width();
-    $img_height = Image::make($image)->height();
-    $new_widht = 450;
-    $new_height = 300;
-
-    //หากภาพ V 3840 มากกว่า H 2160 ทำการ resize
-    if ($img_widht > $img_height ) {
-      if ($img_widht > $new_widht) {
-      $image_resize->resize($new_widht,$new_height);
-      }
-    }
-   //หากภาพ H 3840 มากกว่า V 2160 ทำการ Rotate ก่อน จากนั้น resize
+    $width = 450;
+    $height = 300;
+    $image = file_get_contents($image);
+    $img_master  = imagecreatefromstring($image);
+    $img_widht   = ImagesX($img_master);
+    $img_height  = ImagesY($img_master);
+    $img_create  = $img_master;
     if ($img_widht < $img_height ) {
-      if ($img_height > $new_height ) {
-        $image_resize->rotate(-90);
-       $image_resize->resize($new_widht,$new_height);
-      }
+      $img_master = imagerotate($img_master,90,0,true);
+      $img_widht = ImagesX($img_master);
+      $img_height = ImagesY($img_master);
+      $img_create  = $img_master;
+    }
+    if ($img_widht > $width) {
+      $img_create  = ImageCreateTrueColor($width, $height);
+      ImageCopyResampled($img_create, $img_master, 0, 0, 0, 0, $width+1, $height+1, $img_widht, $img_height);
     }
     $DOC_YEAR = $DATA_SPAREPART_PLAN->DOC_YEAR;
     $DOC_MONTH = $DATA_SPAREPART_PLAN->DOC_MONTH;
@@ -262,9 +258,22 @@ class ReportSparePartController extends Controller
       File::makeDirectory($path, 0777, true, true);
       }
 
-      $dataimgshow = false;
-    if ($image_resize->save($path.'/'.$new_name)) {
+      if (strtoupper($img_ext) == 'JPEG' || strtoupper($img_ext) == 'JPG') {
+        $checkimg_saved = imagejpeg($img_create,$path.'/'.$new_name);
+      }elseif (strtoupper($img_ext) == 'PNG') {
+        $checkimg_saved = imagepng($img_create,$path.'/'.$new_name);
+      }
+      ImageDestroy($img_master);
+      ImageDestroy($img_create);
 
+   //หากภาพ H 3840 มากกว่า V 2160 ทำการ Rotate ก่อน จากนั้น resize
+    if ($img_widht < $img_height ) {
+      if ($img_height > $new_height ) {
+        $image_resize->rotate(-90);
+       $image_resize->resize($new_widht,$new_height);
+      }
+    }
+    if ($checkimg_saved) {
       SparePartPlanIMG::insert([
         'UNID' =>                  $this->randUNID('PMCS_CMMS_SPAREPART_PLAN_IMG')
         ,'PLAN_SPAREPART_UNID' =>  $PLAN_UNID

@@ -86,13 +86,15 @@
 																 <div id="js-grid-juicy-projects" class="cbp">
 																	 @foreach ($dataset as $key => $dataitem)
 
-
+																		 @php
+																		 	$TYPE_ICON = $dataitem->TYPE_ICON != '' ? 'image/machinetype/'.$dataitem->TYPE_ICON : '/assets/img/no_image1200_900.png'
+																		 @endphp
 									                 <div class="cbp-item movie">
 									                     <div class="cbp-item-wrap">
 									                         <div class="cbp-caption">
 									                             <div class="cbp-caption-defaultWrap">
 									                               <a href="{{url('machine/machinetypetable/edit/'.$dataitem->UNID)}}">
-									                                 <img src="{{asset('storage/'.$dataitem->TYPE_ICON)}}" alt="img3">
+									                                 <img src="{{asset($TYPE_ICON)}}" alt="img3">
 
 									                               </a> </div>
 																								 <style>

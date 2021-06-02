@@ -59,7 +59,10 @@
 									<!-- ช่อง1-->
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="{{asset('storage/'.$dataset->TYPE_ICON)}}" width="250" height="200px" class="mt-4">
+												@php
+													$TYPE_ICON = $dataset->TYPE_ICON != '' ? '/image/machinetype/'.$dataset->TYPE_ICON :'/assets/img/nobody.jpg';
+												@endphp
+												<img src="{{asset($TYPE_ICON)}}" width="250" height="200px" class="mt-4">
 												<input type="file" class="form-control mt-4" id="TYPE_ICON" name="TYPE_ICON" >
 												<input type="hidden" class="form-control mt-4" id="imgupdate" name="imgupdate" value="{{$dataset->TYPE_ICON}}">
 
@@ -70,7 +73,7 @@
 											<div class="form-group has-error">
 												<label for="EMP_CODE">ชื่อประเภทเครื่องจักร</label>
 													<input type="text" class="form-control" id="TYPE_NAME" name="TYPE_NAME" value="{{$dataset->TYPE_NAME}}" required autofocus>
-													
+
 											</div>
 											<div class="col-md-6 col-lg-12">
 												<div class="form-group ">

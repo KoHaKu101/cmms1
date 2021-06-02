@@ -56,11 +56,14 @@
 							<div class="card-body">
 								<div class="row">
 									<!-- ช่อง1-->
+									@php
+									$EMP_ICON = $dataset->EMP_ICON != '' ? 'image/emp/'.$dataset->EMP_ICON : "/assets/img/nobody.jpg";
+									@endphp
 										<div class="col-md-6 col-lg-3">
 											<div class="form-group mt-4">
-												<img src="{{asset($dataset->EMP_ICON)}}" width="200" height="200px" class="mt-4">
+												<img src="{{asset($EMP_ICON)}}" width="200" height="200px" class="mt-4">
 													<input type="file" class="form-control mt-4" id="EMP_ICON" name="EMP_ICON" >
-												
+
 											</div>
 										</div>
 										<!-- ช่อง2-->
@@ -69,7 +72,7 @@
 												<label for="EMP_CODE">รหัสพนักงาน</label>
 													<input type="text" class="form-control" id="EMP_CODE" name="EMP_CODE" value="{{ $dataset->EMP_CODE }}">
 														<input type="hidden" id="UNID" name="UNID" value="{{ $dataset->UNID }}">
-												
+
 											</div>
 											<div class="row ml-1 mt-2">
 												<div class="form-group col-md-12 has-error">

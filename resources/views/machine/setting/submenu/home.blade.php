@@ -30,14 +30,7 @@
 						<div class="row">
 							<div class="col-md-8">
 								<div class="card">
-                	@if(session('success'))
-                  	<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  											<strong>{{ session('success') }}</strong>
-  											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    										<span aria-hidden="true">&times;</span>
-  											</button>
-										</div>
-									@endif
+
 
 										<div class="card-header"><h3> Submenu </h4></div>
 											<div class="table-responsive ml-2">
@@ -70,7 +63,7 @@
 															<td>  						{{ $row->SUBMENU_ICON }} </td>
 															<td>
 																<a href="{{ url('machine/setting/submenu/edit/'.$row->UNID) }}" class="btn btn-link"><i class="fab fa-whmcs fa-2x"></i></a>
-																<a href="{{ url('machine/setting/submenu/delete/'.$row->UNID) }}" class="btn btn-link"><i class="fas fa-trash fa-2x"></i></a></a>
+																<a  data-unid="{{ $row->UNID }}"onclick="deletemenu(this)"class="btn btn-danger btn-link"><i class="fas fa-trash fa-2x"></i></a></a>
 															</td>
                         			</tr>
                         	@endforeach
@@ -115,12 +108,12 @@
 														</div>
 														<div class="form-group">
 															<label for="SUBMENU_LINK">Submenu Link</label>
-															<input type="text"  class="form-control" id="SUBMENU_LINK" name="SUBMENU_LINK" placeholder="MENU Link">
+															<input type="text"  class="form-control" id="SUBMENU_LINK" name="SUBMENU_LINK" placeholder="MENU Link" required>
 														</div>
                       			<div class="form-group">
 															<label for="SUBMENU_ICON">Submenu Icon</label>
 															<input type="text" class="form-control" id="SUBMENU_ICON" name="SUBMENU_ICON"  placeholder="MENU Icon">
-                        			
+
 														</div>
 
 														<button tpye="submit" class="btn btn-success">Submit</button>
@@ -137,6 +130,24 @@
 
 {{-- ส่วนjava --}}
 @section('javascript')
+<script>
 
+function deletemenu(thisdata){
+	var unid = $(thisdata).data('unid');
+	var url = '/machine/setting/submenu/delete/'+unid;
+	Swal.fire({
+			title: 'ต้องการลบเมนูนี้มั้ย?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'ใช่!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = url;
+			}
+		});
+}
+</script>
 @stop
 {{-- ปิดส่วนjava --}}

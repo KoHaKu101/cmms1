@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
+use File;
 use Illuminate\Http\Request;
 //******************** model ***********************
 use App\Models\Machine\EMPName;
+use App\Models\Machine\MachineEMP;
 use App\Models\Machine\MachineLine;
 //************** Package form github ***************
 use App\Exports\MachineExport;
@@ -37,8 +39,8 @@ class PersonalController extends Controller
 
   public function Index(){
 
-    $dataset = EMPName::paginate(10);
-    //dd($data_set);
+    $dataset = EMPName::select('*')->selectraw('dbo.decode_utf8(EMP_NAME) as EMP_NAME2')->paginate(6);
+
     return View('machine/personal/personallist',compact('dataset'));
   }
   public function Create(){
@@ -49,6 +51,7 @@ class PersonalController extends Controller
   }
 
   public function Store(Request $request){
+
     $validated = $request->validate([
       'EMP_CODE'           => 'required|max:50',
       'EMP_NAME'           => 'required|max:200'
@@ -58,23 +61,18 @@ class PersonalController extends Controller
       'EMP_NAME.required'  => 'กรุณราใส่ชื่อพนักงาน'
       ]);
 
-
+      $UNID = $this->randUNID('PMCS_EMP_NAME');
       if ($request->hasFile('EMP_ICON')) {
         if ($request->file('EMP_ICON')->isValid()) {
-
-             // $filenamemaster = uniqid()."_".basename($request->file('MACHINE_ICON')->getClientOriginalName());
-            $EMP_ICON = $request->file('EMP_ICON');
-            $name_gen = hexdec(uniqid());
-            $img_ext = strtolower($EMP_ICON->getClientOriginalExtension());
-            $img_name = $name_gen.'.'.$img_ext;
-            $up_location = 'image/EMP/';
-            $last_img = $up_location.$img_name;
-            $EMP_ICON->move($up_location,$img_name);;
+            $image = $request->file('EMP_ICON');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $this->saveimg($image,$new_name);
+            $last_img = $new_name;
         }
     } else {
         $last_img = "";
     }
-    MachinEMP::insert([
+    EMPName::insert([
 
       'EMP_CODE'         => $request->EMP_CODE,
       'EMP_NAME'         => $request->EMP_NAME,
@@ -84,34 +82,29 @@ class PersonalController extends Controller
       'EMP_STATUS'           => $request->EMP_STATUS,
       'CREATE_BY'            => Auth::user()->name,
       'CREATE_TIME'          => Carbon::now(),
-      // 'MODIFY_BY'            => Auth::user()->name,
-      // 'MODIFY_TIME'          => Carbon::now(),
-      'UNID'                 => $this->randUNID('PMCS_EMP_NAME'),
+      'MODIFY_BY'            => Auth::user()->name,
+      'MODIFY_TIME'          => Carbon::now(),
+      'UNID'                 => $UNID,
 
     ]);
     $dataset = EMPName::paginate(12);
 
-    return Redirect()->route('personal.list',compact(['dataset']))->with('success','ลงทะเบียน สำเร็จ');
+    return Redirect()->route('personal.edit',$UNID)->with('success','ลงทะเบียน สำเร็จ');
 
   }
   public function Edit($UNID) {
-    $dataset = EMPName::where('UNID','=',$UNID)->first();
-    $datalineselect = MachineLine::all();
+    $dataset = EMPName::select('*')->selectraw('dbo.decode_utf8(EMP_NAME) as EMP_NAME')->where('UNID','=',$UNID)->first();
+    $datalineselect = MachineLine::where('LINE_NAME','like','%'.'Line'.'%')->get();
     return view('machine/personal/edit',compact('dataset','datalineselect'));
 
   }
   public function Update(Request $request,$UNID){
     if ($request->hasFile('EMP_ICON')) {
       if ($request->file('EMP_ICON')->isValid()) {
-
-           // $filenamemaster = uniqid()."_".basename($request->file('MACHINE_ICON')->getClientOriginalName());
-          $EMP_ICON = $request->file('EMP_ICON');
-          $name_gen = hexdec(uniqid());
-          $img_ext = strtolower($EMP_ICON->getClientOriginalExtension());
-          $img_name = $name_gen.'.'.$img_ext;
-          $up_location = 'image/EMP/';
-          $last_img = $up_location.$img_name;
-          $EMP_ICON->move($up_location,$img_name);;
+          $image = $request->file('EMP_ICON');
+          $new_name = rand() . '.' . $image->getClientOriginalExtension();
+          $this->saveimg($image,$new_name);
+            $last_img = $new_name;
       }
   } else {
       $last_img = "";
@@ -124,8 +117,6 @@ class PersonalController extends Controller
     'EMP_GROUP'        => $request->EMP_GROUP,
     'EMP_NOTE'         => $request->EMP_NOTE,
     'EMP_STATUS'           => $request->EMP_STATUS,
-    // 'CREATE_BY'            => Auth::user()->name,
-    // 'CREATE_TIME'          => Carbon::now(),
     'MODIFY_BY'            => Auth::user()->name,
     'MODIFY_TIME'          => Carbon::now(),
 
@@ -138,5 +129,37 @@ class PersonalController extends Controller
 
       return Redirect()->back()-> with('success','Confirm Delete Success');
 
+  }
+  public function saveimg($image=NULL,$new_name=NULL){
+    $img_ext = $image->getClientOriginalExtension();
+    $width = 1200;
+    $height = 900;
+    $image = file_get_contents($image);
+    $img_master  = imagecreatefromstring($image);
+    $img_widht   = ImagesX($img_master);
+    $img_height  = ImagesY($img_master);
+    $img_create  = $img_master;
+    if ($img_widht < $img_height ) {
+      $img_master = imagerotate($img_master,90,0,true);
+      $img_widht = ImagesX($img_master);
+      $img_height = ImagesY($img_master);
+      $img_create  = $img_master;
+    }
+    if ($img_widht > $width) {
+      $img_create  = ImageCreateTrueColor($width, $height);
+      ImageCopyResampled($img_create, $img_master, 0, 0, 0, 0, $width+1, $height+1, $img_widht, $img_height);
+    }
+    $path = public_path('image/emp');
+      if(!File::isDirectory($path)){
+      File::makeDirectory($path, 0777, true, true);
+      }
+
+      if (strtoupper($img_ext) == 'JPEG' || strtoupper($img_ext) == 'JPG') {
+        $checkimg_saved = imagejpeg($img_create,$path.'/'.$new_name);
+      }elseif (strtoupper($img_ext) == 'PNG') {
+        $checkimg_saved = imagepng($img_create,$path.'/'.$new_name);
+      }
+      ImageDestroy($img_master);
+      ImageDestroy($img_create);
   }
 }

@@ -16,7 +16,7 @@ use App\Models\Machine\Protected;
 use App\Models\Machine\MachineUpload;
 use App\Models\Machine\MachineLine;
 use App\Models\Machine\MachineEMP;
-use App\Models\Machine\MachineRepair;
+use App\Models\Machine\MachineRepairREQ;
 use App\Models\Machine\MasterIMPS;
 use App\Models\Machine\MasterIMPSGroup;
 use App\Models\Machine\MachineSparePart;
@@ -86,19 +86,15 @@ class MachineController extends Controller
       ]);
       if ($request->hasFile('MACHINE_ICON')) {
         if ($request->file('MACHINE_ICON')->isValid()) {
-
-         // $filenamemaster = uniqid()."_".basename($request->file('MACHINE_ICON')->getClientOriginalName());
-        $MACHINE_ICON = $request->file('MACHINE_ICON');
-        $name_gen = hexdec(uniqid());
-        $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
-        $img_name = $name_gen.'.'.$img_ext;
-        $up_location = 'image/machine/';
-        $last_img = $up_location.$img_name;
-        $MACHINE_ICON->move($up_location,$img_name);
+          $image = $request->file('MACHINE_ICON');
+          $new_name = rand() . '.' . $image->getClientOriginalExtension();
+          $this->SaveImg($image,$new_name);
+          $last_img = $new_name;
         }
       } else {
         $last_img = "";
       }
+      $UNID = $this->randUNID('PMCS_MACHINE');
       $machine_type_status = MachineLine::select('LINE_TYPE')->where('LINE_CODE',$request->MACHINE_LINE)->first();
       $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
       $request->MACHINE_STATUS = '9';
@@ -136,16 +132,15 @@ class MachineController extends Controller
           'SUPPLIER_NAME'        => $request->SUPPLIER_NAME,
           'PURCHASE_FORM'        => $request->PURCHASE_FORM,
           'PLAN_LAST_DATE'       => '',
-          'REPAIR_LAST_DATE'       => '',
+          'REPAIR_LAST_DATE'     => '',
           'SPAR_PART_DATE'       => '',
           'CREATE_BY'            => Auth::user()->name,
           'CREATE_TIME'          => Carbon::now(),
-          'UNID'                 => $this->randUNID('PMCS_MACHINE'),
+          'UNID'                 => $UNID,
           'MACHINE_RANK_MONTH'   => $request->MACHINE_RANK_MONTH,
           'MACHINE_RANK_CODE'    => $rankcode->MACHINE_RANK_CODE,
       ]);
-      $dataset = Machine::latest('UNID')->first();
-      return Redirect()->route('machine.edit',['UNID'=> $dataset->UNID])->with('success','ลงทะเบียน สำเร็จ');
+      return Redirect()->route('machine.edit',$UNID)->with('success','ลงทะเบียน สำเร็จ');
   }
   public function Edit($UNID) {
     //ใช้
@@ -159,10 +154,9 @@ class MachineController extends Controller
     $machineline                 = MachineLine::select('LINE_CODE','LINE_NAME')
                                               ->where('LINE_STATUS','=','9')
                                               ->get();
-    $machinerepair               = MachineRepair::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
-                                                ->where('STATUS','=','9')
+    $machinerepair               = MachineRepairREQ::where('MACHINE_CODE','=',$dataset->MACHINE_CODE)
+                                                ->where('CLOSE_STATUS','=','9')
                                                 ->get();
-
 
     $machinepmtemplate           = MachinePmTemplate::whereNotIn('PM_TEMPLATE_NAME',MasterIMPS::select('PM_TEMPLATE_NAME')
                                                     ->where('MACHINE_CODE',$dataset->MACHINE_CODE))
@@ -187,24 +181,20 @@ class MachineController extends Controller
     $update = $request->MACHINE_UPDATE;
     if ($request->hasFile('MACHINE_ICON')) {
       if ($request->file('MACHINE_ICON')->isValid()) {
-          $MACHINE_ICON = $request->file('MACHINE_ICON');
-          $name_gen = hexdec(uniqid());
-          $img_ext = strtolower($MACHINE_ICON->getClientOriginalExtension());
-          $img_name = $name_gen.'.'.$img_ext;
-          $up_location = 'image/machine/';
-          $last_img = $up_location.$img_name;
-          $MACHINE_ICON->move($up_location,$img_name);
+        $image = $request->file('MACHINE_ICON');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $this->SaveImg($image,$new_name);
+        $last_img = $new_name;
       }
     } else {
       $last_img = $update;
-      // dd($last_img);
     }
     $machine_type_status = MachineLine::select('LINE_TYPE')->where('LINE_CODE',$request->MACHINE_LINE)->first();
 
     $rankcode = MachineRankTable::select('MACHINE_RANK_CODE')->where('MACHINE_RANK_MONTH',$request->MACHINE_RANK_MONTH)->first();
-    $request->MACHINE_STATUS = $request->MACHINE_CHECK == "1" ? $request->MACHINE_STATUS = '1' : $request->MACHINE_STATUS = '9' ;
+    $MACHINE_STATUS = $request->MACHINE_CHECK == "1" ? 1 : 9 ;
     $MACHINE_CODE = strtoupper($request->MACHINE_CODE);
-    $data_set = Machine::where('UNID',$UNID)->update([
+     Machine::where('UNID',$UNID)->update([
 
       'MACHINE_CODE'         => $MACHINE_CODE,
       'MACHINE_NAME'         => $request->MACHINE_NAME,
@@ -227,7 +217,7 @@ class MachineController extends Controller
       'MACHINE_POWER'        => $request->MACHINE_POWER,
       'MACHINE_WEIGHT'       => $request->MACHINE_WEIGHT,
       'MACHINE_TARGET'       => $request->MACHINE_TARGET,
-      'MACHINE_STATUS'       => $request->MACHINE_STATUS,
+      'MACHINE_STATUS'       => $MACHINE_STATUS,
       'MACHINE_POSTED'       => $request->MACHINE_POSTED,
       'PCDS_MACHINE_CODE'    => $request->PCDS_MACHINE_CODE,
       'WAREHOUSE_CODE'       => $request->WAREHOUSE_CODE,
@@ -267,6 +257,38 @@ class MachineController extends Controller
 
   public function UserHomePage(){
     return View('machine.userpage.userhomepage');
+  }
+  public function SaveImg($image = NULL,$new_name = NULL){
+    $img_ext = $image->getClientOriginalExtension();
+    $width = 800;
+    $height = 500;
+    $image = file_get_contents($image);
+    $img_master  = imagecreatefromstring($image);
+    $img_widht   = ImagesX($img_master);
+    $img_height  = ImagesY($img_master);
+    $img_create  = $img_master;
+    if ($img_widht < $img_height ) {
+      $img_master = imagerotate($img_master,90,0,true);
+      $img_widht = ImagesX($img_master);
+      $img_height = ImagesY($img_master);
+      $img_create  = $img_master;
+    }
+    if ($img_widht > $width) {
+      $img_create  = ImageCreateTrueColor($width, $height);
+      ImageCopyResampled($img_create, $img_master, 0, 0, 0, 0, $width+1, $height+1, $img_widht, $img_height);
+    }
+    $path = public_path('image/machine/'.$request->MACHINE_LINE);
+      if(!File::isDirectory($path)){
+      File::makeDirectory($path, 0777, true, true);
+      }
+
+      if (strtoupper($img_ext) == 'JPEG' || strtoupper($img_ext) == 'JPG') {
+        $checkimg_saved = imagejpeg($img_create,$path.'/'.$new_name);
+      }elseif (strtoupper($img_ext) == 'PNG') {
+        $checkimg_saved = imagepng($img_create,$path.'/'.$new_name);
+      }
+      ImageDestroy($img_master);
+      ImageDestroy($img_create);
   }
 
 

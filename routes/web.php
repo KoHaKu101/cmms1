@@ -21,6 +21,7 @@ use App\Http\Controllers\Machine\SysCheckController;
 use App\Http\Controllers\Machine\MailConfigController;
 use App\Http\Controllers\Machine\DailyCheckController;
 use App\Http\Controllers\Machine\MachineSparePartController;
+use App\Http\Controllers\Machine\CookieController;
 //************************* Plan *************************************
 use App\Http\Controllers\Plan\MachinePlanController;
 use App\Http\Controllers\Plan\Report\PlanYearMachinePm;
@@ -76,6 +77,9 @@ Route::get('/machine/repairhistory/pdf/{UNID}', 'App\Http\Controllers\PDF\Machin
 Route::get('/machine/repair/pdf/{UNID}',        'App\Http\Controllers\PDF\MachineRepairPDFController@RepairPdf');
 Route::get('/machine/systemcheck/pdf/{UNID}',   'App\Http\Controllers\PDF\MachineSystemCheckPDFController@SystemCheckPdf');
 Route::get('/machine/assets/machineall/{LINE?}', [MachinePDFController::class,'MachinePDF']);
+//Cookie
+Route::get('/cookie/set',[CookieController::class,'setCookie'])->name('cookie.set');
+Route::get('/cookie/get',[CookieController::class,'getCookie'])->name('cookie.get');
 
 
 Route::get('/machine/repair/search',function(){
@@ -133,18 +137,21 @@ Route::get('machine/personal/personallist'   ,[PersonalController::class,'Index'
 Route::get('machine/repair/repairlist'             ,[MachineRepairController::class,'Index'])        ->name('repair.list');
   Route::get('machine/repair/form/{MACHINE_CODE}'  ,[MachineRepairController::class,'Create'])       ->name('repair.form');
   Route::get('machine/repair/repairsearch'         ,[MachineRepairController::class,'PrepareSearch'])->name('repair.repairsearch');
-  Route::post('machine/repair/store'               ,[MachineRepairController::class,'Store'])        ->name('repair.store');
+
+  Route::post('machine/repair/store/{MACHINE_UNID}',[MachineRepairController::class,'Store'])        ->name('repair.store');
   Route::get('machine/repair/edit/{UNID}'          ,[MachineRepairController::class,'Edit'])         ->name('repair.edit');
   Route::post('machine/repair/update/{UNID}'       ,[MachineRepairController::class,'Update']);
   Route::get('machine/repair/delete/{UNID}'        ,[MachineRepairController::class,'Delete'])       ->name('repair.delete');
   Route::post('machine/repair/form/searchempcode'   ,[MachineRepairController::class,'SearchEMPCode'])->name('repair.searchempcode');
-  Route::post('machine/repair/select/selectemp'  ,[MachineRepairController::class,'SelectEmp'])       ->name('repair.selectemp');
+  Route::post('machine/repair/select/selectemp'     ,[MachineRepairController::class,'SelectEmp'])       ->name('repair.selectemp');
+
+  Route::post('machine/repair/select/selectrepairdetail',[MachineRepairController::class,'SelectRepairDetail'])->name('repair.selectrepairdetail');
 
 //daily checksheet
 Route::get('machine/daily/list'                     ,[DailyCheckController::class,'DailyList'])  ->name('daily.list');
-Route::post('machine/daily/list'                    ,[DailyCheckController::class,'DailyList']);
+// Route::post('machine/daily/list'                    ,[DailyCheckController::class,'DailyList']);
 Route::post('machine/daily/uploadimg'               ,[DailyCheckController::class,'CheckSheetUpload']) ->name('daily.upload');
-Route::get('machine/daily/deleteimg/{UNID?}'               ,[DailyCheckController::class,'DeleteImg']) ->name('daily.delete');
+Route::get('machine/daily/deleteimg/{UNID?}'         ,[DailyCheckController::class,'DeleteImg']) ->name('daily.delete');
 //***************************** tabledata ****************************************
 //machinetypetable
 Route::get('machine/machinetypetable/list'      ,[MachineTypeTableController::class,'Index'])  ->name('machinetypetable.list');
@@ -165,8 +172,6 @@ Route::get('machine/repairtemplate/list/{UNID?}'        ,[MachineRepairTableCont
 //status
 Route::get('machine/machinestatustable/list'      ,[MachineStatusTableController::class,'Index'])  ->name('machinestatustable.list');
   Route::post('machine/machinestatustable/store'            ,[MachineStatusTableController::class,'Store']) ->name('machinestatustable.store');
-  Route::get('machine/machinestatustable/form'            ,[MachineStatusTableController::class,'Create']) ->name('machinestatustable.form');
-  Route::get('machine/machinestatustable/edit/{UNID}'     ,[MachineStatusTableController::class,'Edit'])   ->name('machinestatustable.edit');
   Route::post('machine/machinestatustable/update/{UNID}'  ,[MachineStatusTableController::class,'Update']);
   Route::get('machine/machinestatustable/delete/{UNID}'   ,[MachineStatusTableController::class,'Delete']) ->name('machinestatustable.delete');
 //Rank

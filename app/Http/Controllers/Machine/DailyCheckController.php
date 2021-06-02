@@ -17,7 +17,7 @@ use App\Http\Controllers\Machine\UploadImgController;
 
 //************** Package form github ***************
 use RealRashid\SweetAlert\Facades\Alert;
-use Intervention\Image\ImageManagerStatic as Image;
+// use Intervention\Image\ImageManagerStatic as Image;
 
 
 class DailyCheckController extends Controller
@@ -50,7 +50,6 @@ class DailyCheckController extends Controller
   }
 
   public function CheckSheetUpload(Request $request) {
-
     $MACHINE_UNID = $request->MACHINE_UNID;
     $MACHINE_CODE = $request->MACHINE_CODE;
     $CHECK_MONTH = $request->CHECK_MONTH;
@@ -61,38 +60,46 @@ class DailyCheckController extends Controller
                       ->where('CHECK_YEAR','=',$CHECK_YEAR)
                       ->count();
     if ($count_machine > 0) {
-        MachineCheckSheet::where('MACHINE_UNID','=',$MACHINE_UNID)
-                          ->where('CHECK_MONTH','=',$CHECK_MONTH)
-                          ->where('CHECK_YEAR','=',$CHECK_YEAR)
-                          ->delete();
-    }
+      $DATA_CHECKSHEET = MachineCheckSheet::where('MACHINE_UNID','=',$MACHINE_UNID)
+                        ->where('CHECK_MONTH','=',$CHECK_MONTH)
+                        ->where('CHECK_YEAR','=',$CHECK_YEAR);
+      $pathfile = public_path('image/checksheet/'.$CHECK_YEAR.'/'.$CHECK_MONTH.'/'.$DATA_CHECKSHEET->first()->FILE_NAME);
+        File::delete($pathfile);
+          $DATA_CHECKSHEET->delete();
+      }
     $image = $request->file('FILE_NAME');
     $new_name = rand() . '.' . $image->getClientOriginalExtension();
     $img_ext = $image->getClientOriginalExtension();
-    $image_resize = Image::make($image->getRealPath());
-    $img_widht  = Image::make($image)->width();
-    $img_height = Image::make($image)->height();
-    $new_widht = 1200;
-    $new_height = 800;
-    if ($img_widht > $img_height ) {
-      if ($img_widht > $new_widht) {
-      $image_resize->resize($new_widht,$new_height);
-      }
-    }
+    $width = 800;
+    $height = 500;
+    $image = file_get_contents($image);
+    $img_master  = imagecreatefromstring($image);
+    $img_widht   = ImagesX($img_master);
+    $img_height  = ImagesY($img_master);
+    $img_create  = $img_master;
     if ($img_widht < $img_height ) {
-      if ($img_height > $new_height ) {
-        $image_resize->rotate(-90);
-       $image_resize->resize($new_widht,$new_height);
-      }
+      $img_master = imagerotate($img_master,90,0,true);
+      $img_widht = ImagesX($img_master);
+      $img_height = ImagesY($img_master);
+      $img_create  = $img_master;
+    }
+    if ($img_widht > $width) {
+      $img_create  = ImageCreateTrueColor($width, $height);
+      ImageCopyResampled($img_create, $img_master, 0, 0, 0, 0, $width+1, $height+1, $img_widht, $img_height);
     }
     $path = public_path('image/checksheet/'.$CHECK_YEAR.'/'.$CHECK_MONTH.'/');
       if(!File::isDirectory($path)){
       File::makeDirectory($path, 0777, true, true);
       }
-      $dataimgshow = false;
-    if ($image_resize->save($path.'/'.$new_name)) {
-      // $saveimg = new UploadImgController;
-      // $dataimgshow = $saveimg->SaveImg($MACHINE_UNID,$new_name,$img_ext);
+
+      if (strtoupper($img_ext) == 'JPEG' || strtoupper($img_ext) == 'JPG') {
+        $checkimg_saved = imagejpeg($img_create,$path.'/'.$new_name);
+      }elseif (strtoupper($img_ext) == 'PNG') {
+        $checkimg_saved = imagepng($img_create,$path.'/'.$new_name);
+      }
+      ImageDestroy($img_master);
+      ImageDestroy($img_create);
+    if ($checkimg_saved) {
       MachineCheckSheet::insert([
         'UNID' => $this->randUNID('PMCS_CMMS_MACHINE_CHECKSHEET'),
         'MACHINE_UNID' => $MACHINE_UNID,
@@ -106,7 +113,8 @@ class DailyCheckController extends Controller
       ]);
       alert()->success('บันทึกภาพสำเร็จ');
     }
-      return Redirect()->back()->with( ['MONTH' => $CHECK_MONTH,'YEAR' => $CHECK_YEAR,'MACHINE_LINE' => $MACHINE_LINE,'MACHINNE_CODE' => $request->SEARCH_MACHINE] );
+      return Redirect()->back()->with( ['MONTH' => $CHECK_MONTH,'YEAR' =>
+      $CHECK_YEAR,'MACHINE_LINE' => $MACHINE_LINE,'MACHINNE_CODE' => $request->SEARCH_MACHINE] );
   }
 
   public function DeleteImg(Request $request ){
