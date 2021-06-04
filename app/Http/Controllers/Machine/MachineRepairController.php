@@ -22,6 +22,10 @@ use Maatwebsite\Excel\Facades\Excel;
 class MachineRepairController extends Controller
 {
   public function __construct(){
+    $cookie_array = array('0' => 'empcode','1' => 'selectmainrepair','2' => 'selectsubrepair','3' => 'priority' );
+    foreach ($cookie_array as $index => $row) {
+      Cookie::queue(Cookie::forget($row));
+    }
     $this->middleware('auth');
   }
   public function randUNID($table){
@@ -46,6 +50,7 @@ class MachineRepairController extends Controller
   }
 
   public function PrepareSearch(Request $request){
+
     $search = $request->search;
     $machine = NULL;
     if (isset($search)) {

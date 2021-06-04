@@ -122,7 +122,7 @@
 													<div class="card-action text-center">
 														<button type="button" class="btn btn-warning mx-1 my-1"
 														onclick="previousstep(this)"
-														data-step="step2">
+														data-step="step2">Previous</button>
 														<button type="button" class="btn btn-primary mx-1 my-1"
 														onclick="nextstep(this)"
 														data-step="step4">Next <i class="fas fa-arrow-alt-circle-right ml-1"></i></button>
@@ -178,7 +178,7 @@
 											<div class="card-action text-center">
 												<button type="button" class="btn btn-warning mx-1 my-1"
 												onclick="previousstep(this)"
-												data-step="step3">
+												data-step="step3">Previous</button>
 												<button type="button" class="btn btn-primary mx-1 my-1"
 												onclick="nextstep(this)"
 												data-step="step5">Next <i class="fas fa-arrow-alt-circle-right ml-1"></i></button>
